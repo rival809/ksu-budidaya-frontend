@@ -1,0 +1,17 @@
+{
+    "name": "ksu_budidaya",
+    "short_name": "ksu_budidaya",
+    "start_url": ".",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "description": "Sistem Pengelolaan Pajak Alat Berat Pemerintah Provinsi Jawa Barat",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/android-chrome-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        }
+    ]
+}

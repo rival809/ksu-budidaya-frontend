@@ -1,0 +1,87 @@
+name: ksu_budidaya
+description: Aplikasi KSU BUDIDAYA.
+publish_to: "none"
+version: 1.0.0
+environment:
+  sdk: ">=2.18.1 <=3.3.4"
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.18.1
+  flutter_svg: ^1.1.5
+  hive: ^2.2.3
+  path_provider: ^2.1.3
+  change_app_package_name: ^1.1.0
+  lottie: ^2.3.0
+  flutter_animate: ^4.1.0
+  dio: ^5.0.3
+  validatorless: ^1.2.3
+  google_fonts: ^4.0.4
+  flutter_countdown_timer: ^4.1.0
+  json_annotation: ^4.8.1
+  dart_pusher_channels: ^1.1.1
+  qr_flutter: ^4.1.0
+  flutter_localization: ^0.1.13
+  dropdown_search: ^5.0.6
+  package_info_plus: ^4.0.2
+  url_launcher: ^6.2.6
+  provider: ^6.0.5
+  flutter_switch: ^0.3.2
+  camera: ^0.11.0+1
+  image: ^4.1.3
+  flutter_improved_scrolling: ^0.0.3
+  dolumns: ^2.0.1
+  flutter_usb_printer: ^0.1.0+1
+  flutter_image_preview: ^0.1.1
+  terbilang_id: ^0.1.0
+  pdf: ^3.10.8
+  printing: ^5.11.1
+  geolocator: ^10.1.0
+  dropdown_button2: ^2.3.9
+  skeletonizer: ^1.0.1
+  easy_image_viewer: ^1.4.0
+  go_router: ^13.1.0
+  responsive_builder: ^0.7.0
+  mobile_scanner: ^5.1.1
+  flutter_carousel_widget: ^2.2.0
+  connectivity_plus: ^5.0.2
+  htmltopdfwidgets: ^1.0.3
+  image_picker: ^1.1.2
+  flutter_staggered_grid_view: ^0.7.0
+  flutter_cache_manager: ^3.3.2
+  firebase_core: ^2.31.0
+  firebase_crashlytics: ^3.5.5
+  firebase_analytics: ^10.10.5
+  open_file: ^3.3.2
+  universal_html: ^2.2.4
+  searchfield: ^1.0.5
+  permission_handler: ^11.3.1
+  mime: ^1.0.5
+  pluto_grid_plus: ^8.4.0
+  sidebarx: ^0.17.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  freezed: ^2.1.1
+  json_serializable: ^6.7.1
+  hive_generator: ^2.0.1
+  analyzer: ^6.4.1
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: BebasNeue
+      fonts:
+        - asset: assets/fonts/BebasNeue-Regular.ttf
+  assets:
+    - assets/files/json/
+    - assets/icons/detail_kendaraan/
+    - assets/icons/info/
+    - assets/icons/info_card/
+    - assets/icons/info_progresif/
+    - assets/icons/input/
+    - assets/icons/layanan/
+    - assets/icons/misc/
+    - assets/images/illustration/
+    - assets/images/logo/

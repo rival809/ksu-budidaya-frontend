@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF" />
+
+  <meta charset="UTF-8" />
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+  <meta name="description" content="Sistem Pengelolaan Pajak Alat Berat Pemerintah Provinsi Jawa Barat" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="ksu_budidaya" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+
+  <title>Pajak Alat Berat</title>
+  <link rel="manifest" href="manifest.json" />
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = null;
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+  <style>
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      /* Default Axis is X*/
+      justify-content: center;
+      /* Main Axis */
+      align-items: center;
+      /* Cross Axis */
+    }
+
+    .indicator {
+      width: 30vw;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://unpkg.com/@zxing/library@0.19.1" type="application/javascript"></script>
+  <script>
+    window.addEventListener('load', function (ev) {
+      // Check for and clear existing caches
+      if ('caches' in window) {
+        caches.keys().then(function (cacheNames) {
+          cacheNames.forEach(function (cacheName) {
+            caches.delete(cacheName);
+          });
+        }).catch(function (error) {
+          console.error('Error while clearing caches:', error);
+        });
+      }      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        entrypointUrl: "main.dart.js?v=" + serviceWorkerVersion,
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function (engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(function (appRunner) {
+        return appRunner.runApp();
+      });
+    });
+  </script>
+  <div id="loading_indicator" class="container">
+    <img class="indicator" src="./assets/loading_with_text.gif" />
+  </div>
+</body>
+
+</html>

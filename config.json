@@ -1,0 +1,15 @@
+{
+    "modules": [
+        "beranda",
+        "splashscreen",
+        "user/login",
+        "user/ubah_kata_sandi",
+        "user/user_management",
+        "pdf_viewer"
+    ],
+    "module_directory_name": "module",
+    "experimental_mode": false,
+    "learning_mode": false,
+    "unfreezed": true,
+    "use_cubit": false
+}

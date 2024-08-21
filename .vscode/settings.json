@@ -1,0 +1,24 @@
+{
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
+    "editor.formatOnType": true,
+    "editor.rulers": [
+      80
+    ],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off",
+    "editor.defaultFormatter": "Dart-Code.dart-code"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#017260",
+    "activityBar.foreground": "#FFFFFF",
+    "titleBar.activeBackground": "#017260",
+    "titleBar.activeForeground": "#FFFFFF"
+  }
+}
