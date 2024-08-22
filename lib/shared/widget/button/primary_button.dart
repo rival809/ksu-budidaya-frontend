@@ -6,14 +6,14 @@ class PrimaryButton extends StatefulWidget {
   final Function()? onPressed;
   final String? text;
   final String? pathIcon;
-  final bool? isDense;
+  final bool? isExpand;
 
   const PrimaryButton({
     Key? key,
     required this.onPressed,
     this.text,
     this.pathIcon,
-    this.isDense,
+    this.isExpand,
   }) : super(key: key);
 
   @override
@@ -24,12 +24,13 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   @override
   Widget build(BuildContext context) {
     Color textColor = widget.onPressed != null ? neutralBlack : neutralWhite;
-    return Container(
-      constraints: const BoxConstraints(
-        maxHeight: 40,
-        minHeight: 40,
-      ),
-      width: widget.isDense ?? false ? null : MediaQuery.of(context).size.width,
+    return SizedBox(
+      // constraints: const BoxConstraints(
+      //   maxHeight: 40,
+      //   minHeight: 40,
+      // ),
+      width:
+          widget.isExpand ?? false ? MediaQuery.of(context).size.width : null,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: widget.onPressed != null
@@ -51,10 +52,21 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                trimString(widget.pathIcon).isNotEmpty
+                    ? const SizedBox(
+                        width: 8.0,
+                      )
+                    : Container(),
+                trimString(widget.pathIcon).isNotEmpty
+                    ? SvgPicture.asset(
+                        trimString(widget.pathIcon),
+                        color: textColor,
+                      )
+                    : Container(),
                 trimString(widget.text).isNotEmpty
                     ? Text(
                         trimString(widget.text),
-                        style: myTextTheme.titleMedium?.copyWith(
+                        style: myTextTheme.labelLarge?.copyWith(
                           color: textColor,
                         ),
                       )

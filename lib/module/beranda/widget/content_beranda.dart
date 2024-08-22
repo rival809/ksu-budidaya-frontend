@@ -64,6 +64,32 @@ class _ContentBerandaState extends State<ContentBeranda> {
                     },
                   ),
                 ),
+                PrimaryButton(
+                  onPressed: () {},
+                  text: "Button",
+                  pathIcon: ,
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                SecondaryButton(
+                  onPressed: () {},
+                  text: "Button",
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                TertiaryButton(
+                  onPressed: () {},
+                  text: "Button",
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                DangerButton(
+                  onPressed: () {},
+                  text: "Button",
+                ),
                 // trimString(dataPermission?.stsKirimU lgSkkp) == "1"
                 //     ? Padding(
                 //         padding: const EdgeInsets.only(bottom: 8.0),

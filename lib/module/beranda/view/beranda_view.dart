@@ -30,7 +30,6 @@ class BerandaView extends StatefulWidget {
         child: PrimaryButton(
           pathIcon: "assets/icons/misc/open_in_new.svg",
           text: "SIPANDU JAWARA",
-          isDense: true,
           onPressed: () {
             controller.launchInBrowser();
           },
