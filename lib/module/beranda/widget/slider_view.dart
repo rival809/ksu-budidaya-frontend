@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class SliderView extends StatelessWidget {
@@ -9,19 +8,27 @@ class SliderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GoRouter router = GoRouter.of(context);
+    final String currentRoute =
+        router.routerDelegate.currentConfiguration.uri.toString();
+
+    bool isParentSelected(String parentRoute, List<String> childRoutes) {
+      return currentRoute == parentRoute ||
+          childRoutes.any((route) => currentRoute.startsWith(route));
+    }
+
     return Container(
       color: Colors.white,
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 21,
+            padding: const EdgeInsets.only(
+              top: 16,
+              left: 16,
+              right: 16,
             ),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 32.0,
-                ),
                 Row(
                   children: [
                     Image.asset(
@@ -46,52 +53,66 @@ class SliderView extends StatelessWidget {
             child: SingleChildScrollView(
               controller: ScrollController(),
               physics: const ScrollPhysics(),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 21,
-                ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
-                    // DrawerMenu(
-                    //   title: "Pengaturan Pencetakan",
-                    //   pathIcon:
-                    //       "assets/icons/layanan/print_setting.svg",
-                    //   onTap: () {
-                    //     router.go("/pengaturan-pencetakan");
-                    //   },
-                    //   isChildren: false,
-                    // ),
-                    // dataPermission?.stsUserMngmt == "1" ||
-                    //         dataPermission?.stsInfoUser == "1"
-                    //     ? DrawerMenu(
-                    //         title: "User Management",
-                    //         pathIcon:
-                    //             "assets/icons/layanan/edit_data_wp.svg",
-                    //         onTap: () {
-                    //           router.go("/user-management");
-                    //         },
-                    //         isChildren: false,
-                    //       )
-                    //     : const SizedBox(),
-
-                    // DrawerMenu(
-                    //   title: "Tabel Operasional",
-                    //   pathIcon:
-                    //       "assets/icons/layanan/manajemen_njab.svg",
-                    //   onTap: () {
-                    //     router.go("/tabel-operasional");
-                    //   },
-                    //   isChildren: false,
-                    // ),
+                    DrawerMenu(
+                      title: "Dashboard",
+                      isSelected: currentRoute == "/",
+                      onTap: () {
+                        router.go("/");
+                      },
+                    ),
+                    DrawerMenu(
+                      title: "Stock Opname",
+                      isSelected: isParentSelected(
+                        "/user-management",
+                        [
+                          "/user-management/list",
+                          "/user-management/roles",
+                          "/user-management/Stocktake",
+                        ],
+                      ),
+                      onTap: () {
+                        // Route navigation logic here
+                      },
+                      children: [
+                        DrawerMenu(
+                          title: "Cetak Harian",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/user-management/list",
+                          onTap: () {
+                            router.go("/user-management/list");
+                          },
+                        ),
+                        DrawerMenu(
+                          title: "Cetak Bulanan",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/user-management/roles",
+                          onTap: () {
+                            router.go("/user-management/roles");
+                          },
+                        ),
+                        DrawerMenu(
+                          title: "Stocktake",
+                          isSubMenu: true,
+                          isSelected:
+                              currentRoute == "/user-management/Stocktake",
+                          onTap: () {
+                            router.go("/user-management/Stocktake");
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 21,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 21),
             child: Column(
               children: [
                 Padding(
@@ -100,7 +121,7 @@ class SliderView extends StatelessWidget {
                     contentPadding: const EdgeInsets.all(0),
                     minLeadingWidth: 0,
                     title: Text(
-                      "Keluar",
+                      "Keluar Akun",
                       style: myTextTheme.bodyMedium?.copyWith(
                         color: red500,
                       ),
@@ -120,18 +141,14 @@ class SliderView extends StatelessWidget {
                                   "Keluar dari akun",
                                   style: myTextTheme.headlineLarge,
                                 ),
-                                const SizedBox(
-                                  height: 32,
-                                ),
+                                const SizedBox(height: 32),
                                 Text(
                                   "Apakah Anda yakin untuk keluar dari akun ini?",
                                   style: myTextTheme.bodyLarge?.copyWith(
                                     color: gray900,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 32,
-                                ),
+                                const SizedBox(height: 32),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -143,9 +160,7 @@ class SliderView extends StatelessWidget {
                                         text: "Kembali",
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 16,
-                                    ),
+                                    const SizedBox(width: 16),
                                     Expanded(
                                       child: BaseDangerButton(
                                         onPressed: () {

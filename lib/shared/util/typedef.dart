@@ -35,6 +35,8 @@ const iconUniversalCurrencyAlt =
 const iconStatusCheck = "assets/icons/status/check.svg";
 const iconStatusFail = "assets/icons/status/fail.svg";
 
+const iconDot = "assets/icons/sub_menu/dot.svg";
+
 const iconAccountBalanceWallet = "assets/icons/misc/account_balance_wallet.svg";
 const iconAddShoppingCart = "assets/icons/misc/add_shopping_cart.svg";
 const iconAdd = "assets/icons/misc/add.svg";

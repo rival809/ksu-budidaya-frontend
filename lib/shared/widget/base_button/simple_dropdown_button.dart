@@ -273,7 +273,7 @@ class _SimpleDropdownButtonState extends State<SimpleDropdownButton> {
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: yellow600, width: 1),
+                  borderSide: BorderSide(color: primaryGreen, width: 1),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 enabledBorder: const OutlineInputBorder(

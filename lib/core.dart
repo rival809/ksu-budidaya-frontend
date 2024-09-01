@@ -65,6 +65,7 @@ export 'package:ksu_budidaya/shared/widget/base_dialog/show_info_dialog.dart';
 export 'package:ksu_budidaya/shared/widget/base_form/base_form.dart';
 export 'package:ksu_budidaya/shared/widget/base_form/base_form_util.dart';
 export 'package:ksu_budidaya/shared/widget/drawer/custom_drawer.dart';
+export 'package:ksu_budidaya/shared/widget/drawer/drawer_menu.dart';
 export 'package:ksu_budidaya/shared/widget/loading/circle_dialog_loading.dart';
 export 'package:ksu_budidaya/state_util.dart';
 export 'package:ksu_budidaya/utils_intl.dart';

@@ -82,37 +82,43 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             const SizedBox(
                               height: 8.0,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                            SingleChildScrollView(
+                              controller: ScrollController(),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      iconArrowDropUp,
-                                      colorFilter: colorFilterPrimary,
-                                      width: 24,
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    Text(
-                                      "12%",
-                                      style: myTextTheme.titleMedium?.copyWith(
-                                        color: primaryColor,
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -168,16 +174,21 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             const SizedBox(
                               height: 8.0,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                            SingleChildScrollView(
+                              controller: ScrollController(),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -272,37 +283,43 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             const SizedBox(
                               height: 8.0,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                            SingleChildScrollView(
+                              controller: ScrollController(),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      iconArrowDropUp,
-                                      colorFilter: colorFilterPrimary,
-                                      width: 24,
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    Text(
-                                      "12%",
-                                      style: myTextTheme.titleMedium?.copyWith(
-                                        color: primaryColor,
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -335,37 +352,43 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             const SizedBox(
                               height: 8.0,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                            SingleChildScrollView(
+                              controller: ScrollController(),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      iconArrowDropUp,
-                                      colorFilter: colorFilterPrimary,
-                                      width: 24,
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    Text(
-                                      "12%",
-                                      style: myTextTheme.titleMedium?.copyWith(
-                                        color: primaryColor,
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -398,37 +421,43 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             const SizedBox(
                               height: 8.0,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                            SingleChildScrollView(
+                              controller: ScrollController(),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      iconArrowDropUp,
-                                      colorFilter: colorFilterPrimary,
-                                      width: 24,
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    Text(
-                                      "12%",
-                                      style: myTextTheme.titleMedium?.copyWith(
-                                        color: primaryColor,
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
