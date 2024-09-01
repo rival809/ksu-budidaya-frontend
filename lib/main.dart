@@ -7,6 +7,7 @@ void main() async {
   usePathUrlStrategy();
 
   Get.mainTheme.value = getDefaultTheme();
+
   runMainApp();
 }
 

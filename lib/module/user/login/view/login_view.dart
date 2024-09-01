@@ -15,7 +15,7 @@ class LoginView extends StatefulWidget {
               constraints: const BoxConstraints(maxWidth: 420),
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: neutralWhite,
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: const ContentLogin(),

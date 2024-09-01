@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ContentBeranda extends StatefulWidget {
   final BerandaController controller;
@@ -17,99 +18,660 @@ class _ContentBerandaState extends State<ContentBeranda> {
   @override
   Widget build(BuildContext context) {
     BerandaController controller = widget.controller;
-    return Column(
-      children: [
-        const SizedBox(
-          height: 16.0,
-        ),
-        Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: const BorderSide(
-              color: gray300,
-              width: 1,
-            ),
-          ),
-          child: Padding(
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: neutralWhite,
+              border: Border.all(
+                width: 1.0,
+                color: blueGray50,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const HeaderCard(
-                //   pathIcon: "assets/icons/layanan/digger.svg",
-                //   title: "Layanan KSU BUDIDAYA",
-                // ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: MenuCard(
-                    title: "Daftar Ulang Potensi Baru",
-                    onTap: () {
-                      doLogout();
-                    },
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: MenuCard(
-                    title: "Kirim Ulang E-SKPD",
-                    onTap: () {
-                      router.go("/kirim-ulang-eskpd");
-                    },
-                  ),
-                ),
-                BasePrimaryButton(
-                  onPressed: () {},
-                  text: "Button",
-                  suffixIcon: iconChevronKanan,
+                Text(
+                  "Dashboard",
+                  style: myTextTheme.headlineLarge,
                 ),
                 const SizedBox(
-                  height: 16.0,
+                  height: 8.0,
                 ),
-                BaseSecondaryButton(
-                  onPressed: () {},
-                  text: "Button",
-                  suffixIcon: iconChevronKanan,
+                Text(
+                  "Selamat Datang, ADMIN",
+                  style: myTextTheme.bodyLarge,
                 ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                BaseTertiaryButton(
-                  onPressed: () {},
-                  text: "Button",
-                  suffixIcon: iconChevronKanan,
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                BaseDangerButton(
-                  onPressed: () {},
-                  text: "Button",
-                  suffixIcon: iconChevronKanan,
-                ),
-                // trimString(dataPermission?.stsKirimU lgSkkp) == "1"
-                //     ? Padding(
-                //         padding: const EdgeInsets.only(bottom: 8.0),
-                //         child: MenuCard(
-                //           title: "Cek Status Bayar",
-                //           onTap: () {
-                //             router.go("/cek-status-bayar");
-                //           },
-                //         ),
-                //       )
-                //     : const SizedBox(),
               ],
             ),
           ),
-        ),
-        const SizedBox(
-          height: 16.0,
-        ),
-      ],
+          const SizedBox(
+            height: 24.0,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: neutralWhite,
+                    border: Border.all(
+                      width: 1.0,
+                      color: blueGray50,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Pendapatan Hari Ini",
+                              style: myTextTheme.bodyLarge?.copyWith(
+                                color: gray700,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Rp.100.000.000",
+                                  style: myTextTheme.displayLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      iconArrowDropUp,
+                                      colorFilter: colorFilterPrimary,
+                                      width: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      "12%",
+                                      style: myTextTheme.titleMedium?.copyWith(
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          color: green50,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
+                        child: SvgPicture.asset(
+                          iconAccountBalanceWallet,
+                          colorFilter: colorFilterPrimary,
+                          width: 40,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 16.0,
+              ),
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: neutralWhite,
+                    border: Border.all(
+                      width: 1.0,
+                      color: blueGray50,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Pendapatan Kemarin",
+                              style: myTextTheme.bodyLarge?.copyWith(
+                                color: gray700,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Rp.100.000.000",
+                                  style: myTextTheme.displayLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          color: green50,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
+                        child: SvgPicture.asset(
+                          iconAccountBalanceWallet,
+                          colorFilter: colorFilterPrimary,
+                          width: 40,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 24.0,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: neutralWhite,
+              border: Border.all(
+                width: 1.0,
+                color: blueGray50,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Statistik Bulanan",
+                        style: myTextTheme.headlineLarge,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: SimpleDropdownButton(
+                        items: const ["Januari"],
+                        value: "Januari",
+                        isExpand: false,
+                        onChanged: (value) {},
+                        hint: '',
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: neutralWhite,
+                          border: Border.all(
+                            width: 1.0,
+                            color: blueGray50,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Total Pendapatan",
+                              style: myTextTheme.bodyLarge?.copyWith(
+                                color: gray700,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Rp.100.000.000",
+                                  style: myTextTheme.displayLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      iconArrowDropUp,
+                                      colorFilter: colorFilterPrimary,
+                                      width: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      "12%",
+                                      style: myTextTheme.titleMedium?.copyWith(
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16.0,
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: neutralWhite,
+                          border: Border.all(
+                            width: 1.0,
+                            color: blueGray50,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Total Pengeluaran",
+                              style: myTextTheme.bodyLarge?.copyWith(
+                                color: gray700,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Rp.100.000.000",
+                                  style: myTextTheme.displayLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      iconArrowDropUp,
+                                      colorFilter: colorFilterPrimary,
+                                      width: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      "12%",
+                                      style: myTextTheme.titleMedium?.copyWith(
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16.0,
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: neutralWhite,
+                          border: Border.all(
+                            width: 1.0,
+                            color: blueGray50,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Total Keuntungan",
+                              style: myTextTheme.bodyLarge?.copyWith(
+                                color: gray700,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Rp.100.000.000",
+                                  style: myTextTheme.displayLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      iconArrowDropUp,
+                                      colorFilter: colorFilterPrimary,
+                                      width: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      "12%",
+                                      style: myTextTheme.titleMedium?.copyWith(
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 24.0,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: neutralWhite,
+              border: Border.all(
+                width: 1.0,
+                color: blueGray50,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Riwayat Penjualan",
+                        style: myTextTheme.headlineLarge,
+                      ),
+                    ),
+                    BaseTertiaryButton(
+                      isDense: true,
+                      text: "Lihat Lainnya",
+                      suffixIcon: iconChevronKanan,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                FutureBuilder(
+                  future: controller.dataFuture,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: Text("Loading"),
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.done) {
+                      if (snapshot.hasError) {
+                        return const Center(
+                          child: Text("Error"),
+                        );
+                      } else if (snapshot.hasData) {
+                        // EditVerifResult result = snapshot.data;
+                        // controller.dataEdit = result.data ?? DataEditVerif();
+                        // List<dynamic> listData =
+                        //     controller.dataEdit.items ?? [];
+
+                        List<PlutoRow> rows = [];
+                        List<PlutoColumn> columns = [];
+
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height -
+                              AppBar().preferredSize.height -
+                              144,
+                          child: PlutoGrid(
+                            noRowsWidget: const Center(
+                              child: Text("Tidak Ada Data"),
+                            ),
+                            mode: PlutoGridMode.select,
+                            onLoaded: (event) {
+                              event.stateManager.setShowColumnFilter(true);
+                            },
+                            onSorted: (event) {
+                              if (event.column.field != "Aksi") {
+                                // controller.isAsc = !controller.isAsc;
+                                // controller.update();
+                                // controller.dataFuture =
+                                //     controller.cariEditTable(
+                                //         event.column.field, controller.isAsc);
+                                // controller.update();
+                              }
+                            },
+                            configuration: PlutoGridConfiguration(
+                              columnSize: const PlutoGridColumnSizeConfig(
+                                autoSizeMode: PlutoAutoSizeMode.none,
+                              ),
+                              style: PlutoGridStyleConfig(
+                                gridBorderColor: blueGray50,
+                                gridBorderRadius: BorderRadius.circular(8),
+                              ),
+                              localeText: configLocale,
+                            ),
+                            columns: columns,
+                            rows: rows,
+                            // createFooter: (stateManager) {
+                            //   return FooterCariVerif(
+                            //     controller: controller,
+                            //     isMobile: true,
+                            //   );
+                            // },
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text("Error"),
+                        );
+                      }
+                    } else {
+                      List<PlutoColumn> columns = [
+                        /// Text Column definition
+                        PlutoColumn(
+                          backgroundColor: primaryColor,
+                          title: 'ID Transaksi',
+                          field: 'id_transaksi',
+                          type: PlutoColumnType.text(),
+                        ),
+
+                        /// Number Column definition
+                        PlutoColumn(
+                          backgroundColor: primaryColor,
+                          title: 'Jumlah Barang',
+                          field: 'jumlah_barang',
+                          textAlign: PlutoColumnTextAlign.center,
+                          type: PlutoColumnType.number(),
+                        ),
+
+                        /// Select Column definition
+                        PlutoColumn(
+                          backgroundColor: primaryColor,
+                          title: 'Total Pembayaran',
+                          field: 'total_pembayaran',
+                          textAlign: PlutoColumnTextAlign.end,
+                          type: PlutoColumnType.number(format: "#,###"),
+                        ),
+                        // Datetime Column definition
+                        PlutoColumn(
+                          backgroundColor: primaryColor,
+                          title: 'Keuntungan',
+                          field: 'keuntungan',
+                          textAlign: PlutoColumnTextAlign.end,
+                          type: PlutoColumnType.number(format: "#,###"),
+                        ),
+
+                        /// Time Column definition
+                        PlutoColumn(
+                          backgroundColor: primaryColor,
+                          title: 'Pembeli',
+                          field: 'pembeli',
+                          type: PlutoColumnType.text(),
+                        ),
+                        PlutoColumn(
+                          backgroundColor: primaryColor,
+                          title: 'Kasir',
+                          field: 'kasir',
+                          type: PlutoColumnType.text(),
+                        ),
+                      ];
+
+                      List<PlutoRow> rows = [
+                        PlutoRow(
+                          cells: {
+                            'id_transaksi': PlutoCell(value: 'J-000001740'),
+                            'jumlah_barang': PlutoCell(value: 10),
+                            'total_pembayaran': PlutoCell(value: 100000),
+                            'keuntungan': PlutoCell(value: 25000),
+                            'pembeli': PlutoCell(value: 'IRWAN'),
+                            'kasir': PlutoCell(value: 'IRWAN'),
+                          },
+                        ),
+                        PlutoRow(
+                          cells: {
+                            'id_transaksi': PlutoCell(value: 'J-000001740'),
+                            'jumlah_barang': PlutoCell(value: 10),
+                            'total_pembayaran': PlutoCell(value: 100000),
+                            'keuntungan': PlutoCell(value: 25000),
+                            'pembeli': PlutoCell(value: 'IRWAN'),
+                            'kasir': PlutoCell(value: 'IRWAN'),
+                          },
+                        ),
+                      ];
+                      double rowHeight = 45.0;
+                      return SizedBox(
+                        height: (rows.length * rowHeight) + rowHeight * 2,
+                        child: PlutoGrid(
+                          noRowsWidget: const Center(
+                            child: Text("Tidak Ada Data"),
+                          ),
+                          mode: PlutoGridMode.select,
+                          onLoaded: (event) {
+                            event.stateManager.setShowColumnFilter(true);
+                          },
+                          onSorted: (event) {
+                            if (event.column.field != "Aksi") {
+                              // controller.isAsc = !controller.isAsc;
+                              // controller.update();
+                              // controller.dataFuture =
+                              //     controller.cariEditTable(
+                              //         event.column.field, controller.isAsc);
+                              // controller.update();
+                            }
+                          },
+                          configuration: PlutoGridConfiguration(
+                            columnSize: const PlutoGridColumnSizeConfig(
+                              autoSizeMode: PlutoAutoSizeMode.scale,
+                            ),
+                            style: PlutoGridStyleConfig(
+                              columnTextStyle: myTextTheme.titleSmall
+                                      ?.copyWith(color: neutralWhite) ??
+                                  const TextStyle(),
+                              gridBorderColor: blueGray50,
+                              gridBorderRadius: BorderRadius.circular(8),
+                              evenRowColor: gray50,
+                            ),
+                            localeText: configLocale,
+                          ),
+
+                          columns: columns,
+                          rows: rows,
+                          // createFooter: (stateManager) {
+                          //   return FooterCariVerif(
+                          //     controller: controller,
+                          //     isMobile: true,
+                          //   );
+                          // },
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

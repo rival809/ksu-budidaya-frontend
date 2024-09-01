@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 class BerandaController extends State<BerandaView> {
   static late BerandaController instance;
   late BerandaView view;
+
+  int activeTab = 0;
+  bool isExpand = true;
+  final GlobalKey<SliderDrawerState> sliderDrawerKey =
+      GlobalKey<SliderDrawerState>();
+
+  Future<dynamic>? dataFuture;
 
   Widget contentMenuDrawer = const SizedBox();
 
