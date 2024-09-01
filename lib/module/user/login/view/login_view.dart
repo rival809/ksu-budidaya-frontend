@@ -7,28 +7,18 @@ class LoginView extends StatefulWidget {
   Widget build(context, LoginController controller) {
     controller.view = this;
     return Scaffold(
-      body: ScreenTypeLayout.builder(
-        mobile: (BuildContext context) => Container(
-          color: neutralWhite,
-          child: SingleChildScrollView(
-            controller: ScrollController(),
-            child: const IntrinsicHeight(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: ContentLogin(),
-              ),
-            ),
-          ),
-        ),
-        desktop: (BuildContext context) => SingleChildScrollView(
+      body: Center(
+        child: SingleChildScrollView(
           controller: ScrollController(),
           child: Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
-              child: const ContainerBody(
-                isAppbar: false,
-                child: ContentLogin(),
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 420),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
               ),
+              child: const ContentLogin(),
             ),
           ),
         ),

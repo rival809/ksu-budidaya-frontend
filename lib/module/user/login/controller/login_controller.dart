@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:universal_html/html.dart' as html;
 
 class LoginController extends State<LoginView> {
   static late LoginController instance;
@@ -7,6 +9,7 @@ class LoginController extends State<LoginView> {
 
   String username = "";
   String password = "";
+  bool obsecure = true;
   final formKey = GlobalKey<FormState>();
 
   doLogin() async {
@@ -21,7 +24,6 @@ class LoginController extends State<LoginView> {
 
         // router.pop();
 
-        // AppSession.save(result.data?.token ?? "");
         // UserDatabase.save(result);
 
         // GetPermissionResult getPermissionResult =
@@ -29,8 +31,13 @@ class LoginController extends State<LoginView> {
         //         .timeout(const Duration(seconds: 30));
 
         // GetPermissionDatabase.save(getPermissionResult);
-
-        router.go("/beranda");
+        AppSession.save("token");
+        if (kIsWeb) {
+          html.window.location.reload();
+        } else {
+          router.go("/");
+          update();
+        }
       } catch (e) {
         router.pop();
 

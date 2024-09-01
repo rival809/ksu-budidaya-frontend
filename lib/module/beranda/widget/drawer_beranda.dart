@@ -101,21 +101,21 @@ class _DrawerBerandaState extends State<DrawerBeranda> {
                     child: SingleChildScrollView(
                       controller: ScrollController(),
                       physics: const ScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 21,
                         ),
                         child: Column(
                           children: [
-                            DrawerMenu(
-                              title: "Pengaturan Pencetakan",
-                              pathIcon:
-                                  "assets/icons/layanan/print_setting.svg",
-                              onTap: () {
-                                router.go("/pengaturan-pencetakan");
-                              },
-                              isChildren: false,
-                            ),
+                            // DrawerMenu(
+                            //   title: "Pengaturan Pencetakan",
+                            //   pathIcon:
+                            //       "assets/icons/layanan/print_setting.svg",
+                            //   onTap: () {
+                            //     router.go("/pengaturan-pencetakan");
+                            //   },
+                            //   isChildren: false,
+                            // ),
                             // dataPermission?.stsUserMngmt == "1" ||
                             //         dataPermission?.stsInfoUser == "1"
                             //     ? DrawerMenu(
@@ -181,20 +181,20 @@ class _DrawerBerandaState extends State<DrawerBeranda> {
                           ),
                         ),
                         onTap: () {
-                          showConfirmationDialogNegative(
-                            title: "Keluar dari akun",
-                            subtitle:
-                                "Apakah Anda yakin untuk keluar dari akun ini?",
-                            onPressedSecondaryButton: () {
-                              router.pop();
-                            },
-                            secondaryButtonText: "Kembali",
-                            onPressedPrimaryButton: () {
-                              doLogout();
-                            },
-                            primaryButtonText: "Ya, Saya yakin",
-                            context: context,
-                          );
+                          // showConfirmationDialogNegative(
+                          //   title: "Keluar dari akun",
+                          //   subtitle:
+                          //       "Apakah Anda yakin untuk keluar dari akun ini?",
+                          //   onPressedSecondaryButton: () {
+                          //     router.pop();
+                          //   },
+                          //   secondaryButtonText: "Kembali",
+                          //   onPressedPrimaryButton: () {
+                          //     doLogout();
+                          //   },
+                          //   primaryButtonText: "Ya, Saya yakin",
+                          //   context: context,
+                          // );
                         },
                       ),
                       const SizedBox(

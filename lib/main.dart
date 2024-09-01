@@ -1,14 +1,10 @@
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
   await initialize();
-  await loadSVG();
   usePathUrlStrategy();
-
-  DefaultCacheManager().emptyCache();
 
   Get.mainTheme.value = getDefaultTheme();
   runMainApp();
@@ -30,7 +26,7 @@ class MainApp extends StatelessWidget {
       builder: (context, value, child) {
         return MaterialApp.router(
           routerConfig: router,
-          title: 'KSU BUDIDAYA',
+          title: 'KSU Budidaya',
           debugShowCheckedModeBanner: false,
           theme: value,
           localizationsDelegates: GlobalMaterialLocalizations.delegates,

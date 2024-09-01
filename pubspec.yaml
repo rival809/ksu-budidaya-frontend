@@ -1,5 +1,5 @@
 name: ksu_budidaya
-description: Aplikasi KSU BUDIDAYA.
+description: Aplikasi KSU Budidaya.
 publish_to: "none"
 version: 1.0.0
 environment:
@@ -8,7 +8,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.1
-  flutter_svg: ^1.1.5
+  flutter_svg: ^2.0.10+1
   hive: ^2.2.3
   path_provider: ^2.1.3
   change_app_package_name: ^1.1.0
@@ -29,11 +29,9 @@ dependencies:
   flutter_switch: ^0.3.2
   camera: ^0.11.0+1
   image: ^4.1.3
-  flutter_improved_scrolling: ^0.0.3
   dolumns: ^2.0.1
   flutter_usb_printer: ^0.1.0+1
   flutter_image_preview: ^0.1.1
-  terbilang_id: ^0.1.0
   pdf: ^3.10.8
   printing: ^5.11.1
   geolocator: ^10.1.0
@@ -48,17 +46,13 @@ dependencies:
   htmltopdfwidgets: ^1.0.3
   image_picker: ^1.1.2
   flutter_staggered_grid_view: ^0.7.0
-  flutter_cache_manager: ^3.3.2
-  firebase_core: ^2.31.0
-  firebase_crashlytics: ^3.5.5
-  firebase_analytics: ^10.10.5
-  open_file: ^3.3.2
   universal_html: ^2.2.4
   searchfield: ^1.0.5
   permission_handler: ^11.3.1
   mime: ^1.0.5
   pluto_grid_plus: ^8.4.0
   sidebarx: ^0.17.1
+  dartz: ^0.10.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -76,12 +70,12 @@ flutter:
         - asset: assets/fonts/BebasNeue-Regular.ttf
   assets:
     - assets/files/json/
-    - assets/icons/detail_kendaraan/
+    - assets/icons/chevron/
     - assets/icons/info/
-    - assets/icons/info_card/
-    - assets/icons/info_progresif/
     - assets/icons/input/
     - assets/icons/layanan/
+    - assets/icons/metode_pembayaran/
     - assets/icons/misc/
+    - assets/icons/status/
     - assets/images/illustration/
     - assets/images/logo/

@@ -123,7 +123,7 @@ class _ContentUbahKataSandiState extends State<ContentUbahKataSandi> {
                     const SizedBox(
                       height: 24.0,
                     ),
-                    PrimaryButton(
+                    BasePrimaryButton(
                       onPressed: () {
                         if (controller.keyInputPassword.currentState!
                             .validate()) {

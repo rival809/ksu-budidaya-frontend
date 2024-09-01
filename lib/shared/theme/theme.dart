@@ -9,11 +9,11 @@ ThemeData getDefaultTheme() {
     primaryColor: primaryColor,
     scaffoldBackgroundColor: const Color(0xffEFF2F3),
     colorScheme: const ColorScheme.light(
-      primary: yellow500,
+      primary: primaryColor,
       onPrimary: gray900,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: appbarBackgroundColor,
+      backgroundColor: primaryColor,
       elevation: 0,
       titleTextStyle: myTextTheme.titleMedium?.copyWith(color: gray900),
       iconTheme: const IconThemeData(

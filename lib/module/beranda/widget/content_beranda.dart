@@ -35,10 +35,10 @@ class _ContentBerandaState extends State<ContentBeranda> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                const HeaderCard(
-                  pathIcon: "assets/icons/layanan/digger.svg",
-                  title: "Layanan KSU BUDIDAYA",
-                ),
+                // const HeaderCard(
+                //   pathIcon: "assets/icons/layanan/digger.svg",
+                //   title: "Layanan KSU BUDIDAYA",
+                // ),
                 const SizedBox(
                   height: 12.0,
                 ),
@@ -48,9 +48,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                   child: MenuCard(
                     title: "Daftar Ulang Potensi Baru",
                     onTap: () {
-                      router.go(
-                        "/pendaftaran",
-                      );
+                      doLogout();
                     },
                   ),
                 ),
@@ -64,31 +62,34 @@ class _ContentBerandaState extends State<ContentBeranda> {
                     },
                   ),
                 ),
-                PrimaryButton(
+                BasePrimaryButton(
                   onPressed: () {},
                   text: "Button",
-                  pathIcon: ,
+                  suffixIcon: iconChevronKanan,
                 ),
                 const SizedBox(
                   height: 16.0,
                 ),
-                SecondaryButton(
+                BaseSecondaryButton(
                   onPressed: () {},
                   text: "Button",
+                  suffixIcon: iconChevronKanan,
                 ),
                 const SizedBox(
                   height: 16.0,
                 ),
-                TertiaryButton(
+                BaseTertiaryButton(
                   onPressed: () {},
                   text: "Button",
+                  suffixIcon: iconChevronKanan,
                 ),
                 const SizedBox(
                   height: 16.0,
                 ),
-                DangerButton(
+                BaseDangerButton(
                   onPressed: () {},
                   text: "Button",
+                  suffixIcon: iconChevronKanan,
                 ),
                 // trimString(dataPermission?.stsKirimU lgSkkp) == "1"
                 //     ? Padding(

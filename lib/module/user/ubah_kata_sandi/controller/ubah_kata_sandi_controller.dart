@@ -43,12 +43,12 @@ class UbahKataSandiController extends State<UbahKataSandiView> {
         //   data: payload,
         // ).timeout(const Duration(seconds: 30));
 
-        showBaseDialog(
-          title: "Perubahan Kata Sandi Berhasil",
-          message:
-              "Perubahan kata sandi berhasil, silahkan masuk kembali menggunakan kata sandi baru Anda.",
-          context: context,
-        );
+        // showBaseDialog(
+        //   title: "Perubahan Kata Sandi Berhasil",
+        //   message:
+        //       "Perubahan kata sandi berhasil, silahkan masuk kembali menggunakan kata sandi baru Anda.",
+        //   context: context,
+        // );
 
         await Future.delayed(const Duration(seconds: 2));
         Navigator.pop(context);

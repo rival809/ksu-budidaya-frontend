@@ -21,9 +21,15 @@ final GoRouter router = GoRouter(
         return state.uri.toString();
       },
       builder: (BuildContext context, GoRouterState state) {
-        return const SelectionArea(
-          child: BerandaView(),
-        );
+        if (AppSession.token.isEmpty) {
+          return const SelectionArea(
+            child: LoginView(),
+          );
+        } else {
+          return const SelectionArea(
+            child: BerandaView(),
+          );
+        }
       },
       routes: <RouteBase>[
         GoRoute(
@@ -49,14 +55,6 @@ final GoRouter router = GoRouter(
           },
         ),
 
-        GoRoute(
-          path: 'beranda',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SelectionArea(
-              child: BerandaView(),
-            );
-          },
-        ),
         // GoRoute(
         //   path: 'pdf-viewer',
         //   builder: (BuildContext context, GoRouterState state) {

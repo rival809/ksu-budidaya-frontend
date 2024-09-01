@@ -15,29 +15,13 @@ class BerandaView extends StatefulWidget {
               backgroundColor: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(9),
-                child: SvgPicture.asset(
-                  "assets/images/logo/logo_siberat.svg",
+                child: Image.asset(
+                  "assets/images/logo/logo.png",
                 ),
               ),
             ),
           ),
         ],
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 16,
-        ),
-        child: PrimaryButton(
-          pathIcon: "assets/icons/misc/open_in_new.svg",
-          text: "SIPANDU JAWARA",
-          onPressed: () {
-            controller.launchInBrowser();
-          },
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      drawer: const DrawerBeranda(
-        isBeranda: true,
       ),
       body: SingleChildScrollView(
         controller: ScrollController(),

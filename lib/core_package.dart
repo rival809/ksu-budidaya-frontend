@@ -15,7 +15,6 @@ export 'package:flutter_countdown_timer/index.dart';
 export 'package:package_info_plus/package_info_plus.dart';
 export 'package:dolumns/dolumns.dart';
 export 'package:flutter_usb_printer/flutter_usb_printer.dart';
-export 'package:terbilang_id/terbilang_id.dart';
 export 'package:pdf/pdf.dart';
 export 'package:printing/printing.dart';
 export 'package:go_router/go_router.dart';

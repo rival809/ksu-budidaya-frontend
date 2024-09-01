@@ -222,7 +222,7 @@ bool isDarkMode = false;
 get mq => MediaQuery.of(globalContext);
 get mqs => MediaQuery.of(globalContext).size;
 
-var primaryColor = Colors.blueGrey[800]!;
+const Color primaryColor = Color(0xFF017260);
 var secondaryColor = const Color(0xFF2A2D3E);
 var bgColor = const Color(0xFF212332);
 var defaultPadding = 16.0;
@@ -332,3 +332,68 @@ const double rsm = 12;
 const double rmd = 20;
 const double rlg = 30;
 const double rxl = 40;
+
+//Neutral
+const colorFilterWhite = ColorFilter.mode(
+  neutralWhite,
+  BlendMode.srcIn,
+);
+
+const colorFilterPrimary = ColorFilter.mode(
+  primaryColor,
+  BlendMode.srcIn,
+);
+
+//Green
+const colorFilterGreen900 = ColorFilter.mode(
+  green900,
+  BlendMode.srcIn,
+);
+const colorFilterGreen800 = ColorFilter.mode(
+  green800,
+  BlendMode.srcIn,
+);
+const colorFilterGreen700 = ColorFilter.mode(
+  green700,
+  BlendMode.srcIn,
+);
+const colorFilterGreen600 = ColorFilter.mode(
+  green600,
+  BlendMode.srcIn,
+);
+
+//Gray
+const colorFilterGray900 = ColorFilter.mode(
+  gray900,
+  BlendMode.srcIn,
+);
+const colorFilterGray600 = ColorFilter.mode(
+  gray600,
+  BlendMode.srcIn,
+);
+const colorFilterGray500 = ColorFilter.mode(
+  gray500,
+  BlendMode.srcIn,
+);
+const colorFilterGray400 = ColorFilter.mode(
+  gray400,
+  BlendMode.srcIn,
+);
+
+//Blue
+const colorFilterBlue800 = ColorFilter.mode(
+  blue800,
+  BlendMode.srcIn,
+);
+
+//Yellow
+const colorFilterYellow800 = ColorFilter.mode(
+  yellow800,
+  BlendMode.srcIn,
+);
+
+//Red
+const colorFilterRed800 = ColorFilter.mode(
+  red800,
+  BlendMode.srcIn,
+);

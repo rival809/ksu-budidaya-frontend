@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
-        android:label="KSU BUDIDAYA"
+        android:label="KSU Budidaya"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:name">

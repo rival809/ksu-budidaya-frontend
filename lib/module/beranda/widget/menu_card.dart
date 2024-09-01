@@ -34,8 +34,8 @@ class MenuCard extends StatelessWidget {
                 style: myTextTheme.titleMedium,
               ),
               SvgPicture.asset(
-                "assets/icons/misc/chevron_kanan.svg",
-                color: gray900,
+                iconChevronKanan,
+                colorFilter: colorFilterGray900,
               ),
             ],
           ),
