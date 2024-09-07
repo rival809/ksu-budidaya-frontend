@@ -51,6 +51,7 @@ dependencies:
   permission_handler: ^11.3.1
   mime: ^1.0.5
   pluto_grid_plus: ^8.4.0
+  logger: ^2.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

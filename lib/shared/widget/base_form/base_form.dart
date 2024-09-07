@@ -163,6 +163,7 @@ class _BaseFormState extends State<BaseForm> {
               ? widget.textEditingController
               : null,
           maxLength: widget.maxLenght,
+          onChanged: widget.onChanged,
           cursorColor: green700,
           textAlignVertical: TextAlignVertical.center,
           obscureText: widget.obsecure ?? false,

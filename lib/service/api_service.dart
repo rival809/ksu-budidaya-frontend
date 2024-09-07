@@ -3,11 +3,7 @@ import 'package:ksu_budidaya/core.dart';
 
 class ApiService {
   //CONFIG API
-  //  static const String _baseUrl = AppConfig.baseUrl; // PROD
-  // static const String _baseUrl = AppConfig.baseUrl; // DEV
   static const String _baseUrl = AppConfig.domain; // DOMAIN DEV
-  // static final String idUser =
-  //     UserDatabase.loginResult?.data?.dataUser?.id ?? "";
 
   static final CancelToken cancelToken = CancelToken();
   static final Options options = Options(
@@ -22,6 +18,19 @@ class ApiService {
       throw Exception(error.response?.statusMessage);
     },
   );
+
+  static Dio dio = Dio(
+    BaseOptions(
+      // baseUrl: Endpoints.baseURL,
+      baseUrl: _baseUrl,
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 5),
+      responseType: ResponseType.json,
+    ),
+  )..interceptors.addAll([
+      DioInterceptors(),
+    ]);
+
   //END CONFIG API
 
   //API USER MANAGEMENT
@@ -29,26 +38,11 @@ class ApiService {
     required String username,
     required String password,
   }) async {
-    Dio dio = Dio();
-
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, ErrorInterceptorHandler handler) {
-          throw Exception(error.response?.statusMessage);
-        },
-      ),
-    );
-
     var response = await dio.post(
       "$_baseUrl/api/users/login",
-      // options: Options(
-      //     // headers: {
-      //     //   "Content-Type": "application/json",
-      //     // },
-      //     ),
       data: {
-        "username": "admin",
-        "password": "rahasia",
+        "username": username,
+        "password": password,
       },
       cancelToken: cancelToken,
     );

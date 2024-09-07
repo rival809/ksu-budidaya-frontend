@@ -21,9 +21,9 @@ class LoginController extends State<LoginView> {
         password: password,
       ).timeout(const Duration(seconds: 30));
 
+      await AppSession.save("token");
       router.pop();
 
-      AppSession.save("token");
       if (kIsWeb) {
         html.window.location.reload();
       } else {

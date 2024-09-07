@@ -46,10 +46,10 @@ class _ContentLoginState extends State<ContentLogin> {
             BaseForm(
               label: "Username",
               autoFocus: true,
-              onChanged: ((value) {
+              onChanged: (value) {
                 controller.username = value;
                 controller.update();
-              }),
+              },
               prefixIcon: iconAkun,
               hintText: "Masukkan username",
               validator: Validatorless.required("Username tidak boleh kosong"),
@@ -59,10 +59,10 @@ class _ContentLoginState extends State<ContentLogin> {
             ),
             BaseForm(
               label: "Kata sandi",
-              onChanged: ((value) {
+              onChanged: (value) {
                 controller.password = value;
                 controller.update();
-              }),
+              },
               prefixIcon: iconKey,
               obsecure: controller.obsecure,
               suffixIcon: controller.obsecure ? iconEyeOn : iconEyeOff,

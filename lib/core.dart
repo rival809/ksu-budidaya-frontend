@@ -23,6 +23,7 @@ export 'package:ksu_budidaya/module/user/ubah_kata_sandi/view/ubah_kata_sandi_vi
 export 'package:ksu_budidaya/module/user/ubah_kata_sandi/widget/content_ubah_kata_sandi.dart';
 export 'package:ksu_budidaya/routes.dart';
 export 'package:ksu_budidaya/service/api_service.dart';
+export 'package:ksu_budidaya/service/dio_interceptor.dart';
 export 'package:ksu_budidaya/service/main_storage_service/main_storage.dart';
 export 'package:ksu_budidaya/session.dart';
 export 'package:ksu_budidaya/setup.dart';
