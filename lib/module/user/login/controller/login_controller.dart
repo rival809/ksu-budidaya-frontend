@@ -13,43 +13,32 @@ class LoginController extends State<LoginView> {
   final formKey = GlobalKey<FormState>();
 
   doLogin() async {
-    if (await checkInternetConnectivity()) {
-      try {
-        showCircleDialogLoading(context);
+    try {
+      showCircleDialogLoading(context);
 
-        // LoginResult result = await ApiService.login(
-        //   username: username,
-        //   password: password,
-        // ).timeout(const Duration(seconds: 30));
+      LoginResult result = await ApiService.login(
+        username: username,
+        password: password,
+      ).timeout(const Duration(seconds: 30));
 
-        // router.pop();
+      router.pop();
 
-        // UserDatabase.save(result);
-
-        // GetPermissionResult getPermissionResult =
-        //     await ApiService.getPermission()
-        //         .timeout(const Duration(seconds: 30));
-
-        // GetPermissionDatabase.save(getPermissionResult);
-        AppSession.save("token");
-        if (kIsWeb) {
-          html.window.location.reload();
-        } else {
-          router.go("/");
-          update();
-        }
-      } catch (e) {
-        router.pop();
-
-        if (e.toString().contains("TimeoutException")) {
-          showInfoDialog(
-              "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-        } else {
-          showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-        }
+      AppSession.save("token");
+      if (kIsWeb) {
+        html.window.location.reload();
+      } else {
+        router.go("/");
+        update();
       }
-    } else {
-      showInfoDialog("Tidak ada koneksi internet!", context);
+    } catch (e) {
+      router.pop();
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
     }
   }
 

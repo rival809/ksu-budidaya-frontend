@@ -13,7 +13,7 @@ class ApiService {
   static final Options options = Options(
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'Bearer ${AppSession.token}',
+      'Authorization': AppSession.token,
     },
   );
 
@@ -25,40 +25,44 @@ class ApiService {
   //END CONFIG API
 
   //API USER MANAGEMENT
-  // static Future<LoginResult> login({
-  //   required String username,
-  //   required String password,
-  // }) async {
-  //   Dio dio = Dio();
+  static Future<LoginResult> login({
+    required String username,
+    required String password,
+  }) async {
+    Dio dio = Dio();
 
-  //   dio.interceptors.add(
-  //     InterceptorsWrapper(
-  //       onError: (DioException error, ErrorInterceptorHandler handler) {
-  //         throw Exception(error.response?.statusMessage);
-  //       },
-  //     ),
-  //   );
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onError: (DioException error, ErrorInterceptorHandler handler) {
+          throw Exception(error.response?.statusMessage);
+        },
+      ),
+    );
 
-  //   var response = await dio.post(
-  //     "${_baseUrl}login",
-  //     options: options,
-  //     data: {
-  //       "username": username,
-  //       "password": password,
-  //     },
-  //     cancelToken: cancelToken,
-  //   );
+    var response = await dio.post(
+      "$_baseUrl/api/users/login",
+      // options: Options(
+      //     // headers: {
+      //     //   "Content-Type": "application/json",
+      //     // },
+      //     ),
+      data: {
+        "username": "admin",
+        "password": "rahasia",
+      },
+      cancelToken: cancelToken,
+    );
 
-  //   if (response.statusCode == 200) {
-  //     if (response.data["code"] == "0000") {
-  //       return LoginResult.fromJson(json.decode(response.toString()));
-  //     } else {
-  //       throw Exception(response.data["message"]);
-  //     }
-  //   } else {
-  //     throw Exception('Failed to doLogin');
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return LoginResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to doLogin');
+    }
+  }
 
   ///END API CONTROL
 }

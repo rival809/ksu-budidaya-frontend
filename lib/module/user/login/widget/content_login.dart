@@ -48,6 +48,7 @@ class _ContentLoginState extends State<ContentLogin> {
               autoFocus: true,
               onChanged: ((value) {
                 controller.username = value;
+                controller.update();
               }),
               prefixIcon: iconAkun,
               hintText: "Masukkan username",
@@ -60,6 +61,7 @@ class _ContentLoginState extends State<ContentLogin> {
               label: "Kata sandi",
               onChanged: ((value) {
                 controller.password = value;
+                controller.update();
               }),
               prefixIcon: iconKey,
               obsecure: controller.obsecure,
@@ -73,6 +75,7 @@ class _ContentLoginState extends State<ContentLogin> {
               onEditComplete: () {
                 if (controller.formKey.currentState!.validate()) {
                   controller.doLogin();
+                  controller.update();
                 }
               },
               validator:
@@ -85,6 +88,7 @@ class _ContentLoginState extends State<ContentLogin> {
               onPressed: () {
                 if (controller.formKey.currentState!.validate()) {
                   controller.doLogin();
+                  controller.update();
                 }
               },
               text: "Masuk",
