@@ -69,7 +69,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ? SvgPicture.asset(trimString(widget.pathIcon!))
                 : (widget.children != null
                     ? SvgPicture.asset(
-                        isExpanded ? iconChevronUp : iconChevronDown)
+                        isExpanded ? iconChevronUp : iconChevronDown,
+                      )
                     : null),
             minLeadingWidth: 0,
             leading:

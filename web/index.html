@@ -43,24 +43,28 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
   <style>
-    .container {
+    .outer-container {
       width: 100vw;
       height: 100vh;
       display: flex;
-      /* Default Axis is X*/
       justify-content: center;
-      /* Main Axis */
       align-items: center;
-      /* Cross Axis */
+      position: fixed;
+      top: 0;
+      left: 0;
     }
 
-    .indicator {
-      width: 30vw;
+    .inner-container {
+      width: 150px;
+      height: 150px;
     }
   </style>
 </head>
 
 <body>
+  <!-- Include Lottie library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js" defer></script>
+
   <script src="https://unpkg.com/@zxing/library@0.19.1" type="application/javascript"></script>
   <script>
     window.addEventListener('load', function (ev) {
@@ -73,7 +77,8 @@
         }).catch(function (error) {
           console.error('Error while clearing caches:', error);
         });
-      }      // Download main.dart.js
+      }
+      // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         entrypointUrl: "main.dart.js?v=" + serviceWorkerVersion,
         serviceWorker: {
@@ -84,10 +89,22 @@
       }).then(function (appRunner) {
         return appRunner.runApp();
       });
+
+      // Load Lottie animation
+      lottie.loadAnimation({
+        container: document.getElementById('loading_indicator'), // the container element
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: './assets/loading.json' // path to your Lottie JSON file
+      });
     });
   </script>
-  <div id="loading_indicator" class="container">
-    <img class="indicator" src="./assets/loading_with_text.gif" />
+
+  <!-- Centered loading animation container -->
+  <div class="outer-container">
+    <!-- Inner container untuk membatasi ukuran Lottie -->
+    <div id="loading_indicator" class="inner-container"></div>
   </div>
 </body>
 

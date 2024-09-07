@@ -8,15 +8,15 @@ final GoRouter router = GoRouter(
       path: '/',
       redirect: (context, state) {
         ////////USER MANAGEMENT//////////
-        if (state.fullPath!.contains("user-management")) {
-          // if (GetPermissionDatabase.getPermissionResult.data?.stsUserMngmt ==
-          //         "1" ||
-          //     GetPermissionDatabase.getPermissionResult.data?.stsInfoUser ==
-          //         "1") {
-          //   return state.uri.toString();
-          // }
-          return "/beranda";
-        }
+        // if (state.fullPath!.contains("user-management")) {
+        // if (GetPermissionDatabase.getPermissionResult.data?.stsUserMngmt ==
+        //         "1" ||
+        //     GetPermissionDatabase.getPermissionResult.data?.stsInfoUser ==
+        //         "1") {
+        //   return state.uri.toString();
+        // }
+        // return "/beranda";
+        // }
 
         return state.uri.toString();
       },
