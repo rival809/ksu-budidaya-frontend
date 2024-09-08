@@ -71,7 +71,6 @@ class SliderView extends StatelessWidget {
                         "/stock-opname",
                         [
                           "/user-management/roles",
-                          "/user-management/Stocktake",
                           "/stock-opname/mobile",
                         ],
                       ),
@@ -85,15 +84,7 @@ class SliderView extends StatelessWidget {
                           isSelected:
                               currentRoute == "/stock-opname/cetak-harian",
                           onTap: () {
-                            router.go("/stock-opname/cetak-harian");
-                          },
-                        ),
-                        DrawerMenu(
-                          title: "Cetak Bulanan",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/user-management/roles",
-                          onTap: () {
-                            router.go("/user-management/roles");
+                            // router.go("/stock-opname/cetak-harian");
                           },
                         ),
                         DrawerMenu(
@@ -102,6 +93,37 @@ class SliderView extends StatelessWidget {
                           isSelected: currentRoute == "/stock-opname/mobile",
                           onTap: () {
                             router.go("/stock-opname/mobile");
+                          },
+                        ),
+                      ],
+                    ),
+                    DrawerMenu(
+                      title: "User Management",
+                      isSelected: isParentSelected(
+                        "/user-management",
+                        [
+                          "/user-management/user",
+                          "/user-management/role",
+                        ],
+                      ),
+                      onTap: () {
+                        // Route navigation logic here
+                      },
+                      children: [
+                        DrawerMenu(
+                          title: "User",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/user-management/user",
+                          onTap: () {
+                            // router.go("/user-management/user");
+                          },
+                        ),
+                        DrawerMenu(
+                          title: "Role",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/user-management/role",
+                          onTap: () {
+                            router.go("/user-management/role");
                           },
                         ),
                       ],

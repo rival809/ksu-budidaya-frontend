@@ -15,7 +15,7 @@ PlutoGridLocaleText configLocale = const PlutoGridLocaleText(
   filterType: 'Tipe',
   filterValue: 'Nilai',
   filterAllColumns: 'Semua kolom',
-  filterContains: 'Mengandung',
+  filterContains: 'Cari',
   filterEquals: 'Sama dengan',
   filterStartsWith: 'Dimulai dengan',
   filterEndsWith: 'Diakhiri dengan',

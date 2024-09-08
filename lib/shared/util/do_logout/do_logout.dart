@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:universal_html/html.dart' as html;
 
-doLogout() {
+doLogout() async {
   // UserDatabase.save(LoginResult());
   // ReferencesDatabase.saveBbm(BbmResult());
   // ReferencesDatabase.saveJenisKb(JenisKbResult());
@@ -16,9 +14,5 @@ doLogout() {
   //MAKE ERROR IF ERASER DEVICE DATABASE
   // DeviceDatabase.save("", "");
   AppSession.save("");
-  if (kIsWeb) {
-    html.window.location.reload();
-  } else {
-    router.pushReplacement("/");
-  }
+  router.go("/");
 }
