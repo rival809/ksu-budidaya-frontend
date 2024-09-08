@@ -32,6 +32,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
   void initState() {
     super.initState();
     isExpanded = widget.isInitiallyExpanded;
+    if (widget.isSelected == true) {
+      isExpanded = !isExpanded;
+    }
   }
 
   void toggleExpansion() {
@@ -73,12 +76,21 @@ class _DrawerMenuState extends State<DrawerMenu> {
                       )
                     : null),
             minLeadingWidth: 0,
-            leading:
-                widget.isSubMenu ?? false ? SvgPicture.asset(iconDot) : null,
+            leading: widget.isSubMenu ?? false
+                ? SvgPicture.asset(
+                    iconDot,
+                    colorFilter:
+                        widget.isSelected ?? false ? colorFilterPrimary : null,
+                  )
+                : null,
             title: Text(
               widget.title,
-              style: myTextTheme.labelLarge?.copyWith(
-                  color: widget.isSelected ?? false ? neutralWhite : gray900),
+              style: myTextTheme.titleMedium?.copyWith(
+                  color: widget.isSelected ?? false
+                      ? widget.isSubMenu ?? false
+                          ? primaryColor
+                          : neutralWhite
+                      : gray900),
             ),
             onTap: () {
               if (widget.children != null) {

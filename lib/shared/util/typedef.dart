@@ -62,3 +62,4 @@ const iconMiscQrCodeScanner = "assets/icons/misc/qr_code_scanner.svg";
 const iconRefresh = "assets/icons/misc/refresh.svg";
 const iconSave = "assets/icons/misc/save.svg";
 const iconSearch = "assets/icons/misc/search.svg";
+const iconOverlay = "assets/icons/misc/overlay.svg";

@@ -85,10 +85,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Expanded(
+                                  child: Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
@@ -171,10 +173,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Expanded(
+                                  child: Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -275,10 +279,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Expanded(
+                                  child: Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
@@ -338,10 +344,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Expanded(
+                                  child: Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
@@ -401,10 +409,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Rp.100.000.000",
-                                  style: myTextTheme.displayLarge?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                Expanded(
+                                  child: Text(
+                                    "Rp.100.000.000",
+                                    style: myTextTheme.displayLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(

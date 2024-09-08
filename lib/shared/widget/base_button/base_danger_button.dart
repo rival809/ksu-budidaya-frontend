@@ -27,6 +27,7 @@ class _BaseDangerButtonState extends State<BaseDangerButton> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.isDense ?? false ? null : MediaQuery.of(context).size.width,
+      height: 42,
       child: ElevatedButton(
         style: ButtonStyle(
           padding: const MaterialStatePropertyAll(EdgeInsets.zero),

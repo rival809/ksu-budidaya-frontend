@@ -62,17 +62,17 @@ class SliderView extends StatelessWidget {
                       title: "Dashboard",
                       isSelected: currentRoute == "/",
                       onTap: () {
-                        router.go("/");
+                        router.pushReplacement("/");
                       },
                     ),
                     DrawerMenu(
                       title: "Stock Opname",
                       isSelected: isParentSelected(
-                        "/user-management",
+                        "/stock-opname",
                         [
-                          "/user-management/list",
                           "/user-management/roles",
                           "/user-management/Stocktake",
+                          "/stock-opname/mobile",
                         ],
                       ),
                       onTap: () {
@@ -82,9 +82,10 @@ class SliderView extends StatelessWidget {
                         DrawerMenu(
                           title: "Cetak Harian",
                           isSubMenu: true,
-                          isSelected: currentRoute == "/user-management/list",
+                          isSelected:
+                              currentRoute == "/stock-opname/cetak-harian",
                           onTap: () {
-                            router.go("/user-management/list");
+                            router.go("/stock-opname/cetak-harian");
                           },
                         ),
                         DrawerMenu(
@@ -98,10 +99,9 @@ class SliderView extends StatelessWidget {
                         DrawerMenu(
                           title: "Stocktake",
                           isSubMenu: true,
-                          isSelected:
-                              currentRoute == "/user-management/Stocktake",
+                          isSelected: currentRoute == "/stock-opname/mobile",
                           onTap: () {
-                            router.go("/user-management/Stocktake");
+                            router.go("/stock-opname/mobile");
                           },
                         ),
                       ],

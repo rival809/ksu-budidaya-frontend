@@ -54,6 +54,14 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: 'stock-opname/mobile',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: StockOpnameMobileView(),
+            );
+          },
+        ),
 
         // GoRoute(
         //   path: 'pdf-viewer',

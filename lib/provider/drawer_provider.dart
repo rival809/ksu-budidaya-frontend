@@ -10,14 +10,9 @@ class DrawerProvider with ChangeNotifier {
   GlobalKey<SliderDrawerState> get sliderDrawerKey => _sliderDrawerKey;
   bool get isDrawerOpen => _isDrawerOpen;
 
-  void toggleDrawer() {
-    if (_sliderDrawerKey.currentState?.isDrawerOpen == true) {
-      _sliderDrawerKey.currentState?.closeSlider();
-      _isDrawerOpen = false;
-    } else {
-      _sliderDrawerKey.currentState?.openSlider();
-      _isDrawerOpen = true;
-    }
+  void toggleDrawer(bool value) {
+    _isDrawerOpen = value;
+
     notifyListeners();
   }
 }

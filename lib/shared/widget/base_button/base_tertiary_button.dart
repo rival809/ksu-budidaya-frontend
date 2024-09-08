@@ -40,6 +40,7 @@ class _BaseTertiaryButtonState extends State<BaseTertiaryButton> {
         : colorFilterGray400;
     return SizedBox(
       width: widget.isDense ?? false ? null : MediaQuery.of(context).size.width,
+      height: 42,
       child: OutlinedButton(
         style: ButtonStyle(
           padding: const MaterialStatePropertyAll(EdgeInsets.zero),

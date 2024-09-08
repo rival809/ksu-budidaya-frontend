@@ -5,10 +5,14 @@ import 'package:ksu_budidaya/core.dart';
 
 class BodyContainer extends StatefulWidget {
   final Widget contentBody;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionLocation;
 
   const BodyContainer({
     Key? key,
     required this.contentBody,
+    this.floatingActionButton,
+    this.floatingActionLocation,
   }) : super(key: key);
 
   @override
@@ -16,19 +20,34 @@ class BodyContainer extends StatefulWidget {
 }
 
 class _BodyContainerState extends State<BodyContainer> {
+  final GlobalKey<SliderDrawerState> sliderDrawerKey =
+      GlobalKey<SliderDrawerState>();
   @override
   Widget build(BuildContext context) {
     final drawerProvider = Provider.of<DrawerProvider>(context);
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (drawerProvider.isDrawerOpen) {
+        sliderDrawerKey.currentState!.openSlider();
+      }
+    });
+
     return Scaffold(
+      floatingActionButton: widget.floatingActionButton,
+      floatingActionButtonLocation: widget.floatingActionLocation,
       body: SliderDrawer(
-        key: drawerProvider.sliderDrawerKey,
+        animationDuration: 200,
+        key: sliderDrawerKey,
         appBar: SliderAppBar(
           appBarPadding: EdgeInsets.zero,
           appBarColor: neutralWhite,
           drawerIcon: InkWell(
             onTap: () {
-              drawerProvider.toggleDrawer();
+              sliderDrawerKey.currentState!.isDrawerOpen
+                  ? drawerProvider.toggleDrawer(false)
+                  : drawerProvider.toggleDrawer(true);
+
+              sliderDrawerKey.currentState!.openOrClose();
             },
             child: Row(
               children: [
@@ -82,11 +101,7 @@ class _BodyContainerState extends State<BodyContainer> {
             ),
           ),
         ),
-        slider: SliderView(
-          onItemClick: (title) {
-            print(title);
-          },
-        ),
+        slider: const SliderView(),
         child: widget.contentBody,
       ),
     );
