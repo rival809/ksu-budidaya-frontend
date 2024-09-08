@@ -33,7 +33,7 @@ class ApiService {
 
   //END CONFIG API
 
-  //API USER MANAGEMENT
+  //API USER
   static Future<LoginResult> login({
     required String username,
     required String password,

@@ -22,6 +22,8 @@ class LoginController extends State<LoginView> {
       ).timeout(const Duration(seconds: 30));
 
       await AppSession.save("token");
+
+      await Future.delayed(const Duration(seconds: 1));
       router.pop();
 
       if (kIsWeb) {

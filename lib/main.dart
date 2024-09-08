@@ -13,7 +13,10 @@ void main() async {
 
 runMainApp() async {
   return runApp(
-    const MainApp(),
+    ChangeNotifierProvider(
+      create: (_) => DrawerProvider(),
+      child: const MainApp(),
+    ),
   );
 }
 

@@ -4,7 +4,9 @@
         "splashscreen",
         "user/login",
         "user/ubah_kata_sandi",
-        "user/user_management",
+        "user/manajemen_role",
+        "user/manajemen_user",
+        "stock_opname/stock_opname_mobile",
         "pdf_viewer"
     ],
     "module_directory_name": "module",
