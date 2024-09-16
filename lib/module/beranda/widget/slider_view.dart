@@ -115,7 +115,7 @@ class SliderView extends StatelessWidget {
                           isSubMenu: true,
                           isSelected: currentRoute == "/user-management/user",
                           onTap: () {
-                            // router.go("/user-management/user");
+                            router.go("/user-management/user");
                           },
                         ),
                         DrawerMenu(

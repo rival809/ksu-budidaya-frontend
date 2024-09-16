@@ -1,31 +1,313 @@
-
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 import '../controller/manajemen_user_controller.dart';
 
 class ManajemenUserView extends StatefulWidget {
-    const ManajemenUserView({Key? key}) : super(key: key);
+  const ManajemenUserView({Key? key}) : super(key: key);
 
-    Widget build(context, ManajemenUserController controller) {
+  Widget build(context, ManajemenUserController controller) {
     controller.view = this;
 
-    return Scaffold(
-        appBar: AppBar(
-        title: const Text("ManajemenUser"),
-        actions: const [],
-        ),
-        body: SingleChildScrollView(
-        child: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-            children: const [],
-            ),
-        ),
-        ),
-    );
-    }
+    return BodyContainer(
+      contentBody: Container(
+        color: appLightBackground,
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Container(
+            color: neutralWhite,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "User",
+                    style: myTextTheme.headlineLarge,
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  SingleChildScrollView(
+                    controller: ScrollController(),
+                    scrollDirection: Axis.horizontal,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: MediaQuery.of(context).size.width - 32,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 250,
+                                child: BaseForm(
+                                  textEditingController:
+                                      controller.roleNameController,
+                                  onChanged: (value) {},
+                                  hintText: "Pencarian",
+                                  suffix: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: BasePrimaryButton(
+                                      onPressed: () {
+                                        controller.dataFuture =
+                                            controller.cariDataUser();
+                                        controller.update();
+                                      },
+                                      text: "Cari",
+                                      suffixIcon: iconSearch,
+                                      isDense: true,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 16.0,
+                              ),
+                              BaseSecondaryButton(
+                                onPressed: () {
+                                  controller.dataFuture =
+                                      controller.cariDataUser();
+                                  controller.update();
+                                },
+                                text: "Refresh",
+                                suffixIcon: iconCached,
+                                isDense: true,
+                              ),
+                              const SizedBox(
+                                width: 16.0,
+                              ),
+                            ],
+                          ),
+                          BasePrimaryButton(
+                            onPressed: () {
+                              showDialogBase(
+                                width: 700,
+                                context: context,
+                                content: const DialogUser(),
+                              );
+                            },
+                            text: "Tambah User",
+                            suffixIcon: iconAdd,
+                            isDense: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  FutureBuilder(
+                    future: controller.dataFuture,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const ContainerLoadingRole();
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return const ContainerErrorRole();
+                        } else if (snapshot.hasData) {
+                          ListRoleResult result = snapshot.data;
+                          controller.dataListRole =
+                              result.data ?? DataListRole();
+                          List<dynamic> listData =
+                              controller.dataListRole.dataRoles ?? [];
+                          print("result.data");
+                          print(controller.dataListRole.dataRoles);
 
-    @override
-    State<ManajemenUserView> createState() => ManajemenUserController();
+                          if (listData.isNotEmpty) {
+                            List<PlutoRow> rows = [];
+                            List<PlutoColumn> columns = [];
+
+                            columns.add(
+                              PlutoColumn(
+                                width: 30,
+                                backgroundColor: primaryColor,
+                                title: "No.",
+                                field: "no",
+                                filterHintText: "Cari ",
+                                type: PlutoColumnType.text(),
+                                enableEditingMode: false,
+                                renderer: (rendererContext) {
+                                  final rowIndex = rendererContext.rowIdx + 1;
+
+                                  return Text(
+                                    rendererContext.cell.value.toString(),
+                                    style: myTextTheme.bodyMedium,
+                                  );
+                                },
+                              ),
+                            );
+
+                            columns.addAll(List.generate(
+                                controller.listRoleView.length, (index) {
+                              return PlutoColumn(
+                                backgroundColor: primaryColor,
+                                filterHintText:
+                                    "Cari ${controller.listRoleView[index]}",
+                                title: convertTitle(
+                                  controller.listRoleView[index],
+                                ),
+                                field: controller.listRoleView[index],
+                                type: PlutoColumnType.text(),
+                              );
+                            }));
+
+                            columns.add(
+                              PlutoColumn(
+                                width: 75,
+                                backgroundColor: primaryColor,
+                                frozen: PlutoColumnFrozen.end,
+                                title: "AKSI",
+                                field: "Aksi",
+                                filterHintText: "",
+                                type: PlutoColumnType.text(),
+                                enableEditingMode: false,
+                                renderer: (rendererContext) {
+                                  final rowIndex = rendererContext.rowIdx;
+
+                                  return DropdownAksi(
+                                    text: "Aksi",
+                                    onChange: (value) {
+                                      if (value == 1) {
+                                        showDialogBase(
+                                          context: context,
+                                          content: const DialogUser(),
+                                        );
+                                      } else if (value == 2) {
+                                        showDialogBase(
+                                          context: context,
+                                          content: DialogKonfirmasi(
+                                            textKonfirmasi:
+                                                "Apakah Anda yakin ingin Menghapus User",
+                                            onConfirm: () async {
+                                              Navigator.pop(context);
+                                              await showDialogBase(
+                                                context: context,
+                                                content: const DialogBerhasil(),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+
+                            List<dynamic> listDataWithIndex =
+                                List.generate(listData.length, (index) {
+                              return {
+                                ...listData[index],
+                                'persistentIndex': index + 1,
+                              };
+                            });
+                            rows = listDataWithIndex.map((item) {
+                              Map<String, PlutoCell> cells = {};
+
+                              cells['no'] = PlutoCell(
+                                value: item['persistentIndex'].toString(),
+                              );
+
+                              cells['Aksi'] = PlutoCell(
+                                value: null,
+                              );
+
+                              for (String column in controller.listRoleView) {
+                                if (item.containsKey(column)) {
+                                  cells[column] = PlutoCell(
+                                    value: item[column],
+                                  );
+                                }
+                              }
+
+                              return PlutoRow(cells: cells);
+                            }).toList();
+
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height -
+                                  AppBar().preferredSize.height -
+                                  144 -
+                                  16,
+                              child: PlutoGrid(
+                                noRowsWidget: const ContainerTidakAda(
+                                  entity: 'User',
+                                ),
+                                mode: PlutoGridMode.select,
+                                onLoaded: (event) {
+                                  event.stateManager.setShowColumnFilter(true);
+                                },
+                                onSorted: (event) {
+                                  // if (event.column.field != "Aksi") {
+                                  //   controller.isAsc = !controller.isAsc;
+                                  //   controller.update();
+                                  //   controller.dataFuture =
+                                  //       controller.cariEditTable(
+                                  //           event.column.field,
+                                  //           controller.isAsc);
+                                  //   controller.update();
+                                  // }
+                                },
+                                configuration: PlutoGridConfiguration(
+                                  columnSize: const PlutoGridColumnSizeConfig(
+                                    autoSizeMode: PlutoAutoSizeMode.scale,
+                                  ),
+                                  style: PlutoGridStyleConfig(
+                                    columnTextStyle: myTextTheme.titleSmall
+                                            ?.copyWith(color: neutralWhite) ??
+                                        const TextStyle(),
+                                    gridBorderColor: blueGray50,
+                                    gridBorderRadius: BorderRadius.circular(8),
+                                  ),
+                                  localeText: configLocale,
+                                ),
+                                columns: columns,
+                                rows: rows,
+                                createFooter: (stateManager) {
+                                  return FooterTableWidget(
+                                    page: controller.page,
+                                    itemPerpage: controller.size,
+                                    maxPage: controller
+                                            .dataListRole.paging?.totalPage ??
+                                        0,
+                                    onChangePage: (value) {},
+                                    onChangePerPage: (value) {},
+                                    totalRow: controller
+                                            .dataListRole.paging?.totalItem ??
+                                        0,
+                                    onPressLeft: () {},
+                                    onPressRight: () {},
+                                  );
+                                },
+                              ),
+                            );
+                          } else {
+                            return const ContainerTidakAda(
+                              entity: 'User',
+                            );
+                          }
+                        } else {
+                          return const ContainerErrorRole();
+                        }
+                      } else {
+                        return const ContainerTidakAda(
+                          entity: "User",
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  State<ManajemenUserView> createState() => ManajemenUserController();
 }
-    

@@ -2,16 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
-class ContainerTidakAdaRole extends StatefulWidget {
-  const ContainerTidakAdaRole({
+class ContainerTidakAda extends StatefulWidget {
+  final String? entity;
+  const ContainerTidakAda({
     Key? key,
+    required this.entity,
   }) : super(key: key);
 
   @override
-  State<ContainerTidakAdaRole> createState() => _ContainerTidakAdaRoleState();
+  State<ContainerTidakAda> createState() => _ContainerTidakAdaState();
 }
 
-class _ContainerTidakAdaRoleState extends State<ContainerTidakAdaRole> {
+class _ContainerTidakAdaState extends State<ContainerTidakAda> {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
@@ -56,7 +58,7 @@ class _ContainerTidakAdaRoleState extends State<ContainerTidakAdaRole> {
               children: [
                 Expanded(
                   child: Text(
-                    "Tidak ada data Verifikasi. ",
+                    "Tidak ada data ${widget.entity}. ",
                     style: myTextTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
@@ -112,7 +114,7 @@ class _ContainerTidakAdaRoleState extends State<ContainerTidakAdaRole> {
               children: [
                 Expanded(
                   child: Text(
-                    "Tidak ada data Role ",
+                    "Tidak ada data ${widget.entity}.",
                     style: myTextTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),

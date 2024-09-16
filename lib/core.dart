@@ -34,6 +34,7 @@ export 'package:ksu_budidaya/module/user/manajemen_role/widget/dialog_tambah_rol
 export 'package:ksu_budidaya/module/user/manajemen_role/widget/dropdown_aksi.dart';
 export 'package:ksu_budidaya/module/user/manajemen_user/controller/manajemen_user_controller.dart';
 export 'package:ksu_budidaya/module/user/manajemen_user/view/manajemen_user_view.dart';
+export 'package:ksu_budidaya/module/user/manajemen_user/widget/dialog_user.dart';
 export 'package:ksu_budidaya/module/user/ubah_kata_sandi/controller/ubah_kata_sandi_controller.dart';
 export 'package:ksu_budidaya/module/user/ubah_kata_sandi/view/ubah_kata_sandi_view.dart';
 export 'package:ksu_budidaya/module/user/ubah_kata_sandi/widget/content_ubah_kata_sandi.dart';

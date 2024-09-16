@@ -4,6 +4,7 @@ Future showDialogBase({
   required BuildContext context,
   required Widget content,
   bool? barrierDismissible,
+  double? width,
 }) async {
   await showDialog<void>(
     context: context,
@@ -15,8 +16,8 @@ Future showDialogBase({
           borderRadius: BorderRadius.circular(12.0),
         ),
         content: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 450,
+          constraints: BoxConstraints(
+            maxWidth: width ?? 450,
           ),
           child: SingleChildScrollView(
             controller: ScrollController(),

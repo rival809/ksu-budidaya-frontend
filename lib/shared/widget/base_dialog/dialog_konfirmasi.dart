@@ -52,7 +52,7 @@ class _DialogKonfirmasiState extends State<DialogKonfirmasi> {
                 width: 16.0,
               ),
               Expanded(
-                child: BaseDangerButton(
+                child: BasePrimaryButton(
                   text: "Konfirmasi",
                   onPressed: widget.onConfirm,
                 ),

@@ -226,7 +226,9 @@ class ManajemenRoleView extends StatefulWidget {
                                   144 -
                                   16,
                               child: PlutoGrid(
-                                noRowsWidget: const ContainerTidakAdaRole(),
+                                noRowsWidget: const ContainerTidakAda(
+                                  entity: "Role",
+                                ),
                                 mode: PlutoGridMode.select,
                                 onLoaded: (event) {
                                   event.stateManager.setShowColumnFilter(true);
@@ -276,13 +278,17 @@ class ManajemenRoleView extends StatefulWidget {
                               ),
                             );
                           } else {
-                            return const ContainerTidakAdaRole();
+                            return const ContainerTidakAda(
+                              entity: "Role",
+                            );
                           }
                         } else {
                           return const ContainerErrorRole();
                         }
                       } else {
-                        return const ContainerTidakAdaRole();
+                        return const ContainerTidakAda(
+                          entity: "Role",
+                        );
                       }
                     },
                   ),

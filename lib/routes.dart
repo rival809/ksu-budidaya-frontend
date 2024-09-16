@@ -70,6 +70,14 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: 'user-management/user',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: ManajemenUserView(),
+            );
+          },
+        ),
 
         // GoRoute(
         //   path: 'pdf-viewer',
