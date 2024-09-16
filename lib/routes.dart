@@ -102,6 +102,14 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: 'koperasi/anggota',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: AnggotaView(),
+            );
+          },
+        ),
 
         // GoRoute(
         //   path: 'pdf-viewer',

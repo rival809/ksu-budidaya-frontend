@@ -10,6 +10,7 @@
         "database/supplier",
         "database/divisi",
         "database/produk",
+        "koperasi/anggota",
         "pdf_viewer"
     ],
     "module_directory_name": "module",

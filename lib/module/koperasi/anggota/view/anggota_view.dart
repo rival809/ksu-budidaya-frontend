@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
-class DivisiView extends StatefulWidget {
-  const DivisiView({Key? key}) : super(key: key);
+class AnggotaView extends StatefulWidget {
+  const AnggotaView({Key? key}) : super(key: key);
 
-  Widget build(context, DivisiController controller) {
+  Widget build(context, AnggotaController controller) {
     controller.view = this;
 
     return BodyContainer(
@@ -21,7 +21,7 @@ class DivisiView extends StatefulWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Divisi",
+                    "Anggota",
                     style: myTextTheme.headlineLarge,
                   ),
                   const SizedBox(
@@ -43,7 +43,7 @@ class DivisiView extends StatefulWidget {
                                 width: 250,
                                 child: BaseForm(
                                   textEditingController:
-                                      controller.divisiNameController,
+                                      controller.anggotaNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
@@ -84,10 +84,10 @@ class DivisiView extends StatefulWidget {
                               showDialogBase(
                                 width: 700,
                                 context: context,
-                                content: const DialogDivisi(),
+                                content: const DialogAnggota(),
                               );
                             },
-                            text: "Tambah Divisi",
+                            text: "Tambah Anggota",
                             suffixIcon: iconAdd,
                             isDense: true,
                           ),
@@ -113,8 +113,6 @@ class DivisiView extends StatefulWidget {
                               result.data ?? DataListRole();
                           List<dynamic> listData =
                               controller.dataListRole.dataRoles ?? [];
-                          print("result.data");
-                          print(controller.dataListRole.dataRoles);
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
@@ -156,7 +154,7 @@ class DivisiView extends StatefulWidget {
 
                             columns.add(
                               PlutoColumn(
-                                width: 75,
+                                width: 150,
                                 backgroundColor: primaryColor,
                                 frozen: PlutoColumnFrozen.end,
                                 title: "AKSI",
@@ -169,19 +167,70 @@ class DivisiView extends StatefulWidget {
 
                                   return DropdownAksi(
                                     text: "Aksi",
+                                    listItem: [
+                                      PopupMenuItem(
+                                        value: 1,
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(iconMiscInfo),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                'Detail Data',
+                                                style: myTextTheme.bodyMedium,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      PopupMenuItem(
+                                        value: 2,
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                                iconAccountBalanceWallet),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                'Bayar Pinjaman',
+                                                style: myTextTheme.bodyMedium,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      PopupMenuItem(
+                                        value: 3,
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              iconDelete,
+                                              colorFilter:
+                                                  colorFilter(color: red600),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Hapus',
+                                              style: myTextTheme.bodyMedium,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                     onChange: (value) {
                                       if (value == 1) {
                                         showDialogBase(
                                           context: context,
                                           width: 700,
-                                          content: const DialogDivisi(),
+                                          content: const DialogAnggota(),
                                         );
                                       } else if (value == 2) {
+                                      } else if (value == 3) {
                                         showDialogBase(
                                           context: context,
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
-                                                "Apakah Anda yakin ingin Menghapus Divisi",
+                                                "Apakah Anda yakin ingin Menghapus Anggota",
                                             onConfirm: () async {
                                               Navigator.pop(context);
                                               await showDialogBase(
@@ -234,7 +283,7 @@ class DivisiView extends StatefulWidget {
                                   16,
                               child: PlutoGrid(
                                 noRowsWidget: const ContainerTidakAda(
-                                  entity: 'Divisi',
+                                  entity: 'Anggota',
                                 ),
                                 mode: PlutoGridMode.select,
                                 onLoaded: (event) {
@@ -286,7 +335,7 @@ class DivisiView extends StatefulWidget {
                             );
                           } else {
                             return const ContainerTidakAda(
-                              entity: 'Divisi',
+                              entity: 'Anggota',
                             );
                           }
                         } else {
@@ -294,7 +343,7 @@ class DivisiView extends StatefulWidget {
                         }
                       } else {
                         return const ContainerTidakAda(
-                          entity: "Divisi",
+                          entity: "Anggota",
                         );
                       }
                     },
@@ -309,5 +358,5 @@ class DivisiView extends StatefulWidget {
   }
 
   @override
-  State<DivisiView> createState() => DivisiController();
+  State<AnggotaView> createState() => AnggotaController();
 }
