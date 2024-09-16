@@ -33,7 +33,7 @@ class _BarcodeScannerDialogState extends State<BarcodeScannerDialog>
   void _handleBarcode(BarcodeCapture barcodes) {
     if (mounted) {
       setState(() {
-        _barcode = barcodes.barcodes.first;
+        _barcode = barcodes.barcodes.firstOrNull;
       });
       if (_barcode != null) {
         Navigator.of(context).pop(

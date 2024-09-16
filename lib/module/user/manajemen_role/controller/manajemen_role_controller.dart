@@ -21,7 +21,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
 
   cariDataRole() async {
     try {
-      // result = ListRoleResult();
+      result = ListRoleResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
@@ -34,6 +34,14 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
       result = await ApiService.listRole(
         data: dataCari,
       ).timeout(const Duration(seconds: 30));
+
+      // result = ListRoleResult(
+      //   data: DataListRole(
+      //     dataRoles: [
+      //       {"id": "ROLE001", "role_name": "ADMIN"}
+      //     ],
+      //   ),
+      // );
 
       return result;
     } catch (e) {

@@ -30,6 +30,8 @@ export 'package:ksu_budidaya/module/user/manajemen_role/view/manajemen_role_view
 export 'package:ksu_budidaya/module/user/manajemen_role/widget/container_error_role.dart';
 export 'package:ksu_budidaya/module/user/manajemen_role/widget/container_loading_role.dart';
 export 'package:ksu_budidaya/module/user/manajemen_role/widget/container_tidak_ada_data_role.dart';
+export 'package:ksu_budidaya/module/user/manajemen_role/widget/dialog_tambah_role.dart';
+export 'package:ksu_budidaya/module/user/manajemen_role/widget/dropdown_aksi.dart';
 export 'package:ksu_budidaya/module/user/manajemen_user/controller/manajemen_user_controller.dart';
 export 'package:ksu_budidaya/module/user/manajemen_user/view/manajemen_user_view.dart';
 export 'package:ksu_budidaya/module/user/ubah_kata_sandi/controller/ubah_kata_sandi_controller.dart';
@@ -77,11 +79,15 @@ export 'package:ksu_budidaya/shared/widget/base_button/simple_dropdown_button.da
 export 'package:ksu_budidaya/shared/widget/base_card/base_card_info.dart';
 export 'package:ksu_budidaya/shared/widget/base_card/card_label.dart';
 export 'package:ksu_budidaya/shared/widget/base_card/data_color.dart';
+export 'package:ksu_budidaya/shared/widget/base_dialog/dialog_berhasil.dart';
+export 'package:ksu_budidaya/shared/widget/base_dialog/dialog_konfirmasi.dart';
 export 'package:ksu_budidaya/shared/widget/base_dialog/show_base_dialog.dart';
 export 'package:ksu_budidaya/shared/widget/base_dialog/show_info_dialog.dart';
 export 'package:ksu_budidaya/shared/widget/base_form/base_form.dart';
 export 'package:ksu_budidaya/shared/widget/base_form/base_form_util.dart';
+export 'package:ksu_budidaya/shared/widget/base_table/footer_table_widget.dart';
 export 'package:ksu_budidaya/shared/widget/body_container/body_container.dart';
+export 'package:ksu_budidaya/shared/widget/checkbox/row_checkbox.dart';
 export 'package:ksu_budidaya/shared/widget/drawer/drawer_menu.dart';
 export 'package:ksu_budidaya/shared/widget/loading/circle_dialog_loading.dart';
 export 'package:ksu_budidaya/state_util.dart';

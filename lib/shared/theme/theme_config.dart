@@ -397,3 +397,10 @@ const colorFilterRed800 = ColorFilter.mode(
   red800,
   BlendMode.srcIn,
 );
+
+ColorFilter colorFilter({required Color color}) {
+  return ColorFilter.mode(
+    color,
+    BlendMode.srcIn,
+  );
+}

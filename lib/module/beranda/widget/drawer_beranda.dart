@@ -172,7 +172,7 @@ class _DrawerBerandaState extends State<DrawerBeranda> {
                         minLeadingWidth: 0,
                         leading: SvgPicture.asset(
                           "assets/icons/misc/logout.svg",
-                          color: red500,
+                          colorFilter: colorFilter(color: red600),
                         ),
                         title: Text(
                           "Keluar",

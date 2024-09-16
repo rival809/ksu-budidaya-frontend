@@ -20,7 +20,8 @@ class _ContainerErrorRoleState extends State<ContainerErrorRole> {
         constraints: BoxConstraints.loose(
           Size.fromHeight(MediaQuery.of(context).size.height -
               144 -
-              AppBar().preferredSize.height),
+              AppBar().preferredSize.height -
+              48),
         ),
         decoration: BoxDecoration(
           border: Border.all(
@@ -51,10 +52,12 @@ class _ContainerErrorRoleState extends State<ContainerErrorRole> {
       ),
       desktop: (context) => Container(
         padding: const EdgeInsets.all(24),
+        width: MediaQuery.of(context).size.width,
         constraints: BoxConstraints.loose(
           Size.fromHeight(MediaQuery.of(context).size.height -
               120 -
-              AppBar().preferredSize.height),
+              AppBar().preferredSize.height -
+              40),
         ),
         decoration: BoxDecoration(
           border: Border.all(

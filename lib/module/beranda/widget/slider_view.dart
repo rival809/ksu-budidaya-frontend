@@ -79,16 +79,16 @@ class SliderView extends StatelessWidget {
                       },
                       children: [
                         DrawerMenu(
-                          title: "Cetak Harian",
+                          title: "Stocktake Harian",
                           isSubMenu: true,
                           isSelected:
-                              currentRoute == "/stock-opname/cetak-harian",
+                              currentRoute == "/stock-opname/stocktake-harian",
                           onTap: () {
                             // router.go("/stock-opname/cetak-harian");
                           },
                         ),
                         DrawerMenu(
-                          title: "Stocktake",
+                          title: "Stock Opname",
                           isSubMenu: true,
                           isSelected: currentRoute == "/stock-opname/mobile",
                           onTap: () {

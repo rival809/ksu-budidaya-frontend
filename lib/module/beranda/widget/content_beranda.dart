@@ -53,10 +53,10 @@ class _ContentBerandaState extends State<ContentBeranda> {
           const SizedBox(
             height: 24.0,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
+          ScreenTypeLayout.builder(
+            mobile: (p0) => Column(
+              children: [
+                Container(
                   width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -139,12 +139,10 @@ class _ContentBerandaState extends State<ContentBeranda> {
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 16.0,
-              ),
-              Expanded(
-                child: Container(
+                const SizedBox(
+                  height: 16.0,
+                ),
+                Container(
                   width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -206,8 +204,167 @@ class _ContentBerandaState extends State<ContentBeranda> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            desktop: (p0) => Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: neutralWhite,
+                      border: Border.all(
+                        width: 1.0,
+                        color: blueGray50,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Pendapatan Hari Ini",
+                                style: myTextTheme.bodyLarge?.copyWith(
+                                  color: gray700,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Rp.100.000.000",
+                                      style: myTextTheme.displayLarge?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
+                                      ),
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: const BoxDecoration(
+                            color: green50,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                            iconAccountBalanceWallet,
+                            colorFilter: colorFilterPrimary,
+                            width: 40,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: neutralWhite,
+                      border: Border.all(
+                        width: 1.0,
+                        color: blueGray50,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Pendapatan Kemarin",
+                                style: myTextTheme.bodyLarge?.copyWith(
+                                  color: gray700,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Rp.100.000.000",
+                                      style: myTextTheme.displayLarge?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: const BoxDecoration(
+                            color: green50,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                            iconAccountBalanceWallet,
+                            colorFilter: colorFilterPrimary,
+                            width: 40,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             height: 24.0,
@@ -250,10 +407,10 @@ class _ContentBerandaState extends State<ContentBeranda> {
                 const SizedBox(
                   height: 16.0,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
+                ScreenTypeLayout.builder(
+                  mobile: (p0) => Column(
+                    children: [
+                      Container(
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -313,12 +470,10 @@ class _ContentBerandaState extends State<ContentBeranda> {
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
-                    Expanded(
-                      child: Container(
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      Container(
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -378,12 +533,10 @@ class _ContentBerandaState extends State<ContentBeranda> {
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
-                    Expanded(
-                      child: Container(
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      Container(
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -443,9 +596,211 @@ class _ContentBerandaState extends State<ContentBeranda> {
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                  desktop: (p0) => Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: neutralWhite,
+                            border: Border.all(
+                              width: 1.0,
+                              color: blueGray50,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Total Pendapatan",
+                                style: myTextTheme.bodyLarge?.copyWith(
+                                  color: gray700,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Rp.100.000.000",
+                                      style: myTextTheme.displayLarge?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
+                                      ),
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: neutralWhite,
+                            border: Border.all(
+                              width: 1.0,
+                              color: blueGray50,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Total Pengeluaran",
+                                style: myTextTheme.bodyLarge?.copyWith(
+                                  color: gray700,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Rp.100.000.000",
+                                      style: myTextTheme.displayLarge?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
+                                      ),
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: neutralWhite,
+                            border: Border.all(
+                              width: 1.0,
+                              color: blueGray50,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Total Keuntungan",
+                                style: myTextTheme.bodyLarge?.copyWith(
+                                  color: gray700,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Rp.100.000.000",
+                                      style: myTextTheme.displayLarge?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconArrowDropUp,
+                                        colorFilter: colorFilterPrimary,
+                                        width: 24,
+                                      ),
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Text(
+                                        "12%",
+                                        style:
+                                            myTextTheme.titleMedium?.copyWith(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

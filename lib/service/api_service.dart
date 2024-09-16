@@ -9,7 +9,7 @@ class ApiService {
   static final Options options = Options(
     headers: {
       "Content-Type": "application/json",
-      'Authorization': AppSession.token,
+      'Authorization': "Bearer ${AppSession.token}",
     },
   );
 
@@ -65,7 +65,7 @@ class ApiService {
     required DataMap data,
   }) async {
     var response = await dio.post(
-      "$_baseUrl/api/references/list-roles",
+      "$_baseUrl/api/roles/list-roles",
       options: options,
       data: data,
       cancelToken: cancelToken,
