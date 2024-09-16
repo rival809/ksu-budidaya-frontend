@@ -73,6 +73,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 : (widget.children != null
                     ? SvgPicture.asset(
                         isExpanded ? iconChevronUp : iconChevronDown,
+                        colorFilter: widget.isSelected ?? false
+                            ? colorFilter(color: neutralWhite)
+                            : null,
                       )
                     : null),
             minLeadingWidth: 0,
@@ -102,12 +105,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
           ),
         ),
         if (isExpanded && widget.children != null)
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: widget.children!,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: widget.children!,
           ),
       ],
     );

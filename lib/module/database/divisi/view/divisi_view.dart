@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/database/divisi/widget/dialog_divisi.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
-class ManajemenRoleView extends StatefulWidget {
-  const ManajemenRoleView({Key? key}) : super(key: key);
+class DivisiView extends StatefulWidget {
+  const DivisiView({Key? key}) : super(key: key);
 
-  Widget build(context, ManajemenRoleController controller) {
+  Widget build(context, DivisiController controller) {
     controller.view = this;
 
     return BodyContainer(
@@ -21,7 +22,7 @@ class ManajemenRoleView extends StatefulWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Role",
+                    "Divisi",
                     style: myTextTheme.headlineLarge,
                   ),
                   const SizedBox(
@@ -43,7 +44,7 @@ class ManajemenRoleView extends StatefulWidget {
                                 width: 250,
                                 child: BaseForm(
                                   textEditingController:
-                                      controller.roleNameController,
+                                      controller.divisiNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
@@ -51,7 +52,7 @@ class ManajemenRoleView extends StatefulWidget {
                                     child: BasePrimaryButton(
                                       onPressed: () {
                                         controller.dataFuture =
-                                            controller.cariDataRole();
+                                            controller.cariDataUser();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -67,7 +68,7 @@ class ManajemenRoleView extends StatefulWidget {
                               BaseSecondaryButton(
                                 onPressed: () {
                                   controller.dataFuture =
-                                      controller.cariDataRole();
+                                      controller.cariDataUser();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -82,11 +83,12 @@ class ManajemenRoleView extends StatefulWidget {
                           BasePrimaryButton(
                             onPressed: () {
                               showDialogBase(
+                                width: 700,
                                 context: context,
-                                content: const DialogTambahRole(),
+                                content: const DialogDivisi(),
                               );
                             },
-                            text: "Tambah Role",
+                            text: "Tambah Divisi",
                             suffixIcon: iconAdd,
                             isDense: true,
                           ),
@@ -119,25 +121,25 @@ class ManajemenRoleView extends StatefulWidget {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
 
-                            columns.add(
-                              PlutoColumn(
-                                width: 30,
-                                backgroundColor: primaryColor,
-                                title: "No.",
-                                field: "no",
-                                filterHintText: "Cari ",
-                                type: PlutoColumnType.text(),
-                                enableEditingMode: false,
-                                renderer: (rendererContext) {
-                                  final rowIndex = rendererContext.rowIdx + 1;
+                            // columns.add(
+                            //   PlutoColumn(
+                            //     width: 30,
+                            //     backgroundColor: primaryColor,
+                            //     title: "No.",
+                            //     field: "no",
+                            //     filterHintText: "Cari ",
+                            //     type: PlutoColumnType.text(),
+                            //     enableEditingMode: false,
+                            //     renderer: (rendererContext) {
+                            //       final rowIndex = rendererContext.rowIdx + 1;
 
-                                  return Text(
-                                    rendererContext.cell.value.toString(),
-                                    style: myTextTheme.bodyMedium,
-                                  );
-                                },
-                              ),
-                            );
+                            //       return Text(
+                            //         rendererContext.cell.value.toString(),
+                            //         style: myTextTheme.bodyMedium,
+                            //       );
+                            //     },
+                            //   ),
+                            // );
 
                             columns.addAll(List.generate(
                                 controller.listRoleView.length, (index) {
@@ -172,15 +174,21 @@ class ManajemenRoleView extends StatefulWidget {
                                       if (value == 1) {
                                         showDialogBase(
                                           context: context,
-                                          content: const DialogTambahRole(),
+                                          content: const DialogDivisi(),
                                         );
                                       } else if (value == 2) {
                                         showDialogBase(
                                           context: context,
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
-                                                "Apakah Anda yakin ingin Menghapus Role",
-                                            onConfirm: () {},
+                                                "Apakah Anda yakin ingin Menghapus Divisi",
+                                            onConfirm: () async {
+                                              Navigator.pop(context);
+                                              await showDialogBase(
+                                                context: context,
+                                                content: const DialogBerhasil(),
+                                              );
+                                            },
                                           ),
                                         );
                                       }
@@ -200,9 +208,9 @@ class ManajemenRoleView extends StatefulWidget {
                             rows = listDataWithIndex.map((item) {
                               Map<String, PlutoCell> cells = {};
 
-                              cells['no'] = PlutoCell(
-                                value: item['persistentIndex'].toString(),
-                              );
+                              // cells['no'] = PlutoCell(
+                              //   value: item['persistentIndex'].toString(),
+                              // );
 
                               cells['Aksi'] = PlutoCell(
                                 value: null,
@@ -226,7 +234,7 @@ class ManajemenRoleView extends StatefulWidget {
                                   16,
                               child: PlutoGrid(
                                 noRowsWidget: const ContainerTidakAda(
-                                  entity: "Role",
+                                  entity: 'Divisi',
                                 ),
                                 mode: PlutoGridMode.select,
                                 onLoaded: (event) {
@@ -278,7 +286,7 @@ class ManajemenRoleView extends StatefulWidget {
                             );
                           } else {
                             return const ContainerTidakAda(
-                              entity: "Role",
+                              entity: 'Divisi',
                             );
                           }
                         } else {
@@ -286,7 +294,7 @@ class ManajemenRoleView extends StatefulWidget {
                         }
                       } else {
                         return const ContainerTidakAda(
-                          entity: "Role",
+                          entity: "Divisi",
                         );
                       }
                     },
@@ -301,5 +309,5 @@ class ManajemenRoleView extends StatefulWidget {
   }
 
   @override
-  State<ManajemenRoleView> createState() => ManajemenRoleController();
+  State<DivisiView> createState() => DivisiController();
 }

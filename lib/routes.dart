@@ -78,6 +78,30 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: 'database/supplier',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: SupplierView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'database/divisi',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: DivisiView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'database/produk',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: ProdukView(),
+            );
+          },
+        ),
 
         // GoRoute(
         //   path: 'pdf-viewer',

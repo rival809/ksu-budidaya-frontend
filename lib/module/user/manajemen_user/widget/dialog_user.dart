@@ -22,6 +22,20 @@ class _DialogUserState extends State<DialogUser> {
   bool obsecure = true;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textController[0].dispose();
+    textController[1].dispose();
+    textController[2].dispose();
+    textController[3].dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -29,7 +43,7 @@ class _DialogUserState extends State<DialogUser> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Tambah Role",
+            "Tambah User",
             style: myTextTheme.headlineLarge?.copyWith(
               fontWeight: FontWeight.w600,
             ),

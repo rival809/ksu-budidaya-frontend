@@ -7,6 +7,9 @@
         "user/manajemen_role",
         "user/manajemen_user",
         "stock_opname/stock_opname_mobile",
+        "database/supplier",
+        "database/divisi",
+        "database/produk",
         "pdf_viewer"
     ],
     "module_directory_name": "module",

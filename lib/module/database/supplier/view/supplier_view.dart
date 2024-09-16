@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import '../controller/splashscreen_controller.dart';
+import '../controller/supplier_controller.dart';
 
-class SplashscreenView extends StatefulWidget {
-  const SplashscreenView({Key? key}) : super(key: key);
+class SupplierView extends StatefulWidget {
+  const SupplierView({Key? key}) : super(key: key);
 
-  Widget build(context, SplashscreenController controller) {
+  Widget build(context, SupplierController controller) {
     controller.view = this;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Splashscreen"),
+        title: const Text("Supplier"),
         actions: const [],
       ),
       body: SingleChildScrollView(
@@ -25,5 +25,5 @@ class SplashscreenView extends StatefulWidget {
   }
 
   @override
-  State<SplashscreenView> createState() => SplashscreenController();
+  State<SupplierView> createState() => SupplierController();
 }

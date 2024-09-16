@@ -66,6 +66,50 @@ class SliderView extends StatelessWidget {
                       },
                     ),
                     DrawerMenu(
+                      title: "Database",
+                      isSelected: isParentSelected(
+                        "/database",
+                        [
+                          "/database/supplier",
+                          "/database/divisi",
+                          "/database/produk",
+                        ],
+                      ),
+                      onTap: () {},
+                      children: [
+                        DrawerMenu(
+                          title: "Supplier",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/database/supplier",
+                          onTap: () {
+                            router.go(
+                              "/database/supplier",
+                            );
+                          },
+                        ),
+                        DrawerMenu(
+                          title: "Divisi",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/database/divisi",
+                          onTap: () {
+                            router.go(
+                              "/database/divisi",
+                            );
+                          },
+                        ),
+                        DrawerMenu(
+                          title: "Produk",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/database/produk",
+                          onTap: () {
+                            router.go(
+                              "/database/produk",
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    DrawerMenu(
                       title: "Stock Opname",
                       isSelected: isParentSelected(
                         "/stock-opname",
@@ -74,9 +118,7 @@ class SliderView extends StatelessWidget {
                           "/stock-opname/mobile",
                         ],
                       ),
-                      onTap: () {
-                        // Route navigation logic here
-                      },
+                      onTap: () {},
                       children: [
                         DrawerMenu(
                           title: "Stocktake Harian",
@@ -106,9 +148,7 @@ class SliderView extends StatelessWidget {
                           "/user-management/role",
                         ],
                       ),
-                      onTap: () {
-                        // Route navigation logic here
-                      },
+                      onTap: () {},
                       children: [
                         DrawerMenu(
                           title: "User",

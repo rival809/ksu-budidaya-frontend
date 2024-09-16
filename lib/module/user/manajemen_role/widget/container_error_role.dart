@@ -43,7 +43,7 @@ class _ContainerErrorRoleState extends State<ContainerErrorRole> {
             // ),
 
             Text(
-              "Terjadi kesalahan saat mengambil data Verifikasi.",
+              "Terjadi kesalahan saat mengambil data.",
               textAlign: TextAlign.center,
               style: myTextTheme.bodyMedium,
             )
@@ -78,7 +78,7 @@ class _ContainerErrorRoleState extends State<ContainerErrorRole> {
             //   height: 8.0,
             // ),
             Text(
-              "Terjadi kesalahan saat mengambil data Verifikasi.",
+              "Terjadi kesalahan saat mengambil data.",
               textAlign: TextAlign.center,
               style: myTextTheme.bodyMedium,
             )

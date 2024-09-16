@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
-class ManajemenUserController extends State<ManajemenUserView> {
-  static late ManajemenUserController instance;
-  late ManajemenUserView view;
+class DivisiController extends State<DivisiView> {
+  static late DivisiController instance;
+  late DivisiView view;
 
   String page = "1";
   String size = "10";
-  TextEditingController userNameController = TextEditingController();
+  TextEditingController divisiNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
 
@@ -15,9 +15,8 @@ class ManajemenUserController extends State<ManajemenUserView> {
   ListRoleResult result = ListRoleResult();
 
   List<String> listRoleView = [
-    "nama",
-    "username",
-    "role",
+    "id_divisi",
+    "nama_divisi",
   ];
 
   cariDataUser() async {
@@ -28,8 +27,8 @@ class ManajemenUserController extends State<ManajemenUserView> {
         "size": size,
       };
 
-      if (trimString(userNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"role_name": trimString(userNameController.text)});
+      if (trimString(divisiNameController.text).toString().isNotEmpty) {
+        dataCari.addAll({"role_name": trimString(divisiNameController.text)});
       }
 
       // result = await ApiService.listRole(
@@ -39,7 +38,10 @@ class ManajemenUserController extends State<ManajemenUserView> {
       result = ListRoleResult(
         data: DataListRole(
           dataRoles: [
-            {"nama": "ROLE001", "username": "ADMIN", "role": "ADMIN"},
+            {
+              "id_divisi": "Divisi001",
+              "nama_divisi": "ADMIN",
+            },
           ],
         ),
       );

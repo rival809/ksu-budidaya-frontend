@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
-import '../controller/manajemen_user_controller.dart';
 
 class ManajemenUserView extends StatefulWidget {
   const ManajemenUserView({Key? key}) : super(key: key);
@@ -44,7 +43,7 @@ class ManajemenUserView extends StatefulWidget {
                                 width: 250,
                                 child: BaseForm(
                                   textEditingController:
-                                      controller.roleNameController,
+                                      controller.userNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
