@@ -4,10 +4,12 @@ import 'package:ksu_budidaya/core.dart';
 class DropdownAksi extends StatefulWidget {
   final String? text;
   final Function(int)? onChange;
+  final List<PopupMenuEntry<int>>? listItem;
   const DropdownAksi({
     super.key,
     required this.text,
     required this.onChange,
+    this.listItem,
   });
 
   @override
@@ -46,39 +48,41 @@ class _DropdownAksiState extends State<DropdownAksi> {
           ],
         ),
       ),
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: 1,
-          child: Row(
-            children: [
-              SvgPicture.asset(iconMiscInfo),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'Detail Data',
-                  style: myTextTheme.bodyMedium,
+      itemBuilder: (context) => widget.listItem != null
+          ? widget.listItem ?? []
+          : [
+              PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: [
+                    SvgPicture.asset(iconMiscInfo),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Detail Data',
+                        style: myTextTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 2,
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      iconDelete,
+                      colorFilter: colorFilter(color: red600),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Hapus',
+                      style: myTextTheme.bodyMedium,
+                    ),
+                  ],
                 ),
               ),
             ],
-          ),
-        ),
-        PopupMenuItem(
-          value: 2,
-          child: Row(
-            children: [
-              SvgPicture.asset(
-                iconDelete,
-                colorFilter: colorFilter(color: red600),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'Hapus',
-                style: myTextTheme.bodyMedium,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

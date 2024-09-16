@@ -105,7 +105,7 @@ class ManajemenRoleView extends StatefulWidget {
                       } else if (snapshot.connectionState ==
                           ConnectionState.done) {
                         if (snapshot.hasError) {
-                          return const ContainerErrorRole();
+                          return const ContainerError();
                         } else if (snapshot.hasData) {
                           ListRoleResult result = snapshot.data;
                           controller.dataListRole =
@@ -282,7 +282,7 @@ class ManajemenRoleView extends StatefulWidget {
                             );
                           }
                         } else {
-                          return const ContainerErrorRole();
+                          return const ContainerError();
                         }
                       } else {
                         return const ContainerTidakAda(

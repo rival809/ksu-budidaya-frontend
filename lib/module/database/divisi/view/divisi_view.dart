@@ -107,7 +107,7 @@ class DivisiView extends StatefulWidget {
                       } else if (snapshot.connectionState ==
                           ConnectionState.done) {
                         if (snapshot.hasError) {
-                          return const ContainerErrorRole();
+                          return const ContainerError();
                         } else if (snapshot.hasData) {
                           ListRoleResult result = snapshot.data;
                           controller.dataListRole =
@@ -174,6 +174,7 @@ class DivisiView extends StatefulWidget {
                                       if (value == 1) {
                                         showDialogBase(
                                           context: context,
+                                          width: 700,
                                           content: const DialogDivisi(),
                                         );
                                       } else if (value == 2) {
@@ -290,7 +291,7 @@ class DivisiView extends StatefulWidget {
                             );
                           }
                         } else {
-                          return const ContainerErrorRole();
+                          return const ContainerError();
                         }
                       } else {
                         return const ContainerTidakAda(

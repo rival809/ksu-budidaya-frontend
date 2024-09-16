@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
-class ContainerErrorRole extends StatefulWidget {
-  const ContainerErrorRole({
+class ContainerError extends StatefulWidget {
+  const ContainerError({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ContainerErrorRole> createState() => _ContainerErrorRoleState();
+  State<ContainerError> createState() => _ContainerErrorState();
 }
 
-class _ContainerErrorRoleState extends State<ContainerErrorRole> {
+class _ContainerErrorState extends State<ContainerError> {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
