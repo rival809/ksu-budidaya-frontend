@@ -7,6 +7,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
 
   String page = "1";
   String size = "10";
+  bool isAsc = true;
   TextEditingController roleNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
@@ -19,7 +20,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
     "role_name",
   ];
 
-  cariDataRole() async {
+  cariDataRole({bool? isAsc, String? field}) async {
     try {
       result = ListRoleResult();
       DataMap dataCari = {
@@ -29,6 +30,15 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
 
       if (trimString(roleNameController.text).toString().isNotEmpty) {
         dataCari.addAll({"role_name": trimString(roleNameController.text)});
+      }
+
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
       }
 
       result = await ApiService.listRole(
