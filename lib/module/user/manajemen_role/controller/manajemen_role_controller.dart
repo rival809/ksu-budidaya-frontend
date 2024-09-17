@@ -15,7 +15,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
   ListRoleResult result = ListRoleResult();
 
   List<String> listRoleView = [
-    "id",
+    "id_role",
     "role_name",
   ];
 
@@ -35,16 +35,107 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
         data: dataCari,
       ).timeout(const Duration(seconds: 30));
 
-      // result = ListRoleResult(
-      //   data: DataListRole(
-      //     dataRoles: [
-      //       {"id": "ROLE001", "role_name": "ADMIN"}
-      //     ],
-      //   ),
-      // );
-
       return result;
     } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postCreateRole(DataRoles dataEdit) async {
+    showCircleDialogLoading(context);
+    try {
+      DataMap data = dataEdit.toJson();
+      data.removeWhere((key, value) => key == "id_role");
+      data.removeWhere((key, value) => key == "updated_at");
+      data.removeWhere((key, value) => key == "created_at");
+
+      CreateRoleResult result = await ApiService.createRole(
+        data: data,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          context: context,
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataRole();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postRemoveRole(String idRole) async {
+    showCircleDialogLoading(context);
+    try {
+      CreateRoleResult result = await ApiService.removeRole(
+        data: {
+          "id_role": idRole,
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          context: context,
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataRole();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postUpdateRole(DataMap dataEdit, String idRole) async {
+    showCircleDialogLoading(context);
+    try {
+      dataEdit.addAll({"id_role": idRole});
+
+      CreateRoleResult result = await ApiService.updateRole(
+        data: dataEdit,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          context: context,
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataRole();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog(
             "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);

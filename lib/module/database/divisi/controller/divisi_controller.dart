@@ -37,13 +37,13 @@ class DivisiController extends State<DivisiView> {
 
       result = ListRoleResult(
         data: DataListRole(
-          dataRoles: [
-            {
-              "id_divisi": "Divisi001",
-              "nama_divisi": "ADMIN",
-            },
-          ],
-        ),
+            // dataRoles: [
+            //   {
+            //     "id_divisi": "Divisi001",
+            //     "nama_divisi": "ADMIN",
+            //   },
+            // ],
+            ),
       );
 
       return result;

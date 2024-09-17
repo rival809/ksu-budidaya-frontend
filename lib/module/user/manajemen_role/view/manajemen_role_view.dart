@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ManajemenRoleView extends StatefulWidget {
@@ -83,7 +84,9 @@ class ManajemenRoleView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 context: context,
-                                content: const DialogTambahRole(),
+                                content: const DialogTambahRole(
+                                  isDetail: false,
+                                ),
                               );
                             },
                             text: "Tambah Role",
@@ -111,9 +114,8 @@ class ManajemenRoleView extends StatefulWidget {
                           controller.dataListRole =
                               result.data ?? DataListRole();
                           List<dynamic> listData =
-                              controller.dataListRole.dataRoles ?? [];
-                          print("result.data");
-                          print(controller.dataListRole.dataRoles);
+                              controller.dataListRole.toJson()["data_roles"] ??
+                                  [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
@@ -172,7 +174,11 @@ class ManajemenRoleView extends StatefulWidget {
                                       if (value == 1) {
                                         showDialogBase(
                                           context: context,
-                                          content: const DialogTambahRole(),
+                                          content: DialogTambahRole(
+                                            isDetail: true,
+                                            dataRole: result
+                                                .data?.dataRoles?[rowIndex],
+                                          ),
                                         );
                                       } else if (value == 2) {
                                         showDialogBase(
@@ -180,7 +186,15 @@ class ManajemenRoleView extends StatefulWidget {
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Role",
-                                            onConfirm: () {},
+                                            onConfirm: () {
+                                              Navigator.pop(context);
+                                              controller.postRemoveRole(
+                                                trimString(result
+                                                    .data
+                                                    ?.dataRoles?[rowIndex]
+                                                    .idRole),
+                                              );
+                                            },
                                           ),
                                         );
                                       }

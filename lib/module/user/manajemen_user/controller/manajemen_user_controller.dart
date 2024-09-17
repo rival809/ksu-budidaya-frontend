@@ -38,10 +38,10 @@ class ManajemenUserController extends State<ManajemenUserView> {
 
       result = ListRoleResult(
         data: DataListRole(
-          dataRoles: [
-            {"nama": "ROLE001", "username": "ADMIN", "role": "ADMIN"},
-          ],
-        ),
+            // dataRoles: [
+            //   {"nama": "ROLE001", "username": "ADMIN", "role": "ADMIN"},
+            // ],
+            ),
       );
 
       return result;

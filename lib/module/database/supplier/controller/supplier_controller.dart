@@ -41,17 +41,17 @@ class SupplierController extends State<SupplierView> {
 
       result = ListRoleResult(
         data: DataListRole(
-          dataRoles: [
-            {
-              "id": "Supplier001",
-              "nama_supplier": "ADMIN",
-              "alamat": "A",
-              "kontak": "B",
-              "pemilik": "ADMIN",
-              "hutang_dagang": "100000",
-            },
-          ],
-        ),
+            // dataRoles: [
+            //   {
+            //     "id": "Supplier001",
+            //     "nama_supplier": "ADMIN",
+            //     "alamat": "A",
+            //     "kontak": "B",
+            //     "pemilik": "ADMIN",
+            //     "hutang_dagang": "100000",
+            //   },
+            // ],
+            ),
       );
 
       return result;

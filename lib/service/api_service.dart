@@ -82,6 +82,69 @@ class ApiService {
     }
   }
 
+  static Future<CreateRoleResult> createRole({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/roles/create-role",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return CreateRoleResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createRole');
+    }
+  }
+
+  static Future<CreateRoleResult> removeRole({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/roles/remove-role",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return CreateRoleResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeRole');
+    }
+  }
+
+  static Future<CreateRoleResult> updateRole({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/roles/update-role",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return CreateRoleResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateRole');
+    }
+  }
+
   static Future<ListRoleResult> listUser({
     required DataMap data,
   }) async {

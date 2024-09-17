@@ -41,17 +41,17 @@ class AnggotaController extends State<AnggotaView> {
 
       result = ListRoleResult(
         data: DataListRole(
-          dataRoles: [
-            {
-              "id": "Anggota001",
-              "nama": "ADMIN",
-              "alamat": "A",
-              "no_whatsapp": "083391712",
-              "limit": "300000",
-              "hutang": "100000",
-            },
-          ],
-        ),
+            // dataRoles: [
+            //   {
+            //     "id": "Anggota001",
+            //     "nama": "ADMIN",
+            //     "alamat": "A",
+            //     "no_whatsapp": "083391712",
+            //     "limit": "300000",
+            //     "hutang": "100000",
+            //   },
+            // ],
+            ),
       );
 
       return result;

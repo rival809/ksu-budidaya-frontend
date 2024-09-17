@@ -1,13 +1,13 @@
-class ListRoleResult {
+class CreateRoleResult {
   bool? success;
-  DataListRole? data;
+  DataCreateRole? data;
   String? message;
 
-  ListRoleResult({this.success, this.data, this.message});
+  CreateRoleResult({this.success, this.data, this.message});
 
-  ListRoleResult.fromJson(Map<String, dynamic> json) {
+  CreateRoleResult.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? DataListRole.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataCreateRole.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -22,35 +22,7 @@ class ListRoleResult {
   }
 }
 
-class DataListRole {
-  List<DataRoles>? dataRoles;
-  Paging? paging;
-
-  DataListRole({this.dataRoles, this.paging});
-
-  DataListRole.fromJson(Map<String, dynamic> json) {
-    if (json['data_roles'] != null) {
-      dataRoles = <DataRoles>[];
-      json['data_roles'].forEach((v) {
-        dataRoles!.add(DataRoles.fromJson(v));
-      });
-    }
-    paging = json['paging'] != null ? Paging.fromJson(json['paging']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (dataRoles != null) {
-      data['data_roles'] = dataRoles!.map((v) => v.toJson()).toList();
-    }
-    if (paging != null) {
-      data['paging'] = paging!.toJson();
-    }
-    return data;
-  }
-}
-
-class DataRoles {
+class DataCreateRole {
   String? idRole;
   String? roleName;
   bool? stsAnggota;
@@ -78,7 +50,7 @@ class DataRoles {
   String? createdAt;
   String? updatedAt;
 
-  DataRoles(
+  DataCreateRole(
       {this.idRole,
       this.roleName,
       this.stsAnggota,
@@ -106,65 +78,7 @@ class DataRoles {
       this.createdAt,
       this.updatedAt});
 
-  DataRoles copyWith({
-    String? idRole,
-    String? roleName,
-    bool? stsAnggota,
-    bool? stsPembayaranPinjaman,
-    bool? stsKartuPiutang,
-    bool? stsSupplier,
-    bool? stsDivisi,
-    bool? stsProduk,
-    bool? stsPembelian,
-    bool? stsPenjualan,
-    bool? stsRetur,
-    bool? stsPembayaranHutang,
-    bool? stsEstimasi,
-    bool? stsStocktakeHarian,
-    bool? stsStockOpname,
-    bool? stsCashInCashOut,
-    bool? stsCashMovement,
-    bool? stsUser,
-    bool? stsRole,
-    bool? stsCetakLabel,
-    bool? stsCetakBarcode,
-    bool? stsAwalAkhirHari,
-    bool? stsDashboard,
-    bool? stsLaporan,
-    String? createdAt,
-    String? updatedAt,
-  }) =>
-      DataRoles(
-        idRole: idRole ?? this.idRole,
-        roleName: roleName ?? this.roleName,
-        stsAnggota: stsAnggota ?? this.stsAnggota,
-        stsPembayaranPinjaman:
-            stsPembayaranPinjaman ?? this.stsPembayaranPinjaman,
-        stsKartuPiutang: stsKartuPiutang ?? this.stsKartuPiutang,
-        stsSupplier: stsSupplier ?? this.stsSupplier,
-        stsDivisi: stsDivisi ?? this.stsDivisi,
-        stsProduk: stsProduk ?? this.stsProduk,
-        stsPembelian: stsPembelian ?? this.stsPembelian,
-        stsPenjualan: stsPenjualan ?? this.stsPenjualan,
-        stsRetur: stsRetur ?? this.stsRetur,
-        stsPembayaranHutang: stsPembayaranHutang ?? this.stsPembayaranHutang,
-        stsEstimasi: stsEstimasi ?? this.stsEstimasi,
-        stsStocktakeHarian: stsStocktakeHarian ?? this.stsStocktakeHarian,
-        stsStockOpname: stsStockOpname ?? this.stsStockOpname,
-        stsCashInCashOut: stsCashInCashOut ?? this.stsCashInCashOut,
-        stsCashMovement: stsCashMovement ?? this.stsCashMovement,
-        stsUser: stsUser ?? this.stsUser,
-        stsRole: stsRole ?? this.stsRole,
-        stsCetakLabel: stsCetakLabel ?? this.stsCetakLabel,
-        stsCetakBarcode: stsCetakBarcode ?? this.stsCetakBarcode,
-        stsAwalAkhirHari: stsAwalAkhirHari ?? this.stsAwalAkhirHari,
-        stsDashboard: stsDashboard ?? this.stsDashboard,
-        stsLaporan: stsLaporan ?? this.stsLaporan,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  DataRoles.fromJson(Map<String, dynamic> json) {
+  DataCreateRole.fromJson(Map<String, dynamic> json) {
     idRole = json['id_role'];
     roleName = json['role_name'];
     stsAnggota = json['sts_anggota'];
@@ -221,28 +135,6 @@ class DataRoles {
     data['sts_laporan'] = stsLaporan;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
-    return data;
-  }
-}
-
-class Paging {
-  int? page;
-  int? totalItem;
-  int? totalPage;
-
-  Paging({this.page, this.totalItem, this.totalPage});
-
-  Paging.fromJson(Map<String, dynamic> json) {
-    page = json['page'];
-    totalItem = json['total_item'];
-    totalPage = json['total_page'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['page'] = page;
-    data['total_item'] = totalItem;
-    data['total_page'] = totalPage;
     return data;
   }
 }
