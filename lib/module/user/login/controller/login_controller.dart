@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/database/auth/user_database.dart';
 import 'package:universal_html/html.dart' as html;
 
 class LoginController extends State<LoginView> {
@@ -21,7 +22,8 @@ class LoginController extends State<LoginView> {
         password: password,
       ).timeout(const Duration(seconds: 30));
 
-      await AppSession.save(result.data?.token ?? "");
+      await AppSession.save(result.data?.userData?.token ?? "");
+      await UserDatabase.save(result);
 
       ApiService.options.headers?['Authorization'] = AppSession.token;
 

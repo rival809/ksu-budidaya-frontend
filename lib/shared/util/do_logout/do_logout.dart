@@ -1,4 +1,5 @@
 import 'package:ksu_budidaya/core.dart';
+import 'package:universal_html/html.dart' as html;
 
 doLogout() async {
   // UserDatabase.save(LoginResult());
@@ -14,5 +15,5 @@ doLogout() async {
   //MAKE ERROR IF ERASER DEVICE DATABASE
   // DeviceDatabase.save("", "");
   AppSession.save("");
-  router.go("/");
+  html.window.location.replace("/");
 }

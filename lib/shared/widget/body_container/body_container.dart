@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/database/auth/user_database.dart';
+import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class BodyContainer extends StatefulWidget {
   final Widget contentBody;
@@ -79,11 +81,13 @@ class _BodyContainerState extends State<BodyContainer> {
                 Column(
                   children: [
                     Text(
-                      "Irwan Ramadhan",
+                      trimString(
+                          UserDatabase.userDatabase.data?.userData?.name),
                       style: myTextTheme.titleSmall,
                     ),
                     Text(
-                      "Admin",
+                      trimString(
+                          UserDatabase.userDatabase.data?.roleData?.roleName),
                       style: bodyXSmall,
                     ),
                   ],
