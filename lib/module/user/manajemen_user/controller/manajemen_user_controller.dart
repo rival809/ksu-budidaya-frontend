@@ -7,42 +7,44 @@ class ManajemenUserController extends State<ManajemenUserView> {
 
   String page = "1";
   String size = "10";
+  bool isAsc = true;
   TextEditingController userNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
 
-  DataListRole dataListRole = DataListRole();
-  ListRoleResult result = ListRoleResult();
+  DataListUser dataListRole = DataListUser();
+  ListUserResult result = ListUserResult();
 
   List<String> listRoleView = [
-    "nama",
     "username",
-    "role",
+    "name",
+    "id_role",
   ];
 
-  cariDataUser() async {
+  cariDataUser({bool? isAsc, String? field}) async {
     try {
-      result = ListRoleResult();
+      result = ListUserResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
       };
 
       if (trimString(userNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"role_name": trimString(userNameController.text)});
+        dataCari.addAll({"username": trimString(userNameController.text)});
       }
 
-      // result = await ApiService.listRole(
-      //   data: dataCari,
-      // ).timeout(const Duration(seconds: 30));
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
 
-      result = ListRoleResult(
-        data: DataListRole(
-            // dataRoles: [
-            //   {"nama": "ROLE001", "username": "ADMIN", "role": "ADMIN"},
-            // ],
-            ),
-      );
+      result = await ApiService.listUser(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
 
       return result;
     } catch (e) {
@@ -58,6 +60,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
   @override
   void initState() {
     instance = this;
+    dataFuture = cariDataUser();
     super.initState();
   }
 

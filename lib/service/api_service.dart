@@ -145,7 +145,7 @@ class ApiService {
     }
   }
 
-  static Future<ListRoleResult> listUser({
+  static Future<ListUserResult> listUser({
     required DataMap data,
   }) async {
     var response = await dio.post(
@@ -157,7 +157,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return ListRoleResult.fromJson(json.decode(response.toString()));
+        return ListUserResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }

@@ -108,13 +108,12 @@ class ManajemenUserView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          ListRoleResult result = snapshot.data;
+                          ListUserResult result = snapshot.data;
                           controller.dataListRole =
-                              result.data ?? DataListRole();
+                              result.data ?? DataListUser();
                           List<dynamic> listData =
-                              controller.dataListRole.dataRoles ?? [];
-                          print("result.data");
-                          print(controller.dataListRole.dataRoles);
+                              controller.dataListRole.toJson()["data_users"] ??
+                                  [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
@@ -241,15 +240,16 @@ class ManajemenUserView extends StatefulWidget {
                                   event.stateManager.setShowColumnFilter(true);
                                 },
                                 onSorted: (event) {
-                                  // if (event.column.field != "Aksi") {
-                                  //   controller.isAsc = !controller.isAsc;
-                                  //   controller.update();
-                                  //   controller.dataFuture =
-                                  //       controller.cariEditTable(
-                                  //           event.column.field,
-                                  //           controller.isAsc);
-                                  //   controller.update();
-                                  // }
+                                  if (event.column.field != "Aksi") {
+                                    controller.isAsc = !controller.isAsc;
+                                    controller.update();
+                                    controller.dataFuture =
+                                        controller.cariDataUser(
+                                      isAsc: controller.isAsc,
+                                      field: event.column.field,
+                                    );
+                                    controller.update();
+                                  }
                                 },
                                 configuration: PlutoGridConfiguration(
                                   columnSize: const PlutoGridColumnSizeConfig(
@@ -273,13 +273,47 @@ class ManajemenUserView extends StatefulWidget {
                                     maxPage: controller
                                             .dataListRole.paging?.totalPage ??
                                         0,
-                                    onChangePage: (value) {},
-                                    onChangePerPage: (value) {},
+                                    onChangePage: (value) {
+                                      controller.page = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataUser();
+                                      controller.update();
+                                    },
+                                    onChangePerPage: (value) {
+                                      controller.size = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataUser();
+                                      controller.update();
+                                    },
                                     totalRow: controller
                                             .dataListRole.paging?.totalItem ??
                                         0,
-                                    onPressLeft: () {},
-                                    onPressRight: () {},
+                                    onPressLeft: () {
+                                      if (int.parse(controller.page) > 1) {
+                                        controller.page =
+                                            (int.parse(controller.page) - 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataUser();
+                                        controller.update();
+                                      }
+                                    },
+                                    onPressRight: () {
+                                      if (int.parse(controller.page) <
+                                          (result.data?.paging?.totalPage ??
+                                              0)) {
+                                        controller.page =
+                                            (int.parse(controller.page) + 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataUser();
+                                        controller.update();
+                                      }
+                                    },
                                   );
                                 },
                               ),
