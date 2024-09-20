@@ -83,8 +83,10 @@ class ManajemenUserView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 width: 700,
-                                context: context,
-                                content: const DialogUser(),
+                                content: DialogUser(
+                                  isDetail: false,
+                                  data: DetailUserResult(),
+                                ),
                               );
                             },
                             text: "Tambah User",
@@ -109,10 +111,10 @@ class ManajemenUserView extends StatefulWidget {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           ListUserResult result = snapshot.data;
-                          controller.dataListRole =
+                          controller.dataListUser =
                               result.data ?? DataListUser();
                           List<dynamic> listData =
-                              controller.dataListRole.toJson()["data_users"] ??
+                              controller.dataListUser.toJson()["data_users"] ??
                                   [];
 
                           if (listData.isNotEmpty) {
@@ -145,10 +147,17 @@ class ManajemenUserView extends StatefulWidget {
                                 backgroundColor: primaryColor,
                                 filterHintText:
                                     "Cari ${controller.listRoleView[index]}",
-                                title: convertTitle(
-                                  controller.listRoleView[index],
-                                ),
-                                field: controller.listRoleView[index],
+                                title:
+                                    controller.listRoleView[index] == "id_role"
+                                        ? "ROLE"
+                                        : convertTitle(
+                                            controller.listRoleView[index],
+                                          ),
+                                field: controller.listRoleView[index] ==
+                                        "id_role"
+                                    ? getNamaRole(
+                                        idRole: controller.listRoleView[index])
+                                    : controller.listRoleView[index],
                                 type: PlutoColumnType.text(),
                               );
                             }));
@@ -164,28 +173,23 @@ class ManajemenUserView extends StatefulWidget {
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
-                                  final rowIndex = rendererContext.rowIdx;
+                                  Map<String, dynamic> dataRow =
+                                      rendererContext.row.toJson();
 
                                   return DropdownAksi(
                                     text: "Aksi",
                                     onChange: (value) {
                                       if (value == 1) {
-                                        showDialogBase(
-                                          context: context,
-                                          width: 700,
-                                          content: const DialogUser(),
-                                        );
+                                        controller.postDetailUser(
+                                            username: dataRow["username"]);
                                       } else if (value == 2) {
                                         showDialogBase(
-                                          context: context,
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus User",
                                             onConfirm: () async {
-                                              Navigator.pop(context);
-                                              await showDialogBase(
-                                                context: context,
-                                                content: const DialogBerhasil(),
+                                              controller.postRemoveUser(
+                                                trimString(dataRow["username"]),
                                               );
                                             },
                                           ),
@@ -271,7 +275,7 @@ class ManajemenUserView extends StatefulWidget {
                                     page: controller.page,
                                     itemPerpage: controller.size,
                                     maxPage: controller
-                                            .dataListRole.paging?.totalPage ??
+                                            .dataListUser.paging?.totalPage ??
                                         0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
@@ -281,6 +285,7 @@ class ManajemenUserView extends StatefulWidget {
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
+                                      controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
                                       controller.dataFuture =
@@ -288,7 +293,7 @@ class ManajemenUserView extends StatefulWidget {
                                       controller.update();
                                     },
                                     totalRow: controller
-                                            .dataListRole.paging?.totalItem ??
+                                            .dataListUser.paging?.totalItem ??
                                         0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {

@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class FooterTableWidget extends StatefulWidget {
@@ -68,42 +70,45 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                     const SizedBox(
                       width: 8.0,
                     ),
-                    SizedBox(
-                      width: 100,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                          isExpanded: false,
-                          items: ["10", "25", "50", "75", "100"]
-                              .map((String item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: myTextTheme.bodyMedium?.copyWith(
-                                        color: gray900,
-                                        fontWeight: FontWeight.w700,
+                    IntrinsicHeight(
+                      child: SizedBox(
+                        width: 100,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2<String>(
+                            isExpanded: false,
+                            items: ["10", "25", "50", "75", "100"]
+                                .map((String item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: myTextTheme.bodyMedium?.copyWith(
+                                          color: gray900,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
-                                    ),
-                                  ))
-                              .toList(),
-                          value:
-                              trimString(widget.itemPerpage).toString().isEmpty
-                                  ? "10"
-                                  : trimString(widget.itemPerpage),
-                          onChanged: widget.onChangePerPage,
-                          iconStyleData: IconStyleData(
-                            iconEnabledColor: primaryColor,
-                            icon: SvgPicture.asset(
-                              iconChevronDown,
-                              colorFilter: colorFilter(color: primaryColor),
+                                    ))
+                                .toList(),
+                            value: trimString(widget.itemPerpage)
+                                    .toString()
+                                    .isEmpty
+                                ? "10"
+                                : trimString(widget.itemPerpage),
+                            onChanged: widget.onChangePerPage,
+                            iconStyleData: IconStyleData(
+                              iconEnabledColor: primaryColor,
+                              icon: SvgPicture.asset(
+                                iconChevronDown,
+                                colorFilter: colorFilter(color: primaryColor),
+                              ),
                             ),
-                          ),
-                          buttonStyleData: const ButtonStyleData(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            height: 40,
-                            width: 140,
-                          ),
-                          menuItemStyleData: const MenuItemStyleData(
-                            height: 40,
+                            buttonStyleData: const ButtonStyleData(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              height: 40,
+                              width: 140,
+                            ),
+                            menuItemStyleData: const MenuItemStyleData(
+                              height: 40,
+                            ),
                           ),
                         ),
                       ),
@@ -143,40 +148,42 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                     const SizedBox(
                       width: 8.0,
                     ),
-                    SizedBox(
-                      width: 100,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                          isExpanded: false,
-                          items: getPageList(
-                                  trimString((widget.maxPage ?? 0).toString()))
-                              .map((String item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: myTextTheme.bodyMedium?.copyWith(
-                                        color: gray900,
-                                        fontWeight: FontWeight.w700,
+                    IntrinsicHeight(
+                      child: SizedBox(
+                        width: 100,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2<String>(
+                            isExpanded: false,
+                            items: getPageList(trimString(
+                                    (widget.maxPage ?? 0).toString()))
+                                .map((String item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: myTextTheme.bodyMedium?.copyWith(
+                                          color: gray900,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
-                                    ),
-                                  ))
-                              .toList(),
-                          value: widget.page,
-                          onChanged: widget.onChangePage,
-                          iconStyleData: IconStyleData(
-                            iconEnabledColor: yellow600,
-                            icon: SvgPicture.asset(
-                              iconChevronDown,
-                              colorFilter: colorFilter(color: primaryColor),
+                                    ))
+                                .toList(),
+                            value: widget.page,
+                            onChanged: widget.onChangePage,
+                            iconStyleData: IconStyleData(
+                              iconEnabledColor: yellow600,
+                              icon: SvgPicture.asset(
+                                iconChevronDown,
+                                colorFilter: colorFilter(color: primaryColor),
+                              ),
                             ),
-                          ),
-                          buttonStyleData: const ButtonStyleData(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            height: 40,
-                            width: 140,
-                          ),
-                          menuItemStyleData: const MenuItemStyleData(
-                            height: 40,
+                            buttonStyleData: const ButtonStyleData(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              height: 40,
+                              width: 140,
+                            ),
+                            menuItemStyleData: const MenuItemStyleData(
+                              height: 40,
+                            ),
                           ),
                         ),
                       ),
@@ -203,7 +210,7 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                       onPressed: widget.onPressLeft,
                       icon: SvgPicture.asset(
                         iconChevronLeft,
-                        colorFilter: ((widget.maxPage ?? 0) >
+                        colorFilter: ((widget.maxPage ?? 0) >=
                                     (int.tryParse(widget.page ?? "0") ?? 0) &&
                                 (int.tryParse(widget.page ?? "0") != 1))
                             ? colorFilter(color: primaryColor)

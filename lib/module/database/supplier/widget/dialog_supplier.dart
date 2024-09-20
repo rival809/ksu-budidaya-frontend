@@ -149,7 +149,6 @@ class _DialogSupplierState extends State<DialogSupplier> {
                   text: "Simpan",
                   onPressed: () {
                     showDialogBase(
-                      context: context,
                       content: const DialogBerhasil(),
                     );
                   },

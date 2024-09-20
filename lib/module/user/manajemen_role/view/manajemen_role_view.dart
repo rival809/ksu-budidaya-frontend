@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ManajemenRoleView extends StatefulWidget {
@@ -83,7 +82,6 @@ class ManajemenRoleView extends StatefulWidget {
                           BasePrimaryButton(
                             onPressed: () {
                               showDialogBase(
-                                context: context,
                                 content: const DialogTambahRole(
                                   isDetail: false,
                                 ),
@@ -173,7 +171,6 @@ class ManajemenRoleView extends StatefulWidget {
                                     onChange: (value) {
                                       if (value == 1) {
                                         showDialogBase(
-                                          context: context,
                                           content: DialogTambahRole(
                                             isDetail: true,
                                             dataRole: result
@@ -182,12 +179,10 @@ class ManajemenRoleView extends StatefulWidget {
                                         );
                                       } else if (value == 2) {
                                         showDialogBase(
-                                          context: context,
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Role",
                                             onConfirm: () {
-                                              Navigator.pop(context);
                                               controller.postRemoveRole(
                                                 trimString(result
                                                     .data
@@ -288,6 +283,7 @@ class ManajemenRoleView extends StatefulWidget {
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
+                                      controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
                                       controller.dataFuture =

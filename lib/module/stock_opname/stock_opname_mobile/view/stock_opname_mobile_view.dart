@@ -27,7 +27,6 @@ class StockOpnameMobileView extends StatefulWidget {
                   text: "Simpan",
                   onPressed: () {
                     showDialogBase(
-                      context: context,
                       content: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(

@@ -218,7 +218,6 @@ class SliderView extends StatelessWidget {
                     ),
                     onTap: () {
                       showDialogBase(
-                        context: context,
                         content: SingleChildScrollView(
                           controller: ScrollController(),
                           child: Padding(

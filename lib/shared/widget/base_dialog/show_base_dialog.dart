@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ksu_budidaya/state_util.dart';
 
 Future showDialogBase({
-  required BuildContext context,
   required Widget content,
   bool? barrierDismissible,
   double? width,
 }) async {
   await showDialog<void>(
-    context: context,
+    context: globalContext,
     barrierDismissible: barrierDismissible ?? false,
     builder: (BuildContext context) {
       return AlertDialog(

@@ -83,7 +83,6 @@ class SupplierView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 width: 700,
-                                context: context,
                                 content: const DialogSupplier(),
                               );
                             },
@@ -235,27 +234,23 @@ class SupplierView extends StatefulWidget {
                                     onChange: (value) {
                                       if (value == 1) {
                                         showDialogBase(
-                                          context: context,
                                           width: 700,
                                           content: const DialogSupplier(),
                                         );
                                       } else if (value == 2) {
                                         showDialogBase(
-                                          context: context,
                                           width: 700,
                                           content: const DialogSupplier(),
                                         );
                                       } else if (value == 3) {
                                       } else if (value == 4) {
                                         showDialogBase(
-                                          context: context,
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Supplier",
                                             onConfirm: () async {
                                               Navigator.pop(context);
                                               await showDialogBase(
-                                                context: context,
                                                 content: const DialogBerhasil(),
                                               );
                                             },

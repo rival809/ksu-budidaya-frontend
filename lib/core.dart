@@ -6,8 +6,10 @@ it means you have to rename it to something more unique.
 export 'package:ksu_budidaya/config.dart';
 export 'package:ksu_budidaya/core_package.dart';
 export 'package:ksu_budidaya/database/auth/user_database.dart';
+export 'package:ksu_budidaya/database/user/role_database.dart';
 export 'package:ksu_budidaya/model/auth/login_model.dart';
 export 'package:ksu_budidaya/model/user/create_role_model.dart';
+export 'package:ksu_budidaya/model/user/detail_user_model.dart';
 export 'package:ksu_budidaya/model/user/list_role_model.dart';
 export 'package:ksu_budidaya/model/user/list_user_model.dart';
 export 'package:ksu_budidaya/module/beranda/controller/beranda_controller.dart';
@@ -72,6 +74,7 @@ export 'package:ksu_budidaya/shared/util/formater.dart';
 export 'package:ksu_budidaya/shared/util/format_currency.dart';
 export 'package:ksu_budidaya/shared/util/get_image_from_asset/get_image_form_asset.dart';
 export 'package:ksu_budidaya/shared/util/get_label/get_label.dart';
+export 'package:ksu_budidaya/shared/util/global_reference/global_reference.dart';
 export 'package:ksu_budidaya/shared/util/handle_dio_exception/handle_dio_exception.dart';
 export 'package:ksu_budidaya/shared/util/helper_string/helper_string.dart';
 export 'package:ksu_budidaya/shared/util/helper_sum/helper_sum.dart';

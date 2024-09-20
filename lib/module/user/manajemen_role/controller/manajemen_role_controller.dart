@@ -57,6 +57,8 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
   }
 
   postCreateRole(DataRoles dataEdit) async {
+    Get.back();
+
     showCircleDialogLoading(context);
     try {
       DataMap data = dataEdit.toJson();
@@ -72,7 +74,6 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
 
       if (result.success == true) {
         showDialogBase(
-          context: context,
           content: const DialogBerhasil(),
         );
 
@@ -92,6 +93,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
   }
 
   postRemoveRole(String idRole) async {
+    Get.back();
     showCircleDialogLoading(context);
     try {
       CreateRoleResult result = await ApiService.removeRole(
@@ -104,7 +106,6 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
 
       if (result.success == true) {
         showDialogBase(
-          context: context,
           content: const DialogBerhasil(),
         );
 
@@ -124,6 +125,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
   }
 
   postUpdateRole(DataMap dataEdit, String idRole) async {
+    Get.back();
     showCircleDialogLoading(context);
     try {
       dataEdit.addAll({"id_role": idRole});
@@ -136,7 +138,6 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
 
       if (result.success == true) {
         showDialogBase(
-          context: context,
           content: const DialogBerhasil(),
         );
 

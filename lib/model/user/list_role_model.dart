@@ -1,3 +1,7 @@
+import 'package:hive/hive.dart';
+import 'package:ksu_budidaya/core.dart';
+part 'list_role_model.g.dart';
+
 class ListRoleResult {
   bool? success;
   DataListRole? data;
@@ -22,60 +26,87 @@ class ListRoleResult {
   }
 }
 
-class DataListRole {
+@HiveType(typeId: 4)
+class DataListRole extends HiveObject {
+  @HiveField(0)
   List<DataRoles>? dataRoles;
+  @HiveField(1)
   Paging? paging;
 
   DataListRole({this.dataRoles, this.paging});
 
-  DataListRole.fromJson(Map<String, dynamic> json) {
-    if (json['data_roles'] != null) {
-      dataRoles = <DataRoles>[];
-      json['data_roles'].forEach((v) {
-        dataRoles!.add(DataRoles.fromJson(v));
-      });
-    }
-    paging = json['paging'] != null ? Paging.fromJson(json['paging']) : null;
+  factory DataListRole.fromJson(Map<String, dynamic> json) {
+    return DataListRole(
+      dataRoles: json['data_roles'] != null
+          ? (json['data_roles'] as List)
+              .map((v) => DataRoles.fromJson(v))
+              .toList()
+          : null,
+      paging: json['paging'] != null ? Paging.fromJson(json['paging']) : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (dataRoles != null) {
-      data['data_roles'] = dataRoles!.map((v) => v.toJson()).toList();
-    }
-    if (paging != null) {
-      data['paging'] = paging!.toJson();
-    }
-    return data;
+    return {
+      'data_roles': dataRoles?.map((v) => v.toJson()).toList(),
+      'paging': paging?.toJson(),
+    };
   }
 }
 
-class DataRoles {
+@HiveType(typeId: 5)
+class DataRoles extends HiveObject {
+  @HiveField(0)
   String? idRole;
+  @HiveField(1)
   String? roleName;
+  @HiveField(2)
   bool? stsAnggota;
+  @HiveField(3)
   bool? stsPembayaranPinjaman;
+  @HiveField(4)
   bool? stsKartuPiutang;
+  @HiveField(5)
   bool? stsSupplier;
+  @HiveField(6)
   bool? stsDivisi;
+  @HiveField(7)
   bool? stsProduk;
+  @HiveField(8)
   bool? stsPembelian;
+  @HiveField(9)
   bool? stsPenjualan;
+  @HiveField(10)
   bool? stsRetur;
+  @HiveField(11)
   bool? stsPembayaranHutang;
+  @HiveField(12)
   bool? stsEstimasi;
+  @HiveField(13)
   bool? stsStocktakeHarian;
+  @HiveField(14)
   bool? stsStockOpname;
+  @HiveField(15)
   bool? stsCashInCashOut;
+  @HiveField(16)
   bool? stsCashMovement;
+  @HiveField(17)
   bool? stsUser;
+  @HiveField(18)
   bool? stsRole;
+  @HiveField(19)
   bool? stsCetakLabel;
+  @HiveField(20)
   bool? stsCetakBarcode;
+  @HiveField(21)
   bool? stsAwalAkhirHari;
+  @HiveField(22)
   bool? stsDashboard;
+  @HiveField(23)
   bool? stsLaporan;
+  @HiveField(24)
   String? createdAt;
+  @HiveField(25)
   String? updatedAt;
 
   DataRoles(
@@ -105,6 +136,10 @@ class DataRoles {
       this.stsLaporan,
       this.createdAt,
       this.updatedAt});
+
+  String roleAsString() {
+    return '${trimString(idRole)} - ${trimString(roleName)}';
+  }
 
   DataRoles copyWith({
     String? idRole,
@@ -164,70 +199,76 @@ class DataRoles {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  DataRoles.fromJson(Map<String, dynamic> json) {
-    idRole = json['id_role'];
-    roleName = json['role_name'];
-    stsAnggota = json['sts_anggota'];
-    stsPembayaranPinjaman = json['sts_pembayaran_pinjaman'];
-    stsKartuPiutang = json['sts_kartu_piutang'];
-    stsSupplier = json['sts_supplier'];
-    stsDivisi = json['sts_divisi'];
-    stsProduk = json['sts_produk'];
-    stsPembelian = json['sts_pembelian'];
-    stsPenjualan = json['sts_penjualan'];
-    stsRetur = json['sts_retur'];
-    stsPembayaranHutang = json['sts_pembayaran_hutang'];
-    stsEstimasi = json['sts_estimasi'];
-    stsStocktakeHarian = json['sts_stocktake_harian'];
-    stsStockOpname = json['sts_stock_opname'];
-    stsCashInCashOut = json['sts_cash_in_cash_out'];
-    stsCashMovement = json['sts_cash_movement'];
-    stsUser = json['sts_user'];
-    stsRole = json['sts_role'];
-    stsCetakLabel = json['sts_cetak_label'];
-    stsCetakBarcode = json['sts_cetak_barcode'];
-    stsAwalAkhirHari = json['sts_awal_akhir_hari'];
-    stsDashboard = json['sts_dashboard'];
-    stsLaporan = json['sts_laporan'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  factory DataRoles.fromJson(Map<String, dynamic> json) {
+    return DataRoles(
+      idRole: json['id_role'],
+      roleName: json['role_name'],
+      stsAnggota: json['sts_anggota'],
+      stsPembayaranPinjaman: json['sts_pembayaran_pinjaman'],
+      stsKartuPiutang: json['sts_kartu_piutang'],
+      stsSupplier: json['sts_supplier'],
+      stsDivisi: json['sts_divisi'],
+      stsProduk: json['sts_produk'],
+      stsPembelian: json['sts_pembelian'],
+      stsPenjualan: json['sts_penjualan'],
+      stsRetur: json['sts_retur'],
+      stsPembayaranHutang: json['sts_pembayaran_hutang'],
+      stsEstimasi: json['sts_estimasi'],
+      stsStocktakeHarian: json['sts_stocktake_harian'],
+      stsStockOpname: json['sts_stock_opname'],
+      stsCashInCashOut: json['sts_cash_in_cash_out'],
+      stsCashMovement: json['sts_cash_movement'],
+      stsUser: json['sts_user'],
+      stsRole: json['sts_role'],
+      stsCetakLabel: json['sts_cetak_label'],
+      stsCetakBarcode: json['sts_cetak_barcode'],
+      stsAwalAkhirHari: json['sts_awal_akhir_hari'],
+      stsDashboard: json['sts_dashboard'],
+      stsLaporan: json['sts_laporan'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id_role'] = idRole;
-    data['role_name'] = roleName;
-    data['sts_anggota'] = stsAnggota;
-    data['sts_pembayaran_pinjaman'] = stsPembayaranPinjaman;
-    data['sts_kartu_piutang'] = stsKartuPiutang;
-    data['sts_supplier'] = stsSupplier;
-    data['sts_divisi'] = stsDivisi;
-    data['sts_produk'] = stsProduk;
-    data['sts_pembelian'] = stsPembelian;
-    data['sts_penjualan'] = stsPenjualan;
-    data['sts_retur'] = stsRetur;
-    data['sts_pembayaran_hutang'] = stsPembayaranHutang;
-    data['sts_estimasi'] = stsEstimasi;
-    data['sts_stocktake_harian'] = stsStocktakeHarian;
-    data['sts_stock_opname'] = stsStockOpname;
-    data['sts_cash_in_cash_out'] = stsCashInCashOut;
-    data['sts_cash_movement'] = stsCashMovement;
-    data['sts_user'] = stsUser;
-    data['sts_role'] = stsRole;
-    data['sts_cetak_label'] = stsCetakLabel;
-    data['sts_cetak_barcode'] = stsCetakBarcode;
-    data['sts_awal_akhir_hari'] = stsAwalAkhirHari;
-    data['sts_dashboard'] = stsDashboard;
-    data['sts_laporan'] = stsLaporan;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    return data;
+    return {
+      'id_role': idRole,
+      'role_name': roleName,
+      'sts_anggota': stsAnggota,
+      'sts_pembayaran_pinjaman': stsPembayaranPinjaman,
+      'sts_kartu_piutang': stsKartuPiutang,
+      'sts_supplier': stsSupplier,
+      'sts_divisi': stsDivisi,
+      'sts_produk': stsProduk,
+      'sts_pembelian': stsPembelian,
+      'sts_penjualan': stsPenjualan,
+      'sts_retur': stsRetur,
+      'sts_pembayaran_hutang': stsPembayaranHutang,
+      'sts_estimasi': stsEstimasi,
+      'sts_stocktake_harian': stsStocktakeHarian,
+      'sts_stock_opname': stsStockOpname,
+      'sts_cash_in_cash_out': stsCashInCashOut,
+      'sts_cash_movement': stsCashMovement,
+      'sts_user': stsUser,
+      'sts_role': stsRole,
+      'sts_cetak_label': stsCetakLabel,
+      'sts_cetak_barcode': stsCetakBarcode,
+      'sts_awal_akhir_hari': stsAwalAkhirHari,
+      'sts_dashboard': stsDashboard,
+      'sts_laporan': stsLaporan,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+    };
   }
 }
 
+@HiveType(typeId: 6)
 class Paging {
+  @HiveField(0)
   int? page;
+  @HiveField(1)
   int? totalItem;
+  @HiveField(2)
   int? totalPage;
 
   Paging({this.page, this.totalItem, this.totalPage});

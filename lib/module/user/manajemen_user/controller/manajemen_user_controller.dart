@@ -12,7 +12,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
 
   Future<dynamic>? dataFuture;
 
-  DataListUser dataListRole = DataListUser();
+  DataListUser dataListUser = DataListUser();
   ListUserResult result = ListUserResult();
 
   List<String> listRoleView = [
@@ -48,6 +48,130 @@ class ManajemenUserController extends State<ManajemenUserView> {
 
       return result;
     } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postDetailUser({required String? username}) async {
+    showCircleDialogLoading(context);
+    try {
+      DetailUserResult result = await ApiService.detailUser(
+        data: {"username": username},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          width: 700,
+          content: DialogUser(
+            isDetail: true,
+            data: result,
+          ),
+        );
+
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postCreateUser(DataMap dataCreate) async {
+    Get.back();
+
+    showCircleDialogLoading(context);
+    try {
+      DetailUserResult result = await ApiService.createUser(
+        data: dataCreate,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataUser();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postRemoveUser(String username) async {
+    Get.back();
+    showCircleDialogLoading(context);
+    try {
+      DetailUserResult result = await ApiService.removeUser(
+        data: {"username": username},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataUser();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postUpdateUser(DataMap dataEdit) async {
+    Get.back();
+
+    showCircleDialogLoading(context);
+    try {
+      DetailUserResult result = await ApiService.updateUser(
+        data: dataEdit,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataUser();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog(
             "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);

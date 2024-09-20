@@ -11,7 +11,7 @@ class BaseDropdownButton<T> extends StatefulWidget {
   final bool? isSearch;
   final String? Function(String?)? validator;
   final String? hint;
-  final String? value;
+  final T? value;
   final bool? useBorder;
   final bool? enabled;
   final bool? isExpand;
@@ -53,7 +53,8 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
     sortedItems.sort(
         (a, b) => widget.itemAsString(a).compareTo(widget.itemAsString(b)));
 
-    textController.text = widget.value ?? '';
+    textController.text = widget.value.toString();
+    selectedItem = widget.value;
     textController.addListener(_validateInput);
   }
 
@@ -135,12 +136,9 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
           autoValidateMode: widget.autoValidate,
           validator: widget.enabled ?? true
               ? (value) {
-                  final error = widget.validator?.call(value.toString());
+                  final error = widget.validator?.call(value?.toString());
                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                    final isValid = error == null;
-                    if (_isValid.value != isValid) {
-                      _isValid.value = isValid;
-                    }
+                    _isValid.value = error == null;
                   });
                   return error;
                 }
@@ -249,7 +247,7 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
           dropdownButtonProps: DropdownButtonProps(
             tooltip: "Pilih ${widget.label}",
             icon: SvgPicture.asset(
-              "assets/icons/chevron/bawah.svg",
+              iconChevronDown,
               colorFilter: widget.enabled ?? true
                   ? colorFilterPrimary
                   : colorFilterGray600,
@@ -303,7 +301,7 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
                 prefixIcon: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: SvgPicture.asset(
-                    "assets/icons/misc/search.svg",
+                    iconSearch,
                     height: 24,
                     width: 24,
                     colorFilter: colorFilterPrimary,

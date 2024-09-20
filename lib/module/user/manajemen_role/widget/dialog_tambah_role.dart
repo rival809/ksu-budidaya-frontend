@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class DialogTambahRole extends StatefulWidget {
   const DialogTambahRole({
@@ -483,7 +482,6 @@ class _DialogTambahRoleState extends State<DialogTambahRole> {
                   child: BasePrimaryButton(
                     text: "Simpan",
                     onPressed: () {
-                      Navigator.pop(context);
                       if (keyRole.currentState!.validate()) {
                         widget.isDetail
                             ? ManajemenRoleController.instance.postUpdateRole(

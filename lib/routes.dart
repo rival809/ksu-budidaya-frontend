@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
 final GoRouter router = GoRouter(
+  navigatorKey: Get.navigatorKey,
   initialLocation: "/",
   routes: <RouteBase>[
     GoRoute(

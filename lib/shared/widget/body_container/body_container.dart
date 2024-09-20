@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/database/auth/user_database.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class BodyContainer extends StatefulWidget {
   final Widget contentBody;

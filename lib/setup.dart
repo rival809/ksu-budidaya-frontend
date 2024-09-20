@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ksu_budidaya/database/auth/user_database.dart';
+import 'package:ksu_budidaya/model/user/list_role_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -17,11 +17,15 @@ Future initialize() async {
     Hive.registerAdapter(DataLoginAdapter());
     Hive.registerAdapter(UserDataLoginAdapter());
     Hive.registerAdapter(RoleDataLoginAdapter());
+    Hive.registerAdapter(DataListRoleAdapter());
+    Hive.registerAdapter(DataRolesAdapter());
+    Hive.registerAdapter(PagingAdapter());
   }
 
   mainStorage = await Hive.openBox('mainStorage');
 
   await UserDatabase.load();
+  await RoleDatabase.load();
   // await UserDatabase.load();
   // await PenetapanDatabase.load();
   // await ReferencesDatabase.load();

@@ -67,7 +67,6 @@ class _DialogDivisiState extends State<DialogDivisi> {
                   text: "Simpan",
                   onPressed: () {
                     showDialogBase(
-                      context: context,
                       content: const DialogBerhasil(),
                     );
                   },

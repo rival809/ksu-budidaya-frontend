@@ -127,7 +127,6 @@ class _DialogAnggotaState extends State<DialogAnggota> {
                   text: "Simpan",
                   onPressed: () {
                     showDialogBase(
-                      context: context,
                       content: const DialogBerhasil(),
                     );
                   },

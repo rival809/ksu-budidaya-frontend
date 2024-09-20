@@ -165,4 +165,88 @@ class ApiService {
       throw Exception('Failed to listUser');
     }
   }
+
+  static Future<DetailUserResult> detailUser({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/users/detail-user",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailUserResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to detailUser');
+    }
+  }
+
+  static Future<DetailUserResult> updateUser({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/users/update-user",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailUserResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateUser');
+    }
+  }
+
+  static Future<DetailUserResult> createUser({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/users",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailUserResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createUser');
+    }
+  }
+
+  static Future<DetailUserResult> removeUser({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/users/remove-user",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailUserResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeUser');
+    }
+  }
 }

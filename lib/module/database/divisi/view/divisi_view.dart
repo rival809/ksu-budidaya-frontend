@@ -83,7 +83,6 @@ class DivisiView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 width: 700,
-                                context: context,
                                 content: const DialogDivisi(),
                               );
                             },
@@ -172,20 +171,17 @@ class DivisiView extends StatefulWidget {
                                     onChange: (value) {
                                       if (value == 1) {
                                         showDialogBase(
-                                          context: context,
                                           width: 700,
                                           content: const DialogDivisi(),
                                         );
                                       } else if (value == 2) {
                                         showDialogBase(
-                                          context: context,
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Divisi",
                                             onConfirm: () async {
                                               Navigator.pop(context);
                                               await showDialogBase(
-                                                context: context,
                                                 content: const DialogBerhasil(),
                                               );
                                             },

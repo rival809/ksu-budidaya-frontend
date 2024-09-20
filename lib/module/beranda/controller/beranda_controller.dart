@@ -29,17 +29,8 @@ class BerandaController extends State<BerandaView> {
   }
 
   getReferences() async {
-    if (await checkInternetConnectivity()) {
-      try {} catch (e) {
-        if (e.toString().contains("TimeoutException")) {
-          showInfoDialog(
-              "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-        } else {
-          showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-        }
-      }
-    } else {
-      showInfoDialog("Tidak ada koneksi internet!", context);
+    if (RoleDatabase.dataListRole.dataRoles?.isEmpty ?? true) {
+      await GlobalReference().roleReference();
     }
   }
 

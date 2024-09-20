@@ -83,7 +83,6 @@ class AnggotaView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 width: 700,
-                                context: context,
                                 content: const DialogAnggota(),
                               );
                             },
@@ -220,21 +219,18 @@ class AnggotaView extends StatefulWidget {
                                     onChange: (value) {
                                       if (value == 1) {
                                         showDialogBase(
-                                          context: context,
                                           width: 700,
                                           content: const DialogAnggota(),
                                         );
                                       } else if (value == 2) {
                                       } else if (value == 3) {
                                         showDialogBase(
-                                          context: context,
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Anggota",
                                             onConfirm: () async {
                                               Navigator.pop(context);
                                               await showDialogBase(
-                                                context: context,
                                                 content: const DialogBerhasil(),
                                               );
                                             },
