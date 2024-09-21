@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class DivisiView extends StatefulWidget {
@@ -51,7 +52,7 @@ class DivisiView extends StatefulWidget {
                                     child: BasePrimaryButton(
                                       onPressed: () {
                                         controller.dataFuture =
-                                            controller.cariDataUser();
+                                            controller.cariDataDivisi();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -67,7 +68,7 @@ class DivisiView extends StatefulWidget {
                               BaseSecondaryButton(
                                 onPressed: () {
                                   controller.dataFuture =
-                                      controller.cariDataUser();
+                                      controller.cariDataDivisi();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -83,7 +84,10 @@ class DivisiView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 width: 700,
-                                content: const DialogDivisi(),
+                                content: DialogDivisi(
+                                  data: DataDetailDivisi(),
+                                  isDetail: false,
+                                ),
                               );
                             },
                             text: "Tambah Divisi",
@@ -107,37 +111,15 @@ class DivisiView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          ListRoleResult result = snapshot.data;
-                          controller.dataListRole =
-                              result.data ?? DataListRole();
+                          DivisiResult result = snapshot.data;
+                          controller.dataDivisi = result.data ?? DataDivisi();
                           List<dynamic> listData =
-                              controller.dataListRole.dataRoles ?? [];
-                          print("result.data");
-                          print(controller.dataListRole.dataRoles);
+                              controller.dataDivisi.toJson()["data_divisi"] ??
+                                  [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
-
-                            // columns.add(
-                            //   PlutoColumn(
-                            //     width: 30,
-                            //     backgroundColor: primaryColor,
-                            //     title: "No.",
-                            //     field: "no",
-                            //     filterHintText: "Cari ",
-                            //     type: PlutoColumnType.text(),
-                            //     enableEditingMode: false,
-                            //     renderer: (rendererContext) {
-                            //       final rowIndex = rendererContext.rowIdx + 1;
-
-                            //       return Text(
-                            //         rendererContext.cell.value.toString(),
-                            //         style: myTextTheme.bodyMedium,
-                            //       );
-                            //     },
-                            //   ),
-                            // );
 
                             columns.addAll(List.generate(
                                 controller.listRoleView.length, (index) {
@@ -172,7 +154,11 @@ class DivisiView extends StatefulWidget {
                                       if (value == 1) {
                                         showDialogBase(
                                           width: 700,
-                                          content: const DialogDivisi(),
+                                          content: DialogDivisi(
+                                            data: result
+                                                .data?.dataDivisi?[rowIndex],
+                                            isDetail: true,
+                                          ),
                                         );
                                       } else if (value == 2) {
                                         showDialogBase(
@@ -180,9 +166,13 @@ class DivisiView extends StatefulWidget {
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Divisi",
                                             onConfirm: () async {
-                                              Navigator.pop(context);
-                                              await showDialogBase(
-                                                content: const DialogBerhasil(),
+                                              controller.postRemoveDivisi(
+                                                trimString(
+                                                  result
+                                                      .data
+                                                      ?.dataDivisi?[rowIndex]
+                                                      .idDivisi,
+                                                ),
                                               );
                                             },
                                           ),
@@ -267,15 +257,50 @@ class DivisiView extends StatefulWidget {
                                     page: controller.page,
                                     itemPerpage: controller.size,
                                     maxPage: controller
-                                            .dataListRole.paging?.totalPage ??
+                                            .dataDivisi.paging?.totalPage ??
                                         0,
-                                    onChangePage: (value) {},
-                                    onChangePerPage: (value) {},
+                                    onChangePage: (value) {
+                                      controller.page = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataDivisi();
+                                      controller.update();
+                                    },
+                                    onChangePerPage: (value) {
+                                      controller.page = "1";
+                                      controller.size = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataDivisi();
+                                      controller.update();
+                                    },
                                     totalRow: controller
-                                            .dataListRole.paging?.totalItem ??
+                                            .dataDivisi.paging?.totalItem ??
                                         0,
-                                    onPressLeft: () {},
-                                    onPressRight: () {},
+                                    onPressLeft: () {
+                                      if (int.parse(controller.page) > 1) {
+                                        controller.page =
+                                            (int.parse(controller.page) - 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataDivisi();
+                                        controller.update();
+                                      }
+                                    },
+                                    onPressRight: () {
+                                      if (int.parse(controller.page) <
+                                          (result.data?.paging?.totalPage ??
+                                              0)) {
+                                        controller.page =
+                                            (int.parse(controller.page) + 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataDivisi();
+                                        controller.update();
+                                      }
+                                    },
                                   );
                                 },
                               ),

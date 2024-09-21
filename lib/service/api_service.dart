@@ -249,4 +249,94 @@ class ApiService {
       throw Exception('Failed to removeUser');
     }
   }
+
+  static Future<DivisiResult> listDivisi({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/divisi/list-divisi",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DivisiResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listUser');
+    }
+  }
+
+  static Future<DivisiResult> createDivisi({
+    required String nmDivisi,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/divisi/create-divisi",
+      options: options,
+      data: {
+        "nm_divisi": nmDivisi,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DivisiResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createUser');
+    }
+  }
+
+  static Future<DivisiResult> updateDivisi({
+    required String nmDivisi,
+    required String idDivisi,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/divisi/update-divisi",
+      options: options,
+      data: {
+        "nm_divisi": nmDivisi,
+        "id_divisi": idDivisi,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DivisiResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateDivisi');
+    }
+  }
+
+  static Future<DivisiResult> removeDivisi({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/divisi/remove-divisi",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DivisiResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeUser');
+    }
+  }
 }
