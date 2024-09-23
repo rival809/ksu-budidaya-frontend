@@ -6,6 +6,7 @@ it means you have to rename it to something more unique.
 export 'package:ksu_budidaya/config.dart';
 export 'package:ksu_budidaya/core_package.dart';
 export 'package:ksu_budidaya/database/auth/user_database.dart';
+export 'package:ksu_budidaya/database/suplier/supplier_database.dart';
 export 'package:ksu_budidaya/database/user/role_database.dart';
 export 'package:ksu_budidaya/model/anggota/anggota_model.dart';
 export 'package:ksu_budidaya/model/auth/login_model.dart';
@@ -29,6 +30,7 @@ export 'package:ksu_budidaya/module/database/produk/controller/produk_controller
 export 'package:ksu_budidaya/module/database/produk/view/produk_view.dart';
 export 'package:ksu_budidaya/module/database/supplier/controller/supplier_controller.dart';
 export 'package:ksu_budidaya/module/database/supplier/view/supplier_view.dart';
+export 'package:ksu_budidaya/module/database/supplier/widget/dialog_detail_supplier.dart';
 export 'package:ksu_budidaya/module/database/supplier/widget/dialog_supplier.dart';
 export 'package:ksu_budidaya/module/koperasi/anggota/controller/anggota_controller.dart';
 export 'package:ksu_budidaya/module/koperasi/anggota/view/anggota_view.dart';
@@ -110,8 +112,10 @@ export 'package:ksu_budidaya/shared/widget/base_form/base_prefix_rupiah.dart';
 export 'package:ksu_budidaya/shared/widget/base_table/footer_table_widget.dart';
 export 'package:ksu_budidaya/shared/widget/body_container/body_container.dart';
 export 'package:ksu_budidaya/shared/widget/checkbox/row_checkbox.dart';
+export 'package:ksu_budidaya/shared/widget/data/one_data.dart';
 export 'package:ksu_budidaya/shared/widget/drawer/drawer_menu.dart';
 export 'package:ksu_budidaya/shared/widget/loading/circle_dialog_loading.dart';
+export 'package:ksu_budidaya/shared/widget/step/proses_step.dart';
 export 'package:ksu_budidaya/state_util.dart';
 export 'package:ksu_budidaya/utils_intl.dart';
 export 'core_package.dart';

@@ -67,7 +67,7 @@ class _DialogSupplierState extends State<DialogSupplier> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.isDetail ? "Detail Supplier" : "Tambah Supplier",
+              widget.isDetail ? "Edit Supplier" : "Tambah Supplier",
               style: myTextTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
