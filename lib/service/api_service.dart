@@ -423,4 +423,88 @@ class ApiService {
       throw Exception('Failed to updateAnggota');
     }
   }
+
+  static Future<SupplierResult> listSupplier({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/suppliers/list-suppliers",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return SupplierResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listSupplier');
+    }
+  }
+
+  static Future<SupplierResult> createSupplier({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/suppliers/create-suppliers",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return SupplierResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createSupplier');
+    }
+  }
+
+  static Future<SupplierResult> removeSupplier({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/suppliers/remove-suppliers",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return SupplierResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeSupplier');
+    }
+  }
+
+  static Future<SupplierResult> updateSupplier({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/suppliers/update-suppliers",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return SupplierResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateSupplier');
+    }
+  }
 }

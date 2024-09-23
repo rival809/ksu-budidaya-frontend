@@ -51,7 +51,7 @@ class SupplierView extends StatefulWidget {
                                     child: BasePrimaryButton(
                                       onPressed: () {
                                         controller.dataFuture =
-                                            controller.cariDataUser();
+                                            controller.cariDataSupplier();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -67,7 +67,7 @@ class SupplierView extends StatefulWidget {
                               BaseSecondaryButton(
                                 onPressed: () {
                                   controller.dataFuture =
-                                      controller.cariDataUser();
+                                      controller.cariDataSupplier();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -107,35 +107,16 @@ class SupplierView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          ListRoleResult result = snapshot.data;
-                          controller.dataListRole =
-                              result.data ?? DataListRole();
-                          List<dynamic> listData =
-                              controller.dataListRole.dataRoles ?? [];
+                          SupplierResult result = snapshot.data;
+                          controller.dataSupplier =
+                              result.data ?? DataSupplier();
+                          List<dynamic> listData = controller.dataSupplier
+                                  .toJson()["data_supplier"] ??
+                              [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
-
-                            // columns.add(
-                            //   PlutoColumn(
-                            //     width: 30,
-                            //     backgroundColor: primaryColor,
-                            //     title: "No.",
-                            //     field: "no",
-                            //     filterHintText: "Cari ",
-                            //     type: PlutoColumnType.text(),
-                            //     enableEditingMode: false,
-                            //     renderer: (rendererContext) {
-                            //       final rowIndex = rendererContext.rowIdx + 1;
-
-                            //       return Text(
-                            //         rendererContext.cell.value.toString(),
-                            //         style: myTextTheme.bodyMedium,
-                            //       );
-                            //     },
-                            //   ),
-                            // );
 
                             columns.addAll(List.generate(
                                 controller.listRoleView.length, (index) {
@@ -284,7 +265,7 @@ class SupplierView extends StatefulWidget {
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
-                                    value: item[column],
+                                    value: trimStringStrip(item[column]),
                                   );
                                 }
                               }
@@ -336,15 +317,50 @@ class SupplierView extends StatefulWidget {
                                     page: controller.page,
                                     itemPerpage: controller.size,
                                     maxPage: controller
-                                            .dataListRole.paging?.totalPage ??
+                                            .dataSupplier.paging?.totalPage ??
                                         0,
-                                    onChangePage: (value) {},
-                                    onChangePerPage: (value) {},
+                                    onChangePage: (value) {
+                                      controller.page = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataSupplier();
+                                      controller.update();
+                                    },
+                                    onChangePerPage: (value) {
+                                      controller.page = "1";
+                                      controller.size = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataSupplier();
+                                      controller.update();
+                                    },
                                     totalRow: controller
-                                            .dataListRole.paging?.totalItem ??
+                                            .dataSupplier.paging?.totalItem ??
                                         0,
-                                    onPressLeft: () {},
-                                    onPressRight: () {},
+                                    onPressLeft: () {
+                                      if (int.parse(controller.page) > 1) {
+                                        controller.page =
+                                            (int.parse(controller.page) - 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataSupplier();
+                                        controller.update();
+                                      }
+                                    },
+                                    onPressRight: () {
+                                      if (int.parse(controller.page) <
+                                          (result.data?.paging?.totalPage ??
+                                              0)) {
+                                        controller.page =
+                                            (int.parse(controller.page) + 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataSupplier();
+                                        controller.update();
+                                      }
+                                    },
                                   );
                                 },
                               ),

@@ -10,6 +10,7 @@ export 'package:ksu_budidaya/database/user/role_database.dart';
 export 'package:ksu_budidaya/model/anggota/anggota_model.dart';
 export 'package:ksu_budidaya/model/auth/login_model.dart';
 export 'package:ksu_budidaya/model/divisi/divisi_model.dart';
+export 'package:ksu_budidaya/model/supplier/supplier_model.dart';
 export 'package:ksu_budidaya/model/user/create_role_model.dart';
 export 'package:ksu_budidaya/model/user/detail_user_model.dart';
 export 'package:ksu_budidaya/model/user/list_role_model.dart';

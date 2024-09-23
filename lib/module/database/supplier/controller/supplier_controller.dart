@@ -7,25 +7,27 @@ class SupplierController extends State<SupplierView> {
 
   String page = "1";
   String size = "10";
+  bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
 
-  DataListRole dataListRole = DataListRole();
-  ListRoleResult result = ListRoleResult();
+  DataSupplier dataSupplier = DataSupplier();
+  SupplierResult result = SupplierResult();
 
   List<String> listRoleView = [
-    "id",
-    "nama_supplier",
+    "id_supplier",
+    "nm_supplier",
+    "nm_pemilik",
+    "nm_pic",
+    "no_wa",
     "alamat",
-    "kontak",
-    "pemilik",
     "hutang_dagang",
   ];
 
-  cariDataUser() async {
+  cariDataSupplier({bool? isAsc, String? field}) async {
     try {
-      result = ListRoleResult();
+      result = SupplierResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
@@ -35,24 +37,18 @@ class SupplierController extends State<SupplierView> {
         dataCari.addAll({"role_name": trimString(supplierNameController.text)});
       }
 
-      // result = await ApiService.listRole(
-      //   data: dataCari,
-      // ).timeout(const Duration(seconds: 30));
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
 
-      result = ListRoleResult(
-        data: DataListRole(
-            // dataRoles: [
-            //   {
-            //     "id": "Supplier001",
-            //     "nama_supplier": "ADMIN",
-            //     "alamat": "A",
-            //     "kontak": "B",
-            //     "pemilik": "ADMIN",
-            //     "hutang_dagang": "100000",
-            //   },
-            // ],
-            ),
-      );
+      result = await ApiService.listSupplier(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
 
       return result;
     } catch (e) {
@@ -68,6 +64,8 @@ class SupplierController extends State<SupplierView> {
   @override
   void initState() {
     instance = this;
+    dataFuture = cariDataSupplier();
+
     super.initState();
   }
 

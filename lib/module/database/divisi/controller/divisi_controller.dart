@@ -7,6 +7,7 @@ class DivisiController extends State<DivisiView> {
 
   String page = "1";
   String size = "10";
+  bool isAsc = true;
   TextEditingController divisiNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;

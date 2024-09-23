@@ -1,0 +1,102 @@
+import 'package:ksu_budidaya/core.dart';
+
+class SupplierResult {
+  bool? success;
+  DataSupplier? data;
+  String? message;
+
+  SupplierResult({this.success, this.data, this.message});
+
+  SupplierResult.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    data = json['data'] != null ? DataSupplier.fromJson(json['data']) : null;
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['message'] = message;
+    return data;
+  }
+}
+
+class DataSupplier {
+  List<DataDetailSupplier>? dataSupplier;
+  Paging? paging;
+
+  DataSupplier({this.dataSupplier, this.paging});
+
+  DataSupplier.fromJson(Map<String, dynamic> json) {
+    if (json['data_supplier'] != null) {
+      dataSupplier = <DataDetailSupplier>[];
+      json['data_supplier'].forEach((v) {
+        dataSupplier!.add(DataDetailSupplier.fromJson(v));
+      });
+    }
+    paging = json['paging'] != null ? Paging.fromJson(json['paging']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (dataSupplier != null) {
+      data['data_supplier'] = dataSupplier!.map((v) => v.toJson()).toList();
+    }
+    if (paging != null) {
+      data['paging'] = paging!.toJson();
+    }
+    return data;
+  }
+}
+
+class DataDetailSupplier {
+  String? idSupplier;
+  String? nmSupplier;
+  String? nmPemilik;
+  String? nmPic;
+  String? noWa;
+  String? alamat;
+  String? hutangDagang;
+  String? createdAt;
+  String? updatedAt;
+
+  DataDetailSupplier(
+      {this.idSupplier,
+      this.nmSupplier,
+      this.nmPemilik,
+      this.nmPic,
+      this.noWa,
+      this.alamat,
+      this.hutangDagang,
+      this.createdAt,
+      this.updatedAt});
+
+  DataDetailSupplier.fromJson(Map<String, dynamic> json) {
+    idSupplier = json['id_supplier'];
+    nmSupplier = json['nm_supplier'];
+    nmPemilik = json['nm_pemilik'];
+    nmPic = json['nm_pic'];
+    noWa = json['no_wa'];
+    alamat = json['alamat'];
+    hutangDagang = json['hutang_dagang'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id_supplier'] = idSupplier;
+    data['nm_supplier'] = nmSupplier;
+    data['nm_pemilik'] = nmPemilik;
+    data['nm_pic'] = nmPic;
+    data['no_wa'] = noWa;
+    data['alamat'] = alamat;
+    data['hutang_dagang'] = hutangDagang;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    return data;
+  }
+}
