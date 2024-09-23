@@ -1,4 +1,3 @@
-import 'package:hive/hive.dart';
 import 'package:ksu_budidaya/core.dart';
 part 'list_role_model.g.dart';
 

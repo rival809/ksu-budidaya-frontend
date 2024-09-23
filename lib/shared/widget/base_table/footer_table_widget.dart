@@ -1,8 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class FooterTableWidget extends StatefulWidget {

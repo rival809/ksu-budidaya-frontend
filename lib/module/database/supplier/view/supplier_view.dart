@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/supplier/supplier_model.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class SupplierView extends StatefulWidget {
