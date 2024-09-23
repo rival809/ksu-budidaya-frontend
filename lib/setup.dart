@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ksu_budidaya/database/suplier/supplier_database.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -19,12 +20,15 @@ Future initialize() async {
     Hive.registerAdapter(DataListRoleAdapter());
     Hive.registerAdapter(DataRolesAdapter());
     Hive.registerAdapter(PagingAdapter());
+    Hive.registerAdapter(DataSupplierAdapter());
+    Hive.registerAdapter(DataDetailSupplierAdapter());
   }
 
   mainStorage = await Hive.openBox('mainStorage');
 
   await UserDatabase.load();
   await RoleDatabase.load();
+  await SupplierDatabase.load();
   // await UserDatabase.load();
   // await PenetapanDatabase.load();
   // await ReferencesDatabase.load();

@@ -1,4 +1,5 @@
 import 'package:ksu_budidaya/core.dart';
+part 'supplier_model.g.dart';
 
 class SupplierResult {
   bool? success;
@@ -24,7 +25,9 @@ class SupplierResult {
   }
 }
 
+@HiveType(typeId: 7)
 class DataSupplier {
+  @HiveField(0)
   List<DataDetailSupplier>? dataSupplier;
   Paging? paging;
 
@@ -52,15 +55,25 @@ class DataSupplier {
   }
 }
 
+@HiveType(typeId: 8)
 class DataDetailSupplier {
+  @HiveField(0)
   String? idSupplier;
+  @HiveField(1)
   String? nmSupplier;
+  @HiveField(2)
   String? nmPemilik;
+  @HiveField(3)
   String? nmPic;
+  @HiveField(4)
   String? noWa;
+  @HiveField(5)
   String? alamat;
+  @HiveField(6)
   String? hutangDagang;
+  @HiveField(7)
   String? createdAt;
+  @HiveField(8)
   String? updatedAt;
 
   DataDetailSupplier(

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/database/suplier/supplier_database.dart';
 
 class GlobalReference {
   roleReference() async {
@@ -13,6 +14,21 @@ class GlobalReference {
       ).timeout(const Duration(seconds: 30));
 
       RoleDatabase.save(result.data ?? DataListRole());
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  supplierReference() async {
+    try {
+      SupplierResult result = await ApiService.listSupplier(
+        data: {
+          "page": "1",
+          "size": "100",
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      SupplierDatabase.save(result.data ?? DataSupplier());
     } catch (e) {
       log(e.toString());
     }

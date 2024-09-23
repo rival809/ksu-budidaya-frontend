@@ -84,6 +84,7 @@ class SupplierView extends StatefulWidget {
                               showDialogBase(
                                 width: 700,
                                 content: DialogSupplier(
+                                  isDetail: false,
                                   data: DataDetailSupplier(),
                                 ),
                               );
@@ -130,7 +131,13 @@ class SupplierView extends StatefulWidget {
                                   controller.listRoleView[index],
                                 ),
                                 field: controller.listRoleView[index],
-                                type: PlutoColumnType.text(),
+                                type: (controller.listRoleView[index] ==
+                                        "hutang_dagang")
+                                    ? PlutoColumnType.currency(
+                                        locale: "id",
+                                        decimalDigits: 0,
+                                      )
+                                    : PlutoColumnType.text(),
                               );
                             }));
 
@@ -217,17 +224,12 @@ class SupplierView extends StatefulWidget {
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {
-                                        showDialogBase(
-                                          width: 700,
-                                          content: DialogSupplier(
-                                            data: result
-                                                .data?.dataSupplier?[rowIndex],
-                                          ),
-                                        );
+                                        showInfoDialog("message", context);
                                       } else if (value == 2) {
                                         showDialogBase(
                                           width: 700,
                                           content: DialogSupplier(
+                                            isDetail: true,
                                             data: result
                                                 .data?.dataSupplier?[rowIndex],
                                           ),
