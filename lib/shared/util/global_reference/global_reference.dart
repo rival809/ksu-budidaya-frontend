@@ -40,7 +40,7 @@ getNamaRole({String? idRole}) {
     var dataRole = RoleDatabase.dataListRole.dataRoles;
 
     for (var i = 0; i < (dataRole?.length ?? 0); i++) {
-      if (dataRole?[i].idRole == idRole) {
+      if (trimString(dataRole?[i].idRole) == trimString(idRole)) {
         return dataRole?[i].roleName;
       }
     }
@@ -48,5 +48,21 @@ getNamaRole({String? idRole}) {
     return idRole;
   } catch (e) {
     return idRole;
+  }
+}
+
+getNamaSupplier({String? idSupplier}) {
+  try {
+    var dataSupplier = SupplierDatabase.dataSupplier.dataSupplier;
+
+    for (var i = 0; i < (dataSupplier?.length ?? 0); i++) {
+      if (trimString(dataSupplier?[i].idSupplier) == trimString(idSupplier)) {
+        return dataSupplier?[i].nmSupplier;
+      }
+    }
+
+    return idSupplier;
+  } catch (e) {
+    return idSupplier;
   }
 }

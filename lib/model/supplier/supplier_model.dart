@@ -113,6 +113,10 @@ class DataDetailSupplier {
     return data;
   }
 
+  String supplierAsString() {
+    return '${trimString(idSupplier)} - ${trimString(nmSupplier)}';
+  }
+
   DataDetailSupplier copyWith({
     String? idSupplier,
     String? nmSupplier,

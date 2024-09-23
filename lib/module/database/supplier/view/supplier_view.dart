@@ -241,6 +241,13 @@ class SupplierView extends StatefulWidget {
                                           ),
                                         );
                                       } else if (value == 3) {
+                                        showDialogBase(
+                                          width: 700,
+                                          content: DialogTambahPelunasan(
+                                            data: result
+                                                .data?.dataSupplier?[rowIndex],
+                                          ),
+                                        );
                                       } else if (value == 4) {
                                         showDialogBase(
                                           content: DialogKonfirmasi(

@@ -32,6 +32,7 @@ export 'package:ksu_budidaya/module/database/supplier/controller/supplier_contro
 export 'package:ksu_budidaya/module/database/supplier/view/supplier_view.dart';
 export 'package:ksu_budidaya/module/database/supplier/widget/dialog_detail_supplier.dart';
 export 'package:ksu_budidaya/module/database/supplier/widget/dialog_supplier.dart';
+export 'package:ksu_budidaya/module/database/supplier/widget/dialog_tambah_pelunasan.dart';
 export 'package:ksu_budidaya/module/koperasi/anggota/controller/anggota_controller.dart';
 export 'package:ksu_budidaya/module/koperasi/anggota/view/anggota_view.dart';
 export 'package:ksu_budidaya/module/koperasi/anggota/widget/dialog_anggota.dart';

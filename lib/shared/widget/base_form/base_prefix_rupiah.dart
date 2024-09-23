@@ -24,7 +24,7 @@ class _BasePrefixRupiahState extends State<BasePrefixRupiah> {
             bottomLeft: Radius.circular(6),
             topLeft: Radius.circular(6),
           ),
-          color: gray100,
+          color: blueGray50,
         ),
         child: Center(
           child: Text(
