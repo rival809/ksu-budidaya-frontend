@@ -15,6 +15,7 @@ class BaseForm extends StatefulWidget {
   final TextInputType? textInputType;
   final String? Function(String?)? validator;
   final Widget? suffix;
+  final Widget? prefix;
   final String? prefixIcon;
   final String? suffixIcon;
   final Function()? onTapSuffix;
@@ -46,6 +47,7 @@ class BaseForm extends StatefulWidget {
     this.autoFocus,
     this.onEditComplete,
     this.suffix,
+    this.prefix,
     this.haveCounter,
     this.autoValidate,
   });
@@ -182,7 +184,7 @@ class _BaseFormState extends State<BaseForm> {
                           colorFilter: colorFilterGray500,
                         ),
                       )
-                    : null,
+                    : widget.prefix,
             suffixIcon:
                 widget.suffixIcon != null && widget.suffixIcon!.isNotEmpty
                     ? Padding(

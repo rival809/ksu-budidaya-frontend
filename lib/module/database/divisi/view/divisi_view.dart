@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class DivisiView extends StatefulWidget {

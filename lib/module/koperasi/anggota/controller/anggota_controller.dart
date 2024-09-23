@@ -7,52 +7,47 @@ class AnggotaController extends State<AnggotaView> {
 
   String page = "1";
   String size = "10";
+  bool isAsc = true;
   TextEditingController anggotaNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
 
-  DataListRole dataListRole = DataListRole();
-  ListRoleResult result = ListRoleResult();
+  DataAnggota dataListAnggota = DataAnggota();
+  AnggotaResult result = AnggotaResult();
 
   List<String> listRoleView = [
-    "id",
-    "nama",
+    "id_anggota",
+    "nm_anggota",
     "alamat",
-    "no_whatsapp",
-    "limit",
+    "no_wa",
+    "limit_pinjaman",
     "hutang",
   ];
 
-  cariDataUser() async {
+  cariDataAnggota({bool? isAsc, String? field}) async {
     try {
-      result = ListRoleResult();
+      result = AnggotaResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
       };
 
       if (trimString(anggotaNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"role_name": trimString(anggotaNameController.text)});
+        dataCari.addAll({"nm_anggota": trimString(anggotaNameController.text)});
       }
 
-      // result = await ApiService.listRole(
-      //   data: dataCari,
-      // ).timeout(const Duration(seconds: 30));
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
 
-      result = ListRoleResult(
-        data: DataListRole(
-            // dataRoles: [
-            //   {
-            //     "id": "Anggota001",
-            //     "nama": "ADMIN",
-            //     "alamat": "A",
-            //     "no_whatsapp": "083391712",
-            //     "limit": "300000",
-            //     "hutang": "100000",
-            //   },
-            // ],
-            ),
-      );
+      result = await ApiService.listAnggota(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
 
       return result;
     } catch (e) {
@@ -65,9 +60,102 @@ class AnggotaController extends State<AnggotaView> {
     }
   }
 
+  postCreateAnggota(DataMap dataCreate) async {
+    Get.back();
+
+    showCircleDialogLoading(context);
+    try {
+      AnggotaResult result = await ApiService.createAnggota(
+        data: dataCreate,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataAnggota();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postRemoveUser(String idAnggota) async {
+    Get.back();
+    showCircleDialogLoading(context);
+    try {
+      AnggotaResult result = await ApiService.removeAnggota(
+        data: {"id_anggota": idAnggota},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataAnggota();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postUpdateUser(DataMap dataEdit) async {
+    Get.back();
+
+    showCircleDialogLoading(context);
+    try {
+      AnggotaResult result = await ApiService.updateAnggota(
+        data: dataEdit,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataAnggota();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   @override
   void initState() {
     instance = this;
+    dataFuture = cariDataAnggota();
     super.initState();
   }
 

@@ -339,4 +339,88 @@ class ApiService {
       throw Exception('Failed to removeUser');
     }
   }
+
+  static Future<AnggotaResult> listAnggota({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/anggota/list-anggota",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return AnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listAnggota');
+    }
+  }
+
+  static Future<AnggotaResult> createAnggota({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/anggota/create-anggota",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return AnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createAnggota');
+    }
+  }
+
+  static Future<AnggotaResult> removeAnggota({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/anggota/remove-anggota",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return AnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeAnggota');
+    }
+  }
+
+  static Future<AnggotaResult> updateAnggota({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/anggota/update-anggota",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return AnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateAnggota');
+    }
+  }
 }
