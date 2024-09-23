@@ -99,4 +99,27 @@ class DataDetailSupplier {
     data['updated_at'] = updatedAt;
     return data;
   }
+
+  DataDetailSupplier copyWith({
+    String? idSupplier,
+    String? nmSupplier,
+    String? nmPemilik,
+    String? nmPic,
+    String? noWa,
+    String? alamat,
+    String? hutangDagang,
+    String? createdAt,
+    String? updatedAt,
+  }) =>
+      DataDetailSupplier(
+        idSupplier: idSupplier ?? this.idSupplier,
+        nmSupplier: nmSupplier ?? this.nmSupplier,
+        nmPemilik: nmPemilik ?? this.nmPemilik,
+        nmPic: nmPic ?? this.nmPic,
+        noWa: noWa ?? this.noWa,
+        alamat: alamat ?? this.alamat,
+        hutangDagang: hutangDagang ?? this.hutangDagang,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
 }

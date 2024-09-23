@@ -449,7 +449,7 @@ class ApiService {
     required DataMap data,
   }) async {
     var response = await dio.post(
-      "$_baseUrl/api/suppliers/create-suppliers",
+      "$_baseUrl/api/suppliers/create-supplier",
       options: options,
       data: data,
       cancelToken: cancelToken,
@@ -470,7 +470,7 @@ class ApiService {
     required DataMap data,
   }) async {
     var response = await dio.post(
-      "$_baseUrl/api/suppliers/remove-suppliers",
+      "$_baseUrl/api/suppliers/remove-supplier",
       options: options,
       data: data,
       cancelToken: cancelToken,
@@ -491,7 +491,7 @@ class ApiService {
     required DataMap data,
   }) async {
     var response = await dio.post(
-      "$_baseUrl/api/suppliers/update-suppliers",
+      "$_baseUrl/api/suppliers/update-supplier",
       options: options,
       data: data,
       cancelToken: cancelToken,

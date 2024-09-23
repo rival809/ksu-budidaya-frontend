@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/supplier/supplier_model.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class SupplierView extends StatefulWidget {
@@ -83,7 +84,9 @@ class SupplierView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 width: 700,
-                                content: const DialogSupplier(),
+                                content: DialogSupplier(
+                                  data: DataDetailSupplier(),
+                                ),
                               );
                             },
                             text: "Tambah Supplier",
@@ -144,7 +147,8 @@ class SupplierView extends StatefulWidget {
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
                                   final rowIndex = rendererContext.rowIdx;
-
+                                  Map<String, dynamic> dataRow =
+                                      rendererContext.row.toJson();
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -216,12 +220,18 @@ class SupplierView extends StatefulWidget {
                                       if (value == 1) {
                                         showDialogBase(
                                           width: 700,
-                                          content: const DialogSupplier(),
+                                          content: DialogSupplier(
+                                            data: result
+                                                .data?.dataSupplier?[rowIndex],
+                                          ),
                                         );
                                       } else if (value == 2) {
                                         showDialogBase(
                                           width: 700,
-                                          content: const DialogSupplier(),
+                                          content: DialogSupplier(
+                                            data: result
+                                                .data?.dataSupplier?[rowIndex],
+                                          ),
                                         );
                                       } else if (value == 3) {
                                       } else if (value == 4) {
@@ -230,9 +240,10 @@ class SupplierView extends StatefulWidget {
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Supplier",
                                             onConfirm: () async {
-                                              Navigator.pop(context);
-                                              await showDialogBase(
-                                                content: const DialogBerhasil(),
+                                              controller.postRemoveSupplier(
+                                                trimString(
+                                                  dataRow["id_supplier"],
+                                                ),
                                               );
                                             },
                                           ),
@@ -287,15 +298,16 @@ class SupplierView extends StatefulWidget {
                                   event.stateManager.setShowColumnFilter(true);
                                 },
                                 onSorted: (event) {
-                                  // if (event.column.field != "Aksi") {
-                                  //   controller.isAsc = !controller.isAsc;
-                                  //   controller.update();
-                                  //   controller.dataFuture =
-                                  //       controller.cariEditTable(
-                                  //           event.column.field,
-                                  //           controller.isAsc);
-                                  //   controller.update();
-                                  // }
+                                  if (event.column.field != "Aksi") {
+                                    controller.isAsc = !controller.isAsc;
+                                    controller.update();
+                                    controller.dataFuture =
+                                        controller.cariDataSupplier(
+                                      isAsc: controller.isAsc,
+                                      field: event.column.field,
+                                    );
+                                    controller.update();
+                                  }
                                 },
                                 configuration: PlutoGridConfiguration(
                                   columnSize: const PlutoGridColumnSizeConfig(

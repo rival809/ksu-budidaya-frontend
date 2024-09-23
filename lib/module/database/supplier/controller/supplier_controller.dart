@@ -61,6 +61,98 @@ class SupplierController extends State<SupplierView> {
     }
   }
 
+  postCreateSupplier(DataMap dataCreate) async {
+    Get.back();
+
+    showCircleDialogLoading(context);
+    try {
+      SupplierResult result = await ApiService.createSupplier(
+        data: dataCreate,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataSupplier();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postRemoveSupplier(String idSupplier) async {
+    Get.back();
+    showCircleDialogLoading(context);
+    try {
+      SupplierResult result = await ApiService.removeSupplier(
+        data: {"id_supplier": idSupplier},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataSupplier();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postUpdateSupplier(DataMap dataEdit) async {
+    Get.back();
+
+    showCircleDialogLoading(context);
+    try {
+      SupplierResult result = await ApiService.updateSupplier(
+        data: dataEdit,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataSupplier();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   @override
   void initState() {
     instance = this;

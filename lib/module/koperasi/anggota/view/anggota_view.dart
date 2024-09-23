@@ -231,7 +231,7 @@ class AnggotaView extends StatefulWidget {
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Anggota",
                                             onConfirm: () async {
-                                              controller.postRemoveUser(
+                                              controller.postRemoveAnggota(
                                                 trimString(
                                                   dataRow["id_anggota"],
                                                 ),

@@ -91,7 +91,7 @@ class AnggotaController extends State<AnggotaView> {
     }
   }
 
-  postRemoveUser(String idAnggota) async {
+  postRemoveAnggota(String idAnggota) async {
     Get.back();
     showCircleDialogLoading(context);
     try {
@@ -121,7 +121,7 @@ class AnggotaController extends State<AnggotaView> {
     }
   }
 
-  postUpdateUser(DataMap dataEdit) async {
+  postUpdateAnggota(DataMap dataEdit) async {
     Get.back();
 
     showCircleDialogLoading(context);

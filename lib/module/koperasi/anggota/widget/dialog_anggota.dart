@@ -171,7 +171,7 @@ class _DialogAnggotaState extends State<DialogAnggota> {
                         );
 
                         if (widget.isDetail) {
-                          AnggotaController.instance.postUpdateUser(payload);
+                          AnggotaController.instance.postUpdateAnggota(payload);
                         } else {
                           payload.removeWhere(
                             (key, value) => key == "id_anggota",
