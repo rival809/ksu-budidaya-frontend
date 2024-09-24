@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/database/produk/widget/dialog_tambah_produk.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ProdukView extends StatefulWidget {
@@ -97,13 +98,13 @@ class ProdukView extends StatefulWidget {
                           ),
                           BasePrimaryButton(
                             onPressed: () {
-                              // showDialogBase(
-                              //   width: 700,
-                              //   content: DialogSupplier(
-                              //     isDetail: false,
-                              //     data: DataDetailSupplier(),
-                              //   ),
-                              // );
+                              showDialogBase(
+                                width: 700,
+                                content: DialogTambahProduk(
+                                  isDetail: false,
+                                  data: DataDetailProduct(),
+                                ),
+                              );
                             },
                             text: "Tambah Product",
                             suffixIcon: iconAdd,
@@ -642,28 +643,28 @@ class ProdukView extends StatefulWidget {
                                         //   ),
                                         // );
                                       } else if (value == 2) {
-                                        // showDialogBase(
-                                        //   width: 700,
-                                        //   content: DialogProduct(
-                                        //     isDetail: true,
-                                        //     data: result
-                                        //         .data?.dataProduct?[rowIndex],
-                                        //   ),
-                                        // );
+                                        showDialogBase(
+                                          width: 700,
+                                          content: DialogTambahProduk(
+                                            isDetail: true,
+                                            data: result
+                                                .data?.dataProduct?[rowIndex],
+                                          ),
+                                        );
                                       } else if (value == 3) {
-                                        // showDialogBase(
-                                        //   content: DialogKonfirmasi(
-                                        //     textKonfirmasi:
-                                        //         "Apakah Anda yakin ingin Menghapus Product",
-                                        //     onConfirm: () async {
-                                        //       controller.postRemoveProduct(
-                                        //         trimString(
-                                        //           dataRow["id_Product"],
-                                        //         ),
-                                        //       );
-                                        //     },
-                                        //   ),
-                                        // );
+                                        showDialogBase(
+                                          content: DialogKonfirmasi(
+                                            textKonfirmasi:
+                                                "Apakah Anda yakin ingin Menghapus Product",
+                                            onConfirm: () async {
+                                              controller.postRemoveProduct(
+                                                trimString(
+                                                  dataRow["id_product"],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
                                       }
                                     },
                                   );

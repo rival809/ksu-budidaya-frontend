@@ -143,7 +143,7 @@ class ProdukController extends State<ProdukView> {
     Get.back();
     showCircleDialogLoading(context);
     try {
-      SupplierResult result = await ApiService.removeSupplier(
+      ProductResult result = await ApiService.removeProduct(
         data: {"id_product": idProduct},
       ).timeout(const Duration(seconds: 30));
 

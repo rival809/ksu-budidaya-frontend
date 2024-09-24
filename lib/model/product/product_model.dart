@@ -89,6 +89,37 @@ class DataDetailProduct {
       this.totalJual,
       this.totalBeli});
 
+  DataDetailProduct copyWith({
+    String? idProduct,
+    String? nmProduct,
+    String? idDivisi,
+    String? idSupplier,
+    String? hargaJual,
+    String? hargaBeli,
+    bool? statusProduct,
+    int? jumlah,
+    String? keterangan,
+    String? createdAt,
+    String? updatedAt,
+    int? totalJual,
+    int? totalBeli,
+  }) =>
+      DataDetailProduct(
+        idProduct: idProduct ?? this.idProduct,
+        nmProduct: nmProduct ?? this.nmProduct,
+        idDivisi: idDivisi ?? this.idDivisi,
+        idSupplier: idSupplier ?? this.idSupplier,
+        hargaJual: hargaJual ?? this.hargaJual,
+        hargaBeli: hargaBeli ?? this.hargaBeli,
+        statusProduct: statusProduct ?? this.statusProduct,
+        jumlah: jumlah ?? this.jumlah,
+        keterangan: keterangan ?? this.keterangan,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        totalJual: totalJual ?? this.totalJual,
+        totalBeli: totalBeli ?? this.totalBeli,
+      );
+
   DataDetailProduct.fromJson(Map<String, dynamic> json) {
     idProduct = json['id_product'];
     nmProduct = json['nm_product'];
