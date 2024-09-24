@@ -79,20 +79,19 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               children: [
-                if (widget.isDetail)
-                  BaseForm(
-                    label: "ID",
-                    hintText: "Masukkan ID Product",
-                    textInputFormater: [
-                      UpperCaseTextFormatter(),
-                    ],
-                    textEditingController: textController[0],
-                    onChanged: (value) {
-                      dataEdit.idProduct = trimString(value);
-                      update();
-                    },
-                    validator: Validatorless.required("Data Wajib Diisi"),
-                  ),
+                BaseForm(
+                  label: "ID",
+                  hintText: "Masukkan ID Product",
+                  textInputFormater: [
+                    UpperCaseTextFormatter(),
+                  ],
+                  textEditingController: textController[0],
+                  onChanged: (value) {
+                    dataEdit.idProduct = trimString(value);
+                    update();
+                  },
+                  validator: Validatorless.required("Data Wajib Diisi"),
+                ),
                 BaseDropdownButton<DataDetailDivisi>(
                   hint: "Pilih Divisi",
                   label: "Divisi",

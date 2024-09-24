@@ -203,6 +203,8 @@ class ProdukController extends State<ProdukView> {
   @override
   void initState() {
     instance = this;
+    GlobalReference().divisiReference();
+    GlobalReference().supplierReference();
     dataFuture = cariDataProduct();
 
     super.initState();

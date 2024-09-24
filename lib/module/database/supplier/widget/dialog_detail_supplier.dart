@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class DialogDetailSupplier extends StatefulWidget {
   const DialogDetailSupplier({
@@ -28,6 +29,68 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
 
   Future<dynamic>? dataFuture;
 
+  DataProduct dataProduct = DataProduct();
+  ProductResult result = ProductResult();
+
+  List<String> listProdukView = [
+    "id_supplier",
+    "nm_product",
+    "harga_beli",
+    "harga_jual",
+    "jumlah",
+  ];
+
+  String page = "1";
+  String size = "10";
+  bool isAsc = true;
+
+  cariDataProduct({bool? isAsc, String? field}) async {
+    try {
+      result = ProductResult();
+      DataMap dataCari = {
+        "page": page,
+        "size": size,
+      };
+
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
+      dataCari.addAll({"id_supplier": trimString(widget.data?.idSupplier)});
+
+      result = await ApiService.listProduct(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
+
+      return result;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  PlutoColumnType typeField(String field) {
+    switch (field) {
+      case "jumlah":
+        return PlutoColumnType.number(locale: "id");
+      case "harga_beli":
+        return PlutoColumnType.number(locale: "id");
+      case "harga_jual":
+        return PlutoColumnType.number(locale: "id");
+
+      default:
+        return PlutoColumnType.text();
+    }
+  }
+
   @override
   void initState() {
     textController[0].text = trimString(widget.data?.idSupplier);
@@ -48,6 +111,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
         step1 = false;
         step2 = true;
         step3 = false;
+        dataFuture = cariDataProduct();
         break;
       case "3":
         step1 = false;
@@ -176,6 +240,235 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                   textEditingController: textController[3],
                 ),
               ],
+            ),
+          if (step2)
+            FutureBuilder(
+              future: dataFuture,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Text(
+                      "Terjadi kesalahan saat mengambil data.",
+                      textAlign: TextAlign.center,
+                      style: myTextTheme.bodyMedium,
+                    );
+                  } else if (snapshot.hasData) {
+                    ProductResult result = snapshot.data;
+                    dataProduct = result.data ?? DataProduct();
+                    List<dynamic> listData =
+                        dataProduct.toJson()["data_product"] ?? [];
+
+                    if (listData.isNotEmpty) {
+                      List<PlutoRow> rows = [];
+                      List<PlutoColumn> columns = [];
+
+                      columns.add(
+                        PlutoColumn(
+                          width: 30,
+                          backgroundColor: primaryColor,
+                          title: "No.",
+                          field: "no",
+                          filterHintText: "Cari ",
+                          type: PlutoColumnType.text(),
+                          enableEditingMode: false,
+                          renderer: (rendererContext) {
+                            final rowIndex = rendererContext.rowIdx + 1;
+
+                            return Text(
+                              rendererContext.cell.value.toString(),
+                              style: myTextTheme.bodyMedium,
+                            );
+                          },
+                        ),
+                      );
+
+                      columns.addAll(
+                        List.generate(
+                          listProdukView.length,
+                          (index) {
+                            return PlutoColumn(
+                              backgroundColor: primaryColor,
+                              filterHintText: "Cari ${listProdukView[index]}",
+                              title: convertTitle(
+                                listProdukView[index],
+                              ),
+                              field: listProdukView[index],
+                              type: typeField(
+                                listProdukView[index],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+
+                      List<dynamic> listDataWithIndex =
+                          List.generate(listData.length, (index) {
+                        return {
+                          ...listData[index],
+                          'persistentIndex': index + 1,
+                        };
+                      });
+                      rows = listDataWithIndex.map((item) {
+                        Map<String, PlutoCell> cells = {};
+
+                        cells['no'] = PlutoCell(
+                          value: item['persistentIndex'].toString(),
+                        );
+
+                        cells['Aksi'] = PlutoCell(
+                          value: null,
+                        );
+
+                        for (String column in listProdukView) {
+                          if (item.containsKey(column)) {
+                            cells[column] = PlutoCell(
+                              value: trimStringStrip(item[column].toString()),
+                            );
+                          }
+                        }
+
+                        return PlutoRow(cells: cells);
+                      }).toList();
+                      double rowHeight = 46.0;
+
+                      return SizedBox(
+                        height: (rows.length * rowHeight) + rowHeight * 3,
+                        child: PlutoGrid(
+                          noRowsWidget: const ContainerTidakAda(
+                            entity: 'Product',
+                          ),
+                          mode: PlutoGridMode.select,
+                          onLoaded: (event) {
+                            event.stateManager.setShowColumnFilter(true);
+                            event.stateManager.columnFooterHeight = 68;
+                          },
+                          onSorted: (event) {
+                            if (event.column.field != "Aksi") {
+                              isAsc = !isAsc;
+                              update();
+                              dataFuture = cariDataProduct(
+                                isAsc: isAsc,
+                                field: event.column.field,
+                              );
+                              update();
+                            }
+                          },
+                          configuration: PlutoGridConfiguration(
+                            columnSize: const PlutoGridColumnSizeConfig(
+                              autoSizeMode: PlutoAutoSizeMode.scale,
+                            ),
+                            style: PlutoGridStyleConfig(
+                              cellTextStyle: myTextTheme.bodyMedium
+                                      ?.copyWith(color: gray900) ??
+                                  const TextStyle(),
+                              columnTextStyle: myTextTheme.titleSmall
+                                      ?.copyWith(color: neutralWhite) ??
+                                  const TextStyle(),
+                              gridBorderColor: blueGray50,
+                              gridBorderRadius: BorderRadius.circular(8),
+                            ),
+                            localeText: configLocale,
+                          ),
+                          columns: columns,
+                          rows: rows,
+                          createFooter: (stateManager) {
+                            return FooterTableWidget(
+                              page: page,
+                              itemPerpage: size,
+                              maxPage: dataProduct.paging?.totalPage ?? 0,
+                              onChangePage: (value) {
+                                page = trimString(value);
+                                update();
+                                dataFuture = cariDataProduct();
+                                update();
+                              },
+                              onChangePerPage: (value) {
+                                page = "1";
+                                size = trimString(value);
+                                update();
+                                dataFuture = cariDataProduct();
+                                update();
+                              },
+                              totalRow: dataProduct.paging?.totalItem ?? 0,
+                              onPressLeft: () {
+                                if (int.parse(page) > 1) {
+                                  page = (int.parse(page) - 1).toString();
+                                  update();
+                                  dataFuture = cariDataProduct();
+                                  update();
+                                }
+                              },
+                              onPressRight: () {
+                                if (int.parse(page) <
+                                    (result.data?.paging?.totalPage ?? 0)) {
+                                  page = (int.parse(page) + 1).toString();
+                                  update();
+                                  dataFuture = cariDataProduct();
+                                  update();
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 24.0,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Tidak ada data Produk.",
+                                  style: myTextTheme.bodyLarge,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                  } else {
+                    return Text(
+                      "Terjadi kesalahan saat mengambil data.",
+                      textAlign: TextAlign.center,
+                      style: myTextTheme.bodyMedium,
+                    );
+                  }
+                } else {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 24.0,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Tidak ada data Produk.",
+                              style: myTextTheme.bodyLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
           const SizedBox(
             height: 16.0,
