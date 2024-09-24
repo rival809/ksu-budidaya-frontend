@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/database/produk/widget/dialog_tambah_produk.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ProdukView extends StatefulWidget {
@@ -582,6 +581,12 @@ class ProdukView extends StatefulWidget {
                                   final rowIndex = rendererContext.rowIdx;
                                   Map<String, dynamic> dataRow =
                                       rendererContext.row.toJson();
+
+                                  dataRow.update("harga_jual",
+                                      (value) => value.toString());
+                                  dataRow.update("harga_beli",
+                                      (value) => value.toString());
+
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -635,20 +640,22 @@ class ProdukView extends StatefulWidget {
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {
-                                        // showDialogBase(
-                                        //   width: 1000,
-                                        //   content: DialogDetailProduct(
-                                        //     data: result
-                                        //         .data?.da?[rowIndex],
-                                        //   ),
-                                        // );
+                                        showDialogBase(
+                                          width: 1000,
+                                          content: DialogDetailProduk(
+                                            data: DataDetailProduct.fromJson(
+                                              dataRow,
+                                            ),
+                                          ),
+                                        );
                                       } else if (value == 2) {
                                         showDialogBase(
                                           width: 700,
                                           content: DialogTambahProduk(
                                             isDetail: true,
-                                            data: result
-                                                .data?.dataProduct?[rowIndex],
+                                            data: DataDetailProduct.fromJson(
+                                              dataRow,
+                                            ),
                                           ),
                                         );
                                       } else if (value == 3) {
