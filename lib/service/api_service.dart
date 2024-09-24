@@ -507,4 +507,88 @@ class ApiService {
       throw Exception('Failed to updateSupplier');
     }
   }
+
+  static Future<ProductResult> listProduct({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/list-products",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ProductResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listProduct');
+    }
+  }
+
+  static Future<ProductResult> createProduct({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/create-product",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ProductResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createProduct');
+    }
+  }
+
+  static Future<ProductResult> removeProduct({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/remove-product",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ProductResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeProduct');
+    }
+  }
+
+  static Future<ProductResult> updateProduct({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/update-product",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ProductResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateProduct');
+    }
+  }
 }
