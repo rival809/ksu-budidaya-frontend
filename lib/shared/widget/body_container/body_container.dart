@@ -1,4 +1,3 @@
-// ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:ksu_budidaya/core.dart';
@@ -38,6 +37,7 @@ class _BodyContainerState extends State<BodyContainer> {
       body: SliderDrawer(
         animationDuration: 200,
         key: sliderDrawerKey,
+        isDraggable: false,
         appBar: SliderAppBar(
           appBarPadding: EdgeInsets.zero,
           appBarColor: neutralWhite,
@@ -104,7 +104,22 @@ class _BodyContainerState extends State<BodyContainer> {
           ),
         ),
         slider: const SliderView(),
-        child: widget.contentBody,
+        child: Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height -
+                    AppBar().preferredSize.height,
+                child: widget.contentBody,
+              ),
+            ),
+            drawerProvider.isDrawerOpen
+                ? Container(
+                    width: 260,
+                  )
+                : Container(),
+          ],
+        ),
       ),
     );
   }

@@ -16,7 +16,7 @@ class ProdukController extends State<ProdukView> {
   DataProduct dataProduct = DataProduct();
   ProductResult result = ProductResult();
 
-  List<String> listRoleView = [
+  List<String> listProdukView = [
     "id_divisi",
     "id_product",
     "nm_product",

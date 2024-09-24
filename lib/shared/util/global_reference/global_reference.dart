@@ -33,6 +33,21 @@ class GlobalReference {
       log(e.toString());
     }
   }
+
+  divisiReference() async {
+    try {
+      DivisiResult result = await ApiService.listDivisi(
+        data: {
+          "page": "1",
+          "size": "100",
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      DivisiDatabase.save(result.data ?? DataDivisi());
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }
 
 getNamaRole({String? idRole}) {
@@ -64,5 +79,21 @@ getNamaSupplier({String? idSupplier}) {
     return idSupplier;
   } catch (e) {
     return idSupplier;
+  }
+}
+
+getNamaDivisi({String? idDivisi}) {
+  try {
+    var dataDivisi = DivisiDatabase.dataDivisi.dataDivisi;
+
+    for (var i = 0; i < (dataDivisi?.length ?? 0); i++) {
+      if (trimString(dataDivisi?[i].idDivisi) == trimString(idDivisi)) {
+        return dataDivisi?[i].nmDivisi;
+      }
+    }
+
+    return idDivisi;
+  } catch (e) {
+    return idDivisi;
   }
 }

@@ -51,7 +51,9 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
             scrollDirection: Axis.horizontal,
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minWidth: MediaQuery.of(context).size.width - 36,
+                minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                    ? MediaQuery.of(context).size.width - 36 - 260
+                    : MediaQuery.of(context).size.width - 36,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

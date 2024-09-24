@@ -6,6 +6,7 @@ it means you have to rename it to something more unique.
 export 'package:ksu_budidaya/config.dart';
 export 'package:ksu_budidaya/core_package.dart';
 export 'package:ksu_budidaya/database/auth/user_database.dart';
+export 'package:ksu_budidaya/database/divisi/divisi_database.dart';
 export 'package:ksu_budidaya/database/suplier/supplier_database.dart';
 export 'package:ksu_budidaya/database/user/role_database.dart';
 export 'package:ksu_budidaya/model/anggota/anggota_model.dart';

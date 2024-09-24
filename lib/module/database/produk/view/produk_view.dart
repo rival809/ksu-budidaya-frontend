@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/format_currency.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ProdukView extends StatefulWidget {
@@ -33,7 +32,10 @@ class ProdukView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth: MediaQuery.of(context).size.width - 32,
+                        minWidth:
+                            Provider.of<DrawerProvider>(context).isDrawerOpen
+                                ? MediaQuery.of(context).size.width - 32 - 260
+                                : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,11 +210,11 @@ class ProdukView extends StatefulWidget {
 
                             columns.addAll(
                               List.generate(
-                                controller.listRoleView.length,
+                                controller.listProdukView.length,
                                 (index) {
                                   return PlutoColumn(
                                     footerRenderer: (context) {
-                                      if (controller.listRoleView[index] ==
+                                      if (controller.listProdukView[index] ==
                                           "id_divisi") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
@@ -274,7 +276,7 @@ class ProdukView extends StatefulWidget {
                                           ),
                                         );
                                       } else if (controller
-                                              .listRoleView[index] ==
+                                              .listProdukView[index] ==
                                           "jumlah") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
@@ -347,7 +349,7 @@ class ProdukView extends StatefulWidget {
                                           ),
                                         );
                                       } else if (controller
-                                              .listRoleView[index] ==
+                                              .listProdukView[index] ==
                                           "total_jual") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
@@ -420,7 +422,7 @@ class ProdukView extends StatefulWidget {
                                           ),
                                         );
                                       } else if (controller
-                                              .listRoleView[index] ==
+                                              .listProdukView[index] ==
                                           "total_beli") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
@@ -532,13 +534,24 @@ class ProdukView extends StatefulWidget {
                                     },
                                     backgroundColor: primaryColor,
                                     filterHintText:
-                                        "Cari ${controller.listRoleView[index]}",
-                                    title: convertTitle(
-                                      controller.listRoleView[index],
-                                    ),
-                                    field: controller.listRoleView[index],
+                                        "Cari ${controller.listProdukView[index] == "id_divisi" ? "divisi" : controller.listProdukView[index] == "id_supplier" ? "supplier" : controller.listProdukView[index] == "jumlah" ? "stock" : controller.listProdukView[index]}",
+                                    title: controller.listProdukView[index] ==
+                                            "id_divisi"
+                                        ? "DIVISI"
+                                        : controller.listProdukView[index] ==
+                                                "id_supplier"
+                                            ? "SUPPLIER"
+                                            : controller.listProdukView[
+                                                        index] ==
+                                                    "jumlah"
+                                                ? "STOCK"
+                                                : convertTitle(
+                                                    controller
+                                                        .listProdukView[index],
+                                                  ),
+                                    field: controller.listProdukView[index],
                                     type: controller.typeField(
-                                      controller.listRoleView[index],
+                                      controller.listProdukView[index],
                                     ),
                                   );
                                 },
@@ -676,12 +689,23 @@ class ProdukView extends StatefulWidget {
                                 value: null,
                               );
 
-                              for (String column in controller.listRoleView) {
+                              for (String column in controller.listProdukView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
-                                    value: trimStringStrip(
-                                      item[column].toString(),
-                                    ),
+                                    value: column == "id_divisi"
+                                        ? getNamaDivisi(
+                                            idDivisi: trimString(
+                                              item[column].toString(),
+                                            ),
+                                          )
+                                        : column == "id_supplier"
+                                            ? getNamaSupplier(
+                                                idSupplier: trimString(
+                                                  item[column].toString(),
+                                                ),
+                                              )
+                                            : trimStringStrip(
+                                                item[column].toString()),
                                   );
                                 }
                               }
