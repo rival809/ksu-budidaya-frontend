@@ -86,14 +86,14 @@ class CashInCashOutView extends StatefulWidget {
                           BasePrimaryButton(
                             onPressed: () {
                               showDialogBase(
-                                width: 700,
-                                content: DialogSupplier(
-                                  isDetail: false,
-                                  data: DataDetailSupplier(),
+                                width: 1000,
+                                content: DialogCashInOut(
+                                  isDetail: true,
+                                  data: DataDetailCashInOut(),
                                 ),
                               );
                             },
-                            text: "Tambah Cash In dan Cash Out",
+                            text: "Tambah Data",
                             suffixIcon: iconAdd,
                             isDense: true,
                           ),
@@ -219,21 +219,6 @@ class CashInCashOutView extends StatefulWidget {
                                         value: 1,
                                         child: Row(
                                           children: [
-                                            SvgPicture.asset(iconMiscInfo),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                              child: Text(
-                                                'Detail Data',
-                                                style: myTextTheme.bodyMedium,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      PopupMenuItem(
-                                        value: 2,
-                                        child: Row(
-                                          children: [
                                             SvgPicture.asset(iconEditSquare),
                                             const SizedBox(width: 8),
                                             Expanded(
@@ -246,23 +231,7 @@ class CashInCashOutView extends StatefulWidget {
                                         ),
                                       ),
                                       PopupMenuItem(
-                                        value: 3,
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                                iconAccountBalanceWallet),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                              child: Text(
-                                                'Bayar Hutang',
-                                                style: myTextTheme.bodyMedium,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      PopupMenuItem(
-                                        value: 4,
+                                        value: 2,
                                         child: Row(
                                           children: [
                                             SvgPicture.asset(
@@ -281,39 +250,23 @@ class CashInCashOutView extends StatefulWidget {
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {
-                                        // showDialogBase(
-                                        //   width: 1000,
-                                        //   content: DialogDetailSupplier(
-                                        //     data: result
-                                        //         .data?.dataCashInOut?[rowIndex],
-                                        //   ),
-                                        // );
+                                        showDialogBase(
+                                          width: 1000,
+                                          content: DialogCashInOut(
+                                            isDetail: true,
+                                            data: result
+                                                .data?.dataCashInOut?[rowIndex],
+                                          ),
+                                        );
                                       } else if (value == 2) {
-                                        // showDialogBase(
-                                        //   width: 700,
-                                        //   content: DialogSupplier(
-                                        //     isDetail: true,
-                                        //     data: result
-                                        //         .data?.dataCashInOut?[rowIndex],
-                                        //   ),
-                                        // );
-                                      } else if (value == 3) {
-                                        // showDialogBase(
-                                        //   width: 700,
-                                        //   content: DialogTambahPelunasan(
-                                        //     data: result
-                                        //         .data?.dataCashInOut?[rowIndex],
-                                        //   ),
-                                        // );
-                                      } else if (value == 4) {
                                         showDialogBase(
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
-                                                "Apakah Anda yakin ingin Menghapus Cash In dan Cash Out",
+                                                "Apakah Anda yakin ingin Menghapus Supplier",
                                             onConfirm: () async {
                                               controller.postRemoveCashInOut(
                                                 trimString(
-                                                  dataRow["id_supplier"],
+                                                  dataRow["id_id_cash_in_out"],
                                                 ),
                                               );
                                             },
@@ -347,8 +300,13 @@ class CashInCashOutView extends StatefulWidget {
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
-                                    value: trimStringStrip(
-                                        item[column].toString()),
+                                    value: column == "tg_transaksi"
+                                        ? formatDateTime(
+                                            item[column],
+                                          )
+                                        : trimStringStrip(
+                                            item[column].toString(),
+                                          ),
                                   );
                                 }
                               }

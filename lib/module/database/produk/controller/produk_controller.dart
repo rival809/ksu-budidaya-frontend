@@ -81,7 +81,7 @@ class ProdukController extends State<ProdukView> {
       };
 
       if (trimString(productNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"role_name": trimString(productNameController.text)});
+        dataCari.addAll({"nm_product": trimString(productNameController.text)});
       }
 
       if (isAsc != null) {

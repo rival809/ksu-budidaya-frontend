@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
-Future<DateTime?> initSelectedDate(
-    {required BuildContext context, required String? initValue}) async {
+Future<DateTime?> initSelectedDate({required String? initValue}) async {
   DateTime? selectedDate = await showDatePicker(
-    context: context,
+    context: globalContext,
     initialDate: DateTime.parse(
       checkDate(trimString(initValue).toString().isEmpty
           ? DateTime.now().toString()

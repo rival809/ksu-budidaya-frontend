@@ -32,6 +32,7 @@ export 'package:ksu_budidaya/module/beranda/widget/menu_card.dart';
 export 'package:ksu_budidaya/module/beranda/widget/slider_view.dart';
 export 'package:ksu_budidaya/module/cash/cash_in_cash_out/controller/cash_in_cash_out_controller.dart';
 export 'package:ksu_budidaya/module/cash/cash_in_cash_out/view/cash_in_cash_out_view.dart';
+export 'package:ksu_budidaya/module/cash/cash_in_cash_out/widget/dialog_cash_in_out.dart';
 export 'package:ksu_budidaya/module/database/divisi/controller/divisi_controller.dart';
 export 'package:ksu_budidaya/module/database/divisi/view/divisi_view.dart';
 export 'package:ksu_budidaya/module/database/divisi/widget/dialog_divisi.dart';

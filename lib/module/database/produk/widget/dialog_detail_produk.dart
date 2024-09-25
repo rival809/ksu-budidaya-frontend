@@ -87,16 +87,18 @@ class _DialogDetailProdukState extends State<DialogDetailProduk> {
                   label: "Divisi",
                   itemAsString: (item) => item.divisiAsString(),
                   items: DivisiDatabase.dataDivisi.dataDivisi ?? [],
-                  value: DataDetailDivisi(
-                    idDivisi: widget.data?.idDivisi,
-                    nmDivisi: trimString(
-                      getNamaDivisi(
-                        idDivisi: trimString(
-                          widget.data?.idDivisi,
+                  value: widget.data?.idDivisi?.isEmpty ?? true
+                      ? null
+                      : DataDetailDivisi(
+                          idDivisi: widget.data?.idDivisi,
+                          nmDivisi: trimString(
+                            getNamaDivisi(
+                              idDivisi: trimString(
+                                widget.data?.idDivisi,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                   onChanged: (value) {},
                 ),
                 BaseForm(
@@ -114,13 +116,16 @@ class _DialogDetailProdukState extends State<DialogDetailProduk> {
                   enabled: false,
                   itemAsString: (item) => item.supplierAsString(),
                   items: SupplierDatabase.dataSupplier.dataSupplier ?? [],
-                  value: DataDetailSupplier(
-                    idSupplier: widget.data?.idSupplier,
-                    nmSupplier: trimString(
-                      getNamaSupplier(
-                          idSupplier: trimString(widget.data?.idSupplier)),
-                    ),
-                  ),
+                  value: widget.data?.idSupplier?.isEmpty ?? true
+                      ? null
+                      : DataDetailSupplier(
+                          idSupplier: widget.data?.idSupplier,
+                          nmSupplier: trimString(
+                            getNamaSupplier(
+                                idSupplier:
+                                    trimString(widget.data?.idSupplier)),
+                          ),
+                        ),
                   onChanged: (value) {},
                   autoValidate: AutovalidateMode.onUserInteraction,
                   validator: Validatorless.required("Data Wajib Diisi"),

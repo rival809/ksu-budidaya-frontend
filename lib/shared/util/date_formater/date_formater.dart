@@ -15,14 +15,26 @@ formatDateDayMonthYear(String? date) {
 
 formatDate(String? date) {
   if (date!.isEmpty) {
-    return "-";
+    return "";
   } else if (date.contains("null")) {
-    return "-";
+    return "";
   }
   initializeDateFormatting('id');
 
   DateTime dateConverted = DateTime.parse(date);
   return "${dateConverted.day.toString().padLeft(2, '0')}-${dateConverted.month.toString().padLeft(2, '0')}-${dateConverted.year.toString().padLeft(2, '0')}";
+}
+
+formatDateTime(String? dateTime) {
+  if (dateTime?.isEmpty ?? true) {
+    return "-";
+  } else if (dateTime.toString().contains("null")) {
+    return "-";
+  }
+  initializeDateFormatting('id');
+  DateTime date = DateTime.parse(dateTime ?? "");
+
+  return "${date.day.toString().padLeft(2, '0')}-${date.month.toString().padLeft(2, '0')}-${date.year.toString().padLeft(2, '0')}, ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
 }
 
 formatSelectedDate(DateTime selectedDate) {

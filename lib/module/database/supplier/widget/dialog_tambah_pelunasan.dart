@@ -73,7 +73,6 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
                     suffixIcon: iconCalendarMonth,
                     onTap: () async {
                       DateTime? selectedDate = await initSelectedDate(
-                        context: context,
                         initValue: DateTime.now().toString(),
                       );
                     },
