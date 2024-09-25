@@ -16,6 +16,9 @@ class _BarcodeScannerDialogState extends State<BarcodeScannerDialog>
     autoStart: false,
     torchEnabled: true,
     facing: CameraFacing.back,
+    formats: [
+      BarcodeFormat.all,
+    ],
     detectionSpeed: DetectionSpeed.normal,
   );
 

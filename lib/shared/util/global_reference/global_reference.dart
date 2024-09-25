@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/database/suplier/supplier_database.dart';
 
 class GlobalReference {
   roleReference() async {
@@ -9,7 +8,7 @@ class GlobalReference {
       ListRoleResult result = await ApiService.listRole(
         data: {
           "page": "1",
-          "size": "100",
+          "size": "1000",
         },
       ).timeout(const Duration(seconds: 30));
 
@@ -24,7 +23,7 @@ class GlobalReference {
       SupplierResult result = await ApiService.listSupplier(
         data: {
           "page": "1",
-          "size": "100",
+          "size": "1000",
         },
       ).timeout(const Duration(seconds: 30));
 
@@ -39,7 +38,7 @@ class GlobalReference {
       DivisiResult result = await ApiService.listDivisi(
         data: {
           "page": "1",
-          "size": "100",
+          "size": "1000",
         },
       ).timeout(const Duration(seconds: 30));
 

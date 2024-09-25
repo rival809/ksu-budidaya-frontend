@@ -41,6 +41,9 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
     textController[3].text = formatMoney(trimString(widget.data?.hargaBeli));
     textController[4].text = trimString(widget.data?.jumlah.toString());
     textController[5].text = trimString(widget.data?.keterangan);
+    if (!widget.isDetail) {
+      dataEdit.statusProduct = dataEdit.statusProduct ?? true;
+    }
     super.initState();
   }
 

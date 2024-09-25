@@ -117,6 +117,9 @@ class _SimpleDropdownButtonState extends State<SimpleDropdownButton> {
               ),
             ),
           ),
+        const SizedBox(
+          height: 2.0,
+        ),
         DropdownSearch(
           validator: widget.enabled ?? true
               ? (value) {

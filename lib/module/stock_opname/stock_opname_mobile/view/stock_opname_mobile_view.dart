@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class StockOpnameMobileView extends StatefulWidget {
   const StockOpnameMobileView({Key? key}) : super(key: key);
@@ -19,8 +18,10 @@ class StockOpnameMobileView extends StatefulWidget {
               children: [
                 Expanded(
                   child: BaseSecondaryButton(
-                    text: "Batal",
-                    onPressed: () {},
+                    text: "Reset",
+                    onPressed: () {
+                      controller.resetData();
+                    },
                   ),
                 ),
                 const SizedBox(

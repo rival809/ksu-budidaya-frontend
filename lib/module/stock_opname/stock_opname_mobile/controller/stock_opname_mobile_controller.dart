@@ -24,7 +24,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       _debounce?.cancel();
     }
     _debounce = Timer(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
       () {
         postDetailProduct(value);
       },
@@ -93,6 +93,15 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
     }
+  }
+
+  resetData() {
+    textBarcodeController.clear();
+    textNamaProdukController.clear();
+    textCurrentStockController.clear();
+    textStockController.clear();
+    stockEdit = "";
+    update();
   }
 
   @override
