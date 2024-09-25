@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/database/suplier/supplier_database.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
