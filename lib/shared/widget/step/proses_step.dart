@@ -33,6 +33,7 @@ class _ProsesStepState extends State<ProsesStep> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         IntrinsicWidth(
           child: Column(

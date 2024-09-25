@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/cash_in_out/cash_in_out_model.dart';
 
 class ApiService {
   //CONFIG API
@@ -610,6 +611,111 @@ class ApiService {
       }
     } else {
       throw Exception('Failed to updateProduct');
+    }
+  }
+
+  static Future<CashInOutResult> listCashInOut({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/cash-in-out/list-cash",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return CashInOutResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listCashInOut');
+    }
+  }
+
+  static Future<CashInOutResult> createCashInOut({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/create-product",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return CashInOutResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createCashInOut');
+    }
+  }
+
+  static Future<DetailProductResult> detailCashInOut({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/detail-product",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailProductResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to detailCashInOut');
+    }
+  }
+
+  static Future<CashInOutResult> removeCashInOut({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/remove-product",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return CashInOutResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeCashInOut');
+    }
+  }
+
+  static Future<CashInOutResult> updateCashInOut({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/update-product",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return CashInOutResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateCashInOut');
     }
   }
 }

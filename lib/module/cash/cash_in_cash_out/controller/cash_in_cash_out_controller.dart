@@ -1,44 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/cash_in_out/cash_in_out_model.dart';
 
-class SupplierController extends State<SupplierView> {
-  static late SupplierController instance;
-  late SupplierView view;
+class CashInCashOutController extends State<CashInCashOutView> {
+  static late CashInCashOutController instance;
+  late CashInCashOutView view;
 
   String page = "1";
   String size = "10";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 
+  bool step1 = true;
+  bool step2 = false;
+  bool step3 = false;
+
+  onSwitchStep(String valueStep) {
+    switch (valueStep) {
+      case "1":
+        step1 = true;
+        step2 = false;
+        step3 = false;
+        dataFuture = cariDataCashInOut();
+
+        break;
+      case "2":
+        step1 = false;
+        step2 = true;
+        step3 = false;
+        dataFuture = cariDataCashInOut(idCash: "1");
+        break;
+      case "3":
+        step1 = false;
+        step2 = false;
+        step3 = true;
+        dataFuture = cariDataCashInOut(idCash: "2");
+
+        break;
+      default:
+        step1 = true;
+        step2 = false;
+        step3 = false;
+    }
+    update();
+  }
+
   Future<dynamic>? dataFuture;
 
-  DataSupplier dataSupplier = DataSupplier();
-  SupplierResult result = SupplierResult();
-
+  DataCashInOut dataCashInOut = DataCashInOut();
+  CashInOutResult result = CashInOutResult();
   List<String> listRoleView = [
-    "id_supplier",
-    "nm_supplier",
-    "nm_pemilik",
-    "nm_pic",
-    "no_wa",
-    "alamat",
-    "hutang_dagang",
+    "tg_transaksi",
+    "id_jenis",
+    "id_detail",
+    "cash_in",
+    "cash_out",
+    "keterangan",
   ];
 
-  cariDataSupplier({bool? isAsc, String? field}) async {
+  cariDataCashInOut({bool? isAsc, String? field, String? idCash}) async {
     try {
-      result = SupplierResult();
+      result = CashInOutResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
       };
 
-      if (trimString(supplierNameController.text).toString().isNotEmpty) {
+      if (trimString(idCash).toString().isNotEmpty) {
         dataCari.addAll(
-          {
-            "nm_supplier": trimString(supplierNameController.text),
-          },
+          {"id_cash": idCash},
         );
+      }
+
+      if (trimString(supplierNameController.text).toString().isNotEmpty) {
+        dataCari
+            .addAll({"keterangan": trimString(supplierNameController.text)});
       }
 
       if (isAsc != null) {
@@ -50,7 +86,7 @@ class SupplierController extends State<SupplierView> {
         });
       }
 
-      result = await ApiService.listSupplier(
+      result = await ApiService.listCashInOut(
         data: dataCari,
       ).timeout(const Duration(seconds: 30));
 
@@ -65,12 +101,12 @@ class SupplierController extends State<SupplierView> {
     }
   }
 
-  postCreateSupplier(DataMap dataCreate) async {
+  postCreateCashInOut(DataMap dataCreate) async {
     Get.back();
 
     showCircleDialogLoading(context);
     try {
-      SupplierResult result = await ApiService.createSupplier(
+      CashInOutResult result = await ApiService.createCashInOut(
         data: dataCreate,
       ).timeout(const Duration(seconds: 30));
 
@@ -81,7 +117,7 @@ class SupplierController extends State<SupplierView> {
           content: const DialogBerhasil(),
         );
 
-        dataFuture = cariDataSupplier();
+        dataFuture = cariDataCashInOut();
         update();
       }
     } catch (e) {
@@ -96,12 +132,12 @@ class SupplierController extends State<SupplierView> {
     }
   }
 
-  postRemoveSupplier(String idSupplier) async {
+  postRemoveCashInOut(String idCashInOut) async {
     Get.back();
     showCircleDialogLoading(context);
     try {
-      SupplierResult result = await ApiService.removeSupplier(
-        data: {"id_supplier": idSupplier},
+      CashInOutResult result = await ApiService.removeCashInOut(
+        data: {"id_supplier": idCashInOut},
       ).timeout(const Duration(seconds: 30));
 
       Navigator.pop(context);
@@ -111,7 +147,7 @@ class SupplierController extends State<SupplierView> {
           content: const DialogBerhasil(),
         );
 
-        dataFuture = cariDataSupplier();
+        dataFuture = cariDataCashInOut();
         update();
       }
     } catch (e) {
@@ -126,12 +162,12 @@ class SupplierController extends State<SupplierView> {
     }
   }
 
-  postUpdateSupplier(DataMap dataEdit) async {
+  postUpdateCashInOut(DataMap dataEdit) async {
     Get.back();
 
     showCircleDialogLoading(context);
     try {
-      SupplierResult result = await ApiService.updateSupplier(
+      CashInOutResult result = await ApiService.updateCashInOut(
         data: dataEdit,
       ).timeout(const Duration(seconds: 30));
 
@@ -142,7 +178,7 @@ class SupplierController extends State<SupplierView> {
           content: const DialogBerhasil(),
         );
 
-        dataFuture = cariDataSupplier();
+        dataFuture = cariDataCashInOut();
         update();
       }
     } catch (e) {
@@ -160,7 +196,7 @@ class SupplierController extends State<SupplierView> {
   @override
   void initState() {
     instance = this;
-    dataFuture = cariDataSupplier();
+    dataFuture = cariDataCashInOut();
 
     super.initState();
   }

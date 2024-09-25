@@ -110,25 +110,47 @@ class SliderView extends StatelessWidget {
                       ],
                     ),
                     DrawerMenu(
-                      title: "Stock Opname",
+                      title: "Cash",
                       isSelected: isParentSelected(
-                        "/stock-opname",
+                        "/cash",
                         [
-                          "/user-management/roles",
-                          "/stock-opname/mobile",
+                          "/cash/cash-in-cash-out",
                         ],
                       ),
                       onTap: () {},
                       children: [
                         DrawerMenu(
-                          title: "Stocktake Harian",
+                          title: "Cash In dan Cash Out",
                           isSubMenu: true,
-                          isSelected:
-                              currentRoute == "/stock-opname/stocktake-harian",
+                          isSelected: currentRoute == "/cash/cash-in-cash-out",
                           onTap: () {
-                            // router.go("/stock-opname/cetak-harian");
+                            router.go(
+                              "/cash/cash-in-cash-out",
+                            );
                           },
                         ),
+                      ],
+                    ),
+                    DrawerMenu(
+                      title: "Stock Opname",
+                      isSelected: isParentSelected(
+                        "/stock-opname",
+                        [
+                          // "/user-management/roles",
+                          "/stock-opname/mobile",
+                        ],
+                      ),
+                      onTap: () {},
+                      children: [
+                        // DrawerMenu(
+                        //   title: "Stocktake Harian",
+                        //   isSubMenu: true,
+                        //   isSelected:
+                        //       currentRoute == "/stock-opname/stocktake-harian",
+                        //   onTap: () {
+                        //     // router.go("/stock-opname/cetak-harian");
+                        //   },
+                        // ),
                         DrawerMenu(
                           title: "Stock Opname",
                           isSubMenu: true,

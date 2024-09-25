@@ -104,6 +104,14 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
+          path: 'cash/cash-in-cash-out',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: CashInCashOutView(),
+            );
+          },
+        ),
+        GoRoute(
           path: 'koperasi/anggota',
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(
