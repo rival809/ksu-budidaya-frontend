@@ -12,6 +12,7 @@
         "database/divisi",
         "database/produk",
         "koperasi/anggota",
+        "transaksi/pembelian",
         "pdf_viewer"
     ],
     "module_directory_name": "module",

@@ -1,82 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
-class CashInCashOutController extends State<CashInCashOutView> {
-  static late CashInCashOutController instance;
-  late CashInCashOutView view;
+class PembelianController extends State<PembelianView> {
+  static late PembelianController instance;
+  late PembelianView view;
 
   String page = "1";
   String size = "10";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 
-  bool step1 = true;
-  bool step2 = false;
-  bool step3 = false;
-
-  onSwitchStep(String valueStep) {
-    switch (valueStep) {
-      case "1":
-        step1 = true;
-        step2 = false;
-        step3 = false;
-        dataFuture = cariDataCashInOut();
-
-        break;
-      case "2":
-        step1 = false;
-        step2 = true;
-        step3 = false;
-        dataFuture = cariDataCashInOut();
-        break;
-      case "3":
-        step1 = false;
-        step2 = false;
-        step3 = true;
-        dataFuture = cariDataCashInOut();
-
-        break;
-      default:
-        step1 = true;
-        step2 = false;
-        step3 = false;
-    }
-    update();
-  }
-
   Future<dynamic>? dataFuture;
 
-  DataCashInOut dataCashInOut = DataCashInOut();
-  CashInOutResult result = CashInOutResult();
+  DataPembelian dataCashInOut = DataPembelian();
+  PembelianResult result = PembelianResult();
   List<String> listRoleView = [
-    "tg_transaksi",
-    "nm_jenis",
-    "nm_detail",
-    "cash_in",
-    "cash_out",
+    "id_pembelian",
+    "tg_pembelian",
+    "id_supplier",
+    "jumlah",
+    "total_harga_beli",
+    "total_harga_jual",
+    "jenis_pembayaran",
     "keterangan",
   ];
 
-  cariDataCashInOut({
+  cariDataPembelian({
     bool? isAsc,
     String? field,
   }) async {
     try {
-      result = CashInOutResult();
+      result = PembelianResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
       };
-
-      if (step2 == true) {
-        dataCari.addAll(
-          {"id_cash": "1"},
-        );
-      } else if (step3 == true) {
-        dataCari.addAll(
-          {"id_cash": "2"},
-        );
-      }
 
       if (trimString(supplierNameController.text).toString().isNotEmpty) {
         dataCari
@@ -92,7 +50,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
         });
       }
 
-      result = await ApiService.listCashInOut(
+      result = await ApiService.listPembelian(
         data: dataCari,
       ).timeout(const Duration(seconds: 30));
 
@@ -122,13 +80,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
         showDialogBase(
           content: const DialogBerhasil(),
         );
-        onSwitchStep(
-          step1 == true
-              ? "1"
-              : step2 == true
-                  ? "2"
-                  : "3",
-        );
+
         update();
       }
     } catch (e) {
@@ -157,13 +109,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
         showDialogBase(
           content: const DialogBerhasil(),
         );
-        onSwitchStep(
-          step1 == true
-              ? "1"
-              : step2 == true
-                  ? "2"
-                  : "3",
-        );
+
         update();
       }
     } catch (e) {
@@ -194,13 +140,6 @@ class CashInCashOutController extends State<CashInCashOutView> {
           content: const DialogBerhasil(),
         );
 
-        onSwitchStep(
-          step1 == true
-              ? "1"
-              : step2 == true
-                  ? "2"
-                  : "3",
-        );
         update();
       }
     } catch (e) {
@@ -219,7 +158,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
   void initState() {
     instance = this;
     GlobalReference().cashReference();
-    dataFuture = cariDataCashInOut();
+    dataFuture = cariDataPembelian();
     super.initState();
   }
 

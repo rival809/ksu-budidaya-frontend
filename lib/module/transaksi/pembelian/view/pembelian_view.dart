@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
-class CashInCashOutView extends StatefulWidget {
-  const CashInCashOutView({Key? key}) : super(key: key);
+class PembelianView extends StatefulWidget {
+  const PembelianView({Key? key}) : super(key: key);
 
-  Widget build(context, CashInCashOutController controller) {
+  Widget build(context, PembelianController controller) {
     controller.view = this;
 
     return BodyContainer(
@@ -21,7 +21,7 @@ class CashInCashOutView extends StatefulWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Cash In dan Cash Out",
+                    "Daftar Pembelian",
                     style: myTextTheme.headlineLarge,
                   ),
                   const SizedBox(
@@ -54,7 +54,7 @@ class CashInCashOutView extends StatefulWidget {
                                     child: BasePrimaryButton(
                                       onPressed: () {
                                         controller.dataFuture =
-                                            controller.cariDataCashInOut();
+                                            controller.cariDataPembelian();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -69,18 +69,25 @@ class CashInCashOutView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
-                                  controller.onSwitchStep(
-                                    controller.step1 == true
-                                        ? "1"
-                                        : controller.step2 == true
-                                            ? "2"
-                                            : "3",
-                                  );
-
+                                  controller.dataFuture =
+                                      controller.cariDataPembelian();
                                   controller.update();
                                 },
                                 text: "Refresh",
                                 suffixIcon: iconCached,
+                                isDense: true,
+                              ),
+                              const SizedBox(
+                                width: 16.0,
+                              ),
+                              BaseSecondaryButton(
+                                onPressed: () {
+                                  // controller.dataFuture =
+                                  //     controller.cariDataProduct();
+                                  // controller.update();
+                                },
+                                text: "Filter",
+                                suffixIcon: iconFilterAlt,
                                 isDense: true,
                               ),
                               const SizedBox(
@@ -109,26 +116,6 @@ class CashInCashOutView extends StatefulWidget {
                   const SizedBox(
                     height: 16.0,
                   ),
-                  ProsesStep(
-                    step1: controller.step1,
-                    onTapStep1: () {
-                      controller.onSwitchStep("1");
-                    },
-                    textStep1: "Semua",
-                    step2: controller.step2,
-                    onTapStep2: () {
-                      controller.onSwitchStep("2");
-                    },
-                    textStep2: "Cash In",
-                    step3: controller.step3,
-                    onTapStep3: () {
-                      controller.onSwitchStep("3");
-                    },
-                    textStep3: "Cash Out",
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
                   FutureBuilder(
                     future: controller.dataFuture,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -139,51 +126,46 @@ class CashInCashOutView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          CashInOutResult result = snapshot.data;
+                          PembelianResult result = snapshot.data;
                           controller.dataCashInOut =
-                              result.data ?? DataCashInOut();
+                              result.data ?? DataPembelian();
                           List<dynamic> listData = controller.dataCashInOut
-                                  .toJson()["data_cash_in_out"] ??
+                                  .toJson()["data_pembelian"] ??
                               [];
-
-                          for (var data in listData) {
-                            final isCashIn = data["id_cash"] == "1";
-                            final isCashOut = data["id_cash"] == "2";
-
-                            data.addAll({
-                              "cash_in": isCashIn ? data["nominal"] : "0",
-                              "cash_out": isCashOut ? data["nominal"] : "0",
-                            });
-                          }
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
 
-                            columns.add(
-                              PlutoColumn(
-                                width: 30,
-                                backgroundColor: primaryColor,
-                                title: "No.",
-                                field: "no",
-                                filterHintText: "Cari ",
-                                type: PlutoColumnType.text(),
-                                enableEditingMode: false,
-                                renderer: (rendererContext) {
-                                  final rowIndex = rendererContext.rowIdx + 1;
-
-                                  return Text(
-                                    rendererContext.cell.value.toString(),
-                                    style: myTextTheme.bodyMedium,
-                                  );
-                                },
-                              ),
-                            );
-
                             columns.addAll(
                               List.generate(
                                 controller.listRoleView.length,
                                 (index) {
+                                  if (controller.listRoleView[index] ==
+                                      "jenis_pembayaran") {
+                                    return PlutoColumn(
+                                      width: 75,
+                                      backgroundColor: primaryColor,
+                                      filterHintText:
+                                          "Cari ${controller.listRoleView[index]}",
+                                      title: convertTitle(
+                                        controller.listRoleView[index],
+                                      ),
+                                      field: controller.listRoleView[index],
+                                      type: PlutoColumnType.text(),
+                                      renderer: (rendererContext) {
+                                        Map<String, dynamic> dataRow =
+                                            rendererContext.row.toJson();
+                                        return CardLabel(
+                                          cardColor: yellow50,
+                                          cardTitle:
+                                              dataRow["jenis_pembayaran"],
+                                          cardTitleColor: yellow900,
+                                          cardBorderColor: yellow50,
+                                        );
+                                      },
+                                    );
+                                  }
                                   return PlutoColumn(
                                     backgroundColor: primaryColor,
                                     filterHintText:
@@ -193,13 +175,18 @@ class CashInCashOutView extends StatefulWidget {
                                     ),
                                     field: controller.listRoleView[index],
                                     type: (controller.listRoleView[index] ==
-                                                "cash_in" ||
+                                                "total_harga_beli" ||
                                             controller.listRoleView[index] ==
-                                                "cash_out")
+                                                "total_harga_jual" ||
+                                            controller.listRoleView[index] ==
+                                                "jumlah")
                                         ? PlutoColumnType.number(
                                             locale: "id",
                                           )
-                                        : PlutoColumnType.text(),
+                                        : (controller.listRoleView[index] ==
+                                                "tg_pembelian")
+                                            ? PlutoColumnType.date()
+                                            : PlutoColumnType.text(),
                                   );
                                 },
                               ),
@@ -257,14 +244,14 @@ class CashInCashOutView extends StatefulWidget {
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {
-                                        showDialogBase(
-                                          width: 1000,
-                                          content: DialogCashInOut(
-                                            isDetail: true,
-                                            data: result
-                                                .data?.dataCashInOut?[rowIndex],
-                                          ),
-                                        );
+                                        // showDialogBase(
+                                        //   width: 1000,
+                                        //   content: DialogCashInOut(
+                                        //     isDetail: true,
+                                        //     data: result
+                                        //         .data?.dataPembelian?[rowIndex],
+                                        //   ),
+                                        // );
                                       } else if (value == 2) {
                                         showDialogBase(
                                           content: DialogKonfirmasi(
@@ -275,8 +262,8 @@ class CashInCashOutView extends StatefulWidget {
                                                 trimString(
                                                   result
                                                       .data
-                                                      ?.dataCashInOut?[rowIndex]
-                                                      .idCashInOut,
+                                                      ?.dataPembelian?[rowIndex]
+                                                      .idPembelian,
                                                 ),
                                               );
                                             },
@@ -298,10 +285,6 @@ class CashInCashOutView extends StatefulWidget {
                             });
                             rows = listDataWithIndex.map((item) {
                               Map<String, PlutoCell> cells = {};
-
-                              cells['no'] = PlutoCell(
-                                value: item['persistentIndex'].toString(),
-                              );
 
                               cells['Aksi'] = PlutoCell(
                                 value: null,
@@ -339,12 +322,9 @@ class CashInCashOutView extends StatefulWidget {
                                     controller.isAsc = !controller.isAsc;
                                     controller.update();
                                     controller.dataFuture =
-                                        controller.cariDataCashInOut(
+                                        controller.cariDataPembelian(
                                       isAsc: controller.isAsc,
-                                      field: (event.column.field == "cash_in" ||
-                                              event.column.field == "cash_out")
-                                          ? "nominal"
-                                          : event.column.field,
+                                      field: event.column.field,
                                     );
                                     controller.update();
                                   }
@@ -375,7 +355,7 @@ class CashInCashOutView extends StatefulWidget {
                                       controller.page = trimString(value);
                                       controller.update();
                                       controller.dataFuture =
-                                          controller.cariDataCashInOut();
+                                          controller.cariDataPembelian();
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
@@ -383,7 +363,7 @@ class CashInCashOutView extends StatefulWidget {
                                       controller.size = trimString(value);
                                       controller.update();
                                       controller.dataFuture =
-                                          controller.cariDataCashInOut();
+                                          controller.cariDataPembelian();
                                       controller.update();
                                     },
                                     totalRow: controller
@@ -396,7 +376,7 @@ class CashInCashOutView extends StatefulWidget {
                                                 .toString();
                                         controller.update();
                                         controller.dataFuture =
-                                            controller.cariDataCashInOut();
+                                            controller.cariDataPembelian();
                                         controller.update();
                                       }
                                     },
@@ -409,7 +389,7 @@ class CashInCashOutView extends StatefulWidget {
                                                 .toString();
                                         controller.update();
                                         controller.dataFuture =
-                                            controller.cariDataCashInOut();
+                                            controller.cariDataPembelian();
                                         controller.update();
                                       }
                                     },
@@ -442,5 +422,5 @@ class CashInCashOutView extends StatefulWidget {
   }
 
   @override
-  State<CashInCashOutView> createState() => CashInCashOutController();
+  State<PembelianView> createState() => PembelianController();
 }

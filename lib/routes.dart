@@ -119,6 +119,14 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: 'transaksi/pembelian',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: PembelianView(),
+            );
+          },
+        ),
 
         // GoRoute(
         //   path: 'pdf-viewer',

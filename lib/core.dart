@@ -17,6 +17,7 @@ export 'package:ksu_budidaya/model/cash_in_out/ref_cash_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/ref_detail_cash_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/ref_jenis_cash_model.dart';
 export 'package:ksu_budidaya/model/divisi/divisi_model.dart';
+export 'package:ksu_budidaya/model/pembelian/pembelian_model.dart';
 export 'package:ksu_budidaya/model/product/detail_product_model.dart';
 export 'package:ksu_budidaya/model/product/product_model.dart';
 export 'package:ksu_budidaya/model/supplier/supplier_model.dart';
@@ -58,6 +59,8 @@ export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/controller/
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/view/stock_opname_mobile_view.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/widget/scanner_barcode.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/widget/scanner_button_widgets.dart';
+export 'package:ksu_budidaya/module/transaksi/pembelian/controller/pembelian_controller.dart';
+export 'package:ksu_budidaya/module/transaksi/pembelian/view/pembelian_view.dart';
 export 'package:ksu_budidaya/module/user/login/controller/login_controller.dart';
 export 'package:ksu_budidaya/module/user/login/view/login_view.dart';
 export 'package:ksu_budidaya/module/user/login/widget/content_login.dart';

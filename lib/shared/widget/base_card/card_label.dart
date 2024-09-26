@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ksu_budidaya/core.dart';
 
 class CardLabel extends StatelessWidget {
   final Color cardBorderColor;
@@ -30,10 +31,12 @@ class CardLabel extends StatelessWidget {
         child: Text(
           cardTitle,
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall
-              ?.copyWith(color: cardTitleColor),
+          style: myTextTheme.labelSmall?.copyWith(
+            color: cardTitleColor,
+            letterSpacing: 0,
+            height: 1.35,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

@@ -116,6 +116,39 @@ class SliderView extends StatelessWidget {
                       ],
                     ),
                     DrawerMenu(
+                      title: "Transaksi",
+                      isSelected: isParentSelected(
+                        "/transaksi",
+                        [
+                          "/transaksi/pembelian",
+                          "/transaksi/penjualan",
+                        ],
+                      ),
+                      onTap: () {},
+                      children: [
+                        DrawerMenu(
+                          title: "Pembelian",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/transaksi/pembelian",
+                          onTap: () {
+                            router.go(
+                              "/transaksi/pembelian",
+                            );
+                          },
+                        ),
+                        DrawerMenu(
+                          title: "Divisi",
+                          isSubMenu: true,
+                          isSelected: currentRoute == "/database/divisi",
+                          onTap: () {
+                            router.go(
+                              "/database/divisi",
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    DrawerMenu(
                       title: "Cash",
                       isSelected: isParentSelected(
                         "/cash",

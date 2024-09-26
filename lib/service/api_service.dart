@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/cash_in_out/cash_in_out_model.dart';
 
 class ApiService {
   //CONFIG API
@@ -758,6 +757,27 @@ class ApiService {
       }
     } else {
       throw Exception('Failed to updateCashInOut');
+    }
+  }
+
+  static Future<PembelianResult> listPembelian({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/purchase/list-purchase",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return PembelianResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listPembelian');
     }
   }
 }
