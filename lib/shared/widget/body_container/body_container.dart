@@ -99,6 +99,11 @@ class _BodyContainerState extends State<BodyContainer> {
                 const SizedBox(
                   width: 24.0,
                 ),
+                drawerProvider.isDrawerOpen
+                    ? Container(
+                        width: 260,
+                      )
+                    : Container(),
               ],
             ),
           ),
