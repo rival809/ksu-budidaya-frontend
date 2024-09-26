@@ -12,7 +12,7 @@ class PembelianController extends State<PembelianView> {
 
   Future<dynamic>? dataFuture;
 
-  bool isList = false;
+  bool isList = true;
   bool isDetail = false;
 
   DataPembelian dataCashInOut = DataPembelian();
