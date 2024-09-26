@@ -702,7 +702,7 @@ class ApiService {
     required DataMap data,
   }) async {
     var response = await dio.post(
-      "$_baseUrl/api/products/create-product",
+      "$_baseUrl/api/cash-in-out/create-cash",
       options: options,
       data: data,
       cancelToken: cancelToken,
@@ -719,32 +719,11 @@ class ApiService {
     }
   }
 
-  static Future<DetailProductResult> detailCashInOut({
-    required DataMap data,
-  }) async {
-    var response = await dio.post(
-      "$_baseUrl/api/products/detail-product",
-      options: options,
-      data: data,
-      cancelToken: cancelToken,
-    );
-
-    if (response.statusCode == 200) {
-      if (response.data["success"] == true) {
-        return DetailProductResult.fromJson(json.decode(response.toString()));
-      } else {
-        throw Exception(response.data["message"]);
-      }
-    } else {
-      throw Exception('Failed to detailCashInOut');
-    }
-  }
-
   static Future<CashInOutResult> removeCashInOut({
     required DataMap data,
   }) async {
     var response = await dio.post(
-      "$_baseUrl/api/products/remove-product",
+      "$_baseUrl/api/cash-in-out/remove-cash",
       options: options,
       data: data,
       cancelToken: cancelToken,
@@ -765,7 +744,7 @@ class ApiService {
     required DataMap data,
   }) async {
     var response = await dio.post(
-      "$_baseUrl/api/products/update-product",
+      "$_baseUrl/api/cash-in-out/update-cash",
       options: options,
       data: data,
       cancelToken: cancelToken,

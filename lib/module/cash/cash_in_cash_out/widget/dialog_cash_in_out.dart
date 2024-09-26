@@ -34,7 +34,9 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
   @override
   void initState() {
     dataEdit = widget.data?.copyWith() ?? DataDetailCashInOut();
-    textController[0].text = formatDate(trimString(dataEdit.tgTransaksi));
+    textController[0].text = formatDate(formatDateToYearMonthDay(
+      trimString(dataEdit.tgTransaksi),
+    ));
     textController[1].text = formatMoney(trimString(dataEdit.nominal));
     textController[2].text = trimString(dataEdit.keterangan);
     if (dataEdit.idCash?.isNotEmpty ?? false) {
@@ -326,15 +328,42 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
                   child: BasePrimaryButton(
                     text: "Simpan",
                     onPressed: () {
-                      print(dataEdit.toJson());
+                      String tgTransaksi =
+                          formatDateTimePayload(dataEdit.tgTransaksi);
                       if (cashInOutKey.currentState!.validate()) {
                         DataMap payload = dataEdit.toJson();
                         payload.removeWhere(
                           (key, value) => key == "created_at",
                         );
                         payload.removeWhere(
+                          (key, value) => key == "nm_jenis",
+                        );
+                        payload.removeWhere(
+                          (key, value) => key == "nm_detail",
+                        );
+                        payload.removeWhere(
                           (key, value) => key == "updated_at",
                         );
+                        if (trimString(dataEdit.keterangan)
+                            .toString()
+                            .isEmpty) {
+                          payload
+                              .removeWhere((key, value) => key == "keterangan");
+                        }
+                        payload.update("tg_transaksi", (value) => tgTransaksi);
+
+                        if (widget.isDetail) {
+                          CashInCashOutController.instance.postUpdateCashInOut(
+                            payload,
+                          );
+                        } else {
+                          payload.removeWhere(
+                            (key, value) => key == "id_cash_in_out",
+                          );
+                          CashInCashOutController.instance.postCreateCashInOut(
+                            payload,
+                          );
+                        }
                       }
                     },
                   ),

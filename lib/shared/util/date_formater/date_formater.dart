@@ -25,6 +25,38 @@ formatDate(String? date) {
   return "${dateConverted.day.toString().padLeft(2, '0')}-${dateConverted.month.toString().padLeft(2, '0')}-${dateConverted.year.toString().padLeft(2, '0')}";
 }
 
+String convertDateString(String originalDateString) {
+  try {
+    DateFormat originalFormat = DateFormat("dd-MM-yyyy, HH:mm");
+    DateFormat desiredFormat = DateFormat("yyyy-MM-dd, HH:mm");
+
+    DateTime dateTime = originalFormat.parse(originalDateString);
+
+    String formattedDateString = desiredFormat.format(dateTime);
+
+    return formattedDateString;
+  } catch (e) {
+    print("Error parsing date: $e");
+    return "";
+  }
+}
+
+String formatDateToYearMonthDay(String originalDateString) {
+  try {
+    DateFormat originalFormat = DateFormat("dd-MM-yyyy, HH:mm");
+    DateFormat desiredFormat = DateFormat("yyyy-MM-dd");
+
+    DateTime dateTime = originalFormat.parse(originalDateString);
+
+    String formattedDateString = desiredFormat.format(dateTime);
+
+    return formattedDateString;
+  } catch (e) {
+    print("Error parsing date: $e");
+    return "";
+  }
+}
+
 formatDateTime(String? dateTime) {
   if (dateTime?.isEmpty ?? true) {
     return "-";
@@ -35,6 +67,19 @@ formatDateTime(String? dateTime) {
   DateTime date = DateTime.parse(dateTime ?? "");
 
   return "${date.day.toString().padLeft(2, '0')}-${date.month.toString().padLeft(2, '0')}-${date.year.toString().padLeft(2, '0')}, ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
+}
+
+formatDateTimePayload(String? dateTime) {
+  if (dateTime?.isEmpty ?? true) {
+    return "-";
+  } else if (dateTime.toString().contains("null")) {
+    return "-";
+  }
+  initializeDateFormatting('id');
+  DateTime now = DateTime.now();
+  DateTime date = DateTime.parse(dateTime ?? "");
+
+  return "${date.day.toString().padLeft(2, '0')}-${date.month.toString().padLeft(2, '0')}-${date.year.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
 }
 
 formatSelectedDate(DateTime selectedDate) {

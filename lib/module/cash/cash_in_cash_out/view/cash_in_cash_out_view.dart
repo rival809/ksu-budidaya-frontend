@@ -69,6 +69,13 @@ class CashInCashOutView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
+                                  controller.onSwitchStep(
+                                    controller.step1 == true
+                                        ? "1"
+                                        : controller.step2 == true
+                                            ? "2"
+                                            : "3",
+                                  );
                                   controller.dataFuture =
                                       controller.cariDataCashInOut();
                                   controller.update();
@@ -87,7 +94,7 @@ class CashInCashOutView extends StatefulWidget {
                               showDialogBase(
                                 width: 1000,
                                 content: DialogCashInOut(
-                                  isDetail: true,
+                                  isDetail: false,
                                   data: DataDetailCashInOut(),
                                 ),
                               );
@@ -263,11 +270,14 @@ class CashInCashOutView extends StatefulWidget {
                                         showDialogBase(
                                           content: DialogKonfirmasi(
                                             textKonfirmasi:
-                                                "Apakah Anda yakin ingin Menghapus Supplier",
+                                                "Apakah Anda yakin ingin Menghapus Data Cash In Out",
                                             onConfirm: () async {
                                               controller.postRemoveCashInOut(
                                                 trimString(
-                                                  dataRow["id_id_cash_in_out"],
+                                                  result
+                                                      .data
+                                                      ?.dataCashInOut?[rowIndex]
+                                                      .idCashInOut,
                                                 ),
                                               );
                                             },
@@ -301,13 +311,9 @@ class CashInCashOutView extends StatefulWidget {
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
-                                    value: column == "tg_transaksi"
-                                        ? formatDateTime(
-                                            item[column],
-                                          )
-                                        : trimStringStrip(
-                                            item[column].toString(),
-                                          ),
+                                    value: trimStringStrip(
+                                      item[column].toString(),
+                                    ),
                                   );
                                 }
                               }

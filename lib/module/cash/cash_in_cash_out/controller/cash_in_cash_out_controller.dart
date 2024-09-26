@@ -27,13 +27,14 @@ class CashInCashOutController extends State<CashInCashOutView> {
         step1 = false;
         step2 = true;
         step3 = false;
-        dataFuture = cariDataCashInOut(idCash: "1");
+        dataFuture = cariDataCashInOut();
         break;
       case "3":
         step1 = false;
         step2 = false;
         step3 = true;
-        dataFuture = cariDataCashInOut(idCash: "2");
+        dataFuture = cariDataCashInOut();
+        dataFuture = cariDataCashInOut();
 
         break;
       default:
@@ -57,7 +58,10 @@ class CashInCashOutController extends State<CashInCashOutView> {
     "keterangan",
   ];
 
-  cariDataCashInOut({bool? isAsc, String? field, String? idCash}) async {
+  cariDataCashInOut({
+    bool? isAsc,
+    String? field,
+  }) async {
     try {
       result = CashInOutResult();
       DataMap dataCari = {
@@ -65,9 +69,13 @@ class CashInCashOutController extends State<CashInCashOutView> {
         "size": size,
       };
 
-      if (trimString(idCash).toString().isNotEmpty) {
+      if (step2 == true) {
         dataCari.addAll(
-          {"id_cash": idCash},
+          {"id_cash": "1"},
+        );
+      } else if (step3 == true) {
+        dataCari.addAll(
+          {"id_cash": "2"},
         );
       }
 
@@ -115,8 +123,13 @@ class CashInCashOutController extends State<CashInCashOutView> {
         showDialogBase(
           content: const DialogBerhasil(),
         );
-
-        dataFuture = cariDataCashInOut();
+        onSwitchStep(
+          step1 == true
+              ? "1"
+              : step2 == true
+                  ? "2"
+                  : "3",
+        );
         update();
       }
     } catch (e) {
@@ -136,7 +149,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
     showCircleDialogLoading();
     try {
       CashInOutResult result = await ApiService.removeCashInOut(
-        data: {"id_supplier": idCashInOut},
+        data: {"id_cash_in_out": idCashInOut},
       ).timeout(const Duration(seconds: 30));
 
       Navigator.pop(context);
@@ -145,8 +158,13 @@ class CashInCashOutController extends State<CashInCashOutView> {
         showDialogBase(
           content: const DialogBerhasil(),
         );
-
-        dataFuture = cariDataCashInOut();
+        onSwitchStep(
+          step1 == true
+              ? "1"
+              : step2 == true
+                  ? "2"
+                  : "3",
+        );
         update();
       }
     } catch (e) {
@@ -177,7 +195,13 @@ class CashInCashOutController extends State<CashInCashOutView> {
           content: const DialogBerhasil(),
         );
 
-        dataFuture = cariDataCashInOut();
+        onSwitchStep(
+          step1 == true
+              ? "1"
+              : step2 == true
+                  ? "2"
+                  : "3",
+        );
         update();
       }
     } catch (e) {

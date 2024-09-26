@@ -7,7 +7,7 @@ Future<DateTime?> initSelectedDate({required String? initValue}) async {
     initialDate: DateTime.parse(
       checkDate(trimString(initValue).toString().isEmpty
           ? DateTime.now().toString()
-          : trimString(initValue)),
+          : formatDateToYearMonthDay(trimString(initValue))),
     ),
     firstDate: DateTime(1900),
     lastDate: DateTime(DateTime.now().year + 1),
