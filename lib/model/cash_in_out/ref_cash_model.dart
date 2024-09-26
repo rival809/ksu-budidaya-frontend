@@ -1,6 +1,13 @@
+import 'package:ksu_budidaya/core.dart';
+part 'ref_cash_model.g.dart';
+
+@HiveType(typeId: 11)
 class RefCashResult {
+  @HiveField(0)
   bool? success;
+  @HiveField(1)
   List<DataRefCash>? data;
+  @HiveField(2)
   String? message;
 
   RefCashResult({this.success, this.data, this.message});
@@ -27,10 +34,15 @@ class RefCashResult {
   }
 }
 
+@HiveType(typeId: 12)
 class DataRefCash {
+  @HiveField(0)
   String? idCash;
+  @HiveField(1)
   String? nmCash;
+  @HiveField(2)
   String? createdAt;
+  @HiveField(3)
   String? updatedAt;
 
   DataRefCash({this.idCash, this.nmCash, this.createdAt, this.updatedAt});
@@ -49,5 +61,9 @@ class DataRefCash {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  String cashAsString() {
+    return '${trimString(idCash)} - ${trimString(nmCash)}';
   }
 }

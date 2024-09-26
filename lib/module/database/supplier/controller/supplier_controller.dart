@@ -68,7 +68,7 @@ class SupplierController extends State<SupplierView> {
   postCreateSupplier(DataMap dataCreate) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       SupplierResult result = await ApiService.createSupplier(
         data: dataCreate,
@@ -98,7 +98,7 @@ class SupplierController extends State<SupplierView> {
 
   postRemoveSupplier(String idSupplier) async {
     Get.back();
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       SupplierResult result = await ApiService.removeSupplier(
         data: {"id_supplier": idSupplier},
@@ -129,7 +129,7 @@ class SupplierController extends State<SupplierView> {
   postUpdateSupplier(DataMap dataEdit) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       SupplierResult result = await ApiService.updateSupplier(
         data: dataEdit,

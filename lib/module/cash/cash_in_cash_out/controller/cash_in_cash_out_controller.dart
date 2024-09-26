@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/cash_in_out/cash_in_out_model.dart';
 
 class CashInCashOutController extends State<CashInCashOutView> {
   static late CashInCashOutController instance;
@@ -51,8 +50,8 @@ class CashInCashOutController extends State<CashInCashOutView> {
   CashInOutResult result = CashInOutResult();
   List<String> listRoleView = [
     "tg_transaksi",
-    "id_jenis",
-    "id_detail",
+    "nm_jenis",
+    "nm_detail",
     "cash_in",
     "cash_out",
     "keterangan",
@@ -104,7 +103,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
   postCreateCashInOut(DataMap dataCreate) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       CashInOutResult result = await ApiService.createCashInOut(
         data: dataCreate,
@@ -134,7 +133,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
 
   postRemoveCashInOut(String idCashInOut) async {
     Get.back();
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       CashInOutResult result = await ApiService.removeCashInOut(
         data: {"id_supplier": idCashInOut},
@@ -165,7 +164,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
   postUpdateCashInOut(DataMap dataEdit) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       CashInOutResult result = await ApiService.updateCashInOut(
         data: dataEdit,
@@ -196,6 +195,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
   @override
   void initState() {
     instance = this;
+    GlobalReference().cashReference();
     dataFuture = cariDataCashInOut();
 
     super.initState();

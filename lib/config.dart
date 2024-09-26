@@ -7,5 +7,6 @@ class AppConfig {
   // static const String baseUrl = "http://$ip:$port/api/";
 
   //URL DOMAIN DEV
-  static const String domain = "https://ksu-backend.vercel.app";
+  // static const String domain = "https://ksu-backend.vercel.app";
+  static const String domain = "http://10.44.121.214:3000";
 }

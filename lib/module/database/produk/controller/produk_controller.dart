@@ -111,7 +111,7 @@ class ProdukController extends State<ProdukView> {
   postCreateProduct(DataMap dataCreate) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       ProductResult result = await ApiService.createProduct(
         data: dataCreate,
@@ -141,7 +141,7 @@ class ProdukController extends State<ProdukView> {
 
   postRemoveProduct(String idProduct) async {
     Get.back();
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       ProductResult result = await ApiService.removeProduct(
         data: {"id_product": idProduct},
@@ -172,7 +172,7 @@ class ProdukController extends State<ProdukView> {
   postUpdateProduct(DataMap dataEdit) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       ProductResult result = await ApiService.updateProduct(
         data: dataEdit,

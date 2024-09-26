@@ -32,7 +32,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
   }
 
   postDetailProduct(String idProduct) async {
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       dataResult = DetailProductResult();
       textStockController.clear();
@@ -64,7 +64,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
   }
 
   postUpdateProduct(String idProduct, String jumlah) async {
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       ProductResult result = await ApiService.updateProduct(
         data: {

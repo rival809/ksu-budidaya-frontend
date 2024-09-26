@@ -1,5 +1,8 @@
 // ignore_for_file: camel_case_types
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -34,6 +37,23 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
     textController[0].text = formatDate(trimString(dataEdit.tgTransaksi));
     textController[1].text = formatMoney(trimString(dataEdit.nominal));
     textController[2].text = trimString(dataEdit.keterangan);
+    if (dataEdit.idCash?.isNotEmpty ?? false) {
+      jenisReference(idCash: dataEdit.idCash);
+    }
+    if (trimString(dataEdit.idCash).toString().isNotEmpty &&
+        trimString(dataEdit.idJenis.toString()).toString().isNotEmpty) {
+      detailReference(
+        idCash: dataEdit.idCash,
+        idJenis: dataEdit.idJenis.toString(),
+      );
+    }
+    valueDetail = trimString(dataEdit.idDetail.toString()).toString().isEmpty
+        ? null
+        : "${trimString(dataEdit.idDetail.toString())} - ${trimString(dataEdit.nmDetail)}";
+    valueJenis = trimString(dataEdit.idJenis.toString()).toString().isEmpty
+        ? null
+        : "${trimString(dataEdit.idJenis.toString())} - ${trimString(dataEdit.nmJenis)}";
+
     super.initState();
   }
 
@@ -43,6 +63,62 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
     textController[1].dispose();
     textController[2].dispose();
     super.dispose();
+  }
+
+  RefJenisCashResult responRefJenis = RefJenisCashResult();
+  RefDetailCashResult responRefDetail = RefDetailCashResult();
+
+  List<String> dataRefDetail = [];
+  List<String> dataRefJenis = [];
+
+  String? valueJenis;
+  String? valueDetail;
+
+  jenisReference({String? idCash}) async {
+    dataRefJenis = [];
+    responRefJenis = RefJenisCashResult();
+
+    try {
+      RefJenisCashResult result = await ApiService.listRefJenis(
+        data: {
+          "id_cash": trimString(idCash),
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      for (var i = 0; i < (result.data?.length ?? 0); i++) {
+        dataRefJenis.add(
+          "${trimString(result.data?[i].idJenis.toString())} - ${trimString(result.data?[i].nmJenis)}",
+        );
+      }
+
+      responRefJenis = result;
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  detailReference({String? idCash, String? idJenis}) async {
+    dataRefDetail = [];
+    responRefDetail = RefDetailCashResult();
+
+    try {
+      RefDetailCashResult result = await ApiService.listRefDetail(
+        data: {
+          "id_cash": trimString(idCash),
+          "id_jenis": trimString(idJenis),
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      for (var i = 0; i < (result.data?.length ?? 0); i++) {
+        dataRefDetail.add(
+          "${trimString(result.data?[i].idDetail.toString())} - ${trimString(result.data?[i].nmDetail)}",
+        );
+      }
+
+      responRefDetail = result;
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   @override
@@ -96,74 +172,106 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
                     UpperCaseTextFormatter(),
                   ],
                   validator: Validatorless.required("Data Wajib Diisi"),
+                  autoValidate: AutovalidateMode.onUserInteraction,
                   textEditingController: textController[0],
                   enabled: true,
                 ),
-                BaseDropdownButton<DataDetailDivisi>(
+                BaseDropdownButton<DataRefCash>(
                   hint: "Pilih Jenis Cash",
                   enabled: true,
                   label: "Jenis Cash",
-                  itemAsString: (item) => item.divisiAsString(),
-                  items: DivisiDatabase.dataDivisi.dataDivisi ?? [],
-                  value:
-                      trimString(widget.data?.idCash.toString()).isEmpty ?? true
-                          ? null
-                          : DataDetailDivisi(
-                              // idDivisi: widget.data?.idDivisi,
-                              // nmDivisi: trimString(
-                              //   getNamaDivisi(
-                              //     idDivisi: trimString(
-                              //       widget.data?.idDivisi,
-                              //     ),
-                              //   ),
-                              // ),
+                  itemAsString: (item) => item.cashAsString(),
+                  items: RefCashDatabase.refCashResult.data ?? [],
+                  value: trimString(dataEdit.idCash).toString().isEmpty
+                      ? null
+                      : DataRefCash(
+                          idCash: widget.data?.idCash,
+                          nmCash: trimString(
+                            getNamaCash(
+                              idCash: trimString(
+                                widget.data?.idCash,
                               ),
-                  onChanged: (value) {},
-                  validator: Validatorless.required("Data Wajib Diisi"),
-                ),
-                BaseDropdownButton<DataDetailDivisi>(
-                  hint: "Pilih Jenis Transaksi",
-                  enabled: true,
-                  label: "Jenis Transaksi",
-                  itemAsString: (item) => item.divisiAsString(),
-                  items: DivisiDatabase.dataDivisi.dataDivisi ?? [],
-                  value: trimString(widget.data?.idJenis.toString()).isEmpty ??
-                          true
-                      ? null
-                      : DataDetailDivisi(
-                          // idDivisi: widget.data?.idDivisi,
-                          // nmDivisi: trimString(
-                          //   getNamaDivisi(
-                          //     idDivisi: trimString(
-                          //       widget.data?.idDivisi,
-                          //     ),
-                          //   ),
-                          // ),
+                            ),
                           ),
-                  onChanged: (value) {},
+                        ),
+                  onChanged: (value) async {
+                    dataEdit.idCash = trimString(value?.idCash);
+                    dataEdit.idJenis = null;
+                    dataEdit.idDetail = null;
+                    dataEdit.nmDetail = null;
+                    dataEdit.nmJenis = null;
+                    update();
+                    valueDetail = null;
+                    valueJenis = null;
+
+                    update();
+
+                    await jenisReference(idCash: trimString(value?.idCash));
+                    update();
+                  },
                   validator: Validatorless.required("Data Wajib Diisi"),
+                  autoValidate: AutovalidateMode.onUserInteraction,
                 ),
-                BaseDropdownButton<DataDetailDivisi>(
+                SimpleDropdownButton(
                   hint: "Pilih Detail Jenis Transaksi",
-                  enabled: true,
+                  enabled: trimString(dataEdit.idJenis.toString())
+                          .toString()
+                          .isNotEmpty
+                      ? true
+                      : false,
                   label: "Detail Jenis Transaksi",
-                  itemAsString: (item) => item.divisiAsString(),
-                  items: DivisiDatabase.dataDivisi.dataDivisi ?? [],
-                  value: trimString(widget.data?.idDetail.toString()).isEmpty ??
-                          true
+                  items: dataRefDetail,
+                  value: trimString(dataEdit.idDetail.toString())
+                          .toString()
+                          .isEmpty
                       ? null
-                      : DataDetailDivisi(
-                          // idDivisi: widget.data?.idDivisi,
-                          // nmDivisi: trimString(
-                          //   getNamaDivisi(
-                          //     idDivisi: trimString(
-                          //       widget.data?.idDivisi,
-                          //     ),
-                          //   ),
-                          // ),
-                          ),
-                  onChanged: (value) {},
+                      : valueDetail,
                   validator: Validatorless.required("Data Wajib Diisi"),
+                  autoValidate: AutovalidateMode.onUserInteraction,
+                  onChanged: (value) async {
+                    valueDetail = value;
+                    update();
+
+                    dataEdit.idDetail =
+                        int.tryParse(trimString(splitString(value, true)));
+                    dataEdit.nmDetail = trimString(splitString(value, false));
+
+                    update();
+                  },
+                ),
+                SimpleDropdownButton(
+                  hint: "Pilih Jenis Transaksi",
+                  enabled: trimString(dataEdit.idCash.toString())
+                          .toString()
+                          .isNotEmpty
+                      ? true
+                      : false,
+                  label: "Jenis Transaksi",
+                  items: dataRefJenis,
+                  value:
+                      trimString(dataEdit.idJenis.toString()).toString().isEmpty
+                          ? null
+                          : valueJenis,
+                  validator: Validatorless.required("Data Wajib Diisi"),
+                  autoValidate: AutovalidateMode.onUserInteraction,
+                  onChanged: (value) async {
+                    valueJenis = value;
+                    dataEdit.idDetail = null;
+                    dataEdit.nmDetail = null;
+                    valueDetail = null;
+                    update();
+
+                    dataEdit.idJenis =
+                        int.tryParse(trimString(splitString(value, true)));
+                    dataEdit.nmJenis = trimString(splitString(value, false));
+
+                    update();
+                    await detailReference(
+                      idCash: trimString(dataEdit.idCash),
+                      idJenis: dataEdit.idJenis.toString(),
+                    );
+                    update();
+                  },
                 ),
                 Container(),
                 BaseForm(
@@ -172,6 +280,7 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
                   hintText: "Masukkan Nominal",
                   textInputFormater: [
                     ThousandsFormatter(),
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                   ],
                   onChanged: (value) {
                     dataEdit.nominal = removeComma(trimString(value));
@@ -180,6 +289,7 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
                   textEditingController: textController[1],
                   enabled: true,
                   validator: Validatorless.required("Data Wajib Diisi"),
+                  autoValidate: AutovalidateMode.onUserInteraction,
                 ),
               ],
             ),
@@ -216,6 +326,7 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
                   child: BasePrimaryButton(
                     text: "Simpan",
                     onPressed: () {
+                      print(dataEdit.toJson());
                       if (cashInOutKey.currentState!.validate()) {
                         DataMap payload = dataEdit.toJson();
                         payload.removeWhere(

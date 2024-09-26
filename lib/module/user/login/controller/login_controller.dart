@@ -14,7 +14,7 @@ class LoginController extends State<LoginView> {
 
   doLogin() async {
     try {
-      showCircleDialogLoading(context);
+      showCircleDialogLoading();
 
       LoginResult result = await ApiService.login(
         username: username,

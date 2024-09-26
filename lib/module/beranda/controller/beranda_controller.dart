@@ -38,6 +38,9 @@ class BerandaController extends State<BerandaView> {
     if (DivisiDatabase.dataDivisi.dataDivisi?.isEmpty ?? true) {
       await GlobalReference().divisiReference();
     }
+    if (RefCashDatabase.refCashResult.data?.isEmpty ?? true) {
+      await GlobalReference().cashReference();
+    }
   }
 
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
-Future showCircleDialogLoading(BuildContext context) async {
+Future showCircleDialogLoading() async {
   await showDialog<void>(
-    context: context,
+    context: globalContext,
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(

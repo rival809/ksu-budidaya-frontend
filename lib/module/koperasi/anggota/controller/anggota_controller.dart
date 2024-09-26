@@ -63,7 +63,7 @@ class AnggotaController extends State<AnggotaView> {
   postCreateAnggota(DataMap dataCreate) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       AnggotaResult result = await ApiService.createAnggota(
         data: dataCreate,
@@ -93,7 +93,7 @@ class AnggotaController extends State<AnggotaView> {
 
   postRemoveAnggota(String idAnggota) async {
     Get.back();
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       AnggotaResult result = await ApiService.removeAnggota(
         data: {"id_anggota": idAnggota},
@@ -124,7 +124,7 @@ class AnggotaController extends State<AnggotaView> {
   postUpdateAnggota(DataMap dataEdit) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       AnggotaResult result = await ApiService.updateAnggota(
         data: dataEdit,

@@ -58,6 +58,8 @@ class DataDetailCashInOut {
   String? idCash;
   int? idJenis;
   int? idDetail;
+  String? nmJenis;
+  String? nmDetail;
   String? nominal;
   String? keterangan;
   String? createdAt;
@@ -69,6 +71,8 @@ class DataDetailCashInOut {
       this.idCash,
       this.idJenis,
       this.idDetail,
+      this.nmJenis,
+      this.nmDetail,
       this.nominal,
       this.keterangan,
       this.createdAt,
@@ -80,6 +84,8 @@ class DataDetailCashInOut {
     idCash = json['id_cash'];
     idJenis = json['id_jenis'];
     idDetail = json['id_detail'];
+    nmJenis = json['nm_jenis'];
+    nmDetail = json['nm_detail'];
     nominal = json['nominal'];
     keterangan = json['keterangan'];
     createdAt = json['created_at'];
@@ -93,6 +99,8 @@ class DataDetailCashInOut {
     data['id_cash'] = idCash;
     data['id_jenis'] = idJenis;
     data['id_detail'] = idDetail;
+    data['nm_jenis'] = nmJenis;
+    data['nm_detail'] = nmDetail;
     data['nominal'] = nominal;
     data['keterangan'] = keterangan;
     data['created_at'] = createdAt;
@@ -106,6 +114,8 @@ class DataDetailCashInOut {
     String? idCash,
     int? idJenis,
     int? idDetail,
+    String? nmJenis,
+    String? nmDetail,
     String? nominal,
     String? keterangan,
     String? createdAt,
@@ -117,6 +127,8 @@ class DataDetailCashInOut {
         idCash: idCash ?? this.idCash,
         idJenis: idJenis ?? this.idJenis,
         idDetail: idDetail ?? this.idDetail,
+        nmJenis: nmJenis ?? this.nmJenis,
+        nmDetail: nmDetail ?? this.nmDetail,
         nominal: nominal ?? this.nominal,
         keterangan: keterangan ?? this.keterangan,
         createdAt: createdAt ?? this.createdAt,

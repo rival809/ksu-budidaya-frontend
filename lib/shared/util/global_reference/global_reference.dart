@@ -47,6 +47,21 @@ class GlobalReference {
       log(e.toString());
     }
   }
+
+  cashReference() async {
+    try {
+      RefCashResult result = await ApiService.listRefCashInOut(
+        data: {
+          "page": "1",
+          "size": "1000",
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      RefCashDatabase.save(result);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }
 
 getNamaRole({String? idRole}) {
@@ -94,5 +109,35 @@ getNamaDivisi({String? idDivisi}) {
     return idDivisi;
   } catch (e) {
     return idDivisi;
+  }
+}
+
+getNamaCash({String? idCash}) {
+  try {
+    var dataCash = RefCashDatabase.refCashResult.data;
+
+    for (var i = 0; i < (dataCash?.length ?? 0); i++) {
+      if (trimString(dataCash?[i].idCash) == trimString(idCash)) {
+        return dataCash?[i].nmCash;
+      }
+    }
+
+    return idCash;
+  } catch (e) {
+    return idCash;
+  }
+}
+
+getNamaJenis({String? idJenis, List<DataRefJenisCash>? data}) {
+  try {
+    for (var i = 0; i < (data?.length ?? 0); i++) {
+      if (trimString(data?[i].idJenis.toString()) == trimString(idJenis)) {
+        return data?[i].nmJenis;
+      }
+    }
+
+    return idJenis;
+  } catch (e) {
+    return idJenis;
   }
 }

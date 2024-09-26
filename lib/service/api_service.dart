@@ -635,6 +635,69 @@ class ApiService {
     }
   }
 
+  static Future<RefCashResult> listRefCashInOut({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/cash-in-out/list-ref-cash",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return RefCashResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listCashInOut');
+    }
+  }
+
+  static Future<RefJenisCashResult> listRefJenis({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/cash-in-out/list-jenis-cash",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return RefJenisCashResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listRefJenis');
+    }
+  }
+
+  static Future<RefDetailCashResult> listRefDetail({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/cash-in-out/list-detail-cash",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return RefDetailCashResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listRefDetail');
+    }
+  }
+
   static Future<CashInOutResult> createCashInOut({
     required DataMap data,
   }) async {

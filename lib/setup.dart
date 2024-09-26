@@ -12,6 +12,7 @@ Future initialize() async {
   }
 
   if (!Hive.isAdapterRegistered(1)) {
+    //0
     Hive.registerAdapter(LoginResultAdapter());
     Hive.registerAdapter(DataLoginAdapter());
     Hive.registerAdapter(UserDataLoginAdapter());
@@ -23,6 +24,9 @@ Future initialize() async {
     Hive.registerAdapter(DataDetailSupplierAdapter());
     Hive.registerAdapter(DataDivisiAdapter());
     Hive.registerAdapter(DataDetailDivisiAdapter());
+    //11
+    Hive.registerAdapter(RefCashResultAdapter());
+    Hive.registerAdapter(DataRefCashAdapter());
   }
 
   mainStorage = await Hive.openBox('mainStorage');
@@ -31,6 +35,7 @@ Future initialize() async {
   await RoleDatabase.load();
   await SupplierDatabase.load();
   await DivisiDatabase.load();
+  await RefCashDatabase.load();
   // await UserDatabase.load();
   // await PenetapanDatabase.load();
   // await ReferencesDatabase.load();

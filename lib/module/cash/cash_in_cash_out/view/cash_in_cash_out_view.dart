@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/cash_in_out/cash_in_out_model.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class CashInCashOutView extends StatefulWidget {
@@ -188,7 +187,9 @@ class CashInCashOutView extends StatefulWidget {
                                     ),
                                     field: controller.listRoleView[index],
                                     type: (controller.listRoleView[index] ==
-                                            "nominal")
+                                                "cash_in" ||
+                                            controller.listRoleView[index] ==
+                                                "cash_out")
                                         ? PlutoColumnType.number(
                                             locale: "id",
                                           )

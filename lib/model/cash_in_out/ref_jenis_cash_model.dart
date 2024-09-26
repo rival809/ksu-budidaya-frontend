@@ -1,3 +1,5 @@
+import 'package:ksu_budidaya/core.dart';
+
 class RefJenisCashResult {
   bool? success;
   List<DataRefJenisCash>? data;
@@ -57,5 +59,9 @@ class DataRefJenisCash {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  String jenisAsString() {
+    return '${trimString(idJenis.toString())} - ${trimString(nmJenis)}';
   }
 }
