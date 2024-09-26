@@ -36,6 +36,7 @@ Future initialize() async {
   await SupplierDatabase.load();
   await DivisiDatabase.load();
   await RefCashDatabase.load();
+  // await PembelianDatabase.load();
   // await UserDatabase.load();
   // await PenetapanDatabase.load();
   // await ReferencesDatabase.load();

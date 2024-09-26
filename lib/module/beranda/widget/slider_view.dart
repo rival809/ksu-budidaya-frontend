@@ -121,6 +121,7 @@ class SliderView extends StatelessWidget {
                         "/transaksi",
                         [
                           "/transaksi/pembelian",
+                          "/transaksi/detail-pembelian",
                           "/transaksi/penjualan",
                         ],
                       ),
@@ -129,7 +130,8 @@ class SliderView extends StatelessWidget {
                         DrawerMenu(
                           title: "Pembelian",
                           isSubMenu: true,
-                          isSelected: currentRoute == "/transaksi/pembelian",
+                          isSelected: currentRoute == "/transaksi/pembelian" ||
+                              currentRoute == "/transaksi/detail-pembelian",
                           onTap: () {
                             router.go(
                               "/transaksi/pembelian",

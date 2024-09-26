@@ -8,5 +8,5 @@ class AppConfig {
 
   //URL DOMAIN DEV
   // static const String domain = "https://ksu-backend.vercel.app";
-  static const String domain = "http://10.44.121.214:3000";
+  static const String domain = "http://localhost:3000";
 }

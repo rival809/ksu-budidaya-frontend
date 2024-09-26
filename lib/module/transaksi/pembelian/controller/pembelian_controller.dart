@@ -8,9 +8,12 @@ class PembelianController extends State<PembelianView> {
   String page = "1";
   String size = "10";
   bool isAsc = true;
-  TextEditingController supplierNameController = TextEditingController();
+  TextEditingController pembelianNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
+
+  bool isList = false;
+  bool isDetail = false;
 
   DataPembelian dataCashInOut = DataPembelian();
   PembelianResult result = PembelianResult();
@@ -36,9 +39,9 @@ class PembelianController extends State<PembelianView> {
         "size": size,
       };
 
-      if (trimString(supplierNameController.text).toString().isNotEmpty) {
+      if (trimString(pembelianNameController.text).toString().isNotEmpty) {
         dataCari
-            .addAll({"keterangan": trimString(supplierNameController.text)});
+            .addAll({"keterangan": trimString(pembelianNameController.text)});
       }
 
       if (isAsc != null) {
@@ -65,21 +68,19 @@ class PembelianController extends State<PembelianView> {
     }
   }
 
-  postCreateCashInOut(DataMap dataCreate) async {
-    Get.back();
-
+  postDetailPurchase(String id_pembelian) async {
     showCircleDialogLoading();
     try {
-      CashInOutResult result = await ApiService.createCashInOut(
-        data: dataCreate,
+      DetailPembelianResult result = await ApiService.detailPembelian(
+        data: {"id_pembelian": id_pembelian},
       ).timeout(const Duration(seconds: 30));
 
       Navigator.pop(context);
 
       if (result.success == true) {
-        showDialogBase(
-          content: const DialogBerhasil(),
-        );
+        isList = false;
+        isDetail = true;
+        dataList = result.data ?? [];
 
         update();
       }
@@ -95,12 +96,12 @@ class PembelianController extends State<PembelianView> {
     }
   }
 
-  postRemoveCashInOut(String idCashInOut) async {
+  postRemovePurchase(String id_pembelian) async {
     Get.back();
     showCircleDialogLoading();
     try {
-      CashInOutResult result = await ApiService.removeCashInOut(
-        data: {"id_cash_in_out": idCashInOut},
+      PembelianResult result = await ApiService.removePembelian(
+        data: {"id_pembelian": id_pembelian},
       ).timeout(const Duration(seconds: 30));
 
       Navigator.pop(context);
@@ -110,6 +111,7 @@ class PembelianController extends State<PembelianView> {
           content: const DialogBerhasil(),
         );
 
+        dataFuture = cariDataPembelian();
         update();
       }
     } catch (e) {
@@ -124,40 +126,15 @@ class PembelianController extends State<PembelianView> {
     }
   }
 
-  postUpdateCashInOut(DataMap dataEdit) async {
-    Get.back();
+  DataDetailPembelian dataDetail = DataDetailPembelian();
+  DetailDataPembelian dataSupplier = DetailDataPembelian();
 
-    showCircleDialogLoading();
-    try {
-      CashInOutResult result = await ApiService.updateCashInOut(
-        data: dataEdit,
-      ).timeout(const Duration(seconds: 30));
-
-      Navigator.pop(context);
-
-      if (result.success == true) {
-        showDialogBase(
-          content: const DialogBerhasil(),
-        );
-
-        update();
-      }
-    } catch (e) {
-      Navigator.pop(context);
-
-      if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-      } else {
-        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-      }
-    }
-  }
+  List<DataDetailPembelian>? dataList = [];
 
   @override
   void initState() {
     instance = this;
-    GlobalReference().cashReference();
+    GlobalReference().supplierReference();
     dataFuture = cariDataPembelian();
     super.initState();
   }
