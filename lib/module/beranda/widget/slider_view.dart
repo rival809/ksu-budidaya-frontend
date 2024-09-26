@@ -18,7 +18,13 @@ class SliderView extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.white,
+      decoration: const BoxDecoration(
+        border: Border(
+            right: BorderSide(
+          color: blueGray50,
+        )),
+        color: Colors.white,
+      ),
       child: Column(
         children: [
           Padding(

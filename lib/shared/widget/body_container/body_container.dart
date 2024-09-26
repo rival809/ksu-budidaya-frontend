@@ -107,7 +107,14 @@ class _BodyContainerState extends State<BodyContainer> {
         child: Row(
           children: [
             Expanded(
-              child: SizedBox(
+              child: Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: blueGray50,
+                    ),
+                  ),
+                ),
                 height: MediaQuery.of(context).size.height -
                     AppBar().preferredSize.height,
                 child: widget.contentBody,
