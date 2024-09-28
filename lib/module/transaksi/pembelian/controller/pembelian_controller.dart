@@ -130,6 +130,92 @@ class PembelianController extends State<PembelianView> {
   DetailDataPembelian dataSupplier = DetailDataPembelian();
 
   List<DataDetailPembelian>? dataList = [];
+  CreatePembelianModel dataPembelian = CreatePembelianModel();
+  CreatePembelianModel dataOriginal = CreatePembelianModel();
+
+  Future<dynamic>? dataFuturePembelian;
+
+  bool detailHasDiskon(List details) {
+    for (var detail in details) {
+      if (double.parse(detail['diskon'].toString()) != 0) {
+        isDiskon = true;
+        return true;
+      }
+    }
+
+    isDiskon = false;
+    return false;
+  }
+
+  bool detailHasPpn(List details) {
+    for (var detail in details) {
+      if (double.parse(detail['ppn'].toString()) != 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  initDetail() async {
+    dataPembelian = CreatePembelianModel(
+      idSupplier: dataSupplier.idSupplier,
+      jenisPembayaran: dataSupplier.jenisPembayaran,
+      jumlah: dataSupplier.jumlah.toString(),
+      keterangan: dataSupplier.keterangan,
+      nmSupplier: dataSupplier.nmSupplier,
+      tgPembelian: dataSupplier.tgPembelian,
+      totalHargaBeli: dataSupplier.totalHargaBeli,
+      totalHargaJual: dataSupplier.totalHargaJual,
+      details: dataList,
+    );
+    dataOriginal = dataPembelian.copyWith();
+
+    return dataPembelian;
+  }
+
+  onChangeDiskon(bool value) async {
+    if (value) {
+      return dataOriginal;
+    } else {
+      if (dataList?.isNotEmpty ?? false) {
+        for (DataDetailPembelian data in dataList ?? []) {
+          data.diskon = "1000";
+
+          data.totalNilaiBeli =
+              ((int.parse(data.hargaBeli ?? "0") * (data.jumlah ?? 0)) -
+                      (int.tryParse(data.diskon ?? "0") ?? 0))
+                  .toString();
+        }
+        dataPembelian = CreatePembelianModel(
+          idSupplier: dataSupplier.idSupplier,
+          jenisPembayaran: dataSupplier.jenisPembayaran,
+          jumlah: dataSupplier.jumlah.toString(),
+          keterangan: dataSupplier.keterangan,
+          nmSupplier: dataSupplier.nmSupplier,
+          tgPembelian: dataSupplier.tgPembelian,
+          totalHargaBeli: dataSupplier.totalHargaBeli,
+          totalHargaJual: dataSupplier.totalHargaJual,
+          details: dataList,
+        );
+
+        return dataPembelian;
+      } else {
+        return CreatePembelianModel();
+      }
+    }
+  }
+
+  List<TextEditingController> textControllerDetail = [
+    TextEditingController(),
+    TextEditingController(),
+  ];
+
+  bool isLoading = false;
+  bool isPpn = false;
+  bool isDiskon = false;
+
+  double totalHargaBeli = 0;
+  double totalHargaJual = 0;
 
   @override
   void initState() {

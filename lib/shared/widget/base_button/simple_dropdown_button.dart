@@ -163,7 +163,7 @@ class _SimpleDropdownButtonState extends State<SimpleDropdownButton> {
               fillColor: widget.enabled ?? true ? neutralWhite : gray200,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 12.0,
-                vertical: 16.5,
+                vertical: 18,
               ),
               focusedErrorBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: error, width: 1),

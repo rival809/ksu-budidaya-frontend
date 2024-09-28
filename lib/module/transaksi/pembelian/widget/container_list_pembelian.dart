@@ -253,6 +253,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                               controller.dataSupplier =
                                   result.data?.dataPembelian?[rowIndex] ??
                                       DetailDataPembelian();
+                              controller.isDiskon = false;
+                              controller.isPpn = false;
 
                               controller.postDetailPurchase(
                                 trimString(

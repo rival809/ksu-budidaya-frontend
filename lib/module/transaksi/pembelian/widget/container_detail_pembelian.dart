@@ -1,20 +1,15 @@
 // ignore_for_file: camel_case_types
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ContainerDetailPembelian extends StatefulWidget {
-  final List<DataDetailPembelian> dataDetail;
-  final DetailDataPembelian dataSupplier;
   final PembelianController controller;
 
   const ContainerDetailPembelian({
     Key? key,
     required this.controller,
-    required this.dataSupplier,
-    required this.dataDetail,
   }) : super(key: key);
 
   @override
@@ -23,142 +18,20 @@ class ContainerDetailPembelian extends StatefulWidget {
 }
 
 class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
-  List<DataDetailPembelian> dataDetail = [];
-  DetailDataPembelian dataSupplier = DetailDataPembelian();
-
-  Future<dynamic>? dataFuturePembelian;
-
-  List<TextEditingController> textController = [
-    TextEditingController(),
-    TextEditingController(),
-  ];
-
-  bool isLoading = false;
-  bool isPpn = false;
   bool isDiskon = false;
-
-  double totalHargaBeli = 0;
-  double totalHargaJual = 0;
-
-  tambahData(
-    List<DataDetailPembelian> dataDetail,
-    DetailDataPembelian dataSupplier,
-  ) async {
-    try {
-      CreatePembelianModel data = CreatePembelianModel();
-
-      data.details = dataDetail;
-      data.idSupplier = dataSupplier.idSupplier;
-      data.nmSupplier = dataSupplier.nmSupplier;
-      data.jumlah = dataSupplier.jumlah.toString();
-      data.jenisPembayaran = dataSupplier.jenisPembayaran;
-      data.keterangan = dataSupplier.keterangan;
-      data.tgPembelian = dataSupplier.tgPembelian;
-      data.totalHargaBeli = dataSupplier.totalHargaBeli;
-      data.totalHargaJual = dataSupplier.totalHargaJual;
-
-      return data;
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    dataFuturePembelian = tambahData(
-      widget.dataDetail,
-      widget.dataSupplier,
-    );
-    dataDetail = widget.dataDetail;
-    dataSupplier = widget.dataSupplier.copyWith();
-    textController[0].text = formatDate(
+    widget.controller.dataFuturePembelian = widget.controller.initDetail();
+    widget.controller.textControllerDetail[0].text = formatDate(
       formatDateToYearMonthDay(
-        trimString(dataSupplier.tgPembelian),
+        trimString(widget.controller.dataSupplier.tgPembelian),
       ),
     );
-    textController[1].text = trimString(dataSupplier.keterangan);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    textController[0].dispose();
-    textController[1].dispose();
-  }
-
-  void checkDiskonStatus(Map<String, dynamic> data) {
-    List details = data['details'] ?? [];
-
-    if (details.isEmpty) {
-      print('Tidak ada data untuk diskon.');
-      return;
-    }
-
-    // Ambil nilai diskon pertama sebagai acuan
-    var firstDiskon = details[0]['diskon'];
-
-    bool allSame = true; // Untuk mengecek apakah semua diskon sama
-    bool allZero = true; // Untuk mengecek apakah semua diskon 0
-
-    for (var detail in details) {
-      var currentDiskon = int.tryParse(detail['diskon']);
-
-      // Jika ada diskon yang bukan 0, allZero harus menjadi false
-      if (currentDiskon != 0) {
-        allZero = false;
-      }
-
-      // Jika ada diskon yang berbeda dengan yang pertama, allSame harus menjadi false
-      if (currentDiskon != firstDiskon) {
-        allSame = false;
-      }
-    }
-
-    // Tentukan nilai isDiskon berdasarkan hasil pemeriksaan
-    bool isDiskon;
-
-    if (allZero) {
-      isDiskon = false; // Semua diskon 0
-    } else if (allSame) {
-      isDiskon = true; // Semua diskon sama dan bukan 0
-    } else {
-      isDiskon = false; // Nilai diskon berbeda-beda
-    }
-
-    print('isDiskon: $isDiskon');
-  }
-
-  void calculateTotalHarga(Map<String, dynamic> data) {
-    List details = data['details'] ?? [];
-
-    // Hitung total harga beli dan jual tanpa diskon dan PPN
-    for (var detail in details) {
-      double hargaBeli = double.parse(detail['harga_beli'].toString());
-      double hargaJual = double.parse(detail['harga_jual'].toString());
-      int jumlah = detail['jumlah'];
-
-      totalHargaBeli += hargaBeli * jumlah;
-      totalHargaJual += hargaJual * jumlah;
-    }
-
-    // Misalnya diskon dan ppn diterapkan ke seluruh total harga beli
-    double diskon =
-        double.parse(details[0]['diskon'].toString()); // Asumsi diskon sama
-    double ppn = double.parse(details[0]['ppn'].toString()); // Asumsi PPN sama
-
-    // Hitung nominal diskon dan PPN
-    double nominalDiskon = totalHargaBeli * (diskon / 100);
-    double nominalPPN = totalHargaBeli * (ppn / 100);
-
-    // Hitung total harga setelah diskon dan PPN
-    double totalHargaSetelahDiskonPPN =
-        totalHargaBeli - nominalDiskon + nominalPPN;
-
-    print('Total Harga Beli Sebelum Diskon dan PPN: $totalHargaBeli');
-    print('Nominal Diskon: $nominalDiskon');
-    print('Nominal PPN: $nominalPPN');
-    print('Total Harga Setelah Diskon dan PPN: $totalHargaSetelahDiskonPPN');
+    widget.controller.textControllerDetail[1].text =
+        trimString(widget.controller.dataSupplier.keterangan);
+    isDiskon = widget.controller
+        .detailHasDiskon(widget.controller.dataPembelian.toJson()["details"]);
   }
 
   @override
@@ -210,12 +83,13 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                 readOnly: true,
                 onTap: () async {
                   DateTime? selectedDate = await initSelectedDate(
-                    initValue: dataSupplier.tgPembelian,
+                    initValue: controller.dataSupplier.tgPembelian,
                   );
 
                   if (selectedDate != null) {
-                    dataSupplier.tgPembelian = selectedDate.toString();
-                    textController[0].text =
+                    controller.dataSupplier.tgPembelian =
+                        selectedDate.toString();
+                    controller.textControllerDetail[0].text =
                         formatDate(selectedDate.toString());
                     update();
                   }
@@ -227,7 +101,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                 ],
                 validator: Validatorless.required("Data Wajib Diisi"),
                 autoValidate: AutovalidateMode.onUserInteraction,
-                textEditingController: textController[0],
+                textEditingController: controller.textControllerDetail[0],
                 enabled: true,
               ),
             ),
@@ -241,17 +115,19 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                 label: "Supplier",
                 itemAsString: (item) => item.supplierAsString(),
                 items: SupplierDatabase.dataSupplier.dataSupplier ?? [],
-                value: dataSupplier.idSupplier?.isEmpty ?? true
+                value: controller.dataSupplier.idSupplier?.isEmpty ?? true
                     ? null
                     : DataDetailSupplier(
-                        idSupplier: dataSupplier.idSupplier,
+                        idSupplier: controller.dataSupplier.idSupplier,
                         nmSupplier: trimString(
                           getNamaSupplier(
-                              idSupplier: trimString(dataSupplier.idSupplier)),
+                              idSupplier: trimString(
+                                  controller.dataSupplier.idSupplier)),
                         ),
                       ),
                 onChanged: (value) {
-                  dataSupplier.idSupplier = trimString(value?.idSupplier);
+                  controller.dataSupplier.idSupplier =
+                      trimString(value?.idSupplier);
                   update();
                 },
                 autoValidate: AutovalidateMode.onUserInteraction,
@@ -268,13 +144,15 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                 isSearch: false,
                 itemAsString: (item) => item.metodeBayarAsString(),
                 items: metodeBayarList,
-                value: dataSupplier.jenisPembayaran?.isEmpty ?? true
+                value: controller.dataSupplier.jenisPembayaran?.isEmpty ?? true
                     ? null
                     : MetodeBayar(
-                        metode: trimString(dataSupplier.jenisPembayaran),
+                        metode:
+                            trimString(controller.dataSupplier.jenisPembayaran),
                       ),
                 onChanged: (value) {
-                  dataSupplier.jenisPembayaran = trimString(value?.metode);
+                  controller.dataSupplier.jenisPembayaran =
+                      trimString(value?.metode);
                   update();
                 },
                 autoValidate: AutovalidateMode.onUserInteraction,
@@ -292,9 +170,9 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                 textInputFormater: [
                   UpperCaseTextFormatter(),
                 ],
-                textEditingController: textController[1],
+                textEditingController: controller.textControllerDetail[1],
                 onChanged: (value) {
-                  dataSupplier.keterangan = trimString(value);
+                  controller.dataSupplier.keterangan = trimString(value);
                   update();
                 },
                 validator: Validatorless.required("Data Wajib Diisi"),
@@ -306,7 +184,14 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
             BaseSecondaryButton(
               isDense: true,
               prefixIcon: iconAddShoppingCart,
-              onPressed: () {},
+              onPressed: () {
+                showDialogBase(
+                  width: 700,
+                  content: DialogTambahPembelian(
+                    data: DataDetailPembelian(),
+                  ),
+                );
+              },
             ),
             const SizedBox(
               width: 16.0,
@@ -332,13 +217,13 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
           child: Row(
             children: [
               RowCheckbox(
-                statusCheckbox: isPpn,
+                statusCheckbox: controller.isPpn,
                 title: "Harga sudah termasuk pajak",
                 onChanged: (value) {
-                  isLoading = true;
+                  controller.isLoading = true;
                   update();
-                  isPpn = value ?? false;
-                  isLoading = false;
+                  controller.isPpn = value ?? false;
+                  controller.isLoading = false;
                   update();
                 },
               ),
@@ -346,10 +231,19 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                 width: 24.0,
               ),
               RowCheckbox(
-                statusCheckbox: isDiskon,
+                statusCheckbox: controller.isDiskon,
                 title: "Harga sudah termasuk diskon",
                 onChanged: (value) {
-                  isDiskon = value ?? false;
+                  controller.isLoading = true;
+                  update();
+                  print(value);
+
+                  controller.dataFuturePembelian =
+                      controller.onChangeDiskon(value ?? false);
+
+                  controller.isDiskon = value ?? false;
+
+                  controller.isLoading = false;
                   update();
                 },
               ),
@@ -359,12 +253,12 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
         const SizedBox(
           height: 16.0,
         ),
-        isLoading
+        controller.isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
               )
             : FutureBuilder(
-                future: dataFuturePembelian,
+                future: controller.dataFuturePembelian,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container(
@@ -396,8 +290,35 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                     } else if (snapshot.hasData) {
                       CreatePembelianModel result = snapshot.data;
                       List<dynamic> listData = result.toJson()["details"] ?? [];
-                      checkDiskonStatus(result.toJson());
-                      calculateTotalHarga(result.toJson());
+                      bool isPpn = controller.detailHasPpn(listData);
+                      String? totalNilaiBeli;
+                      double sumTotalNilaiBeli = 0;
+                      String? totalNilaiJual;
+                      double sumTotalNilaiJual = 0;
+
+                      for (var pembelian in listData) {
+                        double nilaiBeli = double.parse(
+                            pembelian['total_nilai_beli'].toString());
+                        sumTotalNilaiBeli += nilaiBeli;
+
+                        pembelian["ppn"] = nilaiBeli * (11 / 100);
+
+                        double nilaiJual = double.parse(
+                            pembelian['total_nilai_jual'].toString());
+                        sumTotalNilaiJual += nilaiJual;
+
+                        totalNilaiJual = sumTotalNilaiJual.toString();
+
+                        if (isDiskon) {
+                          totalNilaiBeli = sumTotalNilaiBeli.toString();
+                        } else {
+                          double diskon = double.parse(
+                              (pembelian['diskon'] ?? 0).toString());
+                          totalNilaiBeli = (sumTotalNilaiBeli -
+                                  (sumTotalNilaiBeli * (diskon / 100)))
+                              .toString();
+                        }
+                      }
 
                       if (listData.isNotEmpty) {
                         List<PlutoRow> rows = [];
@@ -413,7 +334,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         width: MediaQuery.of(globalContext)
@@ -429,7 +350,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         width: MediaQuery.of(globalContext)
@@ -470,7 +391,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -496,7 +417,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                                   fontWeight: FontWeight.w700),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -517,9 +438,10 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                         ),
                                         child: Text(
                                           "PPN",
-                                          style: myTextTheme.titleSmall
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.w700),
+                                          style:
+                                              myTextTheme.titleSmall?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
                                       ),
                                     Container(
@@ -533,9 +455,10 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                       ),
                                       child: Text(
                                         "TOTAL",
-                                        style: myTextTheme.displayLarge
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w500),
+                                        style:
+                                            myTextTheme.displayLarge?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -554,7 +477,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -574,7 +497,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -621,7 +544,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -641,7 +564,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -688,7 +611,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -708,7 +631,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -755,7 +678,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -775,7 +698,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -840,9 +763,20 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                               locale: 'id',
                             ),
                             footerRenderer: (context) {
-                              if (isDiskon && isPpn) {
+                              if (!controller.isDiskon &&
+                                  !controller.isPpn &&
+                                  !isDiskon &&
+                                  !isPpn) {
                                 context.stateManager.columnFooterHeight = 49;
-                              } else if (!isDiskon && !isPpn) {
+                              } else if (controller.isDiskon &&
+                                  controller.isPpn &&
+                                  !isDiskon &&
+                                  !isPpn) {
+                                context.stateManager.columnFooterHeight = 49;
+                              } else if (!controller.isDiskon &&
+                                  !controller.isPpn &&
+                                  isDiskon &&
+                                  isPpn) {
                                 context.stateManager.columnFooterHeight = 123;
                               } else {
                                 context.stateManager.columnFooterHeight = 86;
@@ -851,7 +785,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -878,7 +812,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         padding: const EdgeInsets.symmetric(
@@ -925,7 +859,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         width: MediaQuery.of(globalContext)
@@ -951,7 +885,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         width: MediaQuery.of(globalContext)
@@ -988,8 +922,8 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          formatMoney(trimString(
-                                              totalHargaBeli.toString())),
+                                          formatMoney(
+                                              trimString(totalNilaiBeli)),
                                           style: myTextTheme.displayLarge
                                               ?.copyWith(
                                                   fontWeight: FontWeight.w600),
@@ -1014,7 +948,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                 controller: ScrollController(),
                                 child: Column(
                                   children: [
-                                    if (!isDiskon)
+                                    if (!controller.isDiskon && isDiskon)
                                       Container(
                                         height: 37,
                                         width: MediaQuery.of(globalContext)
@@ -1030,7 +964,7 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                           ),
                                         ),
                                       ),
-                                    if (!isPpn)
+                                    if (!controller.isPpn && isPpn)
                                       Container(
                                         height: 37,
                                         width: MediaQuery.of(globalContext)
@@ -1057,8 +991,8 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          formatCurrency(trimString(
-                                              totalHargaJual.toString())),
+                                          formatCurrency(
+                                              trimString(totalNilaiJual)),
                                           style: myTextTheme.displayLarge
                                               ?.copyWith(
                                                   fontWeight: FontWeight.w600),
@@ -1085,10 +1019,20 @@ class _ContainerDetailPembelianState extends State<ContainerDetailPembelian> {
                         }).toList();
                         double rowHeight = 47;
                         double heighFooter = 49;
-
-                        if (isDiskon && isPpn) {
+                        if (!controller.isDiskon &&
+                            !controller.isPpn &&
+                            !isDiskon &&
+                            !isPpn) {
                           heighFooter = 49;
-                        } else if (!isDiskon && !isPpn) {
+                        } else if (controller.isDiskon &&
+                            controller.isPpn &&
+                            !isDiskon &&
+                            !isPpn) {
+                          heighFooter = 49;
+                        } else if (!controller.isDiskon &&
+                            !controller.isPpn &&
+                            isDiskon &&
+                            isPpn) {
                           heighFooter = 123;
                         } else {
                           heighFooter = 86;

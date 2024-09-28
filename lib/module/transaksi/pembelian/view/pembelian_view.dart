@@ -21,8 +21,6 @@ class PembelianView extends StatefulWidget {
                       controller: controller,
                     )
                   : ContainerDetailPembelian(
-                      dataDetail: controller.dataList ?? [],
-                      dataSupplier: controller.dataSupplier,
                       controller: controller,
                     ),
             ),

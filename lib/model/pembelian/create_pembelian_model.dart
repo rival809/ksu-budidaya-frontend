@@ -54,4 +54,27 @@ class CreatePembelianModel {
     }
     return data;
   }
+
+  CreatePembelianModel copyWith({
+    String? tgPembelian,
+    String? idSupplier,
+    String? nmSupplier,
+    String? jumlah,
+    String? totalHargaBeli,
+    String? totalHargaJual,
+    String? jenisPembayaran,
+    String? keterangan,
+    List<DataDetailPembelian>? details,
+  }) =>
+      CreatePembelianModel(
+        tgPembelian: tgPembelian ?? this.tgPembelian,
+        idSupplier: idSupplier ?? this.idSupplier,
+        nmSupplier: nmSupplier ?? this.nmSupplier,
+        jumlah: jumlah ?? this.jumlah,
+        totalHargaBeli: totalHargaBeli ?? this.totalHargaBeli,
+        totalHargaJual: totalHargaJual ?? this.totalHargaJual,
+        jenisPembayaran: jenisPembayaran ?? this.jenisPembayaran,
+        keterangan: keterangan ?? this.keterangan,
+        details: details ?? this.details,
+      );
 }

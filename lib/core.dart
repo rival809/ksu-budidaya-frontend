@@ -66,6 +66,7 @@ export 'package:ksu_budidaya/module/transaksi/pembelian/controller/pembelian_con
 export 'package:ksu_budidaya/module/transaksi/pembelian/view/pembelian_view.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_detail_pembelian.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_list_pembelian.dart';
+export 'package:ksu_budidaya/module/transaksi/pembelian/widget/dialog_tambah_pembelian.dart';
 export 'package:ksu_budidaya/module/user/login/controller/login_controller.dart';
 export 'package:ksu_budidaya/module/user/login/view/login_view.dart';
 export 'package:ksu_budidaya/module/user/login/widget/content_login.dart';
