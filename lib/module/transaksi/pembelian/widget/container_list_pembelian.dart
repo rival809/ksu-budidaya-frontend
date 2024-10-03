@@ -97,10 +97,12 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                 ),
                 BasePrimaryButton(
                   onPressed: () {
-                    controller.dataList = [];
+                    controller.dataPembelian.details = [];
                     controller.update();
                     controller.isList = false;
                     controller.isDetail = false;
+                    controller.isPpn = false;
+                    controller.isDiskon = false;
                     controller.update();
                     update();
                   },
@@ -154,7 +156,9 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                                   rendererContext.row.toJson();
                               return CardLabel(
                                 cardColor: yellow50,
-                                cardTitle: dataRow["jenis_pembayaran"],
+                                cardTitle: dataRow["jenis_pembayaran"]
+                                    .toString()
+                                    .toUpperCase(),
                                 cardTitleColor: yellow900,
                                 cardBorderColor: yellow50,
                               );
@@ -224,7 +228,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: Text(
-                                      'Edit Data',
+                                      'Detail Data',
                                       style: myTextTheme.bodyMedium,
                                     ),
                                   ),
@@ -250,11 +254,25 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           ],
                           onChange: (value) {
                             if (value == 1) {
-                              controller.dataSupplier =
+                              DetailDataPembelian dataDetail =
                                   result.data?.dataPembelian?[rowIndex] ??
                                       DetailDataPembelian();
-                              controller.isDiskon = false;
-                              controller.isPpn = false;
+                              controller.dataPembelian.jenisPembayaran =
+                                  dataDetail.jenisPembayaran;
+                              controller.dataPembelian.idSupplier =
+                                  dataDetail.idSupplier;
+                              controller.dataPembelian.jumlah =
+                                  trimString(dataDetail.jumlah.toString());
+                              controller.dataPembelian.keterangan =
+                                  dataDetail.keterangan;
+                              controller.dataPembelian.nmSupplier =
+                                  dataDetail.nmSupplier;
+                              controller.dataPembelian.tgPembelian =
+                                  dataDetail.tgPembelian;
+                              controller.dataPembelian.totalHargaBeli =
+                                  dataDetail.totalHargaBeli;
+                              controller.dataPembelian.totalHargaJual =
+                                  dataDetail.totalHargaJual;
 
                               controller.postDetailPurchase(
                                 trimString(

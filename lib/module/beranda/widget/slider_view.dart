@@ -17,6 +17,8 @@ class SliderView extends StatelessWidget {
           childRoutes.any((route) => currentRoute.startsWith(route));
     }
 
+    DataLogin dataLogin = UserDatabase.userDatabase.data ?? DataLogin();
+
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -71,194 +73,216 @@ class SliderView extends StatelessWidget {
                         router.pushReplacement("/");
                       },
                     ),
-                    DrawerMenu(
-                      title: "Database",
-                      isSelected: isParentSelected(
-                        "/database",
-                        [
-                          "/database/supplier",
-                          "/database/divisi",
-                          "/database/produk",
+                    if (dataLogin.roleData?.stsSupplier == true ||
+                        dataLogin.roleData?.stsDivisi == true ||
+                        dataLogin.roleData?.stsProduk == true)
+                      DrawerMenu(
+                        title: "Database",
+                        isSelected: isParentSelected(
+                          "/database",
+                          [
+                            "/database/supplier",
+                            "/database/divisi",
+                            "/database/produk",
+                          ],
+                        ),
+                        onTap: () {},
+                        children: [
+                          if (dataLogin.roleData?.stsSupplier == true)
+                            DrawerMenu(
+                              title: "Supplier",
+                              isSubMenu: true,
+                              isSelected: currentRoute == "/database/supplier",
+                              onTap: () {
+                                router.go(
+                                  "/database/supplier",
+                                );
+                              },
+                            ),
+                          if (dataLogin.roleData?.stsDivisi == true)
+                            DrawerMenu(
+                              title: "Divisi",
+                              isSubMenu: true,
+                              isSelected: currentRoute == "/database/divisi",
+                              onTap: () {
+                                router.go(
+                                  "/database/divisi",
+                                );
+                              },
+                            ),
+                          if (dataLogin.roleData?.stsProduk == true)
+                            DrawerMenu(
+                              title: "Produk",
+                              isSubMenu: true,
+                              isSelected: currentRoute == "/database/produk",
+                              onTap: () {
+                                router.go(
+                                  "/database/produk",
+                                );
+                              },
+                            ),
                         ],
                       ),
-                      onTap: () {},
-                      children: [
-                        DrawerMenu(
-                          title: "Supplier",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/database/supplier",
-                          onTap: () {
-                            router.go(
-                              "/database/supplier",
-                            );
-                          },
+                    if (dataLogin.roleData?.stsPembelian == true ||
+                        dataLogin.roleData?.stsPenjualan == true)
+                      DrawerMenu(
+                        title: "Transaksi",
+                        isSelected: isParentSelected(
+                          "/transaksi",
+                          [
+                            "/transaksi/pembelian",
+                            "/transaksi/penjualan",
+                          ],
                         ),
-                        DrawerMenu(
-                          title: "Divisi",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/database/divisi",
-                          onTap: () {
-                            router.go(
-                              "/database/divisi",
-                            );
-                          },
-                        ),
-                        DrawerMenu(
-                          title: "Produk",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/database/produk",
-                          onTap: () {
-                            router.go(
-                              "/database/produk",
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    DrawerMenu(
-                      title: "Transaksi",
-                      isSelected: isParentSelected(
-                        "/transaksi",
-                        [
-                          "/transaksi/pembelian",
-                          "/transaksi/detail-pembelian",
-                          "/transaksi/penjualan",
+                        onTap: () {},
+                        children: [
+                          if (dataLogin.roleData?.stsPembelian == true)
+                            DrawerMenu(
+                              title: "Pembelian",
+                              isSubMenu: true,
+                              isSelected:
+                                  currentRoute == "/transaksi/pembelian",
+                              onTap: () {
+                                router.go(
+                                  "/transaksi/pembelian",
+                                );
+                              },
+                            ),
+                          // if (dataLogin.roleData?.stsPembelian == true)
+                          // DrawerMenu(
+                          //   title: "Divisi",
+                          //   isSubMenu: true,
+                          //   isSelected: currentRoute == "/database/divisi",
+                          //   onTap: () {
+                          //     router.go(
+                          //       "/database/divisi",
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
-                      onTap: () {},
-                      children: [
-                        DrawerMenu(
-                          title: "Pembelian",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/transaksi/pembelian" ||
-                              currentRoute == "/transaksi/detail-pembelian",
-                          onTap: () {
-                            router.go(
-                              "/transaksi/pembelian",
-                            );
-                          },
+                    if (dataLogin.roleData?.stsCashInCashOut == true)
+                      DrawerMenu(
+                        title: "Cash",
+                        isSelected: isParentSelected(
+                          "/cash",
+                          [
+                            "/cash/cash-in-cash-out",
+                          ],
                         ),
-                        DrawerMenu(
-                          title: "Divisi",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/database/divisi",
-                          onTap: () {
-                            router.go(
-                              "/database/divisi",
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    DrawerMenu(
-                      title: "Cash",
-                      isSelected: isParentSelected(
-                        "/cash",
-                        [
-                          "/cash/cash-in-cash-out",
+                        onTap: () {},
+                        children: [
+                          if (dataLogin.roleData?.stsCashInCashOut == true)
+                            DrawerMenu(
+                              title: "Cash In dan Cash Out",
+                              isSubMenu: true,
+                              isSelected:
+                                  currentRoute == "/cash/cash-in-cash-out",
+                              onTap: () {
+                                router.go(
+                                  "/cash/cash-in-cash-out",
+                                );
+                              },
+                            ),
                         ],
                       ),
-                      onTap: () {},
-                      children: [
-                        DrawerMenu(
-                          title: "Cash In dan Cash Out",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/cash/cash-in-cash-out",
-                          onTap: () {
-                            router.go(
-                              "/cash/cash-in-cash-out",
-                            );
-                          },
+                    if (dataLogin.roleData?.stsStockOpname == true)
+                      DrawerMenu(
+                        title: "Stock Opname",
+                        isSelected: isParentSelected(
+                          "/stock-opname",
+                          [
+                            // "/user-management/roles",
+                            "/stock-opname/mobile",
+                          ],
                         ),
-                      ],
-                    ),
-                    DrawerMenu(
-                      title: "Stock Opname",
-                      isSelected: isParentSelected(
-                        "/stock-opname",
-                        [
-                          // "/user-management/roles",
-                          "/stock-opname/mobile",
+                        onTap: () {},
+                        children: [
+                          // DrawerMenu(
+                          //   title: "Stocktake Harian",
+                          //   isSubMenu: true,
+                          //   isSelected:
+                          //       currentRoute == "/stock-opname/stocktake-harian",
+                          //   onTap: () {
+                          //     // router.go("/stock-opname/cetak-harian");
+                          //   },
+                          // ),
+                          if (dataLogin.roleData?.stsStockOpname == true)
+                            DrawerMenu(
+                              title: "Stock Opname",
+                              isSubMenu: true,
+                              isSelected:
+                                  currentRoute == "/stock-opname/mobile",
+                              onTap: () {
+                                router.go("/stock-opname/mobile");
+                              },
+                            ),
                         ],
                       ),
-                      onTap: () {},
-                      children: [
-                        // DrawerMenu(
-                        //   title: "Stocktake Harian",
-                        //   isSubMenu: true,
-                        //   isSelected:
-                        //       currentRoute == "/stock-opname/stocktake-harian",
-                        //   onTap: () {
-                        //     // router.go("/stock-opname/cetak-harian");
-                        //   },
-                        // ),
-                        DrawerMenu(
-                          title: "Stock Opname",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/stock-opname/mobile",
-                          onTap: () {
-                            router.go("/stock-opname/mobile");
-                          },
+                    if (dataLogin.roleData?.stsAnggota == true)
+                      DrawerMenu(
+                        title: "Koperasi",
+                        isSelected: isParentSelected(
+                          "/koperasi",
+                          [
+                            "/koperasi/anggota",
+                          ],
                         ),
-                      ],
-                    ),
-                    DrawerMenu(
-                      title: "Koperasi",
-                      isSelected: isParentSelected(
-                        "/koperasi",
-                        [
-                          "/koperasi/anggota",
+                        onTap: () {},
+                        children: [
+                          if (dataLogin.roleData?.stsAnggota == true)
+                            DrawerMenu(
+                              title: "Anggota",
+                              isSubMenu: true,
+                              isSelected: currentRoute == "/koperasi/anggota",
+                              onTap: () {
+                                router.go("/koperasi/anggota");
+                              },
+                            ),
+                          // DrawerMenu(
+                          //   title: "Stock Opname",
+                          //   isSubMenu: true,
+                          //   isSelected: currentRoute == "/stock-opname/mobile",
+                          //   onTap: () {
+                          //     router.go("/stock-opname/mobile");
+                          //   },
+                          // ),
                         ],
                       ),
-                      onTap: () {},
-                      children: [
-                        DrawerMenu(
-                          title: "Anggota",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/koperasi/anggota",
-                          onTap: () {
-                            router.go("/koperasi/anggota");
-                          },
+                    if (dataLogin.roleData?.stsUser == true)
+                      DrawerMenu(
+                        title: "User Management",
+                        isSelected: isParentSelected(
+                          "/user-management",
+                          [
+                            "/user-management/user",
+                            "/user-management/role",
+                          ],
                         ),
-                        // DrawerMenu(
-                        //   title: "Stock Opname",
-                        //   isSubMenu: true,
-                        //   isSelected: currentRoute == "/stock-opname/mobile",
-                        //   onTap: () {
-                        //     router.go("/stock-opname/mobile");
-                        //   },
-                        // ),
-                      ],
-                    ),
-                    DrawerMenu(
-                      title: "User Management",
-                      isSelected: isParentSelected(
-                        "/user-management",
-                        [
-                          "/user-management/user",
-                          "/user-management/role",
+                        onTap: () {},
+                        children: [
+                          if (dataLogin.roleData?.stsUser == true)
+                            DrawerMenu(
+                              title: "User",
+                              isSubMenu: true,
+                              isSelected:
+                                  currentRoute == "/user-management/user",
+                              onTap: () {
+                                router.go("/user-management/user");
+                              },
+                            ),
+                          if (dataLogin.roleData?.stsRole == true)
+                            DrawerMenu(
+                              title: "Role",
+                              isSubMenu: true,
+                              isSelected:
+                                  currentRoute == "/user-management/role",
+                              onTap: () {
+                                router.go("/user-management/role");
+                              },
+                            ),
                         ],
                       ),
-                      onTap: () {},
-                      children: [
-                        DrawerMenu(
-                          title: "User",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/user-management/user",
-                          onTap: () {
-                            router.go("/user-management/user");
-                          },
-                        ),
-                        DrawerMenu(
-                          title: "Role",
-                          isSubMenu: true,
-                          isSelected: currentRoute == "/user-management/role",
-                          onTap: () {
-                            router.go("/user-management/role");
-                          },
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),

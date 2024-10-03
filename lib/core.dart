@@ -64,8 +64,10 @@ export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/widget/scan
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/widget/scanner_button_widgets.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/controller/pembelian_controller.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/view/pembelian_view.dart';
-export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_detail_pembelian.dart';
+export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_empty.dart';
+export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_footer_text.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_list_pembelian.dart';
+export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_pembelian.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/dialog_tambah_pembelian.dart';
 export 'package:ksu_budidaya/module/user/login/controller/login_controller.dart';
 export 'package:ksu_budidaya/module/user/login/view/login_view.dart';

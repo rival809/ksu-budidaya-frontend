@@ -25,6 +25,17 @@ class DetailPembelianResult {
     data['message'] = message;
     return data;
   }
+
+  DetailPembelianResult copyWith({
+    bool? success,
+    List<DataDetailPembelian>? data,
+    String? message,
+  }) =>
+      DetailPembelianResult(
+        success: success ?? this.success,
+        data: data ?? this.data,
+        message: message ?? this.message,
+      );
 }
 
 class DataDetailPembelian {

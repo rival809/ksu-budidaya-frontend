@@ -8,12 +8,12 @@ import 'package:ksu_budidaya/core.dart';
 
 class DialogTambahPembelian extends StatefulWidget {
   final DataDetailPembelian? data;
-  // final Function()? onPressedRight;
-  // final Function()? onPressedLeft;
+  final PembelianController controller;
+  final bool? isDetail;
   const DialogTambahPembelian({
     required this.data,
-    // required this.onPressedRight,
-    // required this.onPressedLeft,
+    required this.controller,
+    this.isDetail,
     Key? key,
   }) : super(key: key);
 
@@ -103,12 +103,17 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
       if (result.success == true) {
         dataResult = result;
         textController[0].text = trimString(result.data?.idProduct);
+        dataEdit.idProduct = trimString(result.data?.idProduct);
         textController[1].text = trimString(result.data?.nmProduct);
+        dataEdit.nmProduk = trimString(result.data?.nmProduct);
         textController[2].text = trimString(result.data?.jumlah.toString());
+        dataEdit.jumlah = result.data?.jumlah;
         textController[3].text =
             formatMoney(trimString(result.data?.hargaBeli));
+        dataEdit.hargaBeli = trimString(result.data?.hargaBeli);
         textController[4].text =
             formatMoney(trimString(result.data?.hargaJual));
+        dataEdit.hargaJual = trimString(result.data?.hargaJual);
 
         dataEdit.nmDivisi = trimString(result.data?.idDivisi).toString().isEmpty
             ? null
@@ -130,6 +135,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
 
   @override
   Widget build(BuildContext context) {
+    PembelianController controller = widget.controller;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Form(
@@ -191,10 +197,10 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                 BaseForm(
                   label: "Jumlah",
                   hintText: "Masukkan Jumlah",
-                  prefix: const BasePrefixRupiah(),
                   textEditingController: textController[2],
                   onChanged: (value) {
-                    dataEdit.hargaJual = removeComma(trimString(value));
+                    dataEdit.jumlah =
+                        int.tryParse(removeComma(trimString(value)));
                     update();
                   },
                   textInputFormater: [
@@ -277,18 +283,102 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                 const SizedBox(
                   width: 16.0,
                 ),
+                if (widget.isDetail ?? false)
+                  Expanded(
+                    child: BaseDangerButton(
+                      text: "Hapus",
+                      onPressed: () {
+                        controller.dataPembelian.details?.removeWhere(
+                            (element) =>
+                                trimString(
+                                    element.idDetailPembelian.toString()) ==
+                                trimString(
+                                    widget.data?.idDetailPembelian.toString()));
+                        controller.update();
+                        Get.back();
+                      },
+                    ),
+                  ),
+                if (widget.isDetail ?? false)
+                  const SizedBox(
+                    width: 16.0,
+                  ),
                 Expanded(
                   child: BasePrimaryButton(
                     text: "Simpan",
                     onPressed: () {
-                      if (tambahPembelianKey.currentState!.validate()) {
-                        DataMap payload = dataEdit.toJson();
-                        payload.removeWhere(
-                          (key, value) => key == "created_at",
-                        );
-                        payload.removeWhere(
-                          (key, value) => key == "updated_at",
-                        );
+                      try {
+                        if (tambahPembelianKey.currentState!.validate()) {
+                          dataEdit.ppn = "0";
+                          DataMap payload = dataEdit.toJson();
+                          payload.removeWhere(
+                            (key, value) => key == "created_at",
+                          );
+                          payload.removeWhere(
+                            (key, value) => key == "updated_at",
+                          );
+
+                          payload.removeWhere(
+                            (key, value) => key == "id_pembelian",
+                          );
+                          if (jenisDiskon == "Persen") {
+                            payload.update("diskon", (value) {
+                              return ((double.parse(dataEdit.hargaBeli ?? "0") *
+                                      ((double.parse(value ?? "0")) / 100) *
+                                      (dataEdit.jumlah ?? 0)))
+                                  .toString();
+                            });
+                          } else if (jenisDiskon == "Nominal") {
+                            payload.update("diskon", (value) {
+                              return trimString(value ?? "0");
+                            });
+                          }
+                          payload.update("total_nilai_beli", (value) {
+                            return (double.parse(dataEdit.hargaBeli ?? "0") *
+                                        (dataEdit.jumlah ?? 0) -
+                                    double.parse(payload["diskon"] ?? "0"))
+                                .toString();
+                          });
+                          payload.update("total_nilai_jual", (value) {
+                            return (double.parse(dataEdit.hargaJual ?? "0") *
+                                    (dataEdit.jumlah ?? 0))
+                                .toString();
+                          });
+                          if (widget.isDetail ?? false) {
+                            payload.update(
+                              "id_detail_pembelian",
+                              (value) => widget.data?.idDetailPembelian,
+                            );
+                            controller.dataPembelian.details?.removeWhere(
+                                (element) =>
+                                    trimString(
+                                        element.idDetailPembelian.toString()) ==
+                                    trimString(widget.data?.idDetailPembelian
+                                        .toString()));
+                            controller.update();
+
+                            DataDetailPembelian dataPayload =
+                                DataDetailPembelian.fromJson(payload);
+                            controller.dataPembelian.details?.add(dataPayload);
+                            controller.update();
+                          } else {
+                            payload.update(
+                              "id_detail_pembelian",
+                              (value) =>
+                                  controller.dataPembelian.details?.length ?? 0,
+                            );
+
+                            DataDetailPembelian dataPayload =
+                                DataDetailPembelian.fromJson(payload);
+
+                            controller.dataPembelian.details?.add(dataPayload);
+                            controller.update();
+                          }
+
+                          Get.back();
+                        }
+                      } catch (e) {
+                        showInfoDialog(e.toString(), context);
                       }
                     },
                   ),

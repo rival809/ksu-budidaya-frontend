@@ -3,7 +3,7 @@ description: Aplikasi KSU Budidaya.
 publish_to: "none"
 version: 1.0.0
 environment:
-  sdk: ">=3.0.0 <=3.3.4"
+  sdk: ">=3.0.0 <=4.0.0"
 dependencies:
   flutter:
     sdk: flutter
@@ -40,7 +40,7 @@ dependencies:
   easy_image_viewer: ^1.4.0
   go_router: ^13.1.0
   responsive_builder: ^0.7.0
-  mobile_scanner: ^5.1.1
+  mobile_scanner: ^5.0.0
   flutter_carousel_widget: ^2.2.0
   connectivity_plus: ^5.0.2
   htmltopdfwidgets: ^1.0.3

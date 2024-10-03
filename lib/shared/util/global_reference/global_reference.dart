@@ -6,10 +6,7 @@ class GlobalReference {
   roleReference() async {
     try {
       ListRoleResult result = await ApiService.listRole(
-        data: {
-          "page": "1",
-          "size": "1000",
-        },
+        data: {},
       ).timeout(const Duration(seconds: 30));
 
       RoleDatabase.save(result.data ?? DataListRole());
@@ -21,10 +18,7 @@ class GlobalReference {
   supplierReference() async {
     try {
       SupplierResult result = await ApiService.listSupplier(
-        data: {
-          "page": "1",
-          "size": "1000",
-        },
+        data: {},
       ).timeout(const Duration(seconds: 30));
 
       SupplierDatabase.save(result.data ?? DataSupplier());
@@ -36,10 +30,7 @@ class GlobalReference {
   divisiReference() async {
     try {
       DivisiResult result = await ApiService.listDivisi(
-        data: {
-          "page": "1",
-          "size": "1000",
-        },
+        data: {},
       ).timeout(const Duration(seconds: 30));
 
       DivisiDatabase.save(result.data ?? DataDivisi());
@@ -51,10 +42,7 @@ class GlobalReference {
   cashReference() async {
     try {
       RefCashResult result = await ApiService.listRefCashInOut(
-        data: {
-          "page": "1",
-          "size": "1000",
-        },
+        data: {},
       ).timeout(const Duration(seconds: 30));
 
       RefCashDatabase.save(result);

@@ -17,12 +17,8 @@ class PembelianView extends StatefulWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: controller.isList
-                  ? ContainerListPembelian(
-                      controller: controller,
-                    )
-                  : ContainerDetailPembelian(
-                      controller: controller,
-                    ),
+                  ? ContainerListPembelian(controller: controller)
+                  : ContainerPembelian(controller: controller),
             ),
           ),
         ),
