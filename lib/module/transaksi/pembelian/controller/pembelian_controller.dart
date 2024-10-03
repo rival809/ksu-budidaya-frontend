@@ -133,6 +133,62 @@ class PembelianController extends State<PembelianView> {
     }
   }
 
+  postCreatePembelian() async {
+    Get.back();
+
+    showCircleDialogLoading();
+    try {
+      var payload = dataPembelian.toJson();
+
+      for (var i = 0; i < payload['details'].length; i++) {
+        payload['details'][i].removeWhere(
+          (key, value) => key == "id_detail_pembelian",
+        );
+        payload['details'][i].removeWhere(
+          (key, value) => key == "created_at",
+        );
+        payload['details'][i].removeWhere(
+          (key, value) => key == "updated_at",
+        );
+        payload['details'][i].removeWhere(
+          (key, value) => key == "id_pembelian",
+        );
+      }
+
+      if (trimString(payload['keterangan']).toString().isEmpty) {
+        payload.removeWhere(
+          (key, value) => key == "keterangan",
+        );
+      }
+
+      payload.update("tg_pembelian", (value) => formatDate(value.toString()));
+
+      PembelianResult result = await ApiService.createPembelian(
+        data: payload,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        await showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        router.push("/transaksi/pembelian");
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   CreatePembelianModel dataPembelian = CreatePembelianModel();
 
   List<TextEditingController> textControllerDetail = [
@@ -147,6 +203,7 @@ class PembelianController extends State<PembelianView> {
   double totalHargaJual = 0;
   double totalPpn = 0;
   double totalDiskon = 0;
+  double jumlah = 0;
 
   double rowHeight = 47;
   double heighFooter = 49;
@@ -204,6 +261,7 @@ class PembelianController extends State<PembelianView> {
           double.parse(dataPembelian.details?[i].totalNilaiBeli ?? "0");
     }
     totalHargaBeli = totalHargaBeli + totalPpn;
+    dataPembelian.totalHargaBeli = totalHargaBeli.toString();
   }
 
   sumTotalNilaiJual() {
@@ -212,6 +270,15 @@ class PembelianController extends State<PembelianView> {
       totalHargaJual +=
           double.parse(dataPembelian.details?[i].totalNilaiJual ?? "0");
     }
+    dataPembelian.totalHargaJual = totalHargaJual.toString();
+  }
+
+  sumJumlah() {
+    jumlah = 0;
+    for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
+      jumlah += dataPembelian.details?[i].jumlah ?? 0;
+    }
+    dataPembelian.jumlah = jumlah.toString();
   }
 
   List<PlutoRow> rows = [];
@@ -474,8 +541,10 @@ class PembelianController extends State<PembelianView> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       isDetail
-                          ? formatMoney(trimString(
-                              dataPembelian.totalHargaBeli.toString()))
+                          ? formatMoney(trimString((double.parse(
+                                      dataPembelian.totalHargaBeli ?? "0") -
+                                  totalDiskon)
+                              .toString()))
                           : formatMoney(trimString(totalHargaBeli.toString())),
                       style: myTextTheme.displayLarge
                           ?.copyWith(fontWeight: FontWeight.w600),

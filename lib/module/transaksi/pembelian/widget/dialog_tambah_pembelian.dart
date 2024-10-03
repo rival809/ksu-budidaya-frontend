@@ -173,6 +173,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                 ),
                 BaseForm(
                   label: "Nama Produk",
+                  enabled: false,
                   hintText: "Masukkan Nama Produk",
                   textInputFormater: [
                     UpperCaseTextFormatter(),
@@ -188,6 +189,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   hint: "Pilih Divisi",
                   label: "Divisi",
                   items: itemDivisi,
+                  enabled: false,
                   value: dataEdit.nmDivisi,
                   onChanged: (value) {
                     dataEdit.nmDivisi = value;
@@ -317,7 +319,6 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                           payload.removeWhere(
                             (key, value) => key == "updated_at",
                           );
-
                           payload.removeWhere(
                             (key, value) => key == "id_pembelian",
                           );
