@@ -148,17 +148,18 @@ class SliderView extends StatelessWidget {
                                 );
                               },
                             ),
-                          // if (dataLogin.roleData?.stsPembelian == true)
-                          // DrawerMenu(
-                          //   title: "Divisi",
-                          //   isSubMenu: true,
-                          //   isSelected: currentRoute == "/database/divisi",
-                          //   onTap: () {
-                          //     router.go(
-                          //       "/database/divisi",
-                          //     );
-                          //   },
-                          // ),
+                          if (dataLogin.roleData?.stsPenjualan == true)
+                            DrawerMenu(
+                              title: "Penjualan",
+                              isSubMenu: true,
+                              isSelected:
+                                  currentRoute == "/transaksi/penjualan",
+                              onTap: () {
+                                router.go(
+                                  "/transaksi/penjualan",
+                                );
+                              },
+                            ),
                         ],
                       ),
                     if (dataLogin.roleData?.stsCashInCashOut == true)

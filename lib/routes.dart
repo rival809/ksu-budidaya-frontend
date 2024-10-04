@@ -127,6 +127,14 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: 'transaksi/penjualan',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: PenjualanView(),
+            );
+          },
+        ),
 
         // GoRoute(
         //   path: 'pdf-viewer',

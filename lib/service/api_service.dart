@@ -843,4 +843,46 @@ class ApiService {
       throw Exception('Failed to createPembelian');
     }
   }
+
+  static Future<PenjualanResult> listPenjualan({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/sale/list-sale",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return PenjualanResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listPenjualan');
+    }
+  }
+
+  static Future<PenjualanResult> removePenjualan({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/sale/remove-sale",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return PenjualanResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removePenjualan');
+    }
+  }
 }
