@@ -98,14 +98,14 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                 ),
                 BasePrimaryButton(
                   onPressed: () {
-                    // controller.dataPembelian.details = [];
-                    // controller.update();
-                    // controller.isList = false;
-                    // controller.isDetail = false;
-                    // controller.isPpn = false;
-                    // controller.isDiskon = false;
-                    // controller.update();
-                    // update();
+                    controller.dataPenjualan.details = [];
+                    controller.update();
+                    controller.isList = false;
+                    controller.isDetail = false;
+                    controller.isPpn = false;
+                    controller.isDiskon = false;
+                    controller.update();
+                    update();
                   },
                   text: "Tambah Penjualan",
                   suffixIcon: iconAdd,
@@ -260,15 +260,15 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                               DetailDataPenjualan dataDetail =
                                   result.data?.dataPenjualan?[rowIndex] ??
                                       DetailDataPenjualan();
-                              controller.dataPembelian.jenisPembayaran =
+                              controller.dataPenjualan.jenisPembayaran =
                                   dataDetail.jenisPembayaran;
 
-                              controller.postDetailPurchase(
-                                trimString(
-                                  result.data?.dataPenjualan?[rowIndex]
-                                      .idPenjualan,
-                                ),
-                              );
+                              // controller.postDetailPurchase(
+                              //   trimString(
+                              //     result.data?.dataPenjualan?[rowIndex]
+                              //         .idPenjualan,
+                              //   ),
+                              // );
                               update();
                             } else if (value == 2) {
                               showDialogBase(

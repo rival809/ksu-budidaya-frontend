@@ -18,7 +18,7 @@ class PenjualanView extends StatefulWidget {
               padding: const EdgeInsets.all(16),
               child: controller.isList
                   ? ContainerListPenjualan(controller: controller)
-                  : Container(),
+                  : ContainerTambahPenjualan(controller: controller),
             ),
           ),
         ),

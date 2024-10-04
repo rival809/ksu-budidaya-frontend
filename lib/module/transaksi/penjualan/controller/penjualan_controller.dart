@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class PenjualanController extends State<PenjualanView> {
   static late PenjualanController instance;
@@ -70,40 +69,6 @@ class PenjualanController extends State<PenjualanView> {
     }
   }
 
-  postDetailPurchase(String id_pembelian) async {
-    showCircleDialogLoading();
-    try {
-      DetailPembelianResult result = await ApiService.detailPembelian(
-        data: {"id_pembelian": id_pembelian},
-      ).timeout(const Duration(seconds: 30));
-
-      Navigator.pop(context);
-
-      if (result.success == true) {
-        isList = false;
-        isDetail = true;
-        dataPembelian = dataPembelian.copyWith(
-          details: result.data,
-        );
-
-        if (result.data?.isNotEmpty ?? false) {
-          isPpn = result.data!.any((element) => element.ppn != "0");
-        }
-
-        update();
-      }
-    } catch (e) {
-      Navigator.pop(context);
-
-      if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-      } else {
-        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-      }
-    }
-  }
-
   postRemoveSale(String id_penjualan) async {
     Get.back();
     showCircleDialogLoading();
@@ -134,12 +99,46 @@ class PenjualanController extends State<PenjualanView> {
     }
   }
 
+  // postDetailPurchase(String id_pembelian) async {
+  //   showCircleDialogLoading();
+  //   try {
+  //     DetailPembelianResult result = await ApiService.detailPembelian(
+  //       data: {"id_pembelian": id_pembelian},
+  //     ).timeout(const Duration(seconds: 30));
+
+  //     Navigator.pop(context);
+
+  //     if (result.success == true) {
+  //       isList = false;
+  //       isDetail = true;
+  //       dataPenjualan = dataPenjualan.copyWith(
+  //         details: result.data,
+  //       );
+
+  //       if (result.data?.isNotEmpty ?? false) {
+  //         isPpn = result.data!.any((element) => element.ppn != "0");
+  //       }
+
+  //       update();
+  //     }
+  //   } catch (e) {
+  //     Navigator.pop(context);
+
+  //     if (e.toString().contains("TimeoutException")) {
+  //       showInfoDialog(
+  //           "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+  //     } else {
+  //       showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+  //     }
+  //   }
+  // }
+
   postCreatePembelian() async {
     Get.back();
 
     showCircleDialogLoading();
     try {
-      var payload = dataPembelian.toJson();
+      var payload = dataPenjualan.toJson();
 
       for (var i = 0; i < payload['details'].length; i++) {
         payload['details'][i].removeWhere(
@@ -190,7 +189,8 @@ class PenjualanController extends State<PenjualanView> {
     }
   }
 
-  CreatePembelianModel dataPembelian = CreatePembelianModel();
+  TextEditingController cariProdukController = TextEditingController();
+  CreatePenjualanModel dataPenjualan = CreatePenjualanModel();
 
   List<TextEditingController> textControllerDetail = [
     TextEditingController(),
@@ -217,385 +217,36 @@ class PenjualanController extends State<PenjualanView> {
     }
   }
 
-  checkPpn() {
-    isPpn = false;
-
-    if (dataPembelian.details?.isNotEmpty ?? false) {
-      isPpn = dataPembelian.details!
-          .every((element) => trimString(element.ppn ?? "0") != "0");
-    }
-  }
-
-  checklistPpn(bool value) {
-    isPpn = value;
-
-    for (var detail in dataPembelian.details ?? [DataDetailPembelian()]) {
-      if (value) {
-        detail.ppn = ((11 / 100) *
-                double.parse(detail.hargaBeli ?? "0") *
-                double.parse(detail.jumlah?.toString() ?? "0"))
-            .toString();
-      } else {
-        detail.ppn = "0";
-      }
-    }
-  }
-
   sumTotalDiskon() {
     totalDiskon = 0;
-    for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalDiskon += double.parse(dataPembelian.details?[i].diskon ?? "0");
-    }
-  }
-
-  sumTotalPpn() {
-    totalPpn = 0;
-    for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalPpn += double.parse(dataPembelian.details?[i].ppn ?? "0");
+    for (var i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      totalDiskon += double.parse(dataPenjualan.details?[i].diskon ?? "0");
     }
   }
 
   sumTotalNilaiBeli() {
     totalHargaBeli = 0;
-    for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalHargaBeli +=
-          double.parse(dataPembelian.details?[i].totalNilaiBeli ?? "0");
+    for (var i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      totalHargaBeli += double.parse(dataPenjualan.details?[i].total ?? "0");
     }
     totalHargaBeli = totalHargaBeli + totalPpn;
-    dataPembelian.totalHargaBeli = totalHargaBeli.toString();
+    dataPenjualan.totalNilaiBeli = totalHargaBeli.toString();
   }
 
   sumTotalNilaiJual() {
     totalHargaJual = 0;
-    for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalHargaJual +=
-          double.parse(dataPembelian.details?[i].totalNilaiJual ?? "0");
+    for (var i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      totalHargaJual += double.parse(dataPenjualan.details?[i].total ?? "0");
     }
-    dataPembelian.totalHargaJual = totalHargaJual.toString();
+    dataPenjualan.totalNilaiJual = totalHargaJual.toString();
   }
 
   sumJumlah() {
     jumlah = 0;
-    for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      jumlah += dataPembelian.details?[i].jumlah ?? 0;
+    for (var i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      jumlah += int.tryParse(dataPenjualan.details?[i].jumlah ?? "0") ?? 0;
     }
-    dataPembelian.jumlah = jumlah.toString();
-  }
-
-  List<PlutoRow> rows = [];
-  List<PlutoColumn> columns = [];
-
-  initRow() {
-    rows.clear();
-
-    var dataList = dataPembelian.toJson()["details"] as List<dynamic>;
-
-    rows = dataList.map<PlutoRow>((item) {
-      Map<String, PlutoCell> cells = {};
-
-      (item as Map<String, dynamic>).forEach((key, value) {
-        cells[key] = PlutoCell(
-          value: trimStringStrip(value.toString()),
-        );
-      });
-
-      return PlutoRow(cells: cells);
-    }).toList();
-  }
-
-  initColumn() {
-    columns.clear();
-    columns.addAll([
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari ID Produk",
-        title: 'ID Produk',
-        field: 'id_product',
-        type: PlutoColumnType.text(),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Divisi",
-        title: 'Divisi',
-        field: 'nm_divisi',
-        type: PlutoColumnType.text(),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerFooterText(text: "Diskon"),
-                if (isPpn) const ContainerFooterText(text: "PPN"),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                  child: Text(
-                    "TOTAL",
-                    style: myTextTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Nama Produk",
-        title: 'Nama Produk',
-        field: 'nm_produk',
-        type: PlutoColumnType.text(),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Harga Beli",
-        title: 'Harga Beli',
-        field: 'harga_beli',
-        type: PlutoColumnType.number(
-          locale: 'id',
-        ),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Harga Jual",
-        title: 'Harga Jual',
-        field: 'harga_jual',
-        type: PlutoColumnType.number(
-          locale: 'id',
-        ),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Qty",
-        title: 'Qty',
-        field: 'jumlah',
-        type: PlutoColumnType.number(
-          locale: 'id',
-        ),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerEmpty(),
-                if (isPpn) const ContainerFooterText(text: "11 %"),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                  child: PlutoAggregateColumnFooter(
-                    rendererContext: context,
-                    type: PlutoAggregateColumnType.sum,
-                    titleSpanBuilder: (text) {
-                      return [
-                        TextSpan(
-                          text: text,
-                          style: myTextTheme.displayLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ];
-                    },
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Disc",
-        title: 'Disc',
-        field: 'diskon',
-        type: PlutoColumnType.number(
-          locale: 'id',
-        ),
-        footerRenderer: (context) {
-          context.stateManager.columnFooterHeight = getRowHeigh();
-
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                ContainerFooterText(
-                  text: formatMoney(trimString(totalDiskon.toString())),
-                ),
-                if (isPpn) const ContainerEmpty(),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Total Nilai Beli",
-        title: 'Total Nilai Beli',
-        field: 'total_nilai_beli',
-        type: PlutoColumnType.number(
-          locale: 'id',
-        ),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerEmpty(),
-                if (isPpn)
-                  ContainerFooterText(
-                    text: formatMoney(trimString(totalPpn.toString())),
-                  ),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      isDetail
-                          ? formatMoney(trimString((double.parse(
-                                      dataPembelian.totalHargaBeli ?? "0") -
-                                  totalDiskon)
-                              .toString()))
-                          : formatMoney(trimString(totalHargaBeli.toString())),
-                      style: myTextTheme.displayLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        backgroundColor: primaryColor,
-        filterHintText: "Cari Total Nilai Jual",
-        title: 'Total Nilai Jual',
-        field: 'total_nilai_jual',
-        type: PlutoColumnType.number(
-          locale: 'id',
-        ),
-        footerRenderer: (context) {
-          return SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: [
-                const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
-                Container(
-                  height: 49,
-                  width: MediaQuery.of(globalContext).size.width,
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      isDetail
-                          ? formatMoney(trimString(
-                              dataPembelian.totalHargaJual.toString()))
-                          : formatMoney(trimString(totalHargaJual.toString())),
-                      style: myTextTheme.displayLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    ]);
+    dataPenjualan.jumlah = jumlah.toString();
   }
 
   @override
