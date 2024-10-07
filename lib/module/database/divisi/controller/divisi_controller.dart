@@ -7,6 +7,7 @@ class DivisiController extends State<DivisiView> {
 
   String page = "1";
   String size = "10";
+  bool isAsc = true;
   TextEditingController divisiNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
@@ -58,7 +59,7 @@ class DivisiController extends State<DivisiView> {
   postCreateDivisi(String namaDivisi) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       DivisiResult result = await ApiService.createDivisi(
         nmDivisi: namaDivisi,
@@ -89,7 +90,7 @@ class DivisiController extends State<DivisiView> {
   postUpdateDivisi(String idDivisi, String nmDivisi) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       DivisiResult result = await ApiService.updateDivisi(
         idDivisi: idDivisi,
@@ -120,7 +121,7 @@ class DivisiController extends State<DivisiView> {
 
   postRemoveDivisi(String idDivisi) async {
     Get.back();
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       DivisiResult result = await ApiService.removeDivisi(
         data: {"id_divisi": idDivisi},

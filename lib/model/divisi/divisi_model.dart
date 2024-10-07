@@ -1,4 +1,5 @@
 import 'package:ksu_budidaya/core.dart';
+part 'divisi_model.g.dart';
 
 class DivisiResult {
   bool? success;
@@ -24,7 +25,9 @@ class DivisiResult {
   }
 }
 
+@HiveType(typeId: 9)
 class DataDivisi {
+  @HiveField(0)
   List<DataDetailDivisi>? dataDivisi;
   Paging? paging;
 
@@ -52,10 +55,15 @@ class DataDivisi {
   }
 }
 
+@HiveType(typeId: 10)
 class DataDetailDivisi {
+  @HiveField(0)
   String? idDivisi;
+  @HiveField(1)
   String? nmDivisi;
+  @HiveField(2)
   String? createdAt;
+  @HiveField(3)
   String? updatedAt;
 
   DataDetailDivisi(
@@ -75,6 +83,10 @@ class DataDetailDivisi {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  String divisiAsString() {
+    return '${trimString(idDivisi)} - ${trimString(nmDivisi)}';
   }
 
   DataDetailDivisi copyWith({

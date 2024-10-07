@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class StockOpnameMobileView extends StatefulWidget {
@@ -7,116 +8,234 @@ class StockOpnameMobileView extends StatefulWidget {
   Widget build(context, StockOpnameMobileController controller) {
     controller.view = this;
 
-    return BodyContainer(
-      floatingActionButton: ScreenTypeLayout.builder(
-        mobile: (context) => Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: BaseSecondaryButton(
-                  text: "Batal",
-                  onPressed: () {},
-                ),
-              ),
-              const SizedBox(
-                width: 16.0,
-              ),
-              Expanded(
-                child: BasePrimaryButton(
-                  text: "Simpan",
-                  onPressed: () {
-                    showDialogBase(
-                      content: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                              iconStatusCheck,
-                              width: 80,
-                            ),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Text(
-                              "Berhasil",
-                              style: myTextTheme.displaySmall,
-                            ),
-                            const SizedBox(
-                              height: 24.0,
-                            ),
-                            BasePrimaryButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              text: "Oke, saya mengerti",
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        desktop: (context) => Container(),
-      ),
-      floatingActionLocation: FloatingActionButtonLocation.centerDocked,
-      contentBody: SingleChildScrollView(
-        controller: ScrollController(),
-        child: ScreenTypeLayout.builder(
-          mobile: (BuildContext context) => Container(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Form(
+      key: controller.stockOpnameKey,
+      child: BodyContainer(
+        floatingActionButton: ScreenTypeLayout.builder(
+          mobile: (context) => Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
               children: [
-                Text(
-                  "Stock Opname",
-                  style: myTextTheme.headlineLarge,
+                Expanded(
+                  child: BaseSecondaryButton(
+                    text: "Reset",
+                    onPressed: () {
+                      controller.resetData();
+                    },
+                  ),
                 ),
                 const SizedBox(
-                  height: 24.0,
+                  width: 16.0,
                 ),
-                BaseForm(
-                  label: "Kode Produk",
-                  textEditingController: controller.textBarcodeController,
-                  suffixIcon: iconBarcodeScanner,
-                  onTapSuffix: () async {
-                    final result = await showDialog<String>(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const BarcodeScannerDialog();
-                      },
-                    );
-
-                    if (result != null) {
-                      controller.textBarcodeController.text = result;
-                      controller.update();
-                    }
-                  },
-                  onChanged: (value) {
-                    print(value);
-                  },
-                ),
-                const SizedBox(
-                  height: 24.0,
-                ),
-                const BaseForm(
-                  label: "Stok",
-                ),
-                const SizedBox(
-                  height: 24.0,
-                ),
-                const BaseForm(
-                  label: "Stock Sebenarnya",
+                Expanded(
+                  child: BasePrimaryButton(
+                    text: "Simpan",
+                    onPressed: () {
+                      if (controller.stockOpnameKey.currentState!.validate()) {
+                        controller.postUpdateProduct(
+                          trimString(controller.dataResult.data?.idProduct),
+                          controller.textStockController.text,
+                        );
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
           ),
-          desktop: (BuildContext context) => Container(),
+          desktop: (context) => Container(
+            width: MediaQuery.of(context).size.width / 1.5,
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: BaseSecondaryButton(
+                    text: "Reset",
+                    onPressed: () {
+                      controller.resetData();
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Expanded(
+                  child: BasePrimaryButton(
+                    text: "Simpan",
+                    onPressed: () {
+                      if (controller.stockOpnameKey.currentState!.validate()) {
+                        controller.postUpdateProduct(
+                          trimString(controller.dataResult.data?.idProduct),
+                          controller.textStockController.text,
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionLocation: FloatingActionButtonLocation.centerDocked,
+        contentBody: SingleChildScrollView(
+          controller: ScrollController(),
+          child: ScreenTypeLayout.builder(
+            mobile: (BuildContext context) => Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Stock Opname",
+                    style: myTextTheme.headlineLarge,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Kode Produk",
+                    textEditingController: controller.textBarcodeController,
+                    suffixIcon: iconBarcodeScanner,
+                    onTapSuffix: () async {
+                      final result = await showDialog<String>(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const BarcodeScannerDialog();
+                        },
+                      );
+
+                      if (result != null) {
+                        controller.textBarcodeController.text = result;
+                        controller.postDetailProduct(
+                          controller.textBarcodeController.text,
+                        );
+
+                        controller.update();
+                      }
+                    },
+                    onChanged: (value) {
+                      controller.dataResult = DetailProductResult();
+                      controller.onBarcodeChanged(value);
+                      controller.update();
+                    },
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Nama Produk",
+                    textEditingController: controller.textNamaProdukController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Stok",
+                    textEditingController:
+                        controller.textCurrentStockController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Stock Sebenarnya",
+                    textEditingController: controller.textStockController,
+                    validator: Validatorless.required("Data Wajib Diisi"),
+                    hintText: "Masukkan Stock Sebenarnya",
+                    textInputType: TextInputType.number,
+                    onChanged: (value) {
+                      controller.stockEdit = trimString(value);
+                      controller.update();
+                    },
+                    textInputFormater: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            desktop: (BuildContext context) => Container(
+              width: MediaQuery.of(context).size.width / 2,
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Stock Opname",
+                    style: myTextTheme.headlineLarge,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Kode Produk",
+                    textEditingController: controller.textBarcodeController,
+                    suffixIcon: iconBarcodeScanner,
+                    onTapSuffix: () async {
+                      final result = await showDialog<String>(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const BarcodeScannerDialog();
+                        },
+                      );
+
+                      if (result != null) {
+                        controller.textBarcodeController.text = result;
+                        controller.postDetailProduct(
+                          controller.textBarcodeController.text,
+                        );
+
+                        controller.update();
+                      }
+                    },
+                    onChanged: (value) {
+                      controller.dataResult = DetailProductResult();
+                      controller.onBarcodeChanged(value);
+                      controller.update();
+                    },
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Nama Produk",
+                    textEditingController: controller.textNamaProdukController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Stok",
+                    textEditingController:
+                        controller.textCurrentStockController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Stock Sebenarnya",
+                    textEditingController: controller.textStockController,
+                    validator: Validatorless.required("Data Wajib Diisi"),
+                    hintText: "Masukkan Stock Sebenarnya",
+                    textInputType: TextInputType.number,
+                    onChanged: (value) {
+                      controller.stockEdit = trimString(value);
+                      controller.update();
+                    },
+                    textInputFormater: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

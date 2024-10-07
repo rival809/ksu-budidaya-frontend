@@ -16,6 +16,7 @@ class _BarcodeScannerDialogState extends State<BarcodeScannerDialog>
     autoStart: false,
     torchEnabled: true,
     facing: CameraFacing.back,
+    cameraResolution: const Size(3840, 2160),
     detectionSpeed: DetectionSpeed.normal,
   );
 

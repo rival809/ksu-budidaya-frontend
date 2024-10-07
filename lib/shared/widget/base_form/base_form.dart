@@ -15,6 +15,7 @@ class BaseForm extends StatefulWidget {
   final TextInputType? textInputType;
   final String? Function(String?)? validator;
   final Widget? suffix;
+  final Widget? prefix;
   final String? prefixIcon;
   final String? suffixIcon;
   final Function()? onTapSuffix;
@@ -22,8 +23,12 @@ class BaseForm extends StatefulWidget {
   final bool? obsecure;
   final bool? autoFocus;
   final int? maxLenght;
+  final int? maxLines;
   final bool? haveCounter;
   final AutovalidateMode? autoValidate;
+  final Function()? onTap;
+  final Key? keyForm;
+  final bool? readOnly;
 
   const BaseForm({
     super.key,
@@ -46,8 +51,13 @@ class BaseForm extends StatefulWidget {
     this.autoFocus,
     this.onEditComplete,
     this.suffix,
+    this.prefix,
     this.haveCounter,
     this.autoValidate,
+    this.maxLines = 1,
+    this.onTap,
+    this.keyForm,
+    this.readOnly,
   });
 
   @override
@@ -151,6 +161,7 @@ class _BaseFormState extends State<BaseForm> {
         if (widget.label != null && widget.label!.isNotEmpty)
           const SizedBox(height: 2.0),
         TextFormField(
+          key: widget.keyForm,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: widget.enabled ?? true ? gray900 : gray600,
                 height: 1.4,
@@ -163,9 +174,12 @@ class _BaseFormState extends State<BaseForm> {
               ? widget.textEditingController
               : null,
           maxLength: widget.maxLenght,
+          maxLines: widget.maxLines,
           onChanged: widget.onChanged,
+          onTap: widget.onTap,
           cursorColor: green700,
           textAlignVertical: TextAlignVertical.center,
+          readOnly: widget.readOnly ?? false,
           obscureText: widget.obsecure ?? false,
           keyboardType: widget.textInputType,
           onEditingComplete: widget.onEditComplete,
@@ -182,7 +196,7 @@ class _BaseFormState extends State<BaseForm> {
                           colorFilter: colorFilterGray500,
                         ),
                       )
-                    : null,
+                    : widget.prefix,
             suffixIcon:
                 widget.suffixIcon != null && widget.suffixIcon!.isNotEmpty
                     ? Padding(

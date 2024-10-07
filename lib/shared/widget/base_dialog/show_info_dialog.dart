@@ -65,6 +65,10 @@ Future showInfoDialog(String message, BuildContext context) async {
                         )),
                     child: BasePrimaryButton(
                       onPressed: () {
+                        if (message == "TokenExpiredError: jwt expired") {
+                          doLogout();
+                          return;
+                        }
                         Navigator.pop(context);
                       },
                       text: "OK",

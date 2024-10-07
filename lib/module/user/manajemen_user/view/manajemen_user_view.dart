@@ -32,7 +32,10 @@ class ManajemenUserView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth: MediaQuery.of(context).size.width - 32,
+                        minWidth:
+                            Provider.of<DrawerProvider>(context).isDrawerOpen
+                                ? MediaQuery.of(context).size.width - 32 - 260
+                                : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -222,7 +225,13 @@ class ManajemenUserView extends StatefulWidget {
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
-                                    value: item[column],
+                                    value: column == "id_role"
+                                        ? getNamaRole(
+                                            idRole: trimString(
+                                              item[column].toString(),
+                                            ),
+                                          )
+                                        : trimStringStrip(item[column]),
                                   );
                                 }
                               }

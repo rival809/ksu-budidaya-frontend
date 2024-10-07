@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class DialogDivisi extends StatefulWidget {
   final DataDetailDivisi? data;

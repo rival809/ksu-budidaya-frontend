@@ -128,6 +128,10 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
               ),
             ),
           ),
+        if (widget.helperMessage == null)
+          const SizedBox(
+            height: 2.0,
+          ),
         DropdownSearch<T>(
           items: sortedItems,
           itemAsString: widget.itemAsString,
@@ -157,8 +161,7 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
           ),
           dropdownDecoratorProps: DropDownDecoratorProps(
             baseStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: widget.enabled ?? true ? gray900 : gray600,
-                ),
+                color: widget.enabled ?? true ? gray900 : gray600, height: 1.6),
             dropdownSearchDecoration: InputDecoration(
               hintMaxLines: 1,
               helperMaxLines: 1,

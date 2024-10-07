@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class DivisiView extends StatefulWidget {
@@ -33,7 +32,10 @@ class DivisiView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth: MediaQuery.of(context).size.width - 32,
+                        minWidth:
+                            Provider.of<DrawerProvider>(context).isDrawerOpen
+                                ? MediaQuery.of(context).size.width - 32 - 260
+                                : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,7 +207,7 @@ class DivisiView extends StatefulWidget {
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
-                                    value: item[column],
+                                    value: trimStringStrip(item[column]),
                                   );
                                 }
                               }
@@ -227,15 +229,16 @@ class DivisiView extends StatefulWidget {
                                   event.stateManager.setShowColumnFilter(true);
                                 },
                                 onSorted: (event) {
-                                  // if (event.column.field != "Aksi") {
-                                  //   controller.isAsc = !controller.isAsc;
-                                  //   controller.update();
-                                  //   controller.dataFuture =
-                                  //       controller.cariEditTable(
-                                  //           event.column.field,
-                                  //           controller.isAsc);
-                                  //   controller.update();
-                                  // }
+                                  if (event.column.field != "Aksi") {
+                                    controller.isAsc = !controller.isAsc;
+                                    controller.update();
+                                    controller.dataFuture =
+                                        controller.cariDataDivisi(
+                                      isAsc: controller.isAsc,
+                                      field: event.column.field,
+                                    );
+                                    controller.update();
+                                  }
                                 },
                                 configuration: PlutoGridConfiguration(
                                   columnSize: const PlutoGridColumnSizeConfig(

@@ -108,10 +108,10 @@ String splitString(String? originalString, bool? isFirstString) {
         return secondPart;
       }
     } else {
-      return "-";
+      return "";
     }
   } else {
-    return "-";
+    return "";
   }
 }
 

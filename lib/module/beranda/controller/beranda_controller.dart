@@ -32,6 +32,15 @@ class BerandaController extends State<BerandaView> {
     if (RoleDatabase.dataListRole.dataRoles?.isEmpty ?? true) {
       await GlobalReference().roleReference();
     }
+    if (SupplierDatabase.dataSupplier.dataSupplier?.isEmpty ?? true) {
+      await GlobalReference().supplierReference();
+    }
+    if (DivisiDatabase.dataDivisi.dataDivisi?.isEmpty ?? true) {
+      await GlobalReference().divisiReference();
+    }
+    if (RefCashDatabase.refCashResult.data?.isEmpty ?? true) {
+      await GlobalReference().cashReference();
+    }
   }
 
   @override

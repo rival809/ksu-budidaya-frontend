@@ -7,52 +7,52 @@ class SupplierController extends State<SupplierView> {
 
   String page = "1";
   String size = "10";
+  bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 
   Future<dynamic>? dataFuture;
 
-  DataListRole dataListRole = DataListRole();
-  ListRoleResult result = ListRoleResult();
+  DataSupplier dataSupplier = DataSupplier();
+  SupplierResult result = SupplierResult();
 
   List<String> listRoleView = [
-    "id",
-    "nama_supplier",
+    "id_supplier",
+    "nm_supplier",
+    "nm_pemilik",
+    "nm_pic",
+    "no_wa",
     "alamat",
-    "kontak",
-    "pemilik",
     "hutang_dagang",
   ];
 
-  cariDataUser() async {
+  cariDataSupplier({bool? isAsc, String? field}) async {
     try {
-      result = ListRoleResult();
+      result = SupplierResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
       };
 
       if (trimString(supplierNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"role_name": trimString(supplierNameController.text)});
+        dataCari.addAll(
+          {
+            "nm_supplier": trimString(supplierNameController.text),
+          },
+        );
       }
 
-      // result = await ApiService.listRole(
-      //   data: dataCari,
-      // ).timeout(const Duration(seconds: 30));
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
 
-      result = ListRoleResult(
-        data: DataListRole(
-            // dataRoles: [
-            //   {
-            //     "id": "Supplier001",
-            //     "nama_supplier": "ADMIN",
-            //     "alamat": "A",
-            //     "kontak": "B",
-            //     "pemilik": "ADMIN",
-            //     "hutang_dagang": "100000",
-            //   },
-            // ],
-            ),
-      );
+      result = await ApiService.listSupplier(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
 
       return result;
     } catch (e) {
@@ -65,9 +65,103 @@ class SupplierController extends State<SupplierView> {
     }
   }
 
+  postCreateSupplier(DataMap dataCreate) async {
+    Get.back();
+
+    showCircleDialogLoading();
+    try {
+      SupplierResult result = await ApiService.createSupplier(
+        data: dataCreate,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataSupplier();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postRemoveSupplier(String idSupplier) async {
+    Get.back();
+    showCircleDialogLoading();
+    try {
+      SupplierResult result = await ApiService.removeSupplier(
+        data: {"id_supplier": idSupplier},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataSupplier();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postUpdateSupplier(DataMap dataEdit) async {
+    Get.back();
+
+    showCircleDialogLoading();
+    try {
+      SupplierResult result = await ApiService.updateSupplier(
+        data: dataEdit,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataSupplier();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   @override
   void initState() {
     instance = this;
+    dataFuture = cariDataSupplier();
+
     super.initState();
   }
 

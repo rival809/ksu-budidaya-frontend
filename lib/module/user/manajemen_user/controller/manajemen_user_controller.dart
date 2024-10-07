@@ -58,7 +58,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
   }
 
   postDetailUser({required String? username}) async {
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       DetailUserResult result = await ApiService.detailUser(
         data: {"username": username},
@@ -92,7 +92,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
   postCreateUser(DataMap dataCreate) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       DetailUserResult result = await ApiService.createUser(
         data: dataCreate,
@@ -122,7 +122,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
 
   postRemoveUser(String username) async {
     Get.back();
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       DetailUserResult result = await ApiService.removeUser(
         data: {"username": username},
@@ -153,7 +153,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
   postUpdateUser(DataMap dataEdit) async {
     Get.back();
 
-    showCircleDialogLoading(context);
+    showCircleDialogLoading();
     try {
       DetailUserResult result = await ApiService.updateUser(
         data: dataEdit,

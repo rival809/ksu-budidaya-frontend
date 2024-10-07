@@ -27,9 +27,12 @@ class _RowCheckboxState extends State<RowCheckbox> {
           height: 20.0,
           width: 20.0,
           child: Checkbox(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.0),
+            ),
             value: widget.statusCheckbox,
             onChanged: widget.onChanged,
-            activeColor: green700,
+            activeColor: primaryColor,
           ),
         ),
         const SizedBox(

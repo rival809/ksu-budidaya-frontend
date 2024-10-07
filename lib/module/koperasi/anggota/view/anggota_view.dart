@@ -32,7 +32,10 @@ class AnggotaView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth: MediaQuery.of(context).size.width - 32,
+                        minWidth:
+                            Provider.of<DrawerProvider>(context).isDrawerOpen
+                                ? MediaQuery.of(context).size.width - 32 - 260
+                                : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +54,7 @@ class AnggotaView extends StatefulWidget {
                                     child: BasePrimaryButton(
                                       onPressed: () {
                                         controller.dataFuture =
-                                            controller.cariDataUser();
+                                            controller.cariDataAnggota();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -67,7 +70,7 @@ class AnggotaView extends StatefulWidget {
                               BaseSecondaryButton(
                                 onPressed: () {
                                   controller.dataFuture =
-                                      controller.cariDataUser();
+                                      controller.cariDataAnggota();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -83,7 +86,10 @@ class AnggotaView extends StatefulWidget {
                             onPressed: () {
                               showDialogBase(
                                 width: 700,
-                                content: const DialogAnggota(),
+                                content: DialogAnggota(
+                                  data: DataDetailAnggota(),
+                                  isDetail: false,
+                                ),
                               );
                             },
                             text: "Tambah Anggota",
@@ -107,49 +113,42 @@ class AnggotaView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          ListRoleResult result = snapshot.data;
-                          controller.dataListRole =
-                              result.data ?? DataListRole();
-                          List<dynamic> listData =
-                              controller.dataListRole.dataRoles ?? [];
+                          AnggotaResult result = snapshot.data;
+                          controller.dataListAnggota =
+                              result.data ?? DataAnggota();
+                          List<dynamic> listData = controller.dataListAnggota
+                                  .toJson()["data_anggota"] ??
+                              [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
 
-                            // columns.add(
-                            //   PlutoColumn(
-                            //     width: 30,
-                            //     backgroundColor: primaryColor,
-                            //     title: "No.",
-                            //     field: "no",
-                            //     filterHintText: "Cari ",
-                            //     type: PlutoColumnType.text(),
-                            //     enableEditingMode: false,
-                            //     renderer: (rendererContext) {
-                            //       final rowIndex = rendererContext.rowIdx + 1;
-
-                            //       return Text(
-                            //         rendererContext.cell.value.toString(),
-                            //         style: myTextTheme.bodyMedium,
-                            //       );
-                            //     },
-                            //   ),
-                            // );
-
-                            columns.addAll(List.generate(
-                                controller.listRoleView.length, (index) {
-                              return PlutoColumn(
-                                backgroundColor: primaryColor,
-                                filterHintText:
-                                    "Cari ${controller.listRoleView[index]}",
-                                title: convertTitle(
-                                  controller.listRoleView[index],
-                                ),
-                                field: controller.listRoleView[index],
-                                type: PlutoColumnType.text(),
-                              );
-                            }));
+                            columns.addAll(
+                              List.generate(
+                                controller.listRoleView.length,
+                                (index) {
+                                  return PlutoColumn(
+                                    backgroundColor: primaryColor,
+                                    filterHintText:
+                                        "Cari ${controller.listRoleView[index]}",
+                                    title: convertTitle(
+                                      controller.listRoleView[index],
+                                    ),
+                                    field: controller.listRoleView[index],
+                                    type: (controller.listRoleView[index] ==
+                                                "limit_pinjaman" ||
+                                            controller.listRoleView[index] ==
+                                                "hutang")
+                                        ? PlutoColumnType.currency(
+                                            locale: "id",
+                                            decimalDigits: 0,
+                                          )
+                                        : PlutoColumnType.text(),
+                                  );
+                                },
+                              ),
+                            );
 
                             columns.add(
                               PlutoColumn(
@@ -162,6 +161,8 @@ class AnggotaView extends StatefulWidget {
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
+                                  Map<String, dynamic> dataRow =
+                                      rendererContext.row.toJson();
                                   final rowIndex = rendererContext.rowIdx;
 
                                   return DropdownAksi(
@@ -220,7 +221,11 @@ class AnggotaView extends StatefulWidget {
                                       if (value == 1) {
                                         showDialogBase(
                                           width: 700,
-                                          content: const DialogAnggota(),
+                                          content: DialogAnggota(
+                                            data: result
+                                                .data?.dataAnggota?[rowIndex],
+                                            isDetail: true,
+                                          ),
                                         );
                                       } else if (value == 2) {
                                       } else if (value == 3) {
@@ -229,9 +234,10 @@ class AnggotaView extends StatefulWidget {
                                             textKonfirmasi:
                                                 "Apakah Anda yakin ingin Menghapus Anggota",
                                             onConfirm: () async {
-                                              Navigator.pop(context);
-                                              await showDialogBase(
-                                                content: const DialogBerhasil(),
+                                              controller.postRemoveAnggota(
+                                                trimString(
+                                                  dataRow["id_anggota"],
+                                                ),
                                               );
                                             },
                                           ),
@@ -264,7 +270,7 @@ class AnggotaView extends StatefulWidget {
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
-                                    value: item[column],
+                                    value: trimStringStrip(item[column]),
                                   );
                                 }
                               }
@@ -286,15 +292,16 @@ class AnggotaView extends StatefulWidget {
                                   event.stateManager.setShowColumnFilter(true);
                                 },
                                 onSorted: (event) {
-                                  // if (event.column.field != "Aksi") {
-                                  //   controller.isAsc = !controller.isAsc;
-                                  //   controller.update();
-                                  //   controller.dataFuture =
-                                  //       controller.cariEditTable(
-                                  //           event.column.field,
-                                  //           controller.isAsc);
-                                  //   controller.update();
-                                  // }
+                                  if (event.column.field != "Aksi") {
+                                    controller.isAsc = !controller.isAsc;
+                                    controller.update();
+                                    controller.dataFuture =
+                                        controller.cariDataAnggota(
+                                      isAsc: controller.isAsc,
+                                      field: event.column.field,
+                                    );
+                                    controller.update();
+                                  }
                                 },
                                 configuration: PlutoGridConfiguration(
                                   columnSize: const PlutoGridColumnSizeConfig(
@@ -315,16 +322,51 @@ class AnggotaView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller
-                                            .dataListRole.paging?.totalPage ??
+                                    maxPage: controller.dataListAnggota.paging
+                                            ?.totalPage ??
                                         0,
-                                    onChangePage: (value) {},
-                                    onChangePerPage: (value) {},
-                                    totalRow: controller
-                                            .dataListRole.paging?.totalItem ??
+                                    onChangePage: (value) {
+                                      controller.page = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataAnggota();
+                                      controller.update();
+                                    },
+                                    onChangePerPage: (value) {
+                                      controller.page = "1";
+                                      controller.size = trimString(value);
+                                      controller.update();
+                                      controller.dataFuture =
+                                          controller.cariDataAnggota();
+                                      controller.update();
+                                    },
+                                    totalRow: controller.dataListAnggota.paging
+                                            ?.totalItem ??
                                         0,
-                                    onPressLeft: () {},
-                                    onPressRight: () {},
+                                    onPressLeft: () {
+                                      if (int.parse(controller.page) > 1) {
+                                        controller.page =
+                                            (int.parse(controller.page) - 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataAnggota();
+                                        controller.update();
+                                      }
+                                    },
+                                    onPressRight: () {
+                                      if (int.parse(controller.page) <
+                                          (result.data?.paging?.totalPage ??
+                                              0)) {
+                                        controller.page =
+                                            (int.parse(controller.page) + 1)
+                                                .toString();
+                                        controller.update();
+                                        controller.dataFuture =
+                                            controller.cariDataAnggota();
+                                        controller.update();
+                                      }
+                                    },
                                   );
                                 },
                               ),

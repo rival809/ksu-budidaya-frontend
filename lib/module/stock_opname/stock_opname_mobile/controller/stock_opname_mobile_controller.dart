@@ -1,13 +1,108 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ksu_budidaya/core.dart';
-import '../view/stock_opname_mobile_view.dart';
 
 class StockOpnameMobileController extends State<StockOpnameMobileView> {
   static late StockOpnameMobileController instance;
   late StockOpnameMobileView view;
 
   TextEditingController textBarcodeController = TextEditingController();
+  TextEditingController textNamaProdukController = TextEditingController();
+  TextEditingController textCurrentStockController = TextEditingController();
+  TextEditingController textStockController = TextEditingController();
+  String stockEdit = "";
+  Timer? _debounce;
+
+  final stockOpnameKey = GlobalKey<FormState>();
+
+  DetailProductResult dataResult = DetailProductResult();
+
+  void onBarcodeChanged(String value) {
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
+    }
+    _debounce = Timer(
+      const Duration(seconds: 2),
+      () {
+        postDetailProduct(value);
+      },
+    );
+  }
+
+  postDetailProduct(String idProduct) async {
+    showCircleDialogLoading();
+    try {
+      dataResult = DetailProductResult();
+      textStockController.clear();
+      textNamaProdukController.clear();
+      textCurrentStockController.clear();
+      stockEdit = "";
+
+      DetailProductResult result = await ApiService.detailProduct(
+        data: {"id_product": idProduct},
+      ).timeout(const Duration(seconds: 30));
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        dataResult = result;
+        textNamaProdukController.text = trimString(result.data?.nmProduct);
+        textCurrentStockController.text =
+            trimString(result.data?.jumlah.toString());
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postUpdateProduct(String idProduct, String jumlah) async {
+    showCircleDialogLoading();
+    try {
+      ProductResult result = await ApiService.updateProduct(
+        data: {
+          "id_product": idProduct,
+          "jumlah": jumlah,
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        await showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        postDetailProduct(idProduct);
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  resetData() {
+    textBarcodeController.clear();
+    textNamaProdukController.clear();
+    textCurrentStockController.clear();
+    textStockController.clear();
+    stockEdit = "";
+    update();
+  }
 
   @override
   void initState() {

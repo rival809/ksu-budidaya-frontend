@@ -57,20 +57,23 @@ class ThousandsFormatter extends TextInputFormatter {
 }
 
 String formatMoney(dynamic number) {
-  if (number is num) {
-    final formatter = NumberFormat("#,###", "id-ID");
-    return formatter.format(number);
-  } else if (number is String) {
-    try {
-      final numericValue = double.parse(number);
+  try {
+    if (number is num) {
       final formatter = NumberFormat("#,###", "id-ID");
-      return formatter.format(numericValue);
-    } catch (e) {
-      return "-";
+      return formatter.format(number);
+    } else if (number is String) {
+      try {
+        final numericValue = double.parse(number);
+        final formatter = NumberFormat("#,###", "id-ID");
+        return formatter.format(numericValue);
+      } catch (e) {
+        return "";
+      }
     }
+    return "";
+  } catch (e) {
+    return "";
   }
-
-  return "-";
 }
 
 String removeComma(String value) {

@@ -7,10 +7,13 @@
         "user/manajemen_role",
         "user/manajemen_user",
         "stock_opname/stock_opname_mobile",
+        "cash/cash_in_cash_out",
         "database/supplier",
         "database/divisi",
         "database/produk",
         "koperasi/anggota",
+        "transaksi/pembelian",
+        "transaksi/penjualan",
         "pdf_viewer"
     ],
     "module_directory_name": "module",
