@@ -65,15 +65,19 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                 SizedBox(
                   width: 250,
                   child: BaseForm(
+                    autoFocus: true,
                     textEditingController: controller.cariProdukController,
-                    onChanged: (value) {},
-                    hintText: "Pencarian",
+                    onChanged: (value) {
+                      controller.onProdctSearch(value);
+                      controller.update();
+                    },
+                    hintText: "Cari Produk",
                     suffix: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: BasePrimaryButton(
                         onPressed: () {
-                          controller.dataFuture =
-                              controller.cariDataPenjualan();
+                          controller.postDetailProduct(
+                              controller.cariProdukController.text);
                           controller.update();
                         },
                         text: "Cari",
@@ -124,7 +128,7 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                     children: [
                       const HeaderPenjualan(),
                       ListView.builder(
-                        itemCount: 1,
+                        itemCount: controller.dataPenjualan.details?.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
@@ -162,14 +166,18 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                           }
                         },
                       ),
-                      const FooterPenjualan()
+                      FooterPenjualan(
+                        controller: controller,
+                      )
                     ],
                   ),
                 ),
                 const SizedBox(
                   width: 16.0,
                 ),
-                const ContainerNota()
+                ContainerNota(
+                  controller: controller,
+                ),
               ],
             )
           ],

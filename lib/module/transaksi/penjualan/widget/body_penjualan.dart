@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class BodyPenjualan extends StatefulWidget {
@@ -16,6 +17,17 @@ class BodyPenjualan extends StatefulWidget {
 }
 
 class _BodyPenjualanState extends State<BodyPenjualan> {
+  TextEditingController diskonController = TextEditingController();
+  TextEditingController qntController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    diskonController.text = trimString(
+        widget.controller.dataPenjualan.details?[widget.index].diskon);
+    qntController.text = trimString(
+        widget.controller.dataPenjualan.details?[widget.index].jumlah);
+  }
+
   @override
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
@@ -49,6 +61,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                   ),
                   child: SvgPicture.asset(
                     iconDelete,
+                    colorFilter: colorFilterRed800,
                   ),
                 ),
               ),
@@ -143,13 +156,29 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                           onTap: () {
                             if (int.parse(controller.dataPenjualan
                                         .details?[widget.index].jumlah ??
-                                    "1") >=
+                                    "1") >
                                 1) {
                               controller.dataPenjualan.details?[widget.index]
                                   .jumlah = (int.parse(controller.dataPenjualan
                                               .details?[widget.index].jumlah ??
                                           "0") -
                                       1)
+                                  .toString();
+                              controller.dataPenjualan.details?[widget.index]
+                                  .total = ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                                          double.parse(controller
+                                                  .dataPenjualan
+                                                  .details?[widget.index]
+                                                  .jumlah ??
+                                              "0")) -
+                                      (double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                                              double.parse(controller
+                                                      .dataPenjualan
+                                                      .details?[widget.index]
+                                                      .jumlah ??
+                                                  "0")) *
+                                          (double.parse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
+                                              100))
                                   .toString();
                               controller.update();
                             }
@@ -173,11 +202,18 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
               flex: 4,
               child: Container(
                 padding: const EdgeInsets.all(8),
-                child: Text(
-                  trimString(
-                    controller.dataPenjualan.details?[widget.index].diskon,
-                  ),
-                  style: myTextTheme.bodyMedium,
+                child: BaseForm(
+                  textEditingController: diskonController,
+                  onChanged: (value) {
+                    widget.controller.dataPenjualan.details?[widget.index]
+                        .diskon = trimString(value);
+                    controller.update();
+                  },
+                  maxLenght: 3,
+                  textInputFormater: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                    ThousandsFormatter()
+                  ],
                 ),
               ),
             ),
@@ -199,7 +235,20 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                 ),
                 child: Text(
                   trimString(
-                    controller.dataPenjualan.details?[widget.index].total,
+                    ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                                double.parse(controller.dataPenjualan
+                                        .details?[widget.index].jumlah ??
+                                    "0")) -
+                            (double.parse(controller.dataPenjualan
+                                            .details?[widget.index].harga ??
+                                        "0") *
+                                    double.parse(controller.dataPenjualan
+                                            .details?[widget.index].jumlah ??
+                                        "0")) *
+                                (double.parse(
+                                        controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
+                                    100))
+                        .toString(),
                   ),
                   style: myTextTheme.bodyMedium,
                 ),

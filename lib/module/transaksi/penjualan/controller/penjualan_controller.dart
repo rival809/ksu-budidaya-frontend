@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -191,6 +193,72 @@ class PenjualanController extends State<PenjualanView> {
 
   TextEditingController cariProdukController = TextEditingController();
   CreatePenjualanModel dataPenjualan = CreatePenjualanModel();
+
+  double bayar = 0;
+  double kembali = 0;
+
+  sumTotal() {
+    double total = 0;
+    for (int i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      total += (double.parse(dataPenjualan.details?[i].harga ?? "0") *
+              double.parse(dataPenjualan.details?[i].jumlah ?? "0")) -
+          (double.parse(dataPenjualan.details?[i].harga ?? "0") *
+                  double.parse(dataPenjualan.details?[i].jumlah ?? "0")) *
+              (double.parse(dataPenjualan.details?[i].diskon ?? "0") / 100);
+    }
+
+    dataPenjualan.totalNilaiJual = total.toString();
+  }
+
+  Timer? _debounce;
+  void onProdctSearch(String value) {
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
+    }
+    _debounce = Timer(
+      const Duration(seconds: 1),
+      () {
+        postDetailProduct(value);
+      },
+    );
+  }
+
+  DetailProductResult dataResult = DetailProductResult();
+
+  postDetailProduct(String idProduct) async {
+    showCircleDialogLoading();
+    try {
+      dataResult = DetailProductResult();
+
+      DetailProductResult result = await ApiService.detailProduct(
+        data: {"id_product": idProduct},
+      ).timeout(const Duration(seconds: 30));
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        dataPenjualan.details?.add(
+          DetailsCreatePenjualan(
+            idProduct: trimString(result.data?.idProduct),
+            harga: trimString(result.data?.hargaJual),
+            jumlah: "1",
+            nmProduk: trimString(result.data?.nmProduct),
+            nmDivisi:
+                getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
+            diskon: "0",
+            total: (double.parse(result.data?.hargaJual ?? "0") *
+                    double.parse("1"))
+                .toString(),
+          ),
+        );
+
+        cariProdukController.clear();
+
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+    }
+  }
 
   List<TextEditingController> textControllerDetail = [
     TextEditingController(),
