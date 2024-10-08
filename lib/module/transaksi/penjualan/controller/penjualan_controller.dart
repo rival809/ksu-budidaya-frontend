@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class PenjualanController extends State<PenjualanView> {
@@ -16,6 +17,8 @@ class PenjualanController extends State<PenjualanView> {
 
   bool isList = true;
   bool isDetail = false;
+
+  FocusNode focusNodeInputPenjualan = FocusNode();
 
   DataPenjualan dataListPenjualan = DataPenjualan();
   PenjualanResult result = PenjualanResult();
@@ -218,7 +221,9 @@ class PenjualanController extends State<PenjualanView> {
     _debounce = Timer(
       const Duration(seconds: 1),
       () {
-        postDetailProduct(value);
+        if (trimString(value).toString().isNotEmpty) {
+          postDetailProduct(value);
+        }
       },
     );
   }

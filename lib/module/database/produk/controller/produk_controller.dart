@@ -56,11 +56,13 @@ class ProdukController extends State<ProdukView> {
       case "1":
         step1 = true;
         step2 = false;
+        page = "1";
         update();
         break;
       case "2":
         step1 = false;
         step2 = true;
+        page = "1";
         update();
         break;
 
@@ -77,6 +79,7 @@ class ProdukController extends State<ProdukView> {
       result = ProductResult();
       DataMap dataCari = {
         "page": page,
+        "status_product": step1,
         "size": size,
       };
 

@@ -29,6 +29,7 @@ class BaseForm extends StatefulWidget {
   final Function()? onTap;
   final Key? keyForm;
   final bool? readOnly;
+  final FocusNode? focusNode;
 
   const BaseForm({
     super.key,
@@ -58,6 +59,7 @@ class BaseForm extends StatefulWidget {
     this.onTap,
     this.keyForm,
     this.readOnly,
+    this.focusNode,
   });
 
   @override
@@ -161,6 +163,7 @@ class _BaseFormState extends State<BaseForm> {
         if (widget.label != null && widget.label!.isNotEmpty)
           const SizedBox(height: 2.0),
         TextFormField(
+          focusNode: widget.focusNode,
           key: widget.keyForm,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: widget.enabled ?? true ? gray900 : gray600,
