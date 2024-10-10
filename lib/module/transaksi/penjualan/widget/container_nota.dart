@@ -41,6 +41,66 @@ class _ContainerNotaState extends State<ContainerNota> {
               fontWeight: FontWeight.w700,
             ),
           ),
+          if (controller.dataPenjualan.idAnggota?.isNotEmpty ?? false)
+            const SizedBox(
+              height: 8.0,
+            ),
+          if (controller.dataPenjualan.idAnggota?.isNotEmpty ?? false)
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Nama Anggota",
+                    style: myTextTheme.bodySmall,
+                  ),
+                ),
+                Text(
+                  ":",
+                  style: myTextTheme.bodyMedium,
+                ),
+                Expanded(
+                  child: Text(
+                    trimString(
+                      getNamaAnggota(
+                          idAnggota: controller.dataPenjualan.idAnggota),
+                    ),
+                    style: myTextTheme.bodySmall,
+                    textAlign: TextAlign.end,
+                  ),
+                )
+              ],
+            ),
+          if (controller.dataPenjualan.jenisPembayaran?.isNotEmpty ?? false)
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Metode Bayar",
+                    style: myTextTheme.bodySmall,
+                  ),
+                ),
+                Text(
+                  ":",
+                  style: myTextTheme.bodyMedium,
+                ),
+                Expanded(
+                  child: Text(
+                    trimString(controller.dataPenjualan.jenisPembayaran)
+                        .toUpperCase(),
+                    style: myTextTheme.bodySmall,
+                    textAlign: TextAlign.end,
+                  ),
+                )
+              ],
+            ),
+          if ((controller.dataPenjualan.idAnggota?.isNotEmpty ?? false) ||
+              (controller.dataPenjualan.jenisPembayaran?.isNotEmpty ?? false))
+            const SizedBox(
+              height: 8.0,
+            ),
+          if ((controller.dataPenjualan.idAnggota?.isNotEmpty ?? false) ||
+              (controller.dataPenjualan.jenisPembayaran?.isNotEmpty ?? false))
+            const LineDash(),
           const SizedBox(
             height: 8.0,
           ),
@@ -48,7 +108,7 @@ class _ContainerNotaState extends State<ContainerNota> {
             children: [
               Expanded(
                 child: Text(
-                  "KASIR 1",
+                  trimString(UserDatabase.userDatabase.data?.userData?.name),
                   style: myTextTheme.bodySmall,
                 ),
               ),
@@ -112,9 +172,11 @@ class _ContainerNotaState extends State<ContainerNota> {
           ),
           Row(
             children: [
-              Text(
-                "Total",
-                style: myTextTheme.bodyMedium,
+              Expanded(
+                child: Text(
+                  "Total",
+                  style: myTextTheme.bodyMedium,
+                ),
               ),
               Text(
                 ":",
@@ -136,9 +198,11 @@ class _ContainerNotaState extends State<ContainerNota> {
           ),
           Row(
             children: [
-              Text(
-                "Bayar",
-                style: myTextTheme.bodyMedium,
+              Expanded(
+                child: Text(
+                  "Bayar",
+                  style: myTextTheme.bodyMedium,
+                ),
               ),
               Text(
                 ":",
@@ -148,7 +212,8 @@ class _ContainerNotaState extends State<ContainerNota> {
               ),
               Expanded(
                 child: Text(
-                  formatMoney(trimString(controller.bayar.toString())),
+                  formatMoney(trimString(
+                      removeComma(controller.textControllerDialog[2].text))),
                   style: myTextTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -159,9 +224,11 @@ class _ContainerNotaState extends State<ContainerNota> {
           ),
           Row(
             children: [
-              Text(
-                "Kembali",
-                style: myTextTheme.bodyMedium,
+              Expanded(
+                child: Text(
+                  "Kembali",
+                  style: myTextTheme.bodyMedium,
+                ),
               ),
               Text(
                 ":",
@@ -171,7 +238,8 @@ class _ContainerNotaState extends State<ContainerNota> {
               ),
               Expanded(
                 child: Text(
-                  formatMoney(trimString(controller.kembali.toString())),
+                  formatMoney(trimString(
+                      removeComma(controller.textControllerDialog[3].text))),
                   style: myTextTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

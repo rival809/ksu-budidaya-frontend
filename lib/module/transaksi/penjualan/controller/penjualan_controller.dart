@@ -138,37 +138,53 @@ class PenjualanController extends State<PenjualanView> {
   //   }
   // }
 
-  postCreatePembelian() async {
+  postCreatePenjualan() async {
     Get.back();
 
     showCircleDialogLoading();
     try {
+      dataPenjualan.username =
+          trimString(UserDatabase.userDatabase.data?.userData?.username);
+      dataPenjualan.jenisPembayaran = trimString(metodeBayar);
+      dataPenjualan.tgPenjualan =
+          formatDateTimePayload(DateTime.now().toString());
+      update();
       var payload = dataPenjualan.toJson();
 
-      for (var i = 0; i < payload['details'].length; i++) {
-        payload['details'][i].removeWhere(
-          (key, value) => key == "id_detail_pembelian",
-        );
-        payload['details'][i].removeWhere(
-          (key, value) => key == "created_at",
-        );
-        payload['details'][i].removeWhere(
-          (key, value) => key == "updated_at",
-        );
-        payload['details'][i].removeWhere(
-          (key, value) => key == "id_pembelian",
-        );
-      }
-
-      if (trimString(payload['keterangan']).toString().isEmpty) {
+      // for (var i = 0; i < payload['details'].length; i++) {
+      //   if (payload['details'][i]["keterangan"] == null) {
+      //     payload['details'][i].removeWhere(
+      //       (key, value) => key == "keterangan",
+      //     );
+      //   }
+      //   if (payload['details'][i]["id_anggota"] == null) {
+      //     payload['details'][i].removeWhere(
+      //       (key, value) => key == "id_anggota",
+      //     );
+      //   }
+      //   if (payload['details'][i]["nm_anggota"] == null) {
+      //     payload['details'][i].removeWhere(
+      //       (key, value) => key == "nm_anggota",
+      //     );
+      //   }
+      // }
+      if (payload['keterangan'] == null) {
         payload.removeWhere(
           (key, value) => key == "keterangan",
         );
       }
+      if (payload['id_anggota'] == null) {
+        payload.removeWhere(
+          (key, value) => key == "id_anggota",
+        );
+      }
+      if (payload['nm_anggota'] == null) {
+        payload.removeWhere(
+          (key, value) => key == "nm_anggota",
+        );
+      }
 
-      payload.update("tg_pembelian", (value) => formatDate(value.toString()));
-
-      PembelianResult result = await ApiService.createPembelian(
+      PenjualanResult result = await ApiService.createPenjualan(
         data: payload,
       ).timeout(const Duration(seconds: 30));
 
@@ -179,7 +195,7 @@ class PenjualanController extends State<PenjualanView> {
           content: const DialogBerhasil(),
         );
 
-        router.push("/transaksi/pembelian");
+        router.push("/transaksi/penjualan");
         update();
       }
     } catch (e) {
@@ -197,8 +213,27 @@ class PenjualanController extends State<PenjualanView> {
   TextEditingController cariProdukController = TextEditingController();
   CreatePenjualanModel dataPenjualan = CreatePenjualanModel();
 
-  double bayar = 0;
-  double kembali = 0;
+  String? totalBayar = "0";
+
+  List<TextEditingController> textControllerDialog = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
+
+  hitBayar() {
+    var totalKembali = int.parse(removeComma(totalBayar ?? "0")) -
+        int.parse(removeComma(dataPenjualan.totalNilaiJual ?? "0"));
+    if (totalKembali < 0) {
+      totalBayar = "0";
+      textControllerDialog[3].text = totalBayar ?? "0";
+    } else {
+      totalBayar = formatMoney(removeComma(totalKembali.toString()));
+      textControllerDialog[3].text = totalBayar ?? "0";
+    }
+  }
 
   sumTotal() {
     double totalNilaiJual = 0;
@@ -354,6 +389,14 @@ class PenjualanController extends State<PenjualanView> {
   bool statusKredit = false;
   String metodeBayar = "tunai";
 
+  onInitDialog() {
+    statusTunai = true;
+    statusQris = false;
+    statusKredit = false;
+    metodeBayar = "tunai";
+    dataPenjualan.jenisPembayaran = "tunai";
+  }
+
   onSwitchStep(String valueStep) {
     switch (valueStep) {
       case "1":
@@ -361,6 +404,7 @@ class PenjualanController extends State<PenjualanView> {
         statusQris = false;
         statusKredit = false;
         metodeBayar = "tunai";
+        dataPenjualan.jenisPembayaran = "tunai";
 
         break;
       case "2":
@@ -368,6 +412,7 @@ class PenjualanController extends State<PenjualanView> {
         statusQris = true;
         statusKredit = false;
         metodeBayar = "qris";
+        dataPenjualan.jenisPembayaran = "qris";
 
         break;
       case "3":
@@ -375,6 +420,7 @@ class PenjualanController extends State<PenjualanView> {
         statusQris = false;
         statusKredit = true;
         metodeBayar = "kredit";
+        dataPenjualan.jenisPembayaran = "kredit";
 
         break;
       default:
@@ -382,6 +428,7 @@ class PenjualanController extends State<PenjualanView> {
         statusQris = false;
         statusKredit = false;
         metodeBayar = "tunai";
+        dataPenjualan.jenisPembayaran = "tunai";
     }
     update();
   }
@@ -392,6 +439,10 @@ class PenjualanController extends State<PenjualanView> {
     GlobalReference().supplierReference();
     GlobalReference().anggotaReference();
     dataFuture = cariDataPenjualan();
+    textControllerDialog[2].text = "0";
+    totalBayar = "0";
+    textControllerDialog[3].text = "0";
+
     super.initState();
   }
 

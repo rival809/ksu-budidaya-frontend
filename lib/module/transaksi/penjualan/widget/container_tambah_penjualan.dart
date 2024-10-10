@@ -105,6 +105,10 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                           (controller.dataPenjualan.details?.isEmpty ?? true)
                               ? null
                               : () {
+                                  controller.onInitDialog();
+                                  controller.update();
+                                  update();
+
                                   showDialogBase(
                                     width: 700,
                                     content: DialogProsesPembayaran(

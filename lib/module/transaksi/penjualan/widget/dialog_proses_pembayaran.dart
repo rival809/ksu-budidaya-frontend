@@ -15,37 +15,15 @@ class DialogProsesPembayaran extends StatefulWidget {
 }
 
 class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
-  List<TextEditingController> textController = [
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-  ];
-
   FocusNode bayarFocus = FocusNode();
 
-  String? totalBayar = "0";
   final inputPenjualanKey = GlobalKey<FormState>();
-
-  hitBayar() {
-    var totalKembali = int.parse(removeComma(totalBayar ?? "0")) -
-        int.parse(
-            removeComma(widget.controller.dataPenjualan.totalNilaiJual ?? "0"));
-    if (totalKembali < 0) {
-      totalBayar = "0";
-      textController[3].text = totalBayar ?? "0";
-    } else {
-      totalBayar = formatMoney(removeComma(totalKembali.toString()));
-      textController[3].text = totalBayar ?? "0";
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     bayarFocus.requestFocus();
-    textController[1].text =
+    widget.controller.textControllerDialog[1].text =
         formatMoney(trimString(widget.controller.dataPenjualan.totalNilaiJual));
   }
 
@@ -53,7 +31,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
 
-    hitBayar();
+    controller.hitBayar();
     return Container(
       padding: const EdgeInsets.all(16),
       width: MediaQuery.of(context).size.width,
@@ -88,8 +66,8 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
               onChanged: (value) {
                 controller.dataPenjualan.idAnggota =
                     splitString(trimString(value), true);
-                // controller.dataPenjualan.nmAnggota =
-                //     splitString(trimString(value), false);
+                controller.dataPenjualan.nmAnggota =
+                    splitString(trimString(value), false);
                 bayarFocus.requestFocus();
                 controller.update();
                 update();
@@ -156,7 +134,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 ThousandsFormatter(),
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
               ],
-              textEditingController: textController[1],
+              textEditingController: controller.textControllerDialog[1],
               readOnly: true,
               enabled: true,
               validator: Validatorless.required("Data Wajib Diisi"),
@@ -176,10 +154,12 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
               ],
               onChanged: (value) {
-                totalBayar = removeComma(trimString(trimString(value)));
+                controller.totalBayar =
+                    removeComma(trimString(trimString(value)));
+                controller.update();
                 update();
               },
-              textEditingController: textController[2],
+              textEditingController: controller.textControllerDialog[2],
               enabled: true,
               validator: Validatorless.required("Data Wajib Diisi"),
               autoValidate: AutovalidateMode.onUserInteraction,
@@ -195,7 +175,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 ThousandsFormatter(),
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
               ],
-              textEditingController: textController[3],
+              textEditingController: controller.textControllerDialog[3],
               enabled: false,
               validator: Validatorless.required("Data Wajib Diisi"),
               autoValidate: AutovalidateMode.onUserInteraction,
@@ -209,7 +189,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
               textInputFormater: [
                 UpperCaseTextFormatter(),
               ],
-              textEditingController: textController[4],
+              textEditingController: controller.textControllerDialog[4],
               onChanged: (value) {
                 controller.dataPenjualan.keterangan = trimString(value);
                 controller.update();
@@ -225,6 +205,9 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                   child: BaseSecondaryButton(
                     text: "Batal",
                     onPressed: () {
+                      controller.dataPenjualan.jenisPembayaran = null;
+                      controller.update();
+
                       Get.back();
                     },
                   ),
@@ -237,17 +220,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                     text: "Simpan",
                     onPressed: () {
                       if (inputPenjualanKey.currentState!.validate()) {
-                        controller.dataPenjualan.username = trimString(
-                            UserDatabase.userDatabase.data?.userData?.username);
-                        controller.dataPenjualan.jenisPembayaran =
-                            trimString(controller.metodeBayar);
-                        controller.dataPenjualan.tgPenjualan =
-                            formatDateTimePayload(DateTime.now().toString());
-
-                        showInfoDialog(
-                            controller.dataPenjualan.toJson().toString(),
-                            context);
-                        print(controller.dataPenjualan.toJson());
+                        controller.postCreatePenjualan();
                       }
                     },
                   ),

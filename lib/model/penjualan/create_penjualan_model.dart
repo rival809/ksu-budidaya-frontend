@@ -120,7 +120,6 @@ class DetailsCreatePenjualan {
     data['nm_divisi'] = nmDivisi;
     data['nm_produk'] = nmProduk;
     data['harga'] = harga;
-    data['harga_beli'] = hargaBeli;
     data['jumlah'] = jumlah;
     data['diskon'] = diskon;
     data['total'] = total;
