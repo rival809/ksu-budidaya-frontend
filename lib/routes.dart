@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -27,9 +28,15 @@ final GoRouter router = GoRouter(
             child: LoginView(),
           );
         } else {
-          return const SelectionArea(
-            child: BerandaView(),
-          );
+          if (kIsWeb) {
+            return const SelectionArea(
+              child: BerandaView(),
+            );
+          } else {
+            return const SelectionArea(
+              child: StockOpnameMobileView(),
+            );
+          }
         }
       },
       routes: <RouteBase>[
@@ -50,9 +57,15 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: 'beranda',
           builder: (BuildContext context, GoRouterState state) {
-            return const SelectionArea(
-              child: BerandaView(),
-            );
+            if (kIsWeb) {
+              return const SelectionArea(
+                child: BerandaView(),
+              );
+            } else {
+              return const SelectionArea(
+                child: StockOpnameMobileView(),
+              );
+            }
           },
         ),
         GoRoute(
