@@ -24,19 +24,19 @@ class LoginController extends State<LoginView> {
       await AppSession.save(result.data?.userData?.token ?? "");
       await UserDatabase.save(result);
 
-      ApiService.options.headers?['Authorization'] = AppSession.token;
+      ApiService.options.headers?['Authorization'] =
+          "Bearer ${AppSession.token}";
 
       await Future.delayed(const Duration(seconds: 1));
-      router.pop();
-
+      Get.back();
       if (kIsWeb) {
         html.window.location.reload();
       } else {
-        router.go("/");
+        Get.to(const BerandaView());
         update();
       }
     } catch (e) {
-      router.pop();
+      Get.back();
 
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog(

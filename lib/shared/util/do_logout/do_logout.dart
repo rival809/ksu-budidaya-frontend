@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -15,5 +16,9 @@ doLogout() async {
   //MAKE ERROR IF ERASER DEVICE DATABASE
   // DeviceDatabase.save("", "");
   AppSession.save("");
-  html.window.location.replace("/");
+  if (kIsWeb) {
+    html.window.location.replace("/");
+  } else {
+    Get.to(const LoginView());
+  }
 }

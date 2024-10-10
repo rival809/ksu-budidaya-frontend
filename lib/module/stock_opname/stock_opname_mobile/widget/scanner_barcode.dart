@@ -14,7 +14,7 @@ class _BarcodeScannerDialogState extends State<BarcodeScannerDialog>
     with WidgetsBindingObserver {
   final MobileScannerController controller = MobileScannerController(
     autoStart: false,
-    torchEnabled: true,
+    torchEnabled: false,
     facing: CameraFacing.back,
     cameraResolution: const Size(3840, 2160),
     detectionSpeed: DetectionSpeed.normal,

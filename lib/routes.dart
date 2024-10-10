@@ -48,6 +48,14 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
+          path: 'beranda',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: BerandaView(),
+            );
+          },
+        ),
+        GoRoute(
           path: 'ubah-kata-sandi',
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(

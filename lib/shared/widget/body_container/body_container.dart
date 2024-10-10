@@ -34,103 +34,105 @@ class _BodyContainerState extends State<BodyContainer> {
     return Scaffold(
       floatingActionButton: widget.floatingActionButton,
       floatingActionButtonLocation: widget.floatingActionLocation,
-      body: SliderDrawer(
-        animationDuration: 200,
-        key: sliderDrawerKey,
-        isDraggable: false,
-        appBar: SliderAppBar(
-          appBarPadding: EdgeInsets.zero,
-          appBarColor: neutralWhite,
-          drawerIcon: InkWell(
-            onTap: () {
-              sliderDrawerKey.currentState!.isDrawerOpen
-                  ? drawerProvider.toggleDrawer(false)
-                  : drawerProvider.toggleDrawer(true);
+      body: SafeArea(
+        child: SliderDrawer(
+          animationDuration: 0,
+          key: sliderDrawerKey,
+          isDraggable: false,
+          appBar: SliderAppBar(
+            appBarPadding: EdgeInsets.zero,
+            appBarColor: neutralWhite,
+            drawerIcon: InkWell(
+              onTap: () {
+                sliderDrawerKey.currentState!.isDrawerOpen
+                    ? drawerProvider.toggleDrawer(false)
+                    : drawerProvider.toggleDrawer(true);
 
-              sliderDrawerKey.currentState!.openOrClose();
-            },
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 24.0,
-                ),
-                SvgPicture.asset(
-                  drawerProvider.isDrawerOpen ? iconMenuOpen : iconMenu,
-                ),
-                const SizedBox(
-                  width: 8.0,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Menu",
-                    style: myTextTheme.titleMedium,
+                sliderDrawerKey.currentState!.openOrClose();
+              },
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 24.0,
                   ),
-                ),
-              ],
-            ),
-          ),
-          title: const Text(""),
-          trailing: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      trimString(
-                          UserDatabase.userDatabase.data?.userData?.name),
-                      style: myTextTheme.titleSmall,
-                    ),
-                    Text(
-                      trimString(
-                          UserDatabase.userDatabase.data?.roleData?.roleName),
-                      style: bodyXSmall,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 8.0,
-                ),
-                SvgPicture.asset(
-                  iconChevronDown,
-                ),
-                const SizedBox(
-                  width: 24.0,
-                ),
-                drawerProvider.isDrawerOpen
-                    ? Container(
-                        width: 260,
-                      )
-                    : Container(),
-              ],
-            ),
-          ),
-        ),
-        slider: const SliderView(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: blueGray50,
+                  SvgPicture.asset(
+                    drawerProvider.isDrawerOpen ? iconMenuOpen : iconMenu,
+                  ),
+                  const SizedBox(
+                    width: 8.0,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Menu",
+                      style: myTextTheme.titleMedium,
                     ),
                   ),
-                ),
-                height: MediaQuery.of(context).size.height -
-                    AppBar().preferredSize.height,
-                child: widget.contentBody,
+                ],
               ),
             ),
-            drawerProvider.isDrawerOpen
-                ? Container(
-                    width: 260,
-                  )
-                : Container(),
-          ],
+            title: const Text(""),
+            trailing: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        trimString(
+                            UserDatabase.userDatabase.data?.userData?.name),
+                        style: myTextTheme.titleSmall,
+                      ),
+                      Text(
+                        trimString(
+                            UserDatabase.userDatabase.data?.roleData?.roleName),
+                        style: bodyXSmall,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 8.0,
+                  ),
+                  SvgPicture.asset(
+                    iconChevronDown,
+                  ),
+                  const SizedBox(
+                    width: 24.0,
+                  ),
+                  drawerProvider.isDrawerOpen
+                      ? Container(
+                          width: 260,
+                        )
+                      : Container(),
+                ],
+              ),
+            ),
+          ),
+          slider: const SliderView(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: blueGray50,
+                      ),
+                    ),
+                  ),
+                  height: MediaQuery.of(context).size.height -
+                      AppBar().preferredSize.height,
+                  child: widget.contentBody,
+                ),
+              ),
+              drawerProvider.isDrawerOpen
+                  ? Container(
+                      width: 260,
+                    )
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );
