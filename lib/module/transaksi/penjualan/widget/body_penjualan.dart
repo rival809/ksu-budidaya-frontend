@@ -43,6 +43,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
   @override
   void initState() {
     super.initState();
+    hitDiskon();
     diskonController.text = trimString(persenDiskon);
 
     qntController.text = trimString(
@@ -63,35 +64,40 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            Expanded(
-              flex: 2,
-              child: InkWell(
-                onTap: () {
-                  controller.dataPenjualan.details?.removeAt(widget.index);
-                  controller.focusNodeInputPenjualan.requestFocus();
-                  controller.update();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      left: BorderSide(
-                        width: 1.0,
-                        color: blueGray50,
+            if (!controller.isDetail)
+              Expanded(
+                flex: 2,
+                child: InkWell(
+                  onTap: controller.isDetail
+                      ? null
+                      : () {
+                          controller.dataPenjualan.details
+                              ?.removeAt(widget.index);
+                          controller.focusNodeInputPenjualan.requestFocus();
+                          controller.update();
+                        },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          width: 1.0,
+                          color: blueGray50,
+                        ),
                       ),
                     ),
-                  ),
-                  child: SvgPicture.asset(
-                    iconDelete,
-                    colorFilter: colorFilterRed800,
+                    child: SvgPicture.asset(
+                      iconDelete,
+                      colorFilter: colorFilterRed800,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              width: 1,
-              color: blueGray50,
-            ),
+            if (!controller.isDetail)
+              Container(
+                width: 1,
+                color: blueGray50,
+              ),
             Expanded(
               flex: 6,
               child: Container(
@@ -162,54 +168,70 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                     Column(
                       children: [
                         InkWell(
-                          onTap: () {
-                            controller.dataPenjualan.details?[widget.index]
-                                .jumlah = (int.parse(controller.dataPenjualan
-                                            .details?[widget.index].jumlah ??
-                                        "0") +
-                                    1)
-                                .toString();
-                            controller.focusNodeInputPenjualan.requestFocus();
+                          onTap: controller.isDetail
+                              ? null
+                              : () {
+                                  controller
+                                      .dataPenjualan
+                                      .details?[widget.index]
+                                      .jumlah = (int.parse(controller
+                                                  .dataPenjualan
+                                                  .details?[widget.index]
+                                                  .jumlah ??
+                                              "0") +
+                                          1)
+                                      .toString();
+                                  controller.focusNodeInputPenjualan
+                                      .requestFocus();
 
-                            controller.update();
-                          },
+                                  controller.update();
+                                },
                           child: SvgPicture.asset(
                             iconArrowDropUp,
                             height: 16,
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            if (int.parse(controller.dataPenjualan
-                                        .details?[widget.index].jumlah ??
-                                    "1") >
-                                1) {
-                              controller.dataPenjualan.details?[widget.index]
-                                  .jumlah = (int.parse(controller.dataPenjualan
+                          onTap: controller.isDetail
+                              ? null
+                              : () {
+                                  if (int.parse(controller.dataPenjualan
                                               .details?[widget.index].jumlah ??
-                                          "0") -
-                                      1)
-                                  .toString();
-                              controller.dataPenjualan.details?[widget.index]
-                                  .total = ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
-                                          double.parse(controller
-                                                  .dataPenjualan
-                                                  .details?[widget.index]
-                                                  .jumlah ??
-                                              "0")) -
-                                      (double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
-                                              double.parse(controller
-                                                      .dataPenjualan
-                                                      .details?[widget.index]
-                                                      .jumlah ??
-                                                  "0")) *
-                                          (double.parse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
-                                              100))
-                                  .toString();
-                              controller.focusNodeInputPenjualan.requestFocus();
-                              controller.update();
-                            }
-                          },
+                                          "1") >
+                                      1) {
+                                    controller
+                                        .dataPenjualan
+                                        .details?[widget.index]
+                                        .jumlah = (int.parse(controller
+                                                    .dataPenjualan
+                                                    .details?[widget.index]
+                                                    .jumlah ??
+                                                "0") -
+                                            1)
+                                        .toString();
+                                    controller
+                                        .dataPenjualan
+                                        .details?[widget.index]
+                                        .total = ((double.parse(controller
+                                                        .dataPenjualan
+                                                        .details?[widget.index]
+                                                        .harga ??
+                                                    "0") *
+                                                double.parse(controller
+                                                        .dataPenjualan
+                                                        .details?[widget.index]
+                                                        .jumlah ??
+                                                    "0")) -
+                                            (double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                                                    double.parse(
+                                                        controller.dataPenjualan.details?[widget.index].jumlah ?? "0")) *
+                                                (double.parse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") / 100))
+                                        .toString();
+                                    controller.focusNodeInputPenjualan
+                                        .requestFocus();
+                                    controller.update();
+                                  }
+                                },
                           child: SvgPicture.asset(
                             iconArrowDropDown,
                             height: 16,
@@ -235,6 +257,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                     controller.focusNodeInputPenjualan.requestFocus();
                     controller.update();
                   },
+                  readOnly: controller.isDetail ? true : false,
                   onChanged: (value) {
                     String trimmedValue = trimString(value);
 

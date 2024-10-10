@@ -23,6 +23,7 @@ export 'package:ksu_budidaya/model/pembelian/create_pembelian_model.dart';
 export 'package:ksu_budidaya/model/pembelian/detail_pembelian_model.dart';
 export 'package:ksu_budidaya/model/pembelian/pembelian_model.dart';
 export 'package:ksu_budidaya/model/penjualan/create_penjualan_model.dart';
+export 'package:ksu_budidaya/model/penjualan/detail_penjualan_model.dart';
 export 'package:ksu_budidaya/model/penjualan/penjualan_model.dart';
 export 'package:ksu_budidaya/model/product/detail_product_model.dart';
 export 'package:ksu_budidaya/model/product/product_model.dart';

@@ -37,6 +37,7 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                 InkWell(
                   onTap: () {
                     controller.isList = true;
+                    controller.isDetail = false;
                     controller.dataPenjualan = CreatePenjualanModel();
                     controller.update();
                     update();
@@ -55,49 +56,49 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 16.0,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: 250,
-                  child: BaseForm(
-                    focusNode: controller.focusNodeInputPenjualan,
-                    autoFocus: true,
-                    textEditingController: controller.cariProdukController,
-                    onChanged: (value) {
-                      controller.onProdctSearch(value);
-                      controller.update();
-                    },
-                    hintText: "Cari Produk",
-                    suffix: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: BasePrimaryButton(
-                        onPressed: () {
-                          controller.postDetailProduct(
-                              controller.cariProdukController.text);
-                          controller.update();
-                        },
-                        text: "Cari",
-                        suffixIcon: iconSearch,
-                        isDense: true,
+            if (!controller.isDetail)
+              const SizedBox(
+                height: 16.0,
+              ),
+            if (!controller.isDetail)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 250,
+                    child: BaseForm(
+                      focusNode: controller.focusNodeInputPenjualan,
+                      autoFocus: true,
+                      textEditingController: controller.cariProdukController,
+                      onChanged: (value) {
+                        controller.onProdctSearch(value);
+                        controller.update();
+                      },
+                      hintText: "Cari Produk",
+                      suffix: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: BasePrimaryButton(
+                          onPressed: () {
+                            controller.postDetailProduct(
+                                controller.cariProdukController.text);
+                            controller.update();
+                          },
+                          text: "Cari",
+                          suffixIcon: iconSearch,
+                          isDense: true,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 16.0,
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-                if (!controller.isDetail)
                   const SizedBox(
                     width: 16.0,
                   ),
-                if (!controller.isDetail)
+                  Expanded(
+                    child: Container(),
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
                   BasePrimaryButton(
                       text: "Bayar",
                       isDense: true,
@@ -116,8 +117,8 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                                     ),
                                   );
                                 }),
-              ],
-            ),
+                ],
+              ),
             const SizedBox(
               height: 16.0,
             ),

@@ -17,6 +17,7 @@ class PenjualanController extends State<PenjualanView> {
 
   bool isList = true;
   bool isDetail = false;
+  bool viewOnly = false;
 
   FocusNode focusNodeInputPenjualan = FocusNode();
 
@@ -104,39 +105,36 @@ class PenjualanController extends State<PenjualanView> {
     }
   }
 
-  // postDetailPurchase(String id_pembelian) async {
-  //   showCircleDialogLoading();
-  //   try {
-  //     DetailPembelianResult result = await ApiService.detailPembelian(
-  //       data: {"id_pembelian": id_pembelian},
-  //     ).timeout(const Duration(seconds: 30));
+  postDetailPenjualan(String idPenjualan) async {
+    showCircleDialogLoading();
+    try {
+      DetailPenjualanResult result = await ApiService.detailPenjualan(
+        data: {"id_penjualan": idPenjualan},
+      ).timeout(const Duration(seconds: 30));
 
-  //     Navigator.pop(context);
+      Navigator.pop(context);
 
-  //     if (result.success == true) {
-  //       isList = false;
-  //       isDetail = true;
-  //       dataPenjualan = dataPenjualan.copyWith(
-  //         details: result.data,
-  //       );
+      if (result.success == true) {
+        isList = false;
+        isDetail = true;
+        viewOnly = true;
+        dataPenjualan = dataPenjualan.copyWith(
+          details: result.details,
+        );
 
-  //       if (result.data?.isNotEmpty ?? false) {
-  //         isPpn = result.data!.any((element) => element.ppn != "0");
-  //       }
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
 
-  //       update();
-  //     }
-  //   } catch (e) {
-  //     Navigator.pop(context);
-
-  //     if (e.toString().contains("TimeoutException")) {
-  //       showInfoDialog(
-  //           "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-  //     } else {
-  //       showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-  //     }
-  //   }
-  // }
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
 
   postCreatePenjualan() async {
     Get.back();
@@ -151,23 +149,16 @@ class PenjualanController extends State<PenjualanView> {
       update();
       var payload = dataPenjualan.toJson();
 
-      // for (var i = 0; i < payload['details'].length; i++) {
-      //   if (payload['details'][i]["keterangan"] == null) {
-      //     payload['details'][i].removeWhere(
-      //       (key, value) => key == "keterangan",
-      //     );
-      //   }
-      //   if (payload['details'][i]["id_anggota"] == null) {
-      //     payload['details'][i].removeWhere(
-      //       (key, value) => key == "id_anggota",
-      //     );
-      //   }
-      //   if (payload['details'][i]["nm_anggota"] == null) {
-      //     payload['details'][i].removeWhere(
-      //       (key, value) => key == "nm_anggota",
-      //     );
-      //   }
-      // }
+      for (var i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+        payload['details'][i].removeWhere(
+          (key, value) => key == "id_penjualan",
+        );
+
+        payload['details'][i].removeWhere(
+          (key, value) => key == "id_detail_penjualan",
+        );
+      }
+
       if (payload['keterangan'] == null) {
         payload.removeWhere(
           (key, value) => key == "keterangan",
