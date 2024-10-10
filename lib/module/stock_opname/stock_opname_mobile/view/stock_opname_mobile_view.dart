@@ -7,75 +7,86 @@ class StockOpnameMobileView extends StatefulWidget {
 
   Widget build(context, StockOpnameMobileController controller) {
     controller.view = this;
+    final drawerProvider = Provider.of<DrawerProvider>(context);
 
     return Form(
       key: controller.stockOpnameKey,
       child: BodyContainer(
-        floatingActionButton: ScreenTypeLayout.builder(
-          mobile: (context) => Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: BaseSecondaryButton(
-                    text: "Reset",
-                    onPressed: () {
-                      controller.resetData();
-                    },
+        floatingActionButton: drawerProvider.isDrawerOpen
+            ? null
+            : ScreenTypeLayout.builder(
+                mobile: (context) => Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BaseSecondaryButton(
+                          text: "Reset",
+                          onPressed: () {
+                            controller.resetData();
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: BasePrimaryButton(
+                          text: "Simpan",
+                          onPressed: (controller
+                                      .dataResult.data?.idProduct?.isEmpty ??
+                                  true)
+                              ? null
+                              : () {
+                                  if (controller.stockOpnameKey.currentState!
+                                      .validate()) {
+                                    controller.postUpdateProduct(
+                                      trimString(controller
+                                          .dataResult.data?.idProduct),
+                                      controller.textStockController.text,
+                                    );
+                                  }
+                                },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  width: 16.0,
-                ),
-                Expanded(
-                  child: BasePrimaryButton(
-                    text: "Simpan",
-                    onPressed: () {
-                      if (controller.stockOpnameKey.currentState!.validate()) {
-                        controller.postUpdateProduct(
-                          trimString(controller.dataResult.data?.idProduct),
-                          controller.textStockController.text,
-                        );
-                      }
-                    },
+                desktop: (context) => Container(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BaseSecondaryButton(
+                          text: "Reset",
+                          onPressed: () {
+                            controller.resetData();
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: BasePrimaryButton(
+                          text: "Simpan",
+                          onPressed: () {
+                            if (controller.stockOpnameKey.currentState!
+                                .validate()) {
+                              controller.postUpdateProduct(
+                                trimString(
+                                    controller.dataResult.data?.idProduct),
+                                controller.textStockController.text,
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          desktop: (context) => Container(
-            width: MediaQuery.of(context).size.width / 1.5,
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: BaseSecondaryButton(
-                    text: "Reset",
-                    onPressed: () {
-                      controller.resetData();
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 16.0,
-                ),
-                Expanded(
-                  child: BasePrimaryButton(
-                    text: "Simpan",
-                    onPressed: () {
-                      if (controller.stockOpnameKey.currentState!.validate()) {
-                        controller.postUpdateProduct(
-                          trimString(controller.dataResult.data?.idProduct),
-                          controller.textStockController.text,
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
         floatingActionLocation: FloatingActionButtonLocation.centerDocked,
         contentBody: SingleChildScrollView(
           controller: ScrollController(),

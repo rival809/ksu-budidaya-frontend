@@ -32,7 +32,7 @@ class LoginController extends State<LoginView> {
       if (kIsWeb) {
         html.window.location.reload();
       } else {
-        Get.to(const BerandaView());
+        Get.to(const StockOpnameMobileView());
         update();
       }
     } catch (e) {

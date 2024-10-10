@@ -26,7 +26,9 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
     _debounce = Timer(
       const Duration(seconds: 2),
       () {
-        postDetailProduct(value);
+        if (textBarcodeController.text.isNotEmpty) {
+          postDetailProduct(value);
+        }
       },
     );
   }
@@ -80,7 +82,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
           content: const DialogBerhasil(),
         );
 
-        postDetailProduct(idProduct);
+        resetData();
         update();
       }
     } catch (e) {
@@ -101,6 +103,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
     textCurrentStockController.clear();
     textStockController.clear();
     stockEdit = "";
+    dataResult = DetailProductResult();
     update();
   }
 
