@@ -1,4 +1,4 @@
-package com.ksu.jaya.web
+package com.ksu.budidaya
 
 import io.flutter.embedding.android.FlutterActivity
 

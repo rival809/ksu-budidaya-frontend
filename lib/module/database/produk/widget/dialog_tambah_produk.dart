@@ -254,6 +254,11 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                         payload.removeWhere(
                           (key, value) => key == "total_beli",
                         );
+                        if (payload["keterangan"] == null) {
+                          payload.removeWhere(
+                            (key, value) => key == "keterangan",
+                          );
+                        }
 
                         if (widget.isDetail) {
                           ProdukController.instance.postUpdateProduct(payload);

@@ -141,9 +141,10 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
       child: Form(
         key: tambahPembelianKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Tambah Produk",
+              widget.isDetail ?? false ? "Detail Produk" : "Tambah Produk",
               style: myTextTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -157,6 +158,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
               mainAxisSpacing: 16,
               children: [
                 BaseForm(
+                  enabled: widget.isDetail ?? false ? false : true,
                   label: "ID",
                   autoFocus: true,
                   hintText: "Masukkan ID Product",
@@ -197,6 +199,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   },
                 ),
                 BaseForm(
+                  enabled: widget.isDetail ?? false ? false : true,
                   label: "Jumlah",
                   hintText: "Masukkan Jumlah",
                   textEditingController: textController[2],
@@ -212,6 +215,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   validator: Validatorless.required("Data Wajib Diisi"),
                 ),
                 BaseForm(
+                  enabled: widget.isDetail ?? false ? false : true,
                   label: "Harga Jual",
                   hintText: "Masukkan Harga Jual",
                   prefix: const BasePrefixRupiah(),
@@ -227,6 +231,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   validator: Validatorless.required("Data Wajib Diisi"),
                 ),
                 BaseForm(
+                  enabled: widget.isDetail ?? false ? false : true,
                   label: "Harga Beli",
                   hintText: "Masukkan Harga Beli",
                   prefix: const BasePrefixRupiah(),
@@ -242,6 +247,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   validator: Validatorless.required("Data Wajib Diisi"),
                 ),
                 SimpleDropdownButton(
+                  enabled: widget.isDetail ?? false ? false : true,
                   label: "Jenis Diskon",
                   hint: "Pilih Jenis Diskon",
                   items: const ["Nominal", "Persen"],
@@ -252,6 +258,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   },
                 ),
                 BaseForm(
+                  enabled: widget.isDetail ?? false ? false : true,
                   label: "Diskon",
                   prefix: jenisDiskon == "Nominal"
                       ? const BasePrefixRupiah()
@@ -265,7 +272,6 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                     dataEdit.diskon = trimString(value);
                     update();
                   },
-                  validator: Validatorless.required("Data Wajib Diisi"),
                 ),
               ],
             ),
@@ -289,16 +295,18 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   Expanded(
                     child: BaseDangerButton(
                       text: "Hapus",
-                      onPressed: () {
-                        controller.dataPembelian.details?.removeWhere(
-                            (element) =>
-                                trimString(
-                                    element.idDetailPembelian.toString()) ==
-                                trimString(
-                                    widget.data?.idDetailPembelian.toString()));
-                        controller.update();
-                        Get.back();
-                      },
+                      onPressed: widget.isDetail ?? false
+                          ? null
+                          : () {
+                              controller.dataPembelian.details?.removeWhere(
+                                  (element) =>
+                                      trimString(element.idDetailPembelian
+                                          .toString()) ==
+                                      trimString(widget.data?.idDetailPembelian
+                                          .toString()));
+                              controller.update();
+                              Get.back();
+                            },
                     ),
                   ),
                 if (widget.isDetail ?? false)
@@ -308,80 +316,92 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                 Expanded(
                   child: BasePrimaryButton(
                     text: "Simpan",
-                    onPressed: () {
-                      try {
-                        if (tambahPembelianKey.currentState!.validate()) {
-                          dataEdit.ppn = "0";
-                          DataMap payload = dataEdit.toJson();
-                          payload.removeWhere(
-                            (key, value) => key == "created_at",
-                          );
-                          payload.removeWhere(
-                            (key, value) => key == "updated_at",
-                          );
-                          payload.removeWhere(
-                            (key, value) => key == "id_pembelian",
-                          );
-                          if (jenisDiskon == "Persen") {
-                            payload.update("diskon", (value) {
-                              return ((double.parse(dataEdit.hargaBeli ?? "0") *
-                                      ((double.parse(value ?? "0")) / 100) *
-                                      (dataEdit.jumlah ?? 0)))
-                                  .toString();
-                            });
-                          } else if (jenisDiskon == "Nominal") {
-                            payload.update("diskon", (value) {
-                              return trimString(value ?? "0");
-                            });
-                          }
-                          payload.update("total_nilai_beli", (value) {
-                            return (double.parse(dataEdit.hargaBeli ?? "0") *
-                                        (dataEdit.jumlah ?? 0) -
-                                    double.parse(payload["diskon"] ?? "0"))
-                                .toString();
-                          });
-                          payload.update("total_nilai_jual", (value) {
-                            return (double.parse(dataEdit.hargaJual ?? "0") *
-                                    (dataEdit.jumlah ?? 0))
-                                .toString();
-                          });
-                          if (widget.isDetail ?? false) {
-                            payload.update(
-                              "id_detail_pembelian",
-                              (value) => widget.data?.idDetailPembelian,
-                            );
-                            controller.dataPembelian.details?.removeWhere(
-                                (element) =>
-                                    trimString(
-                                        element.idDetailPembelian.toString()) ==
-                                    trimString(widget.data?.idDetailPembelian
-                                        .toString()));
-                            controller.update();
+                    onPressed: widget.isDetail ?? false
+                        ? null
+                        : () {
+                            try {
+                              if (tambahPembelianKey.currentState!.validate()) {
+                                dataEdit.ppn = "0";
+                                DataMap payload = dataEdit.toJson();
+                                payload.removeWhere(
+                                  (key, value) => key == "created_at",
+                                );
+                                payload.removeWhere(
+                                  (key, value) => key == "updated_at",
+                                );
+                                payload.removeWhere(
+                                  (key, value) => key == "id_pembelian",
+                                );
+                                if (jenisDiskon == "Persen") {
+                                  payload.update("diskon", (value) {
+                                    return ((double.parse(
+                                                dataEdit.hargaBeli ?? "0") *
+                                            ((double.parse(value ?? "0")) /
+                                                100) *
+                                            (dataEdit.jumlah ?? 0)))
+                                        .toString();
+                                  });
+                                } else if (jenisDiskon == "Nominal") {
+                                  payload.update("diskon", (value) {
+                                    return trimString(value ?? "0");
+                                  });
+                                }
+                                payload.update("total_nilai_beli", (value) {
+                                  return (double.parse(
+                                                  dataEdit.hargaBeli ?? "0") *
+                                              (dataEdit.jumlah ?? 0) -
+                                          double.parse(
+                                              payload["diskon"] ?? "0"))
+                                      .toString();
+                                });
+                                payload.update("total_nilai_jual", (value) {
+                                  return (double.parse(
+                                              dataEdit.hargaJual ?? "0") *
+                                          (dataEdit.jumlah ?? 0))
+                                      .toString();
+                                });
+                                if (widget.isDetail ?? false) {
+                                  payload.update(
+                                    "id_detail_pembelian",
+                                    (value) => widget.data?.idDetailPembelian,
+                                  );
+                                  controller.dataPembelian.details?.removeWhere(
+                                      (element) =>
+                                          trimString(element.idDetailPembelian
+                                              .toString()) ==
+                                          trimString(widget
+                                              .data?.idDetailPembelian
+                                              .toString()));
+                                  controller.update();
 
-                            DataDetailPembelian dataPayload =
-                                DataDetailPembelian.fromJson(payload);
-                            controller.dataPembelian.details?.add(dataPayload);
-                            controller.update();
-                          } else {
-                            payload.update(
-                              "id_detail_pembelian",
-                              (value) =>
-                                  controller.dataPembelian.details?.length ?? 0,
-                            );
+                                  DataDetailPembelian dataPayload =
+                                      DataDetailPembelian.fromJson(payload);
+                                  controller.dataPembelian.details
+                                      ?.add(dataPayload);
+                                  controller.update();
+                                } else {
+                                  payload.update(
+                                    "id_detail_pembelian",
+                                    (value) =>
+                                        controller
+                                            .dataPembelian.details?.length ??
+                                        0,
+                                  );
 
-                            DataDetailPembelian dataPayload =
-                                DataDetailPembelian.fromJson(payload);
+                                  DataDetailPembelian dataPayload =
+                                      DataDetailPembelian.fromJson(payload);
 
-                            controller.dataPembelian.details?.add(dataPayload);
-                            controller.update();
-                          }
+                                  controller.dataPembelian.details
+                                      ?.add(dataPayload);
+                                  controller.update();
+                                }
 
-                          Get.back();
-                        }
-                      } catch (e) {
-                        showInfoDialog(e.toString(), context);
-                      }
-                    },
+                                Get.back();
+                              }
+                            } catch (e) {
+                              showInfoDialog(e.toString(), context);
+                            }
+                          },
                   ),
                 )
               ],

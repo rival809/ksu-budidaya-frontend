@@ -1,48 +1,50 @@
-# Environemnt to install flutter and build web
-FROM debian:latest AS build-env
+# Stage 1: Environment to install Flutter and build web
+FROM debian:bullseye AS build-env
 
-# install all needed stuff
-RUN apt-get update
-RUN apt-get install -y curl git unzip
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl git unzip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# define variables
+# Define variables
 ARG FLUTTER_SDK=/usr/local/flutter
 ARG FLUTTER_VERSION=3.19.1
 ARG APP=/app/
 
-#clone flutter
-RUN git clone https://github.com/flutter/flutter.git $FLUTTER_SDK
-# change dir to current flutter folder and make a checkout to the specific version
-RUN cd $FLUTTER_SDK && git fetch && git checkout $FLUTTER_VERSION
+# Clone Flutter SDK
+RUN git clone --depth 1 -b $FLUTTER_VERSION https://github.com/flutter/flutter.git $FLUTTER_SDK
 
-# setup the flutter path as an enviromental variable
+# Set Flutter environment
 ENV PATH="$FLUTTER_SDK/bin:$FLUTTER_SDK/bin/cache/dart-sdk/bin:${PATH}"
 
-# Start to run Flutter commands
-# doctor to see if all was installes ok
+# Run flutter doctor to verify the installation
 RUN flutter doctor -v
 
-# create folder to copy source code
+# Prepare app directory
 RUN mkdir $APP
-# copy source code to folder
-COPY . $APP
-# stup new folder as the working directory
 WORKDIR $APP
 
-# Run build: 1 - clean, 2 - pub get, 3 - build web
-RUN flutter clean
-RUN flutter pub upgrade
+# Copy pubspec files and run pub get to leverage caching
+COPY pubspec.* ./
 RUN flutter pub get
-RUN flutter build web --web-renderer canvaskit
 
-# once heare the app will be compiled and ready to deploy
+# Copy the rest of the source code
+COPY . .
 
-# use nginx to deploy
+# Build the Flutter web app
+RUN flutter clean && \
+    flutter build web --release --web-renderer canvaskit && \
+    rm -rf $FLUTTER_SDK/.pub-cache
+
+# Stage 2: Use nginx to serve the built app
 FROM nginx:1.25.2-alpine
 
-# copy the info of the builded web app to nginx
+# Copy the build output to nginx's default directory
 COPY --from=build-env /app/build/web /usr/share/nginx/html
 
-# Expose and run nginx
+# Expose the default port
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Run nginx
+CMD ["nginx", "-g", "daemon off;"]

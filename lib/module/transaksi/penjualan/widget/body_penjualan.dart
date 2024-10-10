@@ -47,6 +47,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
               child: InkWell(
                 onTap: () {
                   controller.dataPenjualan.details?.removeAt(widget.index);
+                  controller.focusNodeInputPenjualan.requestFocus();
                   controller.update();
                 },
                 child: Container(
@@ -107,8 +108,10 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  trimString(
-                    controller.dataPenjualan.details?[widget.index].harga,
+                  formatMoney(
+                    trimString(
+                      controller.dataPenjualan.details?[widget.index].harga,
+                    ),
                   ),
                   style: myTextTheme.bodyMedium,
                 ),
@@ -145,6 +148,8 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                                         "0") +
                                     1)
                                 .toString();
+                            controller.focusNodeInputPenjualan.requestFocus();
+
                             controller.update();
                           },
                           child: SvgPicture.asset(
@@ -180,6 +185,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                                           (double.parse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
                                               100))
                                   .toString();
+                              controller.focusNodeInputPenjualan.requestFocus();
                               controller.update();
                             }
                           },
@@ -204,9 +210,29 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                 padding: const EdgeInsets.all(8),
                 child: BaseForm(
                   textEditingController: diskonController,
+                  onEditComplete: () {
+                    controller.focusNodeInputPenjualan.requestFocus();
+                    controller.update();
+                  },
                   onChanged: (value) {
-                    widget.controller.dataPenjualan.details?[widget.index]
-                        .diskon = trimString(value);
+                    String trimmedValue = trimString(value);
+
+                    double? inputValue = double.tryParse(trimmedValue);
+
+                    if (inputValue != null) {
+                      if (inputValue < 1) {
+                        inputValue = 1;
+                      } else if (inputValue > 100) {
+                        inputValue = 100;
+                      }
+
+                      widget.controller.dataPenjualan.details?[widget.index]
+                          .diskon = inputValue.toString();
+                    } else {
+                      widget.controller.dataPenjualan.details?[widget.index]
+                          .diskon = "1";
+                    }
+
                     controller.update();
                   },
                   maxLenght: 3,
@@ -234,21 +260,23 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                   ),
                 ),
                 child: Text(
-                  trimString(
-                    ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
-                                double.parse(controller.dataPenjualan
-                                        .details?[widget.index].jumlah ??
-                                    "0")) -
-                            (double.parse(controller.dataPenjualan
-                                            .details?[widget.index].harga ??
-                                        "0") *
-                                    double.parse(controller.dataPenjualan
-                                            .details?[widget.index].jumlah ??
-                                        "0")) *
-                                (double.parse(
-                                        controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
-                                    100))
-                        .toString(),
+                  formatMoney(
+                    trimString(
+                      ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                                  double.parse(controller.dataPenjualan
+                                          .details?[widget.index].jumlah ??
+                                      "0")) -
+                              (double.parse(controller.dataPenjualan
+                                              .details?[widget.index].harga ??
+                                          "0") *
+                                      double.parse(controller.dataPenjualan
+                                              .details?[widget.index].jumlah ??
+                                          "0")) *
+                                  (double.parse(
+                                          controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
+                                      100))
+                          .toString(),
+                    ),
                   ),
                   style: myTextTheme.bodyMedium,
                 ),
