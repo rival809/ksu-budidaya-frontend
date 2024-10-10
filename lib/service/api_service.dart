@@ -865,6 +865,48 @@ class ApiService {
     }
   }
 
+  static Future<DetailPenjualanResult> detailPenjualan({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/sale/detail-sale",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailPenjualanResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to detailPembelian');
+    }
+  }
+
+  static Future<PenjualanResult> createPenjualan({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/sale/create-sale",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return PenjualanResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createPenjualan');
+    }
+  }
+
   static Future<PenjualanResult> removePenjualan({
     required DataMap data,
   }) async {

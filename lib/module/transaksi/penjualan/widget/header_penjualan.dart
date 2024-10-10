@@ -28,34 +28,40 @@ class _HeaderPenjualanState extends State<HeaderPenjualan> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
+            if (!PenjualanController.instance.isDetail)
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                    ),
                   ),
-                ),
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  "Aksi ",
-                  style: myTextTheme.titleSmall?.copyWith(
-                    color: neutralWhite,
-                    height: 1.7,
-                    fontWeight: FontWeight.w700,
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    "Aksi ",
+                    style: myTextTheme.titleSmall?.copyWith(
+                      color: neutralWhite,
+                      height: 1.7,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              width: 1,
-              color: blueGray50,
-            ),
+            if (!PenjualanController.instance.isDetail)
+              Container(
+                width: 1,
+                color: blueGray50,
+              ),
             Expanded(
               flex: 6,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(
+                        !PenjualanController.instance.isDetail ? 0 : 8.0),
+                  ),
                   color: primaryColor,
                 ),
                 padding: const EdgeInsets.all(8),

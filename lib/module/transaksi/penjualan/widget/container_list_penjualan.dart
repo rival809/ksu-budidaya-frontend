@@ -102,8 +102,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                     controller.update();
                     controller.isList = false;
                     controller.isDetail = false;
-                    controller.isPpn = false;
-                    controller.isDiskon = false;
+                    controller.viewOnly = false;
                     controller.update();
                     update();
                   },
@@ -189,9 +188,9 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                           ),
                           field: controller.listPenjualanView[index],
                           type: (controller.listPenjualanView[index] ==
-                                      "total_harga_beli" ||
+                                      "total_nilai_beli" ||
                                   controller.listPenjualanView[index] ==
-                                      "total_harga_jual" ||
+                                      "total_nilai_jual" ||
                                   controller.listPenjualanView[index] ==
                                       "jumlah")
                               ? PlutoColumnType.number(
@@ -263,12 +262,12 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                               controller.dataPenjualan.jenisPembayaran =
                                   dataDetail.jenisPembayaran;
 
-                              // controller.postDetailPurchase(
-                              //   trimString(
-                              //     result.data?.dataPenjualan?[rowIndex]
-                              //         .idPenjualan,
-                              //   ),
-                              // );
+                              controller.postDetailPenjualan(
+                                trimString(
+                                  result.data?.dataPenjualan?[rowIndex]
+                                      .idPenjualan,
+                                ),
+                              );
                               update();
                             } else if (value == 2) {
                               showDialogBase(

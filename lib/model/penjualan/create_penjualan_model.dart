@@ -1,3 +1,5 @@
+import 'package:ksu_budidaya/core.dart';
+
 class CreatePenjualanModel {
   String? tgPenjualan;
   String? jumlah;
@@ -84,35 +86,46 @@ class CreatePenjualanModel {
 }
 
 class DetailsCreatePenjualan {
+  String? idPenjualan;
+  String? idDetailPenjualan;
   String? idProduct;
   String? nmDivisi;
   String? nmProduk;
   String? harga;
+  String? hargaBeli;
   String? jumlah;
   String? diskon;
   String? total;
 
   DetailsCreatePenjualan(
       {this.idProduct,
+      this.idPenjualan,
+      this.idDetailPenjualan,
       this.nmDivisi,
       this.nmProduk,
       this.harga,
+      this.hargaBeli,
       this.jumlah,
       this.diskon,
       this.total});
 
   DetailsCreatePenjualan.fromJson(Map<String, dynamic> json) {
+    idPenjualan = json['id_penjualan'];
+    idDetailPenjualan = checkModel(json['id_detail_penjualan']);
     idProduct = json['id_product'];
     nmDivisi = json['nm_divisi'];
     nmProduk = json['nm_produk'];
     harga = json['harga'];
-    jumlah = json['jumlah'];
+    hargaBeli = json['harga_beli'];
+    jumlah = checkModel(json['jumlah']);
     diskon = json['diskon'];
     total = json['total'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id_penjualan'] = idPenjualan;
+    data['id_detail_penjualan'] = idDetailPenjualan;
     data['id_product'] = idProduct;
     data['nm_divisi'] = nmDivisi;
     data['nm_produk'] = nmProduk;
@@ -124,19 +137,25 @@ class DetailsCreatePenjualan {
   }
 
   DetailsCreatePenjualan copyWith({
+    String? idPenjualan,
+    String? idDetailPenjualan,
     String? idProduct,
     String? nmDivisi,
     String? nmProduk,
     String? harga,
+    String? hargaBeli,
     String? jumlah,
     String? diskon,
     String? total,
   }) =>
       DetailsCreatePenjualan(
+        idPenjualan: idPenjualan ?? this.idPenjualan,
+        idDetailPenjualan: idDetailPenjualan ?? this.idDetailPenjualan,
         idProduct: idProduct ?? this.idProduct,
         nmDivisi: nmDivisi ?? this.nmDivisi,
         nmProduk: nmProduk ?? this.nmProduk,
         harga: harga ?? this.harga,
+        hargaBeli: harga ?? this.hargaBeli,
         jumlah: jumlah ?? this.jumlah,
         diskon: diskon ?? this.diskon,
         total: total ?? this.total,

@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class BodyNota extends StatefulWidget {
   final int index;
@@ -17,9 +16,27 @@ class BodyNota extends StatefulWidget {
 }
 
 class _BodyNotaState extends State<BodyNota> {
+  String persenDiskon = "0";
+
+  hitDiskon() {
+    var diskon = double.parse(
+      removeComma(
+          widget.controller.dataPenjualan.details?[widget.index].diskon ?? "0"),
+    );
+
+    var hargaJual = double.parse(
+      removeComma(
+          widget.controller.dataPenjualan.details?[widget.index].harga ?? "0"),
+    );
+
+    persenDiskon = formatMoney(
+        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100).toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
+    hitDiskon();
     return Column(
       children: [
         Row(
@@ -111,11 +128,7 @@ class _BodyNotaState extends State<BodyNota> {
                           ),
                           Expanded(
                             child: Text(
-                              trimString(
-                                    controller.dataPenjualan
-                                        .details?[widget.index].diskon,
-                                  ) +
-                                  "%",
+                              trimString(persenDiskon) + "%",
                               textAlign: TextAlign.start,
                               style: myTextTheme.bodySmall,
                             ),
@@ -125,18 +138,19 @@ class _BodyNotaState extends State<BodyNota> {
                     ),
                     Expanded(
                       child: Text(
-                        trimString(
-                          ((double.parse(controller.dataPenjualan
-                                              .details?[widget.index].harga ??
-                                          "0") *
-                                      double.parse(controller.dataPenjualan
-                                              .details?[widget.index].jumlah ??
-                                          "0")) *
-                                  (double.parse(controller.dataPenjualan
-                                              .details?[widget.index].diskon ??
-                                          "0") /
-                                      100))
-                              .toString(),
+                        formatMoney(
+                          trimString(
+                            (double.parse(controller.dataPenjualan
+                                            .details?[widget.index].diskon ??
+                                        "0") *
+                                    double.parse(removeComma(widget
+                                            .controller
+                                            .dataPenjualan
+                                            .details?[widget.index]
+                                            .jumlah ??
+                                        "0")))
+                                .toString(),
+                          ),
                         ),
                         style: myTextTheme.bodySmall,
                         textAlign: TextAlign.end,

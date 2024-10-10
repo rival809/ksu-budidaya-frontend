@@ -19,11 +19,33 @@ class BodyPenjualan extends StatefulWidget {
 class _BodyPenjualanState extends State<BodyPenjualan> {
   TextEditingController diskonController = TextEditingController();
   TextEditingController qntController = TextEditingController();
+
+  String persenDiskon = "0";
+  String totalHarga = "0";
+
+  hitDiskon() {
+    var diskon = double.parse(
+      removeComma(
+          widget.controller.dataPenjualan.details?[widget.index].diskon ?? "0"),
+    );
+
+    var hargaJual = double.parse(
+      removeComma(
+          widget.controller.dataPenjualan.details?[widget.index].harga ?? "0"),
+    );
+
+    persenDiskon = formatMoney(
+        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100).toString());
+
+    diskonController.text = trimString(persenDiskon);
+  }
+
   @override
   void initState() {
     super.initState();
-    diskonController.text = trimString(
-        widget.controller.dataPenjualan.details?[widget.index].diskon);
+    hitDiskon();
+    diskonController.text = trimString(persenDiskon);
+
     qntController.text = trimString(
         widget.controller.dataPenjualan.details?[widget.index].jumlah);
   }
@@ -31,7 +53,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
   @override
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
-
+    controller.sumTotalIndex();
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -42,35 +64,40 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            Expanded(
-              flex: 2,
-              child: InkWell(
-                onTap: () {
-                  controller.dataPenjualan.details?.removeAt(widget.index);
-                  controller.focusNodeInputPenjualan.requestFocus();
-                  controller.update();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      left: BorderSide(
-                        width: 1.0,
-                        color: blueGray50,
+            if (!controller.isDetail)
+              Expanded(
+                flex: 2,
+                child: InkWell(
+                  onTap: controller.isDetail
+                      ? null
+                      : () {
+                          controller.dataPenjualan.details
+                              ?.removeAt(widget.index);
+                          controller.focusNodeInputPenjualan.requestFocus();
+                          controller.update();
+                        },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          width: 1.0,
+                          color: blueGray50,
+                        ),
                       ),
                     ),
-                  ),
-                  child: SvgPicture.asset(
-                    iconDelete,
-                    colorFilter: colorFilterRed800,
+                    child: SvgPicture.asset(
+                      iconDelete,
+                      colorFilter: colorFilterRed800,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              width: 1,
-              color: blueGray50,
-            ),
+            if (!controller.isDetail)
+              Container(
+                width: 1,
+                color: blueGray50,
+              ),
             Expanded(
               flex: 6,
               child: Container(
@@ -141,54 +168,70 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                     Column(
                       children: [
                         InkWell(
-                          onTap: () {
-                            controller.dataPenjualan.details?[widget.index]
-                                .jumlah = (int.parse(controller.dataPenjualan
-                                            .details?[widget.index].jumlah ??
-                                        "0") +
-                                    1)
-                                .toString();
-                            controller.focusNodeInputPenjualan.requestFocus();
+                          onTap: controller.isDetail
+                              ? null
+                              : () {
+                                  controller
+                                      .dataPenjualan
+                                      .details?[widget.index]
+                                      .jumlah = (int.parse(controller
+                                                  .dataPenjualan
+                                                  .details?[widget.index]
+                                                  .jumlah ??
+                                              "0") +
+                                          1)
+                                      .toString();
+                                  controller.focusNodeInputPenjualan
+                                      .requestFocus();
 
-                            controller.update();
-                          },
+                                  controller.update();
+                                },
                           child: SvgPicture.asset(
                             iconArrowDropUp,
                             height: 16,
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            if (int.parse(controller.dataPenjualan
-                                        .details?[widget.index].jumlah ??
-                                    "1") >
-                                1) {
-                              controller.dataPenjualan.details?[widget.index]
-                                  .jumlah = (int.parse(controller.dataPenjualan
+                          onTap: controller.isDetail
+                              ? null
+                              : () {
+                                  if (int.parse(controller.dataPenjualan
                                               .details?[widget.index].jumlah ??
-                                          "0") -
-                                      1)
-                                  .toString();
-                              controller.dataPenjualan.details?[widget.index]
-                                  .total = ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
-                                          double.parse(controller
-                                                  .dataPenjualan
-                                                  .details?[widget.index]
-                                                  .jumlah ??
-                                              "0")) -
-                                      (double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
-                                              double.parse(controller
-                                                      .dataPenjualan
-                                                      .details?[widget.index]
-                                                      .jumlah ??
-                                                  "0")) *
-                                          (double.parse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
-                                              100))
-                                  .toString();
-                              controller.focusNodeInputPenjualan.requestFocus();
-                              controller.update();
-                            }
-                          },
+                                          "1") >
+                                      1) {
+                                    controller
+                                        .dataPenjualan
+                                        .details?[widget.index]
+                                        .jumlah = (int.parse(controller
+                                                    .dataPenjualan
+                                                    .details?[widget.index]
+                                                    .jumlah ??
+                                                "0") -
+                                            1)
+                                        .toString();
+                                    controller
+                                        .dataPenjualan
+                                        .details?[widget.index]
+                                        .total = ((double.parse(controller
+                                                        .dataPenjualan
+                                                        .details?[widget.index]
+                                                        .harga ??
+                                                    "0") *
+                                                double.parse(controller
+                                                        .dataPenjualan
+                                                        .details?[widget.index]
+                                                        .jumlah ??
+                                                    "0")) -
+                                            (double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                                                    double.parse(
+                                                        controller.dataPenjualan.details?[widget.index].jumlah ?? "0")) *
+                                                (double.parse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") / 100))
+                                        .toString();
+                                    controller.focusNodeInputPenjualan
+                                        .requestFocus();
+                                    controller.update();
+                                  }
+                                },
                           child: SvgPicture.asset(
                             iconArrowDropDown,
                             height: 16,
@@ -214,23 +257,32 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                     controller.focusNodeInputPenjualan.requestFocus();
                     controller.update();
                   },
+                  readOnly: controller.isDetail ? true : false,
                   onChanged: (value) {
                     String trimmedValue = trimString(value);
 
                     double? inputValue = double.tryParse(trimmedValue);
 
                     if (inputValue != null) {
-                      if (inputValue < 1) {
-                        inputValue = 1;
+                      if (inputValue < 0) {
+                        inputValue = 0;
                       } else if (inputValue > 100) {
                         inputValue = 100;
                       }
 
+                      var hargaJual = double.parse(
+                        removeComma(widget.controller.dataPenjualan
+                                .details?[widget.index].harga ??
+                            "0"),
+                      );
+
+                      var nilaiDiskon = (inputValue / 100) * hargaJual;
+
                       widget.controller.dataPenjualan.details?[widget.index]
-                          .diskon = inputValue.toString();
+                          .diskon = nilaiDiskon.toString();
                     } else {
                       widget.controller.dataPenjualan.details?[widget.index]
-                          .diskon = "1";
+                          .diskon = "0";
                     }
 
                     controller.update();
@@ -262,19 +314,15 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                 child: Text(
                   formatMoney(
                     trimString(
-                      ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                      ((double.parse(controller.dataPenjualan
+                                          .details?[widget.index].harga ??
+                                      "0") -
                                   double.parse(controller.dataPenjualan
-                                          .details?[widget.index].jumlah ??
-                                      "0")) -
-                              (double.parse(controller.dataPenjualan
-                                              .details?[widget.index].harga ??
-                                          "0") *
-                                      double.parse(controller.dataPenjualan
-                                              .details?[widget.index].jumlah ??
-                                          "0")) *
-                                  (double.parse(
-                                          controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
-                                      100))
+                                          .details?[widget.index].diskon ??
+                                      "0")) *
+                              double.parse(controller.dataPenjualan
+                                      .details?[widget.index].jumlah ??
+                                  "0"))
                           .toString(),
                     ),
                   ),

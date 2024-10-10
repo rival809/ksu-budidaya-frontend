@@ -17,6 +17,7 @@ class PenjualanController extends State<PenjualanView> {
 
   bool isList = true;
   bool isDetail = false;
+  bool viewOnly = false;
 
   FocusNode focusNodeInputPenjualan = FocusNode();
 
@@ -104,71 +105,77 @@ class PenjualanController extends State<PenjualanView> {
     }
   }
 
-  // postDetailPurchase(String id_pembelian) async {
-  //   showCircleDialogLoading();
-  //   try {
-  //     DetailPembelianResult result = await ApiService.detailPembelian(
-  //       data: {"id_pembelian": id_pembelian},
-  //     ).timeout(const Duration(seconds: 30));
+  postDetailPenjualan(String idPenjualan) async {
+    showCircleDialogLoading();
+    try {
+      DetailPenjualanResult result = await ApiService.detailPenjualan(
+        data: {"id_penjualan": idPenjualan},
+      ).timeout(const Duration(seconds: 30));
 
-  //     Navigator.pop(context);
+      Navigator.pop(context);
 
-  //     if (result.success == true) {
-  //       isList = false;
-  //       isDetail = true;
-  //       dataPenjualan = dataPenjualan.copyWith(
-  //         details: result.data,
-  //       );
+      if (result.success == true) {
+        isList = false;
+        isDetail = true;
+        viewOnly = true;
+        dataPenjualan = dataPenjualan.copyWith(
+          details: result.details,
+        );
 
-  //       if (result.data?.isNotEmpty ?? false) {
-  //         isPpn = result.data!.any((element) => element.ppn != "0");
-  //       }
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
 
-  //       update();
-  //     }
-  //   } catch (e) {
-  //     Navigator.pop(context);
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
 
-  //     if (e.toString().contains("TimeoutException")) {
-  //       showInfoDialog(
-  //           "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-  //     } else {
-  //       showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-  //     }
-  //   }
-  // }
-
-  postCreatePembelian() async {
+  postCreatePenjualan() async {
     Get.back();
 
     showCircleDialogLoading();
     try {
+      dataPenjualan.username =
+          trimString(UserDatabase.userDatabase.data?.userData?.username);
+      dataPenjualan.jenisPembayaran = trimString(metodeBayar);
+      dataPenjualan.tgPenjualan =
+          formatDateTimePayload(DateTime.now().toString());
+      update();
       var payload = dataPenjualan.toJson();
 
-      for (var i = 0; i < payload['details'].length; i++) {
+      for (var i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
         payload['details'][i].removeWhere(
-          (key, value) => key == "id_detail_pembelian",
+          (key, value) => key == "id_penjualan",
         );
+
         payload['details'][i].removeWhere(
-          (key, value) => key == "created_at",
-        );
-        payload['details'][i].removeWhere(
-          (key, value) => key == "updated_at",
-        );
-        payload['details'][i].removeWhere(
-          (key, value) => key == "id_pembelian",
+          (key, value) => key == "id_detail_penjualan",
         );
       }
 
-      if (trimString(payload['keterangan']).toString().isEmpty) {
+      if (payload['keterangan'] == null) {
         payload.removeWhere(
           (key, value) => key == "keterangan",
         );
       }
+      if (payload['id_anggota'] == null) {
+        payload.removeWhere(
+          (key, value) => key == "id_anggota",
+        );
+      }
+      if (payload['nm_anggota'] == null) {
+        payload.removeWhere(
+          (key, value) => key == "nm_anggota",
+        );
+      }
 
-      payload.update("tg_pembelian", (value) => formatDate(value.toString()));
-
-      PembelianResult result = await ApiService.createPembelian(
+      PenjualanResult result = await ApiService.createPenjualan(
         data: payload,
       ).timeout(const Duration(seconds: 30));
 
@@ -179,7 +186,7 @@ class PenjualanController extends State<PenjualanView> {
           content: const DialogBerhasil(),
         );
 
-        router.push("/transaksi/pembelian");
+        router.push("/transaksi/penjualan");
         update();
       }
     } catch (e) {
@@ -197,20 +204,65 @@ class PenjualanController extends State<PenjualanView> {
   TextEditingController cariProdukController = TextEditingController();
   CreatePenjualanModel dataPenjualan = CreatePenjualanModel();
 
-  double bayar = 0;
-  double kembali = 0;
+  String? totalBayar = "0";
+
+  List<TextEditingController> textControllerDialog = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
+
+  hitBayar() {
+    var totalKembali = int.parse(removeComma(totalBayar ?? "0")) -
+        int.parse(removeComma(dataPenjualan.totalNilaiJual ?? "0"));
+    if (totalKembali < 0) {
+      totalBayar = "0";
+      textControllerDialog[3].text = totalBayar ?? "0";
+    } else {
+      totalBayar = formatMoney(removeComma(totalKembali.toString()));
+      textControllerDialog[3].text = totalBayar ?? "0";
+    }
+  }
 
   sumTotal() {
-    double total = 0;
+    double totalNilaiJual = 0;
+    double totalNilaiBeli = 0;
+    double jumlah = 0;
     for (int i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
-      total += (double.parse(dataPenjualan.details?[i].harga ?? "0") *
-              double.parse(dataPenjualan.details?[i].jumlah ?? "0")) -
-          (double.parse(dataPenjualan.details?[i].harga ?? "0") *
-                  double.parse(dataPenjualan.details?[i].jumlah ?? "0")) *
-              (double.parse(dataPenjualan.details?[i].diskon ?? "0") / 100);
+      totalNilaiJual += ((double.parse(dataPenjualan.details?[i].harga ?? "0") -
+              double.parse(dataPenjualan.details?[i].diskon ?? "0")) *
+          double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
+      totalNilaiBeli +=
+          (double.parse(dataPenjualan.details?[i].hargaBeli ?? "0") *
+              double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
+      jumlah += double.parse(dataPenjualan.details?[i].jumlah ?? "0");
     }
 
-    dataPenjualan.totalNilaiJual = total.toString();
+    dataPenjualan.totalNilaiJual = totalNilaiJual.toString();
+    dataPenjualan.totalNilaiBeli = totalNilaiBeli.toString();
+    dataPenjualan.jumlah = jumlah.toString();
+  }
+
+  sumTotalIndex() {
+    double total = 0;
+    for (int i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      var diskon = double.parse(
+        removeComma(dataPenjualan.details?[i].diskon ?? "0"),
+      );
+
+      var hargaJual = double.parse(
+        removeComma(dataPenjualan.details?[i].harga ?? "0"),
+      );
+
+      var jumlah = double.parse(
+        removeComma(dataPenjualan.details?[i].jumlah ?? "0"),
+      );
+
+      var totalHarga = ((hargaJual - diskon) * jumlah).toString();
+      dataPenjualan.details?[i].total = totalHarga;
+    }
   }
 
   Timer? _debounce;
@@ -247,6 +299,7 @@ class PenjualanController extends State<PenjualanView> {
             harga: trimString(result.data?.hargaJual),
             jumlah: "1",
             nmProduk: trimString(result.data?.nmProduct),
+            hargaBeli: trimString(result.data?.hargaBeli),
             nmDivisi:
                 getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
             diskon: "0",
@@ -322,11 +375,65 @@ class PenjualanController extends State<PenjualanView> {
     dataPenjualan.jumlah = jumlah.toString();
   }
 
+  bool statusTunai = true;
+  bool statusQris = false;
+  bool statusKredit = false;
+  String metodeBayar = "tunai";
+
+  onInitDialog() {
+    statusTunai = true;
+    statusQris = false;
+    statusKredit = false;
+    metodeBayar = "tunai";
+    dataPenjualan.jenisPembayaran = "tunai";
+  }
+
+  onSwitchStep(String valueStep) {
+    switch (valueStep) {
+      case "1":
+        statusTunai = true;
+        statusQris = false;
+        statusKredit = false;
+        metodeBayar = "tunai";
+        dataPenjualan.jenisPembayaran = "tunai";
+
+        break;
+      case "2":
+        statusTunai = false;
+        statusQris = true;
+        statusKredit = false;
+        metodeBayar = "qris";
+        dataPenjualan.jenisPembayaran = "qris";
+
+        break;
+      case "3":
+        statusTunai = false;
+        statusQris = false;
+        statusKredit = true;
+        metodeBayar = "kredit";
+        dataPenjualan.jenisPembayaran = "kredit";
+
+        break;
+      default:
+        statusTunai = true;
+        statusQris = false;
+        statusKredit = false;
+        metodeBayar = "tunai";
+        dataPenjualan.jenisPembayaran = "tunai";
+    }
+    update();
+  }
+
   @override
   void initState() {
     instance = this;
     GlobalReference().supplierReference();
+    GlobalReference().anggotaReference();
     dataFuture = cariDataPenjualan();
+    textControllerDialog[2].text = "0";
+    totalBayar = "0";
+    textControllerDialog[3].text = "0";
+
     super.initState();
   }
 
