@@ -22,249 +22,246 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
     widget.controller.focusNodeInputPenjualan.requestFocus();
   }
 
-  final inputPenjualanKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
 
     return SizedBox(
       height: MediaQuery.of(context).size.height - 105,
-      child: Form(
-        key: inputPenjualanKey,
-        child: SingleChildScrollView(
-          controller: ScrollController(),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      controller.isList = true;
-                      controller.dataPenjualan = CreatePenjualanModel();
+      child: SingleChildScrollView(
+        controller: ScrollController(),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    controller.isList = true;
+                    controller.dataPenjualan = CreatePenjualanModel();
+                    controller.update();
+                    update();
+                  },
+                  child: SvgPicture.asset(
+                    iconChevronLeft,
+                    height: 24,
+                  ),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Text(
+                  controller.isDetail ? "Detail Penjualan" : "Tambah Penjualan",
+                  style: myTextTheme.headlineLarge,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 250,
+                  child: BaseForm(
+                    focusNode: controller.focusNodeInputPenjualan,
+                    autoFocus: true,
+                    textEditingController: controller.cariProdukController,
+                    onChanged: (value) {
+                      controller.onProdctSearch(value);
                       controller.update();
-                      update();
                     },
-                    child: SvgPicture.asset(
-                      iconChevronLeft,
-                      height: 24,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    controller.isDetail
-                        ? "Detail Penjualan"
-                        : "Tambah Penjualan",
-                    style: myTextTheme.headlineLarge,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    width: 250,
-                    child: BaseForm(
-                      focusNode: controller.focusNodeInputPenjualan,
-                      autoFocus: true,
-                      textEditingController: controller.cariProdukController,
-                      onChanged: (value) {
-                        controller.onProdctSearch(value);
-                        controller.update();
-                      },
-                      hintText: "Cari Produk",
-                      suffix: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: BasePrimaryButton(
-                          onPressed: () {
-                            controller.postDetailProduct(
-                                controller.cariProdukController.text);
-                            controller.update();
-                          },
-                          text: "Cari",
-                          suffixIcon: iconSearch,
-                          isDense: true,
-                        ),
+                    hintText: "Cari Produk",
+                    suffix: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: BasePrimaryButton(
+                        onPressed: () {
+                          controller.postDetailProduct(
+                              controller.cariProdukController.text);
+                          controller.update();
+                        },
+                        text: "Cari",
+                        suffixIcon: iconSearch,
+                        isDense: true,
                       ),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+                if (!controller.isDetail)
                   const SizedBox(
                     width: 16.0,
                   ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  if (!controller.isDetail)
-                    const SizedBox(
-                      width: 16.0,
-                    ),
-                  if (!controller.isDetail)
-                    BasePrimaryButton(
+                if (!controller.isDetail)
+                  BasePrimaryButton(
                       text: "Bayar",
                       isDense: true,
-                      onPressed: () {
-                        if (inputPenjualanKey.currentState!.validate()) {}
-                      },
-                    ),
-                ],
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              ScreenTypeLayout.builder(
-                desktop: (context) => Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const HeaderPenjualan(),
-                          Container(
-                            // height: 300,
-                            constraints: BoxConstraints(
-                              maxHeight:
-                                  MediaQuery.of(context).size.height - 310,
-                            ),
-                            child: ListView.builder(
-                              itemCount:
-                                  controller.dataPenjualan.details?.length,
-                              shrinkWrap: true,
-                              physics: const ScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                if (controller.dataPenjualan.details?.isEmpty ??
-                                    true) {
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        left: BorderSide(
-                                          width: 1.0,
-                                          color: blueGray50,
-                                        ),
-                                        right: BorderSide(
-                                          width: 1.0,
-                                          color: blueGray50,
-                                        ),
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.all(24.0),
-                                    child: Center(
-                                      child: Text(
-                                        "Silakan Tambahkan Produk",
-                                        style: myTextTheme.bodyMedium?.copyWith(
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
+                      onPressed:
+                          (controller.dataPenjualan.details?.isEmpty ?? true)
+                              ? null
+                              : () {
+                                  showDialogBase(
+                                    width: 700,
+                                    content: DialogProsesPembayaran(
+                                      controller: controller,
                                     ),
                                   );
-                                } else {
-                                  return BodyPenjualan(
-                                    index: index,
-                                    controller: controller,
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                          FooterPenjualan(
-                            controller: controller,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
-                    ContainerNota(
-                      controller: controller,
-                    ),
-                  ],
-                ),
-                mobile: (context) => SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: SizedBox(
-                    width: 2000,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                                }),
+              ],
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            ScreenTypeLayout.builder(
+              desktop: (context) => Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              const HeaderPenjualan(),
-                              Container(
-                                // height: 300,
-                                constraints: BoxConstraints(
-                                  maxHeight:
-                                      MediaQuery.of(context).size.height - 310,
-                                ),
-                                child: ListView.builder(
-                                  itemCount:
-                                      controller.dataPenjualan.details?.length,
-                                  shrinkWrap: true,
-                                  physics: const ScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    if (controller
-                                            .dataPenjualan.details?.isEmpty ??
-                                        true) {
-                                      return Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                              width: 1.0,
-                                              color: blueGray50,
-                                            ),
-                                            right: BorderSide(
-                                              width: 1.0,
-                                              color: blueGray50,
-                                            ),
-                                          ),
-                                        ),
-                                        padding: const EdgeInsets.all(24.0),
-                                        child: Center(
-                                          child: Text(
-                                            "Silakan Tambahkan Produk",
-                                            style: myTextTheme.bodyMedium
-                                                ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      return BodyPenjualan(
-                                        index: index,
-                                        controller: controller,
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                              FooterPenjualan(
-                                controller: controller,
-                              )
-                            ],
+                        const HeaderPenjualan(),
+                        Container(
+                          // height: 300,
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height - 310,
+                          ),
+                          child: ListView.builder(
+                            itemCount: controller.dataPenjualan.details?.length,
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              if (controller.dataPenjualan.details?.isEmpty ??
+                                  true) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                        width: 1.0,
+                                        color: blueGray50,
+                                      ),
+                                      right: BorderSide(
+                                        width: 1.0,
+                                        color: blueGray50,
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(24.0),
+                                  child: Center(
+                                    child: Text(
+                                      "Silakan Tambahkan Produk",
+                                      style: myTextTheme.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return BodyPenjualan(
+                                  index: index,
+                                  controller: controller,
+                                );
+                              }
+                            },
                           ),
                         ),
-                        const SizedBox(
-                          width: 16.0,
-                        ),
-                        ContainerNota(
+                        FooterPenjualan(
                           controller: controller,
-                        ),
+                        )
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  ContainerNota(
+                    controller: controller,
+                  ),
+                ],
+              ),
+              mobile: (context) => SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  width: 2000,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            const HeaderPenjualan(),
+                            Container(
+                              // height: 300,
+                              constraints: BoxConstraints(
+                                maxHeight:
+                                    MediaQuery.of(context).size.height - 310,
+                              ),
+                              child: ListView.builder(
+                                itemCount:
+                                    controller.dataPenjualan.details?.length,
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  if (controller
+                                          .dataPenjualan.details?.isEmpty ??
+                                      true) {
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          left: BorderSide(
+                                            width: 1.0,
+                                            color: blueGray50,
+                                          ),
+                                          right: BorderSide(
+                                            width: 1.0,
+                                            color: blueGray50,
+                                          ),
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.all(24.0),
+                                      child: Center(
+                                        child: Text(
+                                          "Silakan Tambahkan Produk",
+                                          style:
+                                              myTextTheme.bodyMedium?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return BodyPenjualan(
+                                      index: index,
+                                      controller: controller,
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                            FooterPenjualan(
+                              controller: controller,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      ContainerNota(
+                        controller: controller,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -201,16 +201,42 @@ class PenjualanController extends State<PenjualanView> {
   double kembali = 0;
 
   sumTotal() {
-    double total = 0;
+    double totalNilaiJual = 0;
+    double totalNilaiBeli = 0;
+    double jumlah = 0;
     for (int i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
-      total += (double.parse(dataPenjualan.details?[i].harga ?? "0") *
-              double.parse(dataPenjualan.details?[i].jumlah ?? "0")) -
-          (double.parse(dataPenjualan.details?[i].harga ?? "0") *
-                  double.parse(dataPenjualan.details?[i].jumlah ?? "0")) *
-              (double.parse(dataPenjualan.details?[i].diskon ?? "0") / 100);
+      totalNilaiJual += ((double.parse(dataPenjualan.details?[i].harga ?? "0") -
+              double.parse(dataPenjualan.details?[i].diskon ?? "0")) *
+          double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
+      totalNilaiBeli +=
+          (double.parse(dataPenjualan.details?[i].hargaBeli ?? "0") *
+              double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
+      jumlah += double.parse(dataPenjualan.details?[i].jumlah ?? "0");
     }
 
-    dataPenjualan.totalNilaiJual = total.toString();
+    dataPenjualan.totalNilaiJual = totalNilaiJual.toString();
+    dataPenjualan.totalNilaiBeli = totalNilaiBeli.toString();
+    dataPenjualan.jumlah = jumlah.toString();
+  }
+
+  sumTotalIndex() {
+    double total = 0;
+    for (int i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      var diskon = double.parse(
+        removeComma(dataPenjualan.details?[i].diskon ?? "0"),
+      );
+
+      var hargaJual = double.parse(
+        removeComma(dataPenjualan.details?[i].harga ?? "0"),
+      );
+
+      var jumlah = double.parse(
+        removeComma(dataPenjualan.details?[i].jumlah ?? "0"),
+      );
+
+      var totalHarga = ((hargaJual - diskon) * jumlah).toString();
+      dataPenjualan.details?[i].total = totalHarga;
+    }
   }
 
   Timer? _debounce;
@@ -247,6 +273,7 @@ class PenjualanController extends State<PenjualanView> {
             harga: trimString(result.data?.hargaJual),
             jumlah: "1",
             nmProduk: trimString(result.data?.nmProduct),
+            hargaBeli: trimString(result.data?.hargaBeli),
             nmDivisi:
                 getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
             diskon: "0",
@@ -322,10 +349,48 @@ class PenjualanController extends State<PenjualanView> {
     dataPenjualan.jumlah = jumlah.toString();
   }
 
+  bool statusTunai = true;
+  bool statusQris = false;
+  bool statusKredit = false;
+  String metodeBayar = "tunai";
+
+  onSwitchStep(String valueStep) {
+    switch (valueStep) {
+      case "1":
+        statusTunai = true;
+        statusQris = false;
+        statusKredit = false;
+        metodeBayar = "tunai";
+
+        break;
+      case "2":
+        statusTunai = false;
+        statusQris = true;
+        statusKredit = false;
+        metodeBayar = "qris";
+
+        break;
+      case "3":
+        statusTunai = false;
+        statusQris = false;
+        statusKredit = true;
+        metodeBayar = "kredit";
+
+        break;
+      default:
+        statusTunai = true;
+        statusQris = false;
+        statusKredit = false;
+        metodeBayar = "tunai";
+    }
+    update();
+  }
+
   @override
   void initState() {
     instance = this;
     GlobalReference().supplierReference();
+    GlobalReference().anggotaReference();
     dataFuture = cariDataPenjualan();
     super.initState();
   }

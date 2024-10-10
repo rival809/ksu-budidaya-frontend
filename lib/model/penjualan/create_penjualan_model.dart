@@ -88,6 +88,7 @@ class DetailsCreatePenjualan {
   String? nmDivisi;
   String? nmProduk;
   String? harga;
+  String? hargaBeli;
   String? jumlah;
   String? diskon;
   String? total;
@@ -97,6 +98,7 @@ class DetailsCreatePenjualan {
       this.nmDivisi,
       this.nmProduk,
       this.harga,
+      this.hargaBeli,
       this.jumlah,
       this.diskon,
       this.total});
@@ -106,6 +108,7 @@ class DetailsCreatePenjualan {
     nmDivisi = json['nm_divisi'];
     nmProduk = json['nm_produk'];
     harga = json['harga'];
+    hargaBeli = json['harga_beli'];
     jumlah = json['jumlah'];
     diskon = json['diskon'];
     total = json['total'];
@@ -117,6 +120,7 @@ class DetailsCreatePenjualan {
     data['nm_divisi'] = nmDivisi;
     data['nm_produk'] = nmProduk;
     data['harga'] = harga;
+    data['harga_beli'] = hargaBeli;
     data['jumlah'] = jumlah;
     data['diskon'] = diskon;
     data['total'] = total;
@@ -128,6 +132,7 @@ class DetailsCreatePenjualan {
     String? nmDivisi,
     String? nmProduk,
     String? harga,
+    String? hargaBeli,
     String? jumlah,
     String? diskon,
     String? total,
@@ -137,6 +142,7 @@ class DetailsCreatePenjualan {
         nmDivisi: nmDivisi ?? this.nmDivisi,
         nmProduk: nmProduk ?? this.nmProduk,
         harga: harga ?? this.harga,
+        hargaBeli: harga ?? this.hargaBeli,
         jumlah: jumlah ?? this.jumlah,
         diskon: diskon ?? this.diskon,
         total: total ?? this.total,

@@ -39,6 +39,18 @@ class GlobalReference {
     }
   }
 
+  anggotaReference() async {
+    try {
+      AnggotaResult result = await ApiService.listAnggota(
+        data: {},
+      ).timeout(const Duration(seconds: 30));
+
+      AnggotaDatabase.save(result.data ?? DataAnggota());
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   cashReference() async {
     try {
       RefCashResult result = await ApiService.listRefCashInOut(
@@ -97,6 +109,38 @@ getNamaDivisi({String? idDivisi}) {
     return idDivisi;
   } catch (e) {
     return idDivisi;
+  }
+}
+
+getNamaAnggota({String? idAnggota}) {
+  try {
+    var dataDivisi = AnggotaDatabase.dataAnggota.dataAnggota;
+
+    for (var i = 0; i < (dataDivisi?.length ?? 0); i++) {
+      if (trimString(dataDivisi?[i].idAnggota) == trimString(idAnggota)) {
+        return dataDivisi?[i].nmAnggota;
+      }
+    }
+
+    return idAnggota;
+  } catch (e) {
+    return idAnggota;
+  }
+}
+
+setItemAnggota() {
+  List<String> data = [];
+  try {
+    var dataDivisi = AnggotaDatabase.dataAnggota.dataAnggota;
+
+    for (var i = 0; i < (dataDivisi?.length ?? 0); i++) {
+      data.add(
+          "${trimString(dataDivisi?[i].idAnggota)} - ${trimString(dataDivisi?[i].nmAnggota)}");
+    }
+
+    return data;
+  } catch (e) {
+    return data;
   }
 }
 

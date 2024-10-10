@@ -1,8 +1,13 @@
 import 'package:ksu_budidaya/core.dart';
+part 'anggota_model.g.dart';
 
+@HiveType(typeId: 13)
 class AnggotaResult {
+  @HiveField(0)
   bool? success;
+  @HiveField(1)
   DataAnggota? data;
+  @HiveField(2)
   String? message;
 
   AnggotaResult({this.success, this.data, this.message});
@@ -24,7 +29,9 @@ class AnggotaResult {
   }
 }
 
+@HiveType(typeId: 14)
 class DataAnggota {
+  @HiveField(0)
   List<DataDetailAnggota>? dataAnggota;
   Paging? paging;
 
@@ -52,14 +59,23 @@ class DataAnggota {
   }
 }
 
+@HiveType(typeId: 15)
 class DataDetailAnggota {
+  @HiveField(0)
   String? idAnggota;
+  @HiveField(1)
   String? nmAnggota;
+  @HiveField(2)
   String? alamat;
+  @HiveField(3)
   String? noWa;
+  @HiveField(4)
   String? limitPinjaman;
+  @HiveField(5)
   String? hutang;
+  @HiveField(6)
   String? createdAt;
+  @HiveField(7)
   String? updatedAt;
 
   DataDetailAnggota(
@@ -94,6 +110,10 @@ class DataDetailAnggota {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  String anggotaAsString() {
+    return '${trimString(idAnggota)} - ${trimString(nmAnggota)}';
   }
 
   DataDetailAnggota copyWith({

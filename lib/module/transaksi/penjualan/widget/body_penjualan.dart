@@ -19,11 +19,32 @@ class BodyPenjualan extends StatefulWidget {
 class _BodyPenjualanState extends State<BodyPenjualan> {
   TextEditingController diskonController = TextEditingController();
   TextEditingController qntController = TextEditingController();
+
+  String persenDiskon = "0";
+  String totalHarga = "0";
+
+  hitDiskon() {
+    var diskon = double.parse(
+      removeComma(
+          widget.controller.dataPenjualan.details?[widget.index].diskon ?? "0"),
+    );
+
+    var hargaJual = double.parse(
+      removeComma(
+          widget.controller.dataPenjualan.details?[widget.index].harga ?? "0"),
+    );
+
+    persenDiskon = formatMoney(
+        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100).toString());
+
+    diskonController.text = trimString(persenDiskon);
+  }
+
   @override
   void initState() {
     super.initState();
-    diskonController.text = trimString(
-        widget.controller.dataPenjualan.details?[widget.index].diskon);
+    diskonController.text = trimString(persenDiskon);
+
     qntController.text = trimString(
         widget.controller.dataPenjualan.details?[widget.index].jumlah);
   }
@@ -31,7 +52,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
   @override
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
-
+    controller.sumTotalIndex();
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -220,17 +241,25 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                     double? inputValue = double.tryParse(trimmedValue);
 
                     if (inputValue != null) {
-                      if (inputValue < 1) {
-                        inputValue = 1;
+                      if (inputValue < 0) {
+                        inputValue = 0;
                       } else if (inputValue > 100) {
                         inputValue = 100;
                       }
 
+                      var hargaJual = double.parse(
+                        removeComma(widget.controller.dataPenjualan
+                                .details?[widget.index].harga ??
+                            "0"),
+                      );
+
+                      var nilaiDiskon = (inputValue / 100) * hargaJual;
+
                       widget.controller.dataPenjualan.details?[widget.index]
-                          .diskon = inputValue.toString();
+                          .diskon = nilaiDiskon.toString();
                     } else {
                       widget.controller.dataPenjualan.details?[widget.index]
-                          .diskon = "1";
+                          .diskon = "0";
                     }
 
                     controller.update();
@@ -262,19 +291,15 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                 child: Text(
                   formatMoney(
                     trimString(
-                      ((double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
+                      ((double.parse(controller.dataPenjualan
+                                          .details?[widget.index].harga ??
+                                      "0") -
                                   double.parse(controller.dataPenjualan
-                                          .details?[widget.index].jumlah ??
-                                      "0")) -
-                              (double.parse(controller.dataPenjualan
-                                              .details?[widget.index].harga ??
-                                          "0") *
-                                      double.parse(controller.dataPenjualan
-                                              .details?[widget.index].jumlah ??
-                                          "0")) *
-                                  (double.parse(
-                                          controller.dataPenjualan.details?[widget.index].diskon ?? "0") /
-                                      100))
+                                          .details?[widget.index].diskon ??
+                                      "0")) *
+                              double.parse(controller.dataPenjualan
+                                      .details?[widget.index].jumlah ??
+                                  "0"))
                           .toString(),
                     ),
                   ),
