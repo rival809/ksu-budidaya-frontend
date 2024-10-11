@@ -83,7 +83,7 @@ class _BodyNotaState extends State<BodyNota> {
                   ),
                   Expanded(
                     child: Text(
-                      trimString(
+                      formatMoney(trimString(
                         ((double.parse(controller.dataPenjualan
                                         .details?[widget.index].harga ??
                                     "0") *
@@ -91,7 +91,7 @@ class _BodyNotaState extends State<BodyNota> {
                                         .details?[widget.index].jumlah ??
                                     "0")))
                             .toString(),
-                      ),
+                      )),
                       style: myTextTheme.bodySmall,
                       textAlign: TextAlign.end,
                     ),

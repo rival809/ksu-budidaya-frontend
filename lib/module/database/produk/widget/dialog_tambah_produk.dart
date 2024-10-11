@@ -197,11 +197,13 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                   label: "Jumlah",
                   hintText: "Masukkan Jumlah",
                   textInputFormater: [
-                    FilteringTextInputFormatter.digitsOnly,
+                    ThousandsFormatter(),
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                   ],
                   textEditingController: textController[4],
                   onChanged: (value) {
-                    dataEdit.jumlah = int.tryParse(trimString(value)) ?? 0;
+                    dataEdit.jumlah =
+                        int.tryParse(trimString(removeComma(value))) ?? 0;
                     update();
                   },
                   validator: Validatorless.required("Data Wajib Diisi"),
@@ -254,7 +256,9 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                         payload.removeWhere(
                           (key, value) => key == "total_beli",
                         );
-                        if (payload["keterangan"] == null) {
+                        if (trimString(payload["keterangan"])
+                            .toString()
+                            .isEmpty) {
                           payload.removeWhere(
                             (key, value) => key == "keterangan",
                           );

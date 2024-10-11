@@ -166,6 +166,8 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                       ),
                     ),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         InkWell(
                           onTap: controller.isDetail

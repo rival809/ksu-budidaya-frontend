@@ -119,6 +119,23 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                                 }),
                 ],
               ),
+            if (controller.isDetail)
+              const SizedBox(
+                height: 16.0,
+              ),
+            if (controller.isDetail)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  BasePrimaryButton(
+                    text: "Cetak",
+                    isDense: true,
+                    onPressed: () {
+                      controller.doGeneratePdfAndPrint();
+                    },
+                  ),
+                ],
+              ),
             const SizedBox(
               height: 16.0,
             ),
