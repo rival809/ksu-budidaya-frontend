@@ -18,6 +18,8 @@ export 'package:ksu_budidaya/model/cash_in_out/cash_in_out_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/ref_cash_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/ref_detail_cash_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/ref_jenis_cash_model.dart';
+export 'package:ksu_budidaya/model/dashboard/income_dashboard_model.dart';
+export 'package:ksu_budidaya/model/dashboard/income_monthly_model.dart';
 export 'package:ksu_budidaya/model/divisi/divisi_model.dart';
 export 'package:ksu_budidaya/model/pembelian/create_pembelian_model.dart';
 export 'package:ksu_budidaya/model/pembelian/detail_pembelian_model.dart';

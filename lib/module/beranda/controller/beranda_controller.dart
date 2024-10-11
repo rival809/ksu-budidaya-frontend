@@ -1,32 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 class BerandaController extends State<BerandaView> {
   static late BerandaController instance;
   late BerandaView view;
 
-  int activeTab = 0;
-  bool isExpand = true;
-  final GlobalKey<SliderDrawerState> sliderDrawerKey =
-      GlobalKey<SliderDrawerState>();
-
   Future<dynamic>? dataFuture;
-
-  Widget contentMenuDrawer = const SizedBox();
-
-  final Uri url = Uri.parse('https://sipandu-jawara.bapenda.jabarprov.go.id');
-  Future<void> launchInBrowser() async {
-    try {
-      launchUrl(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
-    } catch (e) {
-      showInfoDialog(e.toString(), context);
-    }
-  }
 
   getReferences() async {
     if (RoleDatabase.dataListRole.dataRoles?.isEmpty ?? true) {
@@ -46,11 +25,56 @@ class BerandaController extends State<BerandaView> {
     }
   }
 
+  IncomeDashboardResult result = IncomeDashboardResult();
+  bool loading = false;
+  postIncomeDashboard() async {
+    loading = true;
+    update();
+    try {
+      result = await ApiService.incomeDashboard()
+          .timeout(const Duration(seconds: 30));
+
+      loading = false;
+      update();
+    } catch (e) {
+      loading = false;
+      update();
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postIncomeMonthly() async {
+    loading = true;
+    update();
+    try {
+      result = await ApiService.incomeDashboard()
+          .timeout(const Duration(seconds: 30));
+
+      loading = false;
+      update();
+    } catch (e) {
+      loading = false;
+      update();
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   @override
   void initState() {
     instance = this;
     super.initState();
     getReferences();
+    postIncomeDashboard();
   }
 
   @override

@@ -60,12 +60,12 @@ String formatMoney(dynamic number) {
   try {
     if (number is num) {
       final formatter = NumberFormat("#,###", "id-ID");
-      return formatter.format(number);
+      return trimString(formatter.format(number));
     } else if (number is String) {
       try {
         final numericValue = double.parse(number);
         final formatter = NumberFormat("#,###", "id-ID");
-        return formatter.format(numericValue);
+        return trimString(formatter.format(numericValue));
       } catch (e) {
         return "";
       }

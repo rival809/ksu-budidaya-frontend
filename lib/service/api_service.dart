@@ -927,4 +927,43 @@ class ApiService {
       throw Exception('Failed to removePenjualan');
     }
   }
+
+  static Future<IncomeDashboardResult> incomeDashboard() async {
+    var response = await dio.post(
+      "$_baseUrl/api/dashboard/income-dashboard",
+      options: options,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return IncomeDashboardResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to incomeDashboard');
+    }
+  }
+
+  static Future<IncomeMonthlyResult> incomeMonthly({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/dashboard/income-monthly",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return IncomeMonthlyResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to incomeMonthly');
+    }
+  }
 }
