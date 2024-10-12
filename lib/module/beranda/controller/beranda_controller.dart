@@ -25,13 +25,43 @@ class BerandaController extends State<BerandaView> {
     }
   }
 
-  IncomeDashboardResult result = IncomeDashboardResult();
+  IncomeDashboardResult resultDashboard = IncomeDashboardResult();
+  IncomeMonthlyResult resultMonthly = IncomeMonthlyResult();
+
+  String monthNow = DateTime.now().month.toString();
+
+  String? selectedMonth;
+
+  List<String> month = const [
+    "1 - Januari",
+    "2 - Februari",
+    "3 - Maret",
+    "4 - April",
+    "5 - Mei",
+    "6 - Juni",
+    "7 - Juli",
+    "8 - Agustus",
+    "9 - September",
+    "10 - Oktober",
+    "11 - November",
+    "12 - Desember",
+  ];
+
+  String getNamaMonth(String angkaBulan) {
+    for (var i = 0; i < month.length; i++) {
+      if (splitString(month[i], true) == angkaBulan) {
+        return month[i];
+      }
+    }
+    return "";
+  }
+
   bool loading = false;
   postIncomeDashboard() async {
     loading = true;
     update();
     try {
-      result = await ApiService.incomeDashboard()
+      resultDashboard = await ApiService.incomeDashboard()
           .timeout(const Duration(seconds: 30));
 
       loading = false;
@@ -52,8 +82,10 @@ class BerandaController extends State<BerandaView> {
     loading = true;
     update();
     try {
-      result = await ApiService.incomeDashboard()
-          .timeout(const Duration(seconds: 30));
+      resultMonthly = await ApiService.incomeMonthly(data: {
+        "month": splitString(selectedMonth, true),
+        "year": DateTime.now().year.toString(),
+      }).timeout(const Duration(seconds: 30));
 
       loading = false;
       update();
@@ -73,8 +105,10 @@ class BerandaController extends State<BerandaView> {
   void initState() {
     instance = this;
     super.initState();
+    selectedMonth = getNamaMonth(monthNow);
     getReferences();
     postIncomeDashboard();
+    postIncomeMonthly();
   }
 
   @override

@@ -91,9 +91,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      formatMoney(trimString(controller
-                                          .result.data?.totalIncomeToday
-                                          .toString())),
+                                      "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeToday.toString())}",
                                       style: myTextTheme.displayLarge?.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -104,21 +102,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   ),
                                   Row(
                                     children: [
-                                      if (controller.result.data?.percentage !=
+                                      if (controller.resultDashboard.data
+                                              ?.percentage !=
                                           null)
                                         SvgPicture.asset(
-                                          (controller.result.data
+                                          (controller.resultDashboard.data
                                                           ?.totalIncomeToday ??
                                                       0) <
-                                                  (controller.result.data
+                                                  (controller
+                                                          .resultDashboard
+                                                          .data
                                                           ?.totalIncomeYesterday ??
                                                       0)
                                               ? iconArrowDropDown
                                               : iconArrowDropUp,
-                                          colorFilter: (controller.result.data
+                                          colorFilter: (controller
+                                                          .resultDashboard
+                                                          .data
                                                           ?.totalIncomeToday ??
                                                       0) <
-                                                  (controller.result.data
+                                                  (controller
+                                                          .resultDashboard
+                                                          .data
                                                           ?.totalIncomeYesterday ??
                                                       0)
                                               ? colorFilterRed800
@@ -129,9 +134,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                         width: 8.0,
                                       ),
                                       Text(
-                                        formatMoney(controller
-                                            .result.data?.percentage
-                                            .toString()),
+                                        "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
                                         style:
                                             myTextTheme.titleMedium?.copyWith(
                                           color: primaryColor,
@@ -199,9 +202,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      formatMoney(trimString(controller
-                                          .result.data?.totalIncomeYesterday
-                                          .toString())),
+                                      "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeYesterday.toString())}",
                                       style: myTextTheme.displayLarge?.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -269,9 +270,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        formatMoney(controller
-                                            .result.data?.totalIncomeToday
-                                            .toString()),
+                                        "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeToday.toString())}",
                                         style:
                                             myTextTheme.displayLarge?.copyWith(
                                           fontWeight: FontWeight.w600,
@@ -283,22 +282,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     ),
                                     Row(
                                       children: [
-                                        if (controller
-                                                .result.data?.percentage !=
+                                        if (controller.resultDashboard.data
+                                                ?.percentage !=
                                             null)
                                           SvgPicture.asset(
-                                            (controller.result.data
+                                            (controller.resultDashboard.data
                                                             ?.totalIncomeToday ??
                                                         0) <
-                                                    (controller.result.data
+                                                    (controller
+                                                            .resultDashboard
+                                                            .data
                                                             ?.totalIncomeYesterday ??
                                                         0)
                                                 ? iconArrowDropDown
                                                 : iconArrowDropUp,
-                                            colorFilter: (controller.result.data
+                                            colorFilter: (controller
+                                                            .resultDashboard
+                                                            .data
                                                             ?.totalIncomeToday ??
                                                         0) <
-                                                    (controller.result.data
+                                                    (controller
+                                                            .resultDashboard
+                                                            .data
                                                             ?.totalIncomeYesterday ??
                                                         0)
                                                 ? colorFilterRed800
@@ -309,9 +314,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                           width: 8.0,
                                         ),
                                         Text(
-                                          formatMoney(controller
-                                              .result.data?.percentage
-                                              .toString()),
+                                          "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
                                           style:
                                               myTextTheme.titleMedium?.copyWith(
                                             color: primaryColor,
@@ -381,9 +384,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        formatMoney(trimString(controller
-                                            .result.data?.totalIncomeYesterday
-                                            .toString())),
+                                        "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeYesterday.toString())}",
                                         style:
                                             myTextTheme.displayLarge?.copyWith(
                                           fontWeight: FontWeight.w600,
@@ -419,6 +420,8 @@ class _ContentBerandaState extends State<ContentBeranda> {
                 ],
               ),
             ),
+
+            //////Monthly
             const SizedBox(
               height: 24.0,
             ),
@@ -448,10 +451,15 @@ class _ContentBerandaState extends State<ContentBeranda> {
                       SizedBox(
                         width: 150,
                         child: SimpleDropdownButton(
-                          items: const ["Januari"],
-                          value: "Januari",
+                          items: controller.month,
+                          value: controller.selectedMonth,
                           isExpand: false,
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            controller.selectedMonth = value;
+                            controller.update();
+                            controller.postIncomeMonthly();
+                            controller.update();
+                          },
                           hint: '',
                         ),
                       )
@@ -492,7 +500,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      "Rp.100.000.000",
+                                      "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
                                       style: myTextTheme.displayLarge?.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -501,25 +509,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   const SizedBox(
                                     width: 8.0,
                                   ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        iconArrowDropUp,
-                                        colorFilter: colorFilterPrimary,
-                                        width: 24,
-                                      ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      Text(
-                                        "12%",
-                                        style:
-                                            myTextTheme.titleMedium?.copyWith(
-                                          color: primaryColor,
+                                  if (controller.resultMonthly.data
+                                          ?.percentageIncome !=
+                                      null)
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          iconArrowDropUp,
+                                          colorFilter: colorFilterPrimary,
+                                          width: 24,
                                         ),
-                                      ),
-                                    ],
-                                  )
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        Text(
+                                          "${formatMoney(controller.resultMonthly.data?.percentageIncome.toString())} %",
+                                          style:
+                                              myTextTheme.titleMedium?.copyWith(
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                 ],
                               ),
                             ],
@@ -557,7 +568,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      "Rp.100.000.000",
+                                      "Rp. ${formatMoney(controller.resultMonthly.data?.totalExpense.toString())}",
                                       style: myTextTheme.displayLarge?.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -566,25 +577,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   const SizedBox(
                                     width: 8.0,
                                   ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        iconArrowDropUp,
-                                        colorFilter: colorFilterPrimary,
-                                        width: 24,
-                                      ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      Text(
-                                        "12%",
-                                        style:
-                                            myTextTheme.titleMedium?.copyWith(
-                                          color: primaryColor,
+                                  if (controller.resultMonthly.data
+                                          ?.percentageExpense !=
+                                      null)
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          iconArrowDropUp,
+                                          colorFilter: colorFilterPrimary,
+                                          width: 24,
                                         ),
-                                      ),
-                                    ],
-                                  )
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        Text(
+                                          "${formatMoney(controller.resultMonthly.data?.percentageExpense.toString())} %",
+                                          style:
+                                              myTextTheme.titleMedium?.copyWith(
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                 ],
                               ),
                             ],
@@ -622,7 +636,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      "Rp.100.000.000",
+                                      "Rp. ${formatMoney(controller.resultMonthly.data?.totalProfit.toString())}",
                                       style: myTextTheme.displayLarge?.copyWith(
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -631,41 +645,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   const SizedBox(
                                     width: 8.0,
                                   ),
-                                  Row(
-                                    children: [
-                                      if (controller.result.data?.percentage !=
-                                          null)
+                                  if (controller.resultMonthly.data
+                                          ?.percentageProfit !=
+                                      null)
+                                    Row(
+                                      children: [
                                         SvgPicture.asset(
-                                          (controller.result.data
-                                                          ?.totalIncomeToday ??
-                                                      0) <
-                                                  (controller.result.data
-                                                          ?.totalIncomeYesterday ??
-                                                      0)
-                                              ? iconArrowDropDown
-                                              : iconArrowDropUp,
-                                          colorFilter: (controller.result.data
-                                                          ?.totalIncomeToday ??
-                                                      0) <
-                                                  (controller.result.data
-                                                          ?.totalIncomeYesterday ??
-                                                      0)
-                                              ? colorFilterRed800
-                                              : colorFilterPrimary,
+                                          iconArrowDropUp,
+                                          colorFilter: colorFilterPrimary,
                                           width: 24,
                                         ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      Text(
-                                        "12%",
-                                        style:
-                                            myTextTheme.titleMedium?.copyWith(
-                                          color: primaryColor,
+                                        const SizedBox(
+                                          width: 8.0,
                                         ),
-                                      ),
-                                    ],
-                                  )
+                                        Text(
+                                          "${formatMoney(controller.resultMonthly.data?.percentageProfit.toString())} %",
+                                          style:
+                                              myTextTheme.titleMedium?.copyWith(
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                 ],
                               ),
                             ],
@@ -705,7 +706,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Rp.100.000.000",
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
                                         style:
                                             myTextTheme.displayLarge?.copyWith(
                                           fontWeight: FontWeight.w600,
@@ -715,25 +716,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     const SizedBox(
                                       width: 8.0,
                                     ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          iconArrowDropUp,
-                                          colorFilter: colorFilterPrimary,
-                                          width: 24,
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        Text(
-                                          "12%",
-                                          style:
-                                              myTextTheme.titleMedium?.copyWith(
-                                            color: primaryColor,
+                                    if (controller.resultMonthly.data
+                                            ?.percentageIncome !=
+                                        null)
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            iconArrowDropUp,
+                                            colorFilter: colorFilterPrimary,
+                                            width: 24,
                                           ),
-                                        ),
-                                      ],
-                                    )
+                                          const SizedBox(
+                                            width: 8.0,
+                                          ),
+                                          Text(
+                                            "${formatMoney(controller.resultMonthly.data?.percentageIncome.toString())} %",
+                                            style: myTextTheme.titleMedium
+                                                ?.copyWith(
+                                              color: primaryColor,
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                   ],
                                 ),
                               ],
@@ -773,7 +777,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Rp.100.000.000",
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalExpense.toString())}",
                                         style:
                                             myTextTheme.displayLarge?.copyWith(
                                           fontWeight: FontWeight.w600,
@@ -783,25 +787,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     const SizedBox(
                                       width: 8.0,
                                     ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          iconArrowDropUp,
-                                          colorFilter: colorFilterPrimary,
-                                          width: 24,
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        Text(
-                                          "12%",
-                                          style:
-                                              myTextTheme.titleMedium?.copyWith(
-                                            color: primaryColor,
+                                    if (controller.resultMonthly.data
+                                            ?.percentageExpense !=
+                                        null)
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            iconArrowDropUp,
+                                            colorFilter: colorFilterPrimary,
+                                            width: 24,
                                           ),
-                                        ),
-                                      ],
-                                    )
+                                          const SizedBox(
+                                            width: 8.0,
+                                          ),
+                                          Text(
+                                            "${formatMoney(controller.resultMonthly.data?.percentageExpense.toString())} %",
+                                            style: myTextTheme.titleMedium
+                                                ?.copyWith(
+                                              color: primaryColor,
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                   ],
                                 ),
                               ],
@@ -841,7 +848,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Rp.100.000.000",
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalProfit.toString())}",
                                         style:
                                             myTextTheme.displayLarge?.copyWith(
                                           fontWeight: FontWeight.w600,
@@ -851,25 +858,28 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     const SizedBox(
                                       width: 8.0,
                                     ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          iconArrowDropUp,
-                                          colorFilter: colorFilterPrimary,
-                                          width: 24,
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        Text(
-                                          "12%",
-                                          style:
-                                              myTextTheme.titleMedium?.copyWith(
-                                            color: primaryColor,
+                                    if (controller.resultMonthly.data
+                                            ?.percentageProfit !=
+                                        null)
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            iconArrowDropUp,
+                                            colorFilter: colorFilterPrimary,
+                                            width: 24,
                                           ),
-                                        ),
-                                      ],
-                                    )
+                                          const SizedBox(
+                                            width: 8.0,
+                                          ),
+                                          Text(
+                                            "${formatMoney(controller.resultMonthly.data?.percentageProfit.toString())} %",
+                                            style: myTextTheme.titleMedium
+                                                ?.copyWith(
+                                              color: primaryColor,
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                   ],
                                 ),
                               ],
