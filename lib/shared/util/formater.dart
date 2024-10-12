@@ -76,6 +76,10 @@ String formatMoney(dynamic number) {
   }
 }
 
+bool isPositive(double number) {
+  return number >= 0;
+}
+
 String removeComma(String value) {
   return value.replaceAll('.', '');
 }

@@ -100,48 +100,44 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   const SizedBox(
                                     width: 8.0,
                                   ),
-                                  Row(
-                                    children: [
-                                      if (controller.resultDashboard.data
-                                              ?.percentage !=
-                                          null)
+                                  if (controller
+                                          .resultDashboard.data?.percentage !=
+                                      null)
+                                    Row(
+                                      children: [
                                         SvgPicture.asset(
-                                          (controller.resultDashboard.data
-                                                          ?.totalIncomeToday ??
-                                                      0) <
-                                                  (controller
-                                                          .resultDashboard
-                                                          .data
-                                                          ?.totalIncomeYesterday ??
-                                                      0)
-                                              ? iconArrowDropDown
-                                              : iconArrowDropUp,
-                                          colorFilter: (controller
-                                                          .resultDashboard
-                                                          .data
-                                                          ?.totalIncomeToday ??
-                                                      0) <
-                                                  (controller
-                                                          .resultDashboard
-                                                          .data
-                                                          ?.totalIncomeYesterday ??
-                                                      0)
-                                              ? colorFilterRed800
-                                              : colorFilterPrimary,
+                                          isPositive(controller.resultDashboard
+                                                      .data?.percentage ??
+                                                  0)
+                                              ? iconArrowDropUp
+                                              : iconArrowDropDown,
+                                          colorFilter: isPositive(controller
+                                                      .resultDashboard
+                                                      .data
+                                                      ?.percentage ??
+                                                  0)
+                                              ? colorFilterPrimary
+                                              : colorFilterRed800,
                                           width: 24,
                                         ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      Text(
-                                        "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
-                                        style:
-                                            myTextTheme.titleMedium?.copyWith(
-                                          color: primaryColor,
+                                        const SizedBox(
+                                          width: 8.0,
                                         ),
-                                      ),
-                                    ],
-                                  )
+                                        Text(
+                                          "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
+                                          style:
+                                              myTextTheme.titleMedium?.copyWith(
+                                            color: isPositive(controller
+                                                        .resultDashboard
+                                                        .data
+                                                        ?.percentage ??
+                                                    0)
+                                                ? primaryColor
+                                                : red800,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                 ],
                               ),
                             ],
@@ -280,48 +276,46 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     const SizedBox(
                                       width: 8.0,
                                     ),
-                                    Row(
-                                      children: [
-                                        if (controller.resultDashboard.data
-                                                ?.percentage !=
-                                            null)
+                                    if (controller
+                                            .resultDashboard.data?.percentage !=
+                                        null)
+                                      Row(
+                                        children: [
                                           SvgPicture.asset(
-                                            (controller.resultDashboard.data
-                                                            ?.totalIncomeToday ??
-                                                        0) <
-                                                    (controller
-                                                            .resultDashboard
-                                                            .data
-                                                            ?.totalIncomeYesterday ??
-                                                        0)
-                                                ? iconArrowDropDown
-                                                : iconArrowDropUp,
-                                            colorFilter: (controller
-                                                            .resultDashboard
-                                                            .data
-                                                            ?.totalIncomeToday ??
-                                                        0) <
-                                                    (controller
-                                                            .resultDashboard
-                                                            .data
-                                                            ?.totalIncomeYesterday ??
-                                                        0)
-                                                ? colorFilterRed800
-                                                : colorFilterPrimary,
+                                            isPositive(controller
+                                                        .resultDashboard
+                                                        .data
+                                                        ?.percentage ??
+                                                    0)
+                                                ? iconArrowDropUp
+                                                : iconArrowDropDown,
+                                            colorFilter: isPositive(controller
+                                                        .resultDashboard
+                                                        .data
+                                                        ?.percentage ??
+                                                    0)
+                                                ? colorFilterPrimary
+                                                : colorFilterRed800,
                                             width: 24,
                                           ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        Text(
-                                          "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
-                                          style:
-                                              myTextTheme.titleMedium?.copyWith(
-                                            color: primaryColor,
+                                          const SizedBox(
+                                            width: 8.0,
                                           ),
-                                        ),
-                                      ],
-                                    )
+                                          Text(
+                                            "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
+                                            style: myTextTheme.titleMedium
+                                                ?.copyWith(
+                                              color: isPositive(controller
+                                                          .resultDashboard
+                                                          .data
+                                                          ?.percentage ??
+                                                      0)
+                                                  ? primaryColor
+                                                  : red800,
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                   ],
                                 ),
                               ],
@@ -519,8 +513,18 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          iconArrowDropUp,
-                                          colorFilter: colorFilterPrimary,
+                                          isPositive(controller.resultMonthly
+                                                      .data?.percentageIncome ??
+                                                  0)
+                                              ? iconArrowDropUp
+                                              : iconArrowDropDown,
+                                          colorFilter: isPositive(controller
+                                                      .resultMonthly
+                                                      .data
+                                                      ?.percentageIncome ??
+                                                  0)
+                                              ? colorFilterPrimary
+                                              : colorFilterRed800,
                                           width: 24,
                                         ),
                                         const SizedBox(
@@ -530,7 +534,13 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                           "${formatMoney(controller.resultMonthly.data?.percentageIncome.toString())} %",
                                           style:
                                               myTextTheme.titleMedium?.copyWith(
-                                            color: primaryColor,
+                                            color: isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageIncome ??
+                                                    0)
+                                                ? primaryColor
+                                                : red800,
                                           ),
                                         ),
                                       ],
@@ -587,8 +597,20 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          iconArrowDropUp,
-                                          colorFilter: colorFilterPrimary,
+                                          isPositive(controller
+                                                      .resultMonthly
+                                                      .data
+                                                      ?.percentageExpense ??
+                                                  0)
+                                              ? iconArrowDropUp
+                                              : iconArrowDropDown,
+                                          colorFilter: isPositive(controller
+                                                      .resultMonthly
+                                                      .data
+                                                      ?.percentageExpense ??
+                                                  0)
+                                              ? colorFilterPrimary
+                                              : colorFilterRed800,
                                           width: 24,
                                         ),
                                         const SizedBox(
@@ -598,7 +620,13 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                           "${formatMoney(controller.resultMonthly.data?.percentageExpense.toString())} %",
                                           style:
                                               myTextTheme.titleMedium?.copyWith(
-                                            color: primaryColor,
+                                            color: isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageExpense ??
+                                                    0)
+                                                ? primaryColor
+                                                : red800,
                                           ),
                                         ),
                                       ],
@@ -655,8 +683,18 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          iconArrowDropUp,
-                                          colorFilter: colorFilterPrimary,
+                                          isPositive(controller.resultMonthly
+                                                      .data?.percentageProfit ??
+                                                  0)
+                                              ? iconArrowDropUp
+                                              : iconArrowDropDown,
+                                          colorFilter: isPositive(controller
+                                                      .resultMonthly
+                                                      .data
+                                                      ?.percentageProfit ??
+                                                  0)
+                                              ? colorFilterPrimary
+                                              : colorFilterRed800,
                                           width: 24,
                                         ),
                                         const SizedBox(
@@ -666,7 +704,13 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                           "${formatMoney(controller.resultMonthly.data?.percentageProfit.toString())} %",
                                           style:
                                               myTextTheme.titleMedium?.copyWith(
-                                            color: primaryColor,
+                                            color: isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageProfit ??
+                                                    0)
+                                                ? primaryColor
+                                                : red700,
                                           ),
                                         ),
                                       ],
@@ -726,8 +770,20 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                       Row(
                                         children: [
                                           SvgPicture.asset(
-                                            iconArrowDropUp,
-                                            colorFilter: colorFilterPrimary,
+                                            isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageIncome ??
+                                                    0)
+                                                ? iconArrowDropUp
+                                                : iconArrowDropDown,
+                                            colorFilter: isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageIncome ??
+                                                    0)
+                                                ? colorFilterPrimary
+                                                : colorFilterRed800,
                                             width: 24,
                                           ),
                                           const SizedBox(
@@ -737,7 +793,13 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                             "${formatMoney(controller.resultMonthly.data?.percentageIncome.toString())} %",
                                             style: myTextTheme.titleMedium
                                                 ?.copyWith(
-                                              color: primaryColor,
+                                              color: isPositive(controller
+                                                          .resultMonthly
+                                                          .data
+                                                          ?.percentageIncome ??
+                                                      0)
+                                                  ? primaryColor
+                                                  : red800,
                                             ),
                                           ),
                                         ],
@@ -797,8 +859,20 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                       Row(
                                         children: [
                                           SvgPicture.asset(
-                                            iconArrowDropUp,
-                                            colorFilter: colorFilterPrimary,
+                                            isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageExpense ??
+                                                    0)
+                                                ? iconArrowDropUp
+                                                : iconArrowDropDown,
+                                            colorFilter: isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageExpense ??
+                                                    0)
+                                                ? colorFilterPrimary
+                                                : colorFilterRed800,
                                             width: 24,
                                           ),
                                           const SizedBox(
@@ -808,7 +882,13 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                             "${formatMoney(controller.resultMonthly.data?.percentageExpense.toString())} %",
                                             style: myTextTheme.titleMedium
                                                 ?.copyWith(
-                                              color: primaryColor,
+                                              color: isPositive(controller
+                                                          .resultMonthly
+                                                          .data
+                                                          ?.percentageExpense ??
+                                                      0)
+                                                  ? primaryColor
+                                                  : red800,
                                             ),
                                           ),
                                         ],
@@ -868,8 +948,20 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                       Row(
                                         children: [
                                           SvgPicture.asset(
-                                            iconArrowDropUp,
-                                            colorFilter: colorFilterPrimary,
+                                            isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageProfit ??
+                                                    0)
+                                                ? iconArrowDropUp
+                                                : iconArrowDropDown,
+                                            colorFilter: isPositive(controller
+                                                        .resultMonthly
+                                                        .data
+                                                        ?.percentageProfit ??
+                                                    0)
+                                                ? colorFilterPrimary
+                                                : colorFilterRed800,
                                             width: 24,
                                           ),
                                           const SizedBox(
@@ -879,7 +971,13 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                             "${formatMoney(controller.resultMonthly.data?.percentageProfit.toString())} %",
                                             style: myTextTheme.titleMedium
                                                 ?.copyWith(
-                                              color: primaryColor,
+                                              color: isPositive(controller
+                                                          .resultMonthly
+                                                          .data
+                                                          ?.percentageProfit ??
+                                                      0)
+                                                  ? primaryColor
+                                                  : red700,
                                             ),
                                           ),
                                         ],
