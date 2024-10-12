@@ -28,29 +28,13 @@ class BerandaController extends State<BerandaView> {
   IncomeDashboardResult resultDashboard = IncomeDashboardResult();
   IncomeMonthlyResult resultMonthly = IncomeMonthlyResult();
 
-  String monthNow = DateTime.now().month.toString();
+  int monthNow = DateTime.now().month;
 
-  String? selectedMonth;
-
-  List<String> month = const [
-    "1 - Januari",
-    "2 - Februari",
-    "3 - Maret",
-    "4 - April",
-    "5 - Mei",
-    "6 - Juni",
-    "7 - Juli",
-    "8 - Agustus",
-    "9 - September",
-    "10 - Oktober",
-    "11 - November",
-    "12 - Desember",
-  ];
-
-  String getNamaMonth(String angkaBulan) {
-    for (var i = 0; i < month.length; i++) {
-      if (splitString(month[i], true) == angkaBulan) {
-        return month[i];
+  String getNamaMonth(int angkaBulan) {
+    var data = Year.fromJson(monthData).months;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].id == angkaBulan) {
+        return data[i].month;
       }
     }
     return "";
@@ -83,7 +67,7 @@ class BerandaController extends State<BerandaView> {
     update();
     try {
       resultMonthly = await ApiService.incomeMonthly(data: {
-        "month": splitString(selectedMonth, true),
+        "month": monthNow.toString(),
         "year": DateTime.now().year.toString(),
       }).timeout(const Duration(seconds: 30));
 
@@ -105,7 +89,6 @@ class BerandaController extends State<BerandaView> {
   void initState() {
     instance = this;
     super.initState();
-    selectedMonth = getNamaMonth(monthNow);
     getReferences();
     postIncomeDashboard();
     postIncomeMonthly();

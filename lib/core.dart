@@ -14,6 +14,7 @@ export 'package:ksu_budidaya/database/transaksi/pembelian_database.dart';
 export 'package:ksu_budidaya/database/user/role_database.dart';
 export 'package:ksu_budidaya/model/anggota/anggota_model.dart';
 export 'package:ksu_budidaya/model/auth/login_model.dart';
+export 'package:ksu_budidaya/model/bulan_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/cash_in_out_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/ref_cash_model.dart';
 export 'package:ksu_budidaya/model/cash_in_out/ref_detail_cash_model.dart';

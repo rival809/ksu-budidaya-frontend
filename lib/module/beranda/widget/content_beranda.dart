@@ -450,19 +450,23 @@ class _ContentBerandaState extends State<ContentBeranda> {
                       ),
                       SizedBox(
                         width: 150,
-                        child: SimpleDropdownButton(
-                          items: controller.month,
-                          value: controller.selectedMonth,
-                          isExpand: false,
+                        child: BaseDropdownButton<Month>(
+                          sortItem: false,
+                          itemAsString: (item) => item.monthAsString(),
+                          items: Year.fromJson(monthData).months,
+                          value: Month(
+                            id: controller.monthNow,
+                            month: trimString(
+                                controller.getNamaMonth(controller.monthNow)),
+                          ),
                           onChanged: (value) {
-                            controller.selectedMonth = value;
+                            controller.monthNow = value?.id ?? 1;
                             controller.update();
                             controller.postIncomeMonthly();
                             controller.update();
                           },
-                          hint: '',
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(
