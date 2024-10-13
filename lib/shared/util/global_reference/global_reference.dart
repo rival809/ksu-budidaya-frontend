@@ -128,6 +128,26 @@ getNamaAnggota({String? idAnggota}) {
   }
 }
 
+String getNamaMonth(int angkaBulan) {
+  var data = Year.fromJson(monthData).months;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].id == angkaBulan) {
+      return data[i].month;
+    }
+  }
+  return "";
+}
+
+String getNamaLaporan(int idLaporan) {
+  var data = JenisLaporan.fromJson(dataItemLaporan).listItemLaporan;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].id == idLaporan) {
+      return data[i].nmLaporan;
+    }
+  }
+  return "";
+}
+
 setItemAnggota() {
   List<String> data = [];
   try {

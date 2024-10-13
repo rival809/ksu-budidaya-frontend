@@ -450,8 +450,8 @@ class _ContentBerandaState extends State<ContentBeranda> {
                           items: Year.fromJson(monthData).months,
                           value: Month(
                             id: controller.monthNow,
-                            month: trimString(
-                                controller.getNamaMonth(controller.monthNow)),
+                            month:
+                                trimString(getNamaMonth(controller.monthNow)),
                           ),
                           onChanged: (value) {
                             controller.monthNow = value?.id ?? 1;

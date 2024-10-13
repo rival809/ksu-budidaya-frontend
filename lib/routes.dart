@@ -156,6 +156,14 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: 'laporan',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: LaporanView(),
+            );
+          },
+        ),
 
         // GoRoute(
         //   path: 'pdf-viewer',

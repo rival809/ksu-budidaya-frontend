@@ -30,16 +30,6 @@ class BerandaController extends State<BerandaView> {
 
   int monthNow = DateTime.now().month;
 
-  String getNamaMonth(int angkaBulan) {
-    var data = Year.fromJson(monthData).months;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].id == angkaBulan) {
-        return data[i].month;
-      }
-    }
-    return "";
-  }
-
   bool loading = false;
   postIncomeDashboard() async {
     loading = true;

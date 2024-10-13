@@ -3,6 +3,7 @@
         "beranda",
         "splashscreen",
         "user/login",
+        "laporan",
         "user/ubah_kata_sandi",
         "user/manajemen_role",
         "user/manajemen_user",

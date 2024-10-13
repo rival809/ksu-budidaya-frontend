@@ -966,4 +966,30 @@ class ApiService {
       throw Exception('Failed to incomeMonthly');
     }
   }
+
+  static Future<LaporanHasilUsahaResult> laporanHasilUsaha({
+    required String month,
+    required String year,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/laporan/hasil-usaha",
+      options: options,
+      data: {
+        "month": month,
+        "year": year,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return LaporanHasilUsahaResult.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to laporanHasilUsaha');
+    }
+  }
 }
