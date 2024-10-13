@@ -212,6 +212,7 @@ class PenjualanController extends State<PenjualanView> {
   CreatePenjualanModel dataPenjualan = CreatePenjualanModel();
 
   String? totalBayar = "0";
+  int totalKembali = 0;
 
   List<TextEditingController> textControllerDialog = [
     TextEditingController(),
@@ -222,13 +223,15 @@ class PenjualanController extends State<PenjualanView> {
   ];
 
   hitBayar() {
-    var totalKembali = int.parse(removeComma(
-            trimString(textControllerDialog[2].text.toString())
-                    .toString()
-                    .isEmpty
-                ? "0"
-                : trimString(textControllerDialog[2].text.toString()) ?? "0")) -
-        int.parse(removeComma(dataPenjualan.totalNilaiJual ?? "0"));
+    totalKembali = double.parse(removeComma(
+                trimString(textControllerDialog[2].text.toString())
+                        .toString()
+                        .isEmpty
+                    ? "0"
+                    : trimString(textControllerDialog[2].text.toString()) ??
+                        "0"))
+            .round() -
+        double.parse(removeComma(dataPenjualan.totalNilaiJual ?? "0")).round();
     totalBayar = formatMoney(removeComma(totalKembali.toString()));
     textControllerDialog[3].text = totalBayar ?? "0";
   }
@@ -598,88 +601,18 @@ class PenjualanController extends State<PenjualanView> {
                                     100)
                                 .toString());
 
-                        return pw.Column(
-                          children: [
-                            pw.Row(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Expanded(
-                                  child: pw.Text(
-                                    trimString(
-                                      dataPenjualan.details?[index].nmProduk,
-                                    ),
-                                    style: const pw.TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                                pw.Expanded(
-                                  child: pw.Row(
-                                    children: [
-                                      pw.Expanded(
-                                        child: pw.Row(
-                                          children: [
-                                            pw.Expanded(
-                                              child: pw.Text(
-                                                trimString(
-                                                      dataPenjualan
-                                                          .details?[index]
-                                                          .jumlah,
-                                                    ) +
-                                                    "x",
-                                                style: const pw.TextStyle(
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                            ),
-                                            pw.SizedBox(
-                                              width: 16.0,
-                                            ),
-                                            pw.Expanded(
-                                              child: pw.Text(
-                                                formatMoney(trimString(
-                                                  dataPenjualan
-                                                      .details?[index].harga,
-                                                )),
-                                                style: const pw.TextStyle(
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      pw.Expanded(
-                                        child: pw.Text(
-                                          formatMoney(trimString(
-                                            ((double.parse(dataPenjualan
-                                                            .details?[index]
-                                                            .harga ??
-                                                        "0") *
-                                                    double.parse(dataPenjualan
-                                                            .details?[index]
-                                                            .jumlah ??
-                                                        "0")))
-                                                .toString(),
-                                          )),
-                                          style: const pw.TextStyle(
-                                            fontSize: 18,
-                                          ),
-                                          textAlign: pw.TextAlign.end,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            if (dataPenjualan.details?[index].diskon != "0")
+                        return pw.Padding(
+                          padding: const pw.EdgeInsets.only(bottom: 4.0),
+                          child: pw.Column(
+                            children: [
                               pw.Row(
                                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                                 children: [
                                   pw.Expanded(
                                     child: pw.Text(
-                                      "Diskon",
+                                      trimString(
+                                        dataPenjualan.details?[index].nmProduk,
+                                      ),
                                       style: const pw.TextStyle(
                                         fontSize: 18,
                                       ),
@@ -693,7 +626,12 @@ class PenjualanController extends State<PenjualanView> {
                                             children: [
                                               pw.Expanded(
                                                 child: pw.Text(
-                                                  "",
+                                                  trimString(
+                                                        dataPenjualan
+                                                            .details?[index]
+                                                            .jumlah,
+                                                      ) +
+                                                      "x",
                                                   style: const pw.TextStyle(
                                                     fontSize: 18,
                                                   ),
@@ -704,9 +642,10 @@ class PenjualanController extends State<PenjualanView> {
                                               ),
                                               pw.Expanded(
                                                 child: pw.Text(
-                                                  trimString(persenDiskon) +
-                                                      "%",
-                                                  textAlign: pw.TextAlign.start,
+                                                  formatMoney(trimString(
+                                                    dataPenjualan
+                                                        .details?[index].harga,
+                                                  )),
                                                   style: const pw.TextStyle(
                                                     fontSize: 18,
                                                   ),
@@ -717,21 +656,17 @@ class PenjualanController extends State<PenjualanView> {
                                         ),
                                         pw.Expanded(
                                           child: pw.Text(
-                                            formatMoney(
-                                              trimString(
-                                                (double.parse(dataPenjualan
-                                                                .details?[index]
-                                                                .diskon ??
-                                                            "0") *
-                                                        double.parse(removeComma(
-                                                            dataPenjualan
-                                                                    .details?[
-                                                                        index]
-                                                                    .jumlah ??
-                                                                "0")))
-                                                    .toString(),
-                                              ),
-                                            ),
+                                            formatMoney(trimString(
+                                              ((double.parse(dataPenjualan
+                                                              .details?[index]
+                                                              .harga ??
+                                                          "0") *
+                                                      double.parse(dataPenjualan
+                                                              .details?[index]
+                                                              .jumlah ??
+                                                          "0")))
+                                                  .toString(),
+                                            )),
                                             style: const pw.TextStyle(
                                               fontSize: 18,
                                             ),
@@ -743,7 +678,81 @@ class PenjualanController extends State<PenjualanView> {
                                   ),
                                 ],
                               ),
-                          ],
+                              if (dataPenjualan.details?[index].diskon != "0")
+                                pw.Row(
+                                  crossAxisAlignment:
+                                      pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.Expanded(
+                                      child: pw.Text(
+                                        "Diskon",
+                                        style: const pw.TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                    pw.Expanded(
+                                      child: pw.Row(
+                                        children: [
+                                          pw.Expanded(
+                                            child: pw.Row(
+                                              children: [
+                                                pw.Expanded(
+                                                  child: pw.Text(
+                                                    "",
+                                                    style: const pw.TextStyle(
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                                pw.SizedBox(
+                                                  width: 16.0,
+                                                ),
+                                                pw.Expanded(
+                                                  child: pw.Text(
+                                                    trimString(persenDiskon) +
+                                                        "%",
+                                                    textAlign:
+                                                        pw.TextAlign.start,
+                                                    style: const pw.TextStyle(
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          pw.Expanded(
+                                            child: pw.Text(
+                                              formatMoney(
+                                                trimString(
+                                                  (double.parse(dataPenjualan
+                                                                  .details?[
+                                                                      index]
+                                                                  .diskon ??
+                                                              "0") *
+                                                          double.parse(removeComma(
+                                                              dataPenjualan
+                                                                      .details?[
+                                                                          index]
+                                                                      .jumlah ??
+                                                                  "0")))
+                                                      .toString(),
+                                                ),
+                                              ),
+                                              style: const pw.TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                              textAlign: pw.TextAlign.end,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
                         );
                       },
                     ),

@@ -80,19 +80,19 @@ class ProdukView extends StatefulWidget {
                               const SizedBox(
                                 width: 16.0,
                               ),
-                              BaseSecondaryButton(
-                                onPressed: () {
-                                  // controller.dataFuture =
-                                  //     controller.cariDataProduct();
-                                  // controller.update();
-                                },
-                                text: "Filter",
-                                suffixIcon: iconFilterAlt,
-                                isDense: true,
-                              ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
+                              // BaseSecondaryButton(
+                              //   onPressed: () {
+                              //     // controller.dataFuture =
+                              //     //     controller.cariDataProduct();
+                              //     // controller.update();
+                              //   },
+                              //   text: "Filter",
+                              //   suffixIcon: iconFilterAlt,
+                              //   isDense: true,
+                              // ),
+                              // const SizedBox(
+                              //   width: 16.0,
+                              // ),
                             ],
                           ),
                           BasePrimaryButton(
@@ -594,8 +594,6 @@ class ProdukView extends StatefulWidget {
                                               trimString(
                                                   dataRow["id_product"])) ??
                                       DataDetailProduct();
-                                  print("data");
-                                  print(data);
 
                                   return DropdownAksi(
                                     text: "Aksi",

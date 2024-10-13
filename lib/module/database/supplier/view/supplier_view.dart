@@ -136,9 +136,8 @@ class SupplierView extends StatefulWidget {
                                 field: controller.listRoleView[index],
                                 type: (controller.listRoleView[index] ==
                                         "hutang_dagang")
-                                    ? PlutoColumnType.currency(
+                                    ? PlutoColumnType.number(
                                         locale: "id",
-                                        decimalDigits: 0,
                                       )
                                     : PlutoColumnType.text(),
                               );

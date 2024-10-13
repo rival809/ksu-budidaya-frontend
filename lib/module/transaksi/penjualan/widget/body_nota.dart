@@ -29,85 +29,27 @@ class _BodyNotaState extends State<BodyNota> {
           widget.controller.dataPenjualan.details?[widget.index].harga ?? "0"),
     );
 
-    persenDiskon = formatMoney(
-        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100).toString());
+    persenDiskon = (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100)
+        .round()
+        .toString();
   }
 
   @override
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
     hitDiskon();
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                trimString(
-                  controller.dataPenjualan.details?[widget.index].nmProduk,
-                ),
-                style: myTextTheme.bodySmall,
-              ),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            trimString(
-                                  controller.dataPenjualan
-                                      .details?[widget.index].jumlah,
-                                ) +
-                                "x",
-                            style: myTextTheme.bodySmall,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 16.0,
-                        ),
-                        Expanded(
-                          child: Text(
-                            formatMoney(trimString(
-                              controller
-                                  .dataPenjualan.details?[widget.index].harga,
-                            )),
-                            style: myTextTheme.bodySmall,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      formatMoney(trimString(
-                        ((double.parse(controller.dataPenjualan
-                                        .details?[widget.index].harga ??
-                                    "0") *
-                                double.parse(controller.dataPenjualan
-                                        .details?[widget.index].jumlah ??
-                                    "0")))
-                            .toString(),
-                      )),
-                      style: myTextTheme.bodySmall,
-                      textAlign: TextAlign.end,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-        if (controller.dataPenjualan.details?[widget.index].diskon != "0")
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Column(
+        children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Text(
-                  "Diskon",
+                  trimString(
+                    controller.dataPenjualan.details?[widget.index].nmProduk,
+                  ),
                   style: myTextTheme.bodySmall,
                 ),
               ),
@@ -119,7 +61,11 @@ class _BodyNotaState extends State<BodyNota> {
                         children: [
                           Expanded(
                             child: Text(
-                              "",
+                              trimString(
+                                    controller.dataPenjualan
+                                        .details?[widget.index].jumlah,
+                                  ) +
+                                  "x",
                               style: myTextTheme.bodySmall,
                             ),
                           ),
@@ -128,8 +74,10 @@ class _BodyNotaState extends State<BodyNota> {
                           ),
                           Expanded(
                             child: Text(
-                              trimString(persenDiskon) + "%",
-                              textAlign: TextAlign.start,
+                              formatMoney(trimString(
+                                controller
+                                    .dataPenjualan.details?[widget.index].harga,
+                              )),
                               style: myTextTheme.bodySmall,
                             ),
                           )
@@ -138,20 +86,15 @@ class _BodyNotaState extends State<BodyNota> {
                     ),
                     Expanded(
                       child: Text(
-                        formatMoney(
-                          trimString(
-                            (double.parse(controller.dataPenjualan
-                                            .details?[widget.index].diskon ??
-                                        "0") *
-                                    double.parse(removeComma(widget
-                                            .controller
-                                            .dataPenjualan
-                                            .details?[widget.index]
-                                            .jumlah ??
-                                        "0")))
-                                .toString(),
-                          ),
-                        ),
+                        formatMoney(trimString(
+                          ((double.parse(controller.dataPenjualan
+                                          .details?[widget.index].harga ??
+                                      "0") *
+                                  double.parse(controller.dataPenjualan
+                                          .details?[widget.index].jumlah ??
+                                      "0")))
+                              .toString(),
+                        )),
                         style: myTextTheme.bodySmall,
                         textAlign: TextAlign.end,
                       ),
@@ -161,7 +104,68 @@ class _BodyNotaState extends State<BodyNota> {
               ),
             ],
           ),
-      ],
+          if (controller.dataPenjualan.details?[widget.index].diskon != "0")
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    "Diskon",
+                    style: myTextTheme.bodySmall,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                "",
+                                style: myTextTheme.bodySmall,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 16.0,
+                            ),
+                            Expanded(
+                              child: Text(
+                                trimString(persenDiskon) + "%",
+                                textAlign: TextAlign.start,
+                                style: myTextTheme.bodySmall,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          formatMoney(
+                            trimString(
+                              (double.parse(controller.dataPenjualan
+                                              .details?[widget.index].diskon ??
+                                          "0") *
+                                      double.parse(removeComma(widget
+                                              .controller
+                                              .dataPenjualan
+                                              .details?[widget.index]
+                                              .jumlah ??
+                                          "0")))
+                                  .toString(),
+                            ),
+                          ),
+                          style: myTextTheme.bodySmall,
+                          textAlign: TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 }

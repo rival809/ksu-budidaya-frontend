@@ -219,11 +219,13 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 Expanded(
                   child: BasePrimaryButton(
                     text: "Simpan",
-                    onPressed: () {
-                      if (inputPenjualanKey.currentState!.validate()) {
-                        controller.postCreatePenjualan();
-                      }
-                    },
+                    onPressed: controller.totalKembali < 0
+                        ? null
+                        : () {
+                            if (inputPenjualanKey.currentState!.validate()) {
+                              controller.postCreatePenjualan();
+                            }
+                          },
                   ),
                 ),
               ],

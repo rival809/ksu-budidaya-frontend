@@ -39,6 +39,7 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                     controller.isList = true;
                     controller.isDetail = false;
                     controller.dataPenjualan = CreatePenjualanModel();
+                    controller.dataFuture = controller.cariDataPenjualan();
                     controller.update();
                     update();
                   },

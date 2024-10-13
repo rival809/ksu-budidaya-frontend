@@ -20,6 +20,13 @@ class _ContainerPembelianState extends State<ContainerPembelian> {
     super.initState();
     widget.controller.initColumn();
     widget.controller.initRow();
+    widget.controller.sumTotalDiskon();
+    widget.controller.sumTotalDiskon();
+    widget.controller.sumTotalPpn();
+    widget.controller.sumTotalNilaiBeli();
+    widget.controller.sumTotalNilaiJual();
+    widget.controller.sumJumlah();
+    widget.controller.checkPpn();
   }
 
   final inputPembelianKey = GlobalKey<FormState>();
@@ -28,6 +35,7 @@ class _ContainerPembelianState extends State<ContainerPembelian> {
   Widget build(BuildContext context) {
     PembelianController controller = widget.controller;
 
+    controller.sumTotalDiskon();
     controller.sumTotalDiskon();
     controller.sumTotalPpn();
     controller.sumTotalNilaiBeli();
@@ -346,21 +354,6 @@ class _ContainerPembelianState extends State<ContainerPembelian> {
                         controller.isLoading = false;
                         controller.update();
                       },
-                      // onChanged: (event) {
-                      //   var dataRow = event.row.toJson();
-
-                      //   dataRow.update("id_detail_pembelian", (value) => null);
-                      //   dataRow.update("harga_beli", (value) => value.toString());
-                      //   dataRow.update("harga_jual", (value) => value.toString());
-                      //   dataRow.update("diskon", (value) => value.toString());
-                      //   dataRow.update(
-                      //       "total_nilai_beli", (value) => value.toString());
-                      //   dataRow.update(
-                      //       "total_nilai_jual", (value) => value.toString());
-
-                      //   controller.dataPembelian.details?[event.rowIdx] =
-                      //       DataDetailPembelian.fromJson(dataRow);
-                      // },
                       onLoaded: (event) {
                         event.stateManager.setShowColumnFilter(true);
                       },

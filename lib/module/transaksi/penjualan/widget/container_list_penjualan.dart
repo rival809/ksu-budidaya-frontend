@@ -81,19 +81,19 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                     const SizedBox(
                       width: 16.0,
                     ),
-                    BaseSecondaryButton(
-                      onPressed: () {
-                        // controller.dataFuture =
-                        //     controller.cariDataProduct();
-                        // controller.update();
-                      },
-                      text: "Filter",
-                      suffixIcon: iconFilterAlt,
-                      isDense: true,
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
+                    // BaseSecondaryButton(
+                    //   onPressed: () {
+                    //     // controller.dataFuture =
+                    //     //     controller.cariDataProduct();
+                    //     // controller.update();
+                    //   },
+                    //   text: "Filter",
+                    //   suffixIcon: iconFilterAlt,
+                    //   isDense: true,
+                    // ),
+                    // const SizedBox(
+                    //   width: 16.0,
+                    // ),
                   ],
                 ),
                 BasePrimaryButton(

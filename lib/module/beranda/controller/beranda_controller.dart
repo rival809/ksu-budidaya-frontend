@@ -85,13 +85,54 @@ class BerandaController extends State<BerandaView> {
     }
   }
 
+  PenjualanResult result = PenjualanResult();
+  DataPenjualan dataListPenjualan = DataPenjualan();
+
+  List<String> listPenjualanView = [
+    "id_penjualan",
+    // "tg_penjualan",
+    "jumlah",
+    "total_nilai_jual",
+    "total_nilai_beli",
+    "nm_anggota",
+    // "jenis_pembayaran",
+    // "keterangan",
+    "username",
+  ];
+  cariDataPenjualan() async {
+    try {
+      result = PenjualanResult();
+      DataMap dataCari = {
+        "page": "1",
+        "size": "10",
+      };
+
+      result = await ApiService.listPenjualan(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
+
+      return result;
+    } catch (e) {
+      update();
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   @override
   void initState() {
     instance = this;
     super.initState();
+    dataFuture = cariDataPenjualan();
     getReferences();
     postIncomeDashboard();
     postIncomeMonthly();
+    update();
+    update();
   }
 
   @override
