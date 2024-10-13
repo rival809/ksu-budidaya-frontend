@@ -128,6 +128,34 @@ getNamaAnggota({String? idAnggota}) {
   }
 }
 
+String subtractOneMonth(int month, int year) {
+  int newMonth, newYear;
+
+  if (month == 1) {
+    newMonth = 12;
+    newYear = year - 1;
+  } else {
+    newMonth = month - 1;
+    newYear = year;
+  }
+
+  return '${getNamaMonth(newMonth)} - $newYear';
+}
+
+String subtractTitleOneMonth(int month, int year) {
+  int newMonth, newYear;
+
+  if (month == 1) {
+    newMonth = 12;
+    newYear = year - 1;
+  } else {
+    newMonth = month - 1;
+    newYear = year;
+  }
+
+  return '${getNamaMonth(newMonth)}\n$newYear';
+}
+
 String getNamaMonth(int angkaBulan) {
   var data = Year.fromJson(monthData).months;
   for (var i = 0; i < data.length; i++) {

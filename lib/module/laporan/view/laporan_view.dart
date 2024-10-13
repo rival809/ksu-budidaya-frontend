@@ -112,13 +112,9 @@ class LaporanView extends StatefulWidget {
                                 ),
                                 BasePrimaryButton(
                                   onPressed: () {
-                                    showDialogBase(
-                                      width: 1000,
-                                      content: DialogCashInOut(
-                                        isDetail: false,
-                                        data: DataDetailCashInOut(),
-                                      ),
-                                    );
+                                    controller
+                                        .onSearchLaporan(controller.idLaporan);
+                                    controller.update();
                                   },
                                   text: "Lihat Data",
                                   isDense: true,
@@ -127,15 +123,12 @@ class LaporanView extends StatefulWidget {
                             ),
                           ),
                           BaseSecondaryButton(
-                            onPressed: () {
-                              showDialogBase(
-                                width: 1000,
-                                content: DialogCashInOut(
-                                  isDetail: false,
-                                  data: DataDetailCashInOut(),
-                                ),
-                              );
-                            },
+                            onPressed: controller.hasData
+                                ? () {
+                                    doGenerateLaporanHasilUsaha(
+                                        controller: controller);
+                                  }
+                                : null,
                             text: "Cetak Laporan",
                             suffixIcon: iconPrint,
                             isDense: true,

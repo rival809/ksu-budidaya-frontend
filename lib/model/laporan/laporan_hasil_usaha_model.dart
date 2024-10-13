@@ -391,3 +391,33 @@ class SisaHasilUsahaLaporanHasilUsaha {
     return data;
   }
 }
+
+class RowLaporanHasilUsaha {
+  String? no;
+  String? uraian;
+  double? currentMonth;
+  double? lastMonth;
+
+  RowLaporanHasilUsaha({
+    this.no,
+    this.uraian,
+    this.currentMonth,
+    this.lastMonth,
+  });
+
+  RowLaporanHasilUsaha.fromJson(Map<String, dynamic> json) {
+    no = json['no'];
+    uraian = json['uraian'];
+    currentMonth = json['current_month'];
+    lastMonth = json['last_month'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['no'] = no;
+    data['uraian'] = uraian;
+    data['current_month'] = currentMonth;
+    data['last_month'] = lastMonth;
+    return data;
+  }
+}

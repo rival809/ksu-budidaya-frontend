@@ -45,6 +45,27 @@ convertTitle(String text) {
   }
 }
 
+bool boldChecker(String? text) {
+  switch (trimString(text.toString())) {
+    case "Penjualan":
+      return true;
+    case "TOTAL":
+      return true;
+    case "Harga Pokok Penjualan":
+      return true;
+    case "Beban Operasional":
+      return true;
+    case "Pendapatan Lain-lain":
+      return true;
+    case "Total Pendapatan Lain-Lain":
+      return true;
+    case "Sisa Hasil Usaha":
+      return true;
+    default:
+      return false;
+  }
+}
+
 trimStringStrip(String? string) {
   if (string == null) {
     return "-";

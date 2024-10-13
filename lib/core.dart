@@ -66,6 +66,7 @@ export 'package:ksu_budidaya/module/koperasi/anggota/widget/dialog_anggota.dart'
 export 'package:ksu_budidaya/module/laporan/controller/laporan_controller.dart';
 export 'package:ksu_budidaya/module/laporan/view/laporan_view.dart';
 export 'package:ksu_budidaya/module/laporan/widget/container_tidak_ada_laporan.dart';
+export 'package:ksu_budidaya/module/laporan/widget/generate_laporan.dart';
 export 'package:ksu_budidaya/module/laporan/widget/laporan_hasil_usaha.dart';
 export 'package:ksu_budidaya/module/pdf_viewer/controller/pdf_viewer_controller.dart';
 export 'package:ksu_budidaya/module/pdf_viewer/view/pdf_viewer_view.dart';
