@@ -39,6 +39,7 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                     controller.isList = true;
                     controller.isDetail = false;
                     controller.dataPenjualan = CreatePenjualanModel();
+                    controller.dataFuture = controller.cariDataPenjualan();
                     controller.update();
                     update();
                   },
@@ -117,6 +118,23 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                                     ),
                                   );
                                 }),
+                ],
+              ),
+            if (controller.isDetail)
+              const SizedBox(
+                height: 16.0,
+              ),
+            if (controller.isDetail)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  BasePrimaryButton(
+                    text: "Cetak",
+                    isDense: true,
+                    onPressed: () {
+                      controller.doGeneratePdfAndPrint();
+                    },
+                  ),
                 ],
               ),
             const SizedBox(

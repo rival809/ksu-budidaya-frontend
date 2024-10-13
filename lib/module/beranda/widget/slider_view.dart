@@ -193,6 +193,14 @@ class SliderView extends StatelessWidget {
                               ),
                           ],
                         ),
+                    if (kIsWeb)
+                      DrawerMenu(
+                        title: "Laporan",
+                        isSelected: currentRoute == "/laporan",
+                        onTap: () {
+                          router.go("/laporan");
+                        },
+                      ),
                     if (dataLogin.roleData?.stsStockOpname == true)
                       DrawerMenu(
                         title: "Stock Opname",

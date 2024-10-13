@@ -197,7 +197,7 @@ class PembelianController extends State<PembelianView> {
   ];
 
   bool isLoading = false;
-  bool isPpn = false;
+  bool isPpn = true;
   bool isDiskon = false;
   double totalHargaBeli = 0;
   double totalHargaJual = 0;
@@ -209,7 +209,7 @@ class PembelianController extends State<PembelianView> {
   double heighFooter = 49;
 
   double getRowHeigh() {
-    if (isPpn) {
+    if (!isPpn) {
       return heighFooter = 123;
     } else {
       return heighFooter = 86;
@@ -217,11 +217,11 @@ class PembelianController extends State<PembelianView> {
   }
 
   checkPpn() {
-    isPpn = false;
+    isPpn = true;
 
     if (dataPembelian.details?.isNotEmpty ?? false) {
       isPpn = dataPembelian.details!
-          .every((element) => trimString(element.ppn ?? "0") != "0");
+          .every((element) => trimString(element.ppn ?? "0") == "0");
     }
   }
 
@@ -229,8 +229,8 @@ class PembelianController extends State<PembelianView> {
     isPpn = value;
 
     for (var detail in dataPembelian.details ?? [DataDetailPembelian()]) {
-      if (value) {
-        detail.ppn = ((11 / 100) *
+      if (!value) {
+        detail.ppn = roundDouble((11 / 100) *
                 double.parse(detail.hargaBeli ?? "0") *
                 double.parse(detail.jumlah?.toString() ?? "0"))
             .toString();
@@ -317,7 +317,7 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
+                if (!isPpn) const ContainerEmpty(),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -342,7 +342,7 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 const ContainerFooterText(text: "Diskon"),
-                if (isPpn) const ContainerFooterText(text: "PPN"),
+                if (!isPpn) const ContainerFooterText(text: "PPN"),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -374,7 +374,7 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
+                if (!isPpn) const ContainerEmpty(),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -401,7 +401,7 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
+                if (!isPpn) const ContainerEmpty(),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -428,7 +428,7 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
+                if (!isPpn) const ContainerEmpty(),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -455,7 +455,7 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 const ContainerEmpty(),
-                if (isPpn) const ContainerFooterText(text: "11 %"),
+                if (!isPpn) const ContainerFooterText(text: "11 %"),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -498,9 +498,9 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 ContainerFooterText(
-                  text: formatMoney(trimString(totalDiskon.toString())),
+                  text: formatMoney(totalDiskon.toString()),
                 ),
-                if (isPpn) const ContainerEmpty(),
+                if (!isPpn) const ContainerEmpty(),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -521,15 +521,32 @@ class PembelianController extends State<PembelianView> {
         type: PlutoColumnType.number(
           locale: 'id',
         ),
+        renderer: (rendererContext) {
+          var data = rendererContext.row.toJson();
+
+          double total = 0;
+
+          if (isDetail) {
+            total = double.parse((data["total_nilai_beli"] ?? 0).toString());
+          } else {
+            total =
+                ((double.parse((data["total_nilai_beli"] ?? 0).toString())) +
+                    (double.parse((data["diskon"] ?? 0).toString())));
+          }
+
+          return Text(formatMoney(total.toString()));
+        },
         footerRenderer: (context) {
           return SingleChildScrollView(
             controller: ScrollController(),
             child: Column(
               children: [
-                const ContainerEmpty(),
-                if (isPpn)
+                ContainerFooterText(
+                  text: "-${formatMoney(totalDiskon.toString())}",
+                ),
+                if (!isPpn)
                   ContainerFooterText(
-                    text: formatMoney(trimString(totalPpn.toString())),
+                    text: formatMoney(totalPpn.toString()),
                   ),
                 Container(
                   height: 49,
@@ -541,11 +558,11 @@ class PembelianController extends State<PembelianView> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       isDetail
-                          ? formatMoney(trimString((double.parse(
+                          ? formatMoney((double.parse(
                                       dataPembelian.totalHargaBeli ?? "0") -
                                   totalDiskon)
-                              .toString()))
-                          : formatMoney(trimString(totalHargaBeli.toString())),
+                              .toString())
+                          : formatMoney(totalHargaBeli.toString()),
                       style: myTextTheme.displayLarge
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
@@ -570,7 +587,7 @@ class PembelianController extends State<PembelianView> {
             child: Column(
               children: [
                 const ContainerEmpty(),
-                if (isPpn) const ContainerEmpty(),
+                if (!isPpn) const ContainerEmpty(),
                 Container(
                   height: 49,
                   width: MediaQuery.of(globalContext).size.width,
@@ -581,9 +598,8 @@ class PembelianController extends State<PembelianView> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       isDetail
-                          ? formatMoney(trimString(
-                              dataPembelian.totalHargaJual.toString()))
-                          : formatMoney(trimString(totalHargaJual.toString())),
+                          ? formatMoney(dataPembelian.totalHargaJual.toString())
+                          : formatMoney(totalHargaJual.toString()),
                       style: myTextTheme.displayLarge
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),

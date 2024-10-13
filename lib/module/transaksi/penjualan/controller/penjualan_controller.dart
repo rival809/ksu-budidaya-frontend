@@ -1,12 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:flutter/widgets.dart';
 
 class PenjualanController extends State<PenjualanView> {
   static late PenjualanController instance;
   late PenjualanView view;
+
+  final GlobalKey notaKey = GlobalKey();
 
   String page = "1";
   String size = "10";
@@ -186,6 +189,8 @@ class PenjualanController extends State<PenjualanView> {
           content: const DialogBerhasil(),
         );
 
+        await doGeneratePdfAndPrint();
+
         router.push("/transaksi/penjualan");
         update();
       }
@@ -205,6 +210,7 @@ class PenjualanController extends State<PenjualanView> {
   CreatePenjualanModel dataPenjualan = CreatePenjualanModel();
 
   String? totalBayar = "0";
+  int totalKembali = 0;
 
   List<TextEditingController> textControllerDialog = [
     TextEditingController(),
@@ -215,15 +221,17 @@ class PenjualanController extends State<PenjualanView> {
   ];
 
   hitBayar() {
-    var totalKembali = int.parse(removeComma(totalBayar ?? "0")) -
-        int.parse(removeComma(dataPenjualan.totalNilaiJual ?? "0"));
-    if (totalKembali < 0) {
-      totalBayar = "0";
-      textControllerDialog[3].text = totalBayar ?? "0";
-    } else {
-      totalBayar = formatMoney(removeComma(totalKembali.toString()));
-      textControllerDialog[3].text = totalBayar ?? "0";
-    }
+    totalKembali = double.parse(removeComma(
+                trimString(textControllerDialog[2].text.toString())
+                        .toString()
+                        .isEmpty
+                    ? "0"
+                    : trimString(textControllerDialog[2].text.toString()) ??
+                        "0"))
+            .round() -
+        double.parse(removeComma(dataPenjualan.totalNilaiJual ?? "0")).round();
+    totalBayar = formatMoney(removeComma(totalKembali.toString()));
+    textControllerDialog[3].text = totalBayar ?? "0";
   }
 
   sumTotal() {
@@ -337,7 +345,7 @@ class PenjualanController extends State<PenjualanView> {
 
   double getRowHeigh() {
     if (isPpn) {
-      return heighFooter = 123;
+      return heighFooter = 143;
     } else {
       return heighFooter = 86;
     }
@@ -422,6 +430,460 @@ class PenjualanController extends State<PenjualanView> {
         dataPenjualan.jenisPembayaran = "tunai";
     }
     update();
+  }
+
+  doGeneratePdfAndPrint() async {
+    showCircleDialogLoading();
+    try {
+      final pdf = pw.Document();
+
+      final ttfRegular =
+          await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
+
+      final regularFont = pw.Font.ttf(ttfRegular);
+
+      pdf.addPage(
+        pw.Page(
+          // pageTheme: const pw.PageTheme(
+          //   pageFormat: PdfPageFormat.roll80,
+          //   margin: pw.EdgeInsets.zero,
+
+          // ),
+          build: (pw.Context context) {
+            return pw.Container(
+              // padding: const pw.EdgeInsets.all(16),
+              decoration: const pw.BoxDecoration(
+                // border: pw.Border.all(
+                //   width: 1.0,
+                //   color: PdfColors.blueGrey50,
+                // ),
+                // borderRadius: const pw.BorderRadius.all(
+                //   pw.Radius.circular(8.0),
+                // ),
+                color: PdfColors.white,
+              ),
+              width: 800,
+              child: pw.Column(
+                children: [
+                  pw.Text(
+                    "KSU BUDI DAYA",
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      font: regularFont,
+                      fontSize: 20,
+                    ),
+                  ),
+                  if (dataPenjualan.idAnggota?.isNotEmpty ?? false)
+                    pw.SizedBox(
+                      height: 8.0,
+                    ),
+                  if (dataPenjualan.idAnggota?.isNotEmpty ?? false)
+                    pw.Row(
+                      children: [
+                        pw.Expanded(
+                          child: pw.Text(
+                            "Nama Anggota",
+                            style: pw.TextStyle(
+                              font: regularFont,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        pw.Text(
+                          ":",
+                          style: const pw.TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        pw.Expanded(
+                          child: pw.Text(
+                            trimString(
+                              getNamaAnggota(
+                                  idAnggota: dataPenjualan.idAnggota),
+                            ),
+                            style: pw.TextStyle(
+                              font: regularFont,
+                              fontSize: 18,
+                            ),
+                            textAlign: pw.TextAlign.end,
+                          ),
+                        )
+                      ],
+                    ),
+                  if (dataPenjualan.jenisPembayaran?.isNotEmpty ?? false)
+                    pw.Row(
+                      children: [
+                        pw.Expanded(
+                          child: pw.Text(
+                            "Metode Bayar",
+                            style: pw.TextStyle(
+                              font: regularFont,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        pw.Text(
+                          ":",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                        pw.Expanded(
+                          child: pw.Text(
+                            trimString(dataPenjualan.jenisPembayaran)
+                                .toUpperCase(),
+                            style: pw.TextStyle(
+                              font: regularFont,
+                              fontSize: 18,
+                            ),
+                            textAlign: pw.TextAlign.end,
+                          ),
+                        )
+                      ],
+                    ),
+                  if ((dataPenjualan.idAnggota?.isNotEmpty ?? false) ||
+                      (dataPenjualan.jenisPembayaran?.isNotEmpty ?? false))
+                    pw.SizedBox(
+                      height: 8.0,
+                    ),
+                  if ((dataPenjualan.idAnggota?.isNotEmpty ?? false) ||
+                      (dataPenjualan.jenisPembayaran?.isNotEmpty ?? false))
+                    // pw.LineDash(),
+                    pw.SizedBox(
+                      height: 8.0,
+                    ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          trimString(
+                              UserDatabase.userDatabase.data?.userData?.name),
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatDateTime(DateTime.now().toString()),
+                          textAlign: pw.TextAlign.end,
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  // const LineDash(),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.ListView.builder(
+                    itemCount: dataPenjualan.details?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      String persenDiskon = "0";
+
+                      var diskon = double.parse(
+                        removeComma(
+                            dataPenjualan.details?[index].diskon ?? "0"),
+                      );
+
+                      var hargaJual = double.parse(
+                        removeComma(dataPenjualan.details?[index].harga ?? "0"),
+                      );
+
+                      persenDiskon = formatMoney(
+                          (((hargaJual - (hargaJual - diskon)) / hargaJual) *
+                                  100)
+                              .toString());
+
+                      return pw.Padding(
+                        padding: const pw.EdgeInsets.only(bottom: 4.0),
+                        child: pw.Column(
+                          children: [
+                            pw.Row(
+                              crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              children: [
+                                pw.Expanded(
+                                  child: pw.Text(
+                                    trimString(
+                                      dataPenjualan.details?[index].nmProduk,
+                                    ),
+                                    style: pw.TextStyle(
+                                      font: regularFont,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                                pw.Expanded(
+                                  child: pw.Row(
+                                    children: [
+                                      pw.Expanded(
+                                        child: pw.Row(
+                                          children: [
+                                            pw.Expanded(
+                                              child: pw.Text(
+                                                trimString(
+                                                      dataPenjualan
+                                                          .details?[index]
+                                                          .jumlah,
+                                                    ) +
+                                                    "x",
+                                                style: pw.TextStyle(
+                                                  font: regularFont,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                            pw.SizedBox(
+                                              width: 16.0,
+                                            ),
+                                            pw.Expanded(
+                                              child: pw.Text(
+                                                formatMoney(trimString(
+                                                  dataPenjualan
+                                                      .details?[index].harga,
+                                                )),
+                                                style: pw.TextStyle(
+                                                  font: regularFont,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      pw.Expanded(
+                                        child: pw.Text(
+                                          formatMoney(trimString(
+                                            ((double.parse(dataPenjualan
+                                                            .details?[index]
+                                                            .harga ??
+                                                        "0") *
+                                                    double.parse(dataPenjualan
+                                                            .details?[index]
+                                                            .jumlah ??
+                                                        "0")))
+                                                .toString(),
+                                          )),
+                                          style: pw.TextStyle(
+                                            font: regularFont,
+                                            fontSize: 18,
+                                          ),
+                                          textAlign: pw.TextAlign.end,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (dataPenjualan.details?[index].diskon != "0")
+                              pw.Row(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  pw.Expanded(
+                                    child: pw.Text(
+                                      "Diskon",
+                                      style: pw.TextStyle(
+                                        font: regularFont,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  pw.Expanded(
+                                    child: pw.Row(
+                                      children: [
+                                        pw.Expanded(
+                                          child: pw.Row(
+                                            children: [
+                                              pw.Expanded(
+                                                child: pw.Text(
+                                                  "",
+                                                  style: pw.TextStyle(
+                                                    fontSize: 18,
+                                                    font: regularFont,
+                                                  ),
+                                                ),
+                                              ),
+                                              pw.SizedBox(
+                                                width: 16.0,
+                                              ),
+                                              pw.Expanded(
+                                                child: pw.Text(
+                                                  trimString(persenDiskon) +
+                                                      "%",
+                                                  textAlign: pw.TextAlign.start,
+                                                  style: pw.TextStyle(
+                                                    font: regularFont,
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        pw.Expanded(
+                                          child: pw.Text(
+                                            formatMoney(
+                                              trimString(
+                                                (double.parse(dataPenjualan
+                                                                .details?[index]
+                                                                .diskon ??
+                                                            "0") *
+                                                        double.parse(removeComma(
+                                                            dataPenjualan
+                                                                    .details?[
+                                                                        index]
+                                                                    .jumlah ??
+                                                                "0")))
+                                                    .toString(),
+                                              ),
+                                            ),
+                                            style: pw.TextStyle(
+                                              font: regularFont,
+                                              fontSize: 18,
+                                            ),
+                                            textAlign: pw.TextAlign.end,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  // const LineDash(),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "Total",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(trimString(dataPenjualan.totalNilaiJual)),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "Bayar",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(trimString(
+                              removeComma(textControllerDialog[2].text))),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "Kembali",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(trimString(
+                              removeComma(textControllerDialog[3].text))),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+
+      Uint8List pdfData = await pdf.save();
+      await Printing.layoutPdf(
+          onLayout: (PdfPageFormat format) async => pdfData);
+    } catch (e) {
+      Navigator.pop(context);
+      showInfoDialog(e.toString(), context);
+    }
+
+    Navigator.pop(context);
   }
 
   @override

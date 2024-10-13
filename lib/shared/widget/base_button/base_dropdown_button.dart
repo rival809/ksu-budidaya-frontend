@@ -18,6 +18,7 @@ class BaseDropdownButton<T> extends StatefulWidget {
   final void Function(T?)? onChanged;
   final Function()? onClear;
   final AutovalidateMode? autoValidate;
+  final bool? sortItem;
 
   const BaseDropdownButton({
     super.key,
@@ -36,6 +37,7 @@ class BaseDropdownButton<T> extends StatefulWidget {
     this.onClear,
     this.isExpand,
     this.autoValidate,
+    this.sortItem,
   });
 
   @override
@@ -50,8 +52,10 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
   void initState() {
     super.initState();
     sortedItems = widget.items;
-    sortedItems.sort(
-        (a, b) => widget.itemAsString(a).compareTo(widget.itemAsString(b)));
+    if (widget.sortItem != false) {
+      sortedItems.sort(
+          (a, b) => widget.itemAsString(a).compareTo(widget.itemAsString(b)));
+    }
 
     textController.text = widget.value.toString();
     selectedItem = widget.value;

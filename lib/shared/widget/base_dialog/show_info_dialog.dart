@@ -1,9 +1,9 @@
 import 'package:ksu_budidaya/core.dart';
 import 'package:flutter/material.dart';
 
-Future showInfoDialog(String message, BuildContext context) async {
+Future showInfoDialog(String message, BuildContext? context) async {
   await showDialog<void>(
-    context: context,
+    context: context ?? globalContext,
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(

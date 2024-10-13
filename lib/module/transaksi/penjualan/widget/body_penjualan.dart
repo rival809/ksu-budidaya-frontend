@@ -35,7 +35,9 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
     );
 
     persenDiskon = formatMoney(
-        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100).toString());
+        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100)
+            .round()
+            .toString());
 
     diskonController.text = trimString(persenDiskon);
   }
@@ -166,6 +168,8 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                       ),
                     ),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         InkWell(
                           onTap: controller.isDetail
@@ -276,7 +280,8 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                             "0"),
                       );
 
-                      var nilaiDiskon = (inputValue / 100) * hargaJual;
+                      var nilaiDiskon =
+                          ((inputValue / 100) * hargaJual).round();
 
                       widget.controller.dataPenjualan.details?[widget.index]
                           .diskon = nilaiDiskon.toString();

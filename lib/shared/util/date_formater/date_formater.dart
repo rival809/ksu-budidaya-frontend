@@ -57,6 +57,22 @@ String formatDateToYearMonthDay(String originalDateString) {
   }
 }
 
+String formatDateForView(String originalDateString) {
+  try {
+    DateFormat originalFormat = DateFormat("dd-MM-yyyy");
+    DateFormat desiredFormat = DateFormat("yyyy-MM-dd");
+
+    DateTime dateTime = originalFormat.parse(originalDateString);
+
+    String formattedDateString = desiredFormat.format(dateTime);
+
+    return formattedDateString;
+  } catch (e) {
+    print("Error parsing date: $e");
+    return "";
+  }
+}
+
 formatDateTime(String? dateTime) {
   if (dateTime?.isEmpty ?? true) {
     return "-";

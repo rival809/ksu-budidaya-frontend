@@ -140,9 +140,8 @@ class AnggotaView extends StatefulWidget {
                                                 "limit_pinjaman" ||
                                             controller.listRoleView[index] ==
                                                 "hutang")
-                                        ? PlutoColumnType.currency(
+                                        ? PlutoColumnType.number(
                                             locale: "id",
-                                            decimalDigits: 0,
                                           )
                                         : PlutoColumnType.text(),
                                   );

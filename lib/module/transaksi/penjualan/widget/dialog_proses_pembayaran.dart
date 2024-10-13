@@ -25,6 +25,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
     bayarFocus.requestFocus();
     widget.controller.textControllerDialog[1].text =
         formatMoney(trimString(widget.controller.dataPenjualan.totalNilaiJual));
+    widget.controller.hitBayar();
   }
 
   @override
@@ -155,7 +156,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
               ],
               onChanged: (value) {
                 controller.totalBayar =
-                    removeComma(trimString(trimString(value)));
+                    removeComma(trimString(value.toString()));
                 controller.update();
                 update();
               },
@@ -218,11 +219,13 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 Expanded(
                   child: BasePrimaryButton(
                     text: "Simpan",
-                    onPressed: () {
-                      if (inputPenjualanKey.currentState!.validate()) {
-                        controller.postCreatePenjualan();
-                      }
-                    },
+                    onPressed: controller.totalKembali < 0
+                        ? null
+                        : () {
+                            if (inputPenjualanKey.currentState!.validate()) {
+                              controller.postCreatePenjualan();
+                            }
+                          },
                   ),
                 ),
               ],

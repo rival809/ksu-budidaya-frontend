@@ -39,7 +39,9 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     textController[2].text = trimString(widget.data?.jumlah.toString());
     textController[3].text = formatMoney(trimString(widget.data?.hargaBeli));
     textController[4].text = formatMoney(trimString(widget.data?.hargaJual));
-    textController[5].text = formatMoney(trimString(widget.data?.diskon));
+    textController[5].text =
+        formatMoney(trimString(widget.data?.diskon ?? "0"));
+    dataEdit.diskon = widget.data?.diskon ?? "0";
     dataEdit.nmDivisi = trimString(widget.data?.nmDivisi).toString().isNotEmpty
         ? trimString(widget.data?.nmDivisi)
         : null;
@@ -83,7 +85,9 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     _debounce = Timer(
       const Duration(seconds: 2),
       () {
-        postDetailProduct(value);
+        if (textController[0].text.isNotEmpty) {
+          postDetailProduct(value);
+        }
       },
     );
   }
@@ -124,12 +128,12 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     } catch (e) {
       Navigator.pop(context);
 
-      if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-      } else {
-        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-      }
+      // if (e.toString().contains("TimeoutException")) {
+      //   showInfoDialog(
+      //       "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      // } else {
+      //   showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      // }
     }
   }
 
@@ -158,7 +162,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
               mainAxisSpacing: 16,
               children: [
                 BaseForm(
-                  enabled: widget.isDetail ?? false ? false : true,
+                  enabled: controller.isDetail ? false : true,
                   label: "ID",
                   autoFocus: true,
                   hintText: "Masukkan ID Product",
@@ -199,7 +203,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   },
                 ),
                 BaseForm(
-                  enabled: widget.isDetail ?? false ? false : true,
+                  enabled: controller.isDetail ? false : true,
                   label: "Jumlah",
                   hintText: "Masukkan Jumlah",
                   textEditingController: textController[2],
@@ -215,7 +219,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   validator: Validatorless.required("Data Wajib Diisi"),
                 ),
                 BaseForm(
-                  enabled: widget.isDetail ?? false ? false : true,
+                  enabled: controller.isDetail ? false : true,
                   label: "Harga Jual",
                   hintText: "Masukkan Harga Jual",
                   prefix: const BasePrefixRupiah(),
@@ -231,7 +235,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   validator: Validatorless.required("Data Wajib Diisi"),
                 ),
                 BaseForm(
-                  enabled: widget.isDetail ?? false ? false : true,
+                  enabled: controller.isDetail ? false : true,
                   label: "Harga Beli",
                   hintText: "Masukkan Harga Beli",
                   prefix: const BasePrefixRupiah(),
@@ -247,7 +251,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   validator: Validatorless.required("Data Wajib Diisi"),
                 ),
                 SimpleDropdownButton(
-                  enabled: widget.isDetail ?? false ? false : true,
+                  enabled: controller.isDetail ? false : true,
                   label: "Jenis Diskon",
                   hint: "Pilih Jenis Diskon",
                   items: const ["Nominal", "Persen"],
@@ -258,18 +262,19 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   },
                 ),
                 BaseForm(
-                  enabled: widget.isDetail ?? false ? false : true,
+                  enabled: controller.isDetail ? false : true,
                   label: "Diskon",
                   prefix: jenisDiskon == "Nominal"
                       ? const BasePrefixRupiah()
                       : null,
                   hintText: "Masukkan Diskon",
                   textInputFormater: [
-                    FilteringTextInputFormatter.digitsOnly,
+                    ThousandsFormatter(),
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                   ],
                   textEditingController: textController[5],
                   onChanged: (value) {
-                    dataEdit.diskon = trimString(value);
+                    dataEdit.diskon = trimString(removeComma(value));
                     update();
                   },
                 ),
@@ -291,11 +296,11 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                 const SizedBox(
                   width: 16.0,
                 ),
-                if (widget.isDetail ?? false)
+                if (!controller.isDetail)
                   Expanded(
                     child: BaseDangerButton(
                       text: "Hapus",
-                      onPressed: widget.isDetail ?? false
+                      onPressed: controller.isDetail
                           ? null
                           : () {
                               controller.dataPembelian.details?.removeWhere(
@@ -309,14 +314,14 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                             },
                     ),
                   ),
-                if (widget.isDetail ?? false)
+                if (!controller.isDetail)
                   const SizedBox(
                     width: 16.0,
                   ),
                 Expanded(
                   child: BasePrimaryButton(
                     text: "Simpan",
-                    onPressed: widget.isDetail ?? false
+                    onPressed: controller.isDetail
                         ? null
                         : () {
                             try {
@@ -334,7 +339,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                                 );
                                 if (jenisDiskon == "Persen") {
                                   payload.update("diskon", (value) {
-                                    return ((double.parse(
+                                    return roundDouble((double.parse(
                                                 dataEdit.hargaBeli ?? "0") *
                                             ((double.parse(value ?? "0")) /
                                                 100) *
@@ -352,12 +357,14 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                                               (dataEdit.jumlah ?? 0) -
                                           double.parse(
                                               payload["diskon"] ?? "0"))
+                                      .round()
                                       .toString();
                                 });
                                 payload.update("total_nilai_jual", (value) {
                                   return (double.parse(
                                               dataEdit.hargaJual ?? "0") *
                                           (dataEdit.jumlah ?? 0))
+                                      .round()
                                       .toString();
                                 });
                                 if (widget.isDetail ?? false) {

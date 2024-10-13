@@ -80,19 +80,19 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     const SizedBox(
                       width: 16.0,
                     ),
-                    BaseSecondaryButton(
-                      onPressed: () {
-                        // controller.dataFuture =
-                        //     controller.cariDataProduct();
-                        // controller.update();
-                      },
-                      text: "Filter",
-                      suffixIcon: iconFilterAlt,
-                      isDense: true,
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
+                    // BaseSecondaryButton(
+                    //   onPressed: () {
+                    //     // controller.dataFuture =
+                    //     //     controller.cariDataProduct();
+                    //     // controller.update();
+                    //   },
+                    //   text: "Filter",
+                    //   suffixIcon: iconFilterAlt,
+                    //   isDense: true,
+                    // ),
+                    // const SizedBox(
+                    //   width: 16.0,
+                    // ),
                   ],
                 ),
                 BasePrimaryButton(
@@ -128,6 +128,13 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
               } else if (snapshot.hasData) {
                 PembelianResult result = snapshot.data;
                 controller.dataCashInOut = result.data ?? DataPembelian();
+                for (var i = 0;
+                    i < (controller.dataCashInOut.dataPembelian?.length ?? 0);
+                    i++) {
+                  controller.dataCashInOut.dataPembelian?[i].tgPembelian =
+                      formatDateForView(trimString(controller
+                          .dataCashInOut.dataPembelian?[i].tgPembelian));
+                }
                 List<dynamic> listData =
                     controller.dataCashInOut.toJson()["data_pembelian"] ?? [];
 
@@ -178,6 +185,15 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                             ),
                           );
                         }
+                        if (controller.listRoleView[index] == "tg_pembelian") {
+                          return PlutoColumn(
+                              // width: 85,
+                              backgroundColor: primaryColor,
+                              filterHintText: "Cari Tgl. Pembelian",
+                              title: "TGL. PEMBELIAN",
+                              field: controller.listRoleView[index],
+                              type: PlutoColumnType.date(format: 'dd-MM-yyyy'));
+                        }
                         return PlutoColumn(
                           backgroundColor: primaryColor,
                           filterHintText:
@@ -194,10 +210,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                               ? PlutoColumnType.number(
                                   locale: "id",
                                 )
-                              : (controller.listRoleView[index] ==
-                                      "tg_pembelian")
-                                  ? PlutoColumnType.date()
-                                  : PlutoColumnType.text(),
+                              : PlutoColumnType.text(),
                         );
                       },
                     ),

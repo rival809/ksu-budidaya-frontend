@@ -203,6 +203,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
               children: [
                 BaseForm(
                   label: "Pemilik",
+                  readOnly: true,
                   hintText: "Masukkan Pemilik",
                   textInputFormater: [
                     UpperCaseTextFormatter(),
@@ -214,6 +215,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                 ),
                 BaseForm(
                   label: "Nama PIC",
+                  readOnly: true,
                   hintText: "Masukkan Pemilik",
                   textInputFormater: [
                     UpperCaseTextFormatter(),
@@ -225,6 +227,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                 ),
                 BaseForm(
                   label: "No. Whatsapp",
+                  readOnly: true,
                   hintText: "Masukkan No. Whatsapp",
                   textEditingController: textController[2],
                   textInputFormater: [
@@ -236,6 +239,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                 ),
                 BaseForm(
                   label: "Alamat",
+                  readOnly: true,
                   hintText: "Masukkan Alamat",
                   textEditingController: textController[3],
                 ),

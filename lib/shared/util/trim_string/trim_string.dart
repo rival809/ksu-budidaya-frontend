@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ksu_budidaya/core.dart';
 
 trimString(String? string) {
@@ -10,6 +12,19 @@ trimString(String? string) {
   } else {
     final trimmedString = string.trim();
     return trimmedString.isEmpty ? "" : trimmedString;
+  }
+}
+
+double roundDouble(double value) {
+  try {
+    if (value % 100 == 50) {
+      return value;
+    }
+
+    return (value / 100).round() * 100;
+  } catch (e) {
+    log('Terjadi kesalahan: $e');
+    return 0;
   }
 }
 
@@ -27,6 +42,27 @@ convertTitle(String text) {
     return data.toUpperCase();
   } catch (e) {
     return "";
+  }
+}
+
+bool boldChecker(String? text) {
+  switch (trimString(text.toString())) {
+    case "Penjualan":
+      return true;
+    case "TOTAL":
+      return true;
+    case "Harga Pokok Penjualan":
+      return true;
+    case "Beban Operasional":
+      return true;
+    case "Pendapatan Lain-lain":
+      return true;
+    case "Total Pendapatan Lain-Lain":
+      return true;
+    case "Sisa Hasil Usaha":
+      return true;
+    default:
+      return false;
   }
 }
 

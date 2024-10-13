@@ -80,19 +80,19 @@ class ProdukView extends StatefulWidget {
                               const SizedBox(
                                 width: 16.0,
                               ),
-                              BaseSecondaryButton(
-                                onPressed: () {
-                                  // controller.dataFuture =
-                                  //     controller.cariDataProduct();
-                                  // controller.update();
-                                },
-                                text: "Filter",
-                                suffixIcon: iconFilterAlt,
-                                isDense: true,
-                              ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
+                              // BaseSecondaryButton(
+                              //   onPressed: () {
+                              //     // controller.dataFuture =
+                              //     //     controller.cariDataProduct();
+                              //     // controller.update();
+                              //   },
+                              //   text: "Filter",
+                              //   suffixIcon: iconFilterAlt,
+                              //   isDense: true,
+                              // ),
+                              // const SizedBox(
+                              //   width: 16.0,
+                              // ),
                             ],
                           ),
                           BasePrimaryButton(
@@ -587,6 +587,14 @@ class ProdukView extends StatefulWidget {
                                   dataRow.update("harga_beli",
                                       (value) => value.toString());
 
+                                  DataDetailProduct data = controller
+                                          .dataProduct.dataProduct
+                                          ?.firstWhere((element) =>
+                                              trimString(element.idProduct) ==
+                                              trimString(
+                                                  dataRow["id_product"])) ??
+                                      DataDetailProduct();
+
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -653,9 +661,7 @@ class ProdukView extends StatefulWidget {
                                           width: 700,
                                           content: DialogTambahProduk(
                                             isDetail: true,
-                                            data: DataDetailProduct.fromJson(
-                                              dataRow,
-                                            ),
+                                            data: data,
                                           ),
                                         );
                                       } else if (value == 3) {
