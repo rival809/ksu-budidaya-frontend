@@ -14,25 +14,25 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
     List<RowLaporanHasilUsaha> rows = [
       RowLaporanHasilUsaha(
         no: "A",
-        uraian: "Penjualan",
+        uraian: "PENJUALAN",
         currentMonth: null,
         lastMonth: null,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Penjualan Tunai",
+        uraian: "TUNAI",
         currentMonth: data.penjualan?.currentMonthCashSale,
         lastMonth: data.penjualan?.lastMonthCashSale,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Penjualan Kredit",
+        uraian: "KREDIT",
         currentMonth: data.penjualan?.currentMonthCreditSale,
         lastMonth: data.penjualan?.lastMonthCreditSale,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Penjualan QRIS",
+        uraian: "QRIS",
         currentMonth: data.penjualan?.currentMonthQrisSale,
         lastMonth: data.penjualan?.lastMonthQrisSale,
       ),
@@ -46,55 +46,62 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
       //B
       RowLaporanHasilUsaha(
         no: "B",
-        uraian: "Harga Pokok Penjualan",
+        uraian: "HARGA POKOK PENJUALAN",
         currentMonth: null,
         lastMonth: null,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Persediaan Awal",
+        uraian: "PERSEDIAAN AWAL",
         currentMonth: data.hargaPokokPenjualan?.persediaanAwal,
         lastMonth: data.hargaPokokPenjualan?.persediaanAwalLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Pembelian Tunai",
+        uraian: "PEMBELIAN TUNAI",
         currentMonth: data.hargaPokokPenjualan?.pembelianTunai,
         lastMonth: data.hargaPokokPenjualan?.pembelianTunaiLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Pembelian Kredit",
+        uraian: "PEMBELIAN KREDIT",
         currentMonth: data.hargaPokokPenjualan?.pembelianKredit,
         lastMonth: data.hargaPokokPenjualan?.pembelianKreditLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Pembelian Bersih",
+        uraian: "RETUR PEMBELIAN",
+        currentMonth: data.hargaPokokPenjualan?.retur,
+        lastMonth: data.hargaPokokPenjualan?.returLastMonth,
+      ),
+      RowLaporanHasilUsaha(
+        no: "",
+        uraian: "PEMBELIAN BERSIH",
         currentMonth: data.hargaPokokPenjualan?.pembelianBersih,
         lastMonth: data.hargaPokokPenjualan?.pembelianBersihLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Barang Siap Jual",
+        uraian: "BARANG SIAP JUAL",
         currentMonth: data.hargaPokokPenjualan?.barangSiapJual,
         lastMonth: data.hargaPokokPenjualan?.barangSiapJualLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Persediaan Akhir",
+        uraian: "PERSEDIAAN AKHIR",
         currentMonth: data.hargaPokokPenjualan?.persediaanAkhir,
         lastMonth: data.hargaPokokPenjualan?.persediaanAkhirLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Harga Pokok Penjualan",
+        uraian: "HARGA POKOK PENJUALAN",
         currentMonth: data.hargaPokokPenjualan?.hargaPokokPenjualan,
         lastMonth: data.hargaPokokPenjualan?.hargaPokokPenjualanLastMonth,
       ),
+      RowLaporanHasilUsaha(),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Hasil Usaha Kotor",
+        uraian: "HASIL USAHA KOTOR",
         currentMonth: data.hargaPokokPenjualan?.hasilUsahaKotor,
         lastMonth: data.hargaPokokPenjualan?.hasilUsahaKotorLastMonth,
       ),
@@ -102,91 +109,80 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
       //C
       RowLaporanHasilUsaha(
         no: "C",
-        uraian: "Beban Operasional",
+        uraian: "BEBAN OPERASIONAL",
         currentMonth: null,
         lastMonth: null,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Beban Gaji/ Insentif",
+        uraian: "BEBAN GAJI/INSENTIF",
         currentMonth: data.bebanOperasional?.bebanGaji,
         lastMonth: data.bebanOperasional?.bebanGajiLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Uang Makan Karyawan",
+        uraian: "UANG MAKAN KARYAWAN",
         currentMonth: data.bebanOperasional?.uangMakan,
         lastMonth: data.bebanOperasional?.uangMakanLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "THR Karyawan",
+        uraian: "THR KARYAWAN",
         currentMonth: data.bebanOperasional?.thrKaryawan,
         lastMonth: data.bebanOperasional?.thrKaryawanLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Tunjangan Pangan",
-        currentMonth: data.bebanOperasional?.tunjanganPangan,
-        lastMonth: data.bebanOperasional?.tunjanganPanganLastMonth,
-      ),
-      RowLaporanHasilUsaha(
-        no: "",
-        uraian: "Beban Adm. & Umum",
+        uraian: "BEBAN ADM. & UMUM",
         currentMonth: data.bebanOperasional?.bebanAdm,
         lastMonth: data.bebanOperasional?.bebanAdmLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Beban Perlengkapan",
+        uraian: "BEBAN PERLENGKAPAN",
         currentMonth: data.bebanOperasional?.bebanPerlengkapan,
         lastMonth: data.bebanOperasional?.bebanPerlengkapanLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Tunjangan Kesehatan",
-        currentMonth: data.bebanOperasional?.tunjanganKesehatan,
-        lastMonth: data.bebanOperasional?.tunjanganKesehatanLastMonth,
-      ),
-      RowLaporanHasilUsaha(
-        no: "",
-        uraian: "Beban Peny. Inventaris",
+        uraian: "BEBAN PENY. INVENTARIS",
         currentMonth: data.bebanOperasional?.bebanPenyInventaris,
         lastMonth: data.bebanOperasional?.bebanPenyInventarisLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Beban Peny. Gedung",
+        uraian: "BEBAN PENY. GEDUNG",
         currentMonth: data.bebanOperasional?.bebanPenyGedung,
         lastMonth: data.bebanOperasional?.bebanPenyGedungLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Pemeliharaan Inventaris",
+        uraian: "PEMELIHARAAN INVENTARIS",
         currentMonth: data.bebanOperasional?.pemeliharaanInventaris,
         lastMonth: data.bebanOperasional?.pemeliharaanInventarisLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Pemeliharaan Gedung",
+        uraian: "PEMELIHARAAN GEDUNG",
         currentMonth: data.bebanOperasional?.pemeliharaanGedung,
         lastMonth: data.bebanOperasional?.pemeliharaanGedungLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Pengeluaran Lain-lain",
+        uraian: "PENGELUARAN LAIN-LAIN",
         currentMonth: data.bebanOperasional?.pengeluaranLain,
         lastMonth: data.bebanOperasional?.pengeluaranLainLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Total Beban Operasional",
-        currentMonth: data.bebanOperasional?.bebanOperasional,
-        lastMonth: data.bebanOperasional?.bebanOperasionalLastMonth,
+        uraian: "TOTAL BEBAN OPERASIONAL",
+        currentMonth: data.bebanOperasional?.totalBebanOperasional,
+        lastMonth: data.bebanOperasional?.totalBebanOperasionalLastMonth,
       ),
+      RowLaporanHasilUsaha(),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Hasil Usaha Bersih",
+        uraian: "HASIL USAHA BERSIH",
         currentMonth: data.bebanOperasional?.hasilUsahaBersih,
         lastMonth: data.bebanOperasional?.hasilUsahaBersihLastMonth,
       ),
@@ -194,33 +190,27 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
       //D
       RowLaporanHasilUsaha(
         no: "D",
-        uraian: "Pendapatan Lain-lain",
+        uraian: "PENDAPATAN LAIN-LAIN",
         currentMonth: null,
         lastMonth: null,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Jasa Bank",
-        currentMonth: data.pendapatanLain?.penarikanBank,
-        lastMonth: data.pendapatanLain?.penarikanBankLastMonth,
-      ),
-      RowLaporanHasilUsaha(
-        no: "",
-        uraian: "Tenant",
+        uraian: "TENANT",
         currentMonth: data.pendapatanLain?.tenant,
         lastMonth: data.pendapatanLain?.tenantLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Pendapatan Lain-lain",
+        uraian: "PENDAPATAN LAIN-LAIN",
         currentMonth: data.pendapatanLain?.lainLain,
         lastMonth: data.pendapatanLain?.lainLainLastMonth,
       ),
       RowLaporanHasilUsaha(
         no: "",
-        uraian: "Total Pendapatan Lain-Lain",
-        currentMonth: data.pendapatanLain?.pendapatanLain,
-        lastMonth: data.pendapatanLain?.pendapatanLainLastMonth,
+        uraian: "TOTAL PENDAPATAN LAIN-LAIN",
+        currentMonth: data.pendapatanLain?.totalPendapatanLain,
+        lastMonth: data.pendapatanLain?.totalPendapatanLainLastMonth,
       ),
       RowLaporanHasilUsaha(),
       //E
@@ -244,31 +234,36 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
             pageFormat: PdfPageFormat.a4,
             margin: pw.EdgeInsets.all(16),
           ),
-          header: (pw.Context context) => pw.Center(
-                child: pw.Text(
-                  "LAPORAN HASIL USAHA",
-                  textAlign: pw.TextAlign.center,
-                  style: pw.TextStyle(
-                    font: boldFont,
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-          build: (pw.Context context) => [
-                pw.SizedBox(height: 16),
-                pw.Center(
-                  child: pw.Text(
-                    '${getNamaMonth(controller.monthNow)} - ${controller.yearNow}',
-                    textAlign: pw.TextAlign.center,
-                    style: pw.TextStyle(
-                      font: boldFont,
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 16,
+          header: (pw.Context context) => pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.center,
+                children: [
+                  pw.Center(
+                    child: pw.Text(
+                      "LAPORAN HASIL USAHA",
+                      textAlign: pw.TextAlign.center,
+                      style: pw.TextStyle(
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                pw.SizedBox(height: 16),
+                  pw.SizedBox(height: 16),
+                  pw.Center(
+                    child: pw.Text(
+                      '${getNamaMonth(controller.monthNow)} - ${controller.yearNow}',
+                      textAlign: pw.TextAlign.center,
+                      style: pw.TextStyle(
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  pw.SizedBox(height: 16),
+                ],
+              ),
+          build: (pw.Context context) => [
                 pw.TableHelper.fromTextArray(
                   headerAlignments: {
                     0: pw.Alignment.center,

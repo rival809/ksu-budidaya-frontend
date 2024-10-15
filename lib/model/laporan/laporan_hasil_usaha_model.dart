@@ -130,6 +130,8 @@ class HargaPokokPenjualanLaporanHasilUsaha {
   double? pembelianTunaiLastMonth;
   double? pembelianKredit;
   double? pembelianKreditLastMonth;
+  double? retur;
+  double? returLastMonth;
   double? pembelianBersih;
   double? pembelianBersihLastMonth;
   double? barangSiapJual;
@@ -207,14 +209,10 @@ class BebanOperasionalLaporanHasilUsaha {
   double? uangMakanLastMonth;
   double? thrKaryawan;
   double? thrKaryawanLastMonth;
-  double? tunjanganPangan;
-  double? tunjanganPanganLastMonth;
   double? bebanAdm;
   double? bebanAdmLastMonth;
   double? bebanPerlengkapan;
   double? bebanPerlengkapanLastMonth;
-  double? tunjanganKesehatan;
-  double? tunjanganKesehatanLastMonth;
   double? bebanPenyInventaris;
   double? bebanPenyInventarisLastMonth;
   double? bebanPenyGedung;
@@ -225,8 +223,8 @@ class BebanOperasionalLaporanHasilUsaha {
   double? pemeliharaanGedungLastMonth;
   double? pengeluaranLain;
   double? pengeluaranLainLastMonth;
-  double? bebanOperasional;
-  double? bebanOperasionalLastMonth;
+  double? totalBebanOperasional;
+  double? totalBebanOperasionalLastMonth;
   double? hasilUsahaBersih;
   double? hasilUsahaBersihLastMonth;
 
@@ -237,14 +235,10 @@ class BebanOperasionalLaporanHasilUsaha {
       this.uangMakanLastMonth,
       this.thrKaryawan,
       this.thrKaryawanLastMonth,
-      this.tunjanganPangan,
-      this.tunjanganPanganLastMonth,
       this.bebanAdm,
       this.bebanAdmLastMonth,
       this.bebanPerlengkapan,
       this.bebanPerlengkapanLastMonth,
-      this.tunjanganKesehatan,
-      this.tunjanganKesehatanLastMonth,
       this.bebanPenyInventaris,
       this.bebanPenyInventarisLastMonth,
       this.bebanPenyGedung,
@@ -255,8 +249,8 @@ class BebanOperasionalLaporanHasilUsaha {
       this.pemeliharaanGedungLastMonth,
       this.pengeluaranLain,
       this.pengeluaranLainLastMonth,
-      this.bebanOperasional,
-      this.bebanOperasionalLastMonth,
+      this.totalBebanOperasional,
+      this.totalBebanOperasionalLastMonth,
       this.hasilUsahaBersih,
       this.hasilUsahaBersihLastMonth});
 
@@ -267,14 +261,10 @@ class BebanOperasionalLaporanHasilUsaha {
     uangMakanLastMonth = json['uang_makan_last_month'];
     thrKaryawan = json['thr_karyawan'];
     thrKaryawanLastMonth = json['thr_karyawan_last_month'];
-    tunjanganPangan = json['tunjangan_pangan'];
-    tunjanganPanganLastMonth = json['tunjangan_pangan_last_month'];
     bebanAdm = json['beban_adm'];
     bebanAdmLastMonth = json['beban_adm_last_month'];
     bebanPerlengkapan = json['beban_perlengkapan'];
     bebanPerlengkapanLastMonth = json['beban_perlengkapan_last_month'];
-    tunjanganKesehatan = json['tunjangan_kesehatan'];
-    tunjanganKesehatanLastMonth = json['tunjangan_kesehatan_last_month'];
     bebanPenyInventaris = json['beban_peny_inventaris'];
     bebanPenyInventarisLastMonth = json['beban_peny_inventaris_last_month'];
     bebanPenyGedung = json['beban_peny_gedung'];
@@ -286,8 +276,8 @@ class BebanOperasionalLaporanHasilUsaha {
     pemeliharaanGedungLastMonth = json['pemeliharaan_gedung_last_month'];
     pengeluaranLain = json['pengeluaran_lain'];
     pengeluaranLainLastMonth = json['pengeluaran_lain_last_month'];
-    bebanOperasional = json['beban_operasional'];
-    bebanOperasionalLastMonth = json['beban_operasional_last_month'];
+    totalBebanOperasional = json['total_beban_operasional'];
+    totalBebanOperasionalLastMonth = json['total_beban_operasional_last_month'];
     hasilUsahaBersih = json['hasil_usaha_bersih'];
     hasilUsahaBersihLastMonth = json['hasil_usaha_bersih_last_month'];
   }
@@ -300,14 +290,10 @@ class BebanOperasionalLaporanHasilUsaha {
     data['uang_makan_last_month'] = uangMakanLastMonth;
     data['thr_karyawan'] = thrKaryawan;
     data['thr_karyawan_last_month'] = thrKaryawanLastMonth;
-    data['tunjangan_pangan'] = tunjanganPangan;
-    data['tunjangan_pangan_last_month'] = tunjanganPanganLastMonth;
     data['beban_adm'] = bebanAdm;
     data['beban_adm_last_month'] = bebanAdmLastMonth;
     data['beban_perlengkapan'] = bebanPerlengkapan;
     data['beban_perlengkapan_last_month'] = bebanPerlengkapanLastMonth;
-    data['tunjangan_kesehatan'] = tunjanganKesehatan;
-    data['tunjangan_kesehatan_last_month'] = tunjanganKesehatanLastMonth;
     data['beban_peny_inventaris'] = bebanPenyInventaris;
     data['beban_peny_inventaris_last_month'] = bebanPenyInventarisLastMonth;
     data['beban_peny_gedung'] = bebanPenyGedung;
@@ -319,8 +305,8 @@ class BebanOperasionalLaporanHasilUsaha {
     data['pemeliharaan_gedung_last_month'] = pemeliharaanGedungLastMonth;
     data['pengeluaran_lain'] = pengeluaranLain;
     data['pengeluaran_lain_last_month'] = pengeluaranLainLastMonth;
-    data['beban_operasional'] = bebanOperasional;
-    data['beban_operasional_last_month'] = bebanOperasionalLastMonth;
+    data['total_beban_operasional'] = totalBebanOperasional;
+    data['total_beban_operasional_last_month'] = totalBebanOperasionalLastMonth;
     data['hasil_usaha_bersih'] = hasilUsahaBersih;
     data['hasil_usaha_bersih_last_month'] = hasilUsahaBersihLastMonth;
     return data;
@@ -328,46 +314,38 @@ class BebanOperasionalLaporanHasilUsaha {
 }
 
 class PendapatanLainLaporanHasilUsaha {
-  double? penarikanBank;
-  double? penarikanBankLastMonth;
   double? tenant;
   double? tenantLastMonth;
   double? lainLain;
   double? lainLainLastMonth;
-  double? pendapatanLain;
-  double? pendapatanLainLastMonth;
+  double? totalPendapatanLain;
+  double? totalPendapatanLainLastMonth;
 
   PendapatanLainLaporanHasilUsaha(
-      {this.penarikanBank,
-      this.penarikanBankLastMonth,
-      this.tenant,
+      {this.tenant,
       this.tenantLastMonth,
       this.lainLain,
       this.lainLainLastMonth,
-      this.pendapatanLain,
-      this.pendapatanLainLastMonth});
+      this.totalPendapatanLain,
+      this.totalPendapatanLainLastMonth});
 
   PendapatanLainLaporanHasilUsaha.fromJson(Map<String, dynamic> json) {
-    penarikanBank = json['penarikan_bank'];
-    penarikanBankLastMonth = json['penarikan_bank_last_month'];
     tenant = json['tenant'];
     tenantLastMonth = json['tenant_last_month'];
     lainLain = json['lain_lain'];
     lainLainLastMonth = json['lain_lain_last_month'];
-    pendapatanLain = json['pendapatan_lain'];
-    pendapatanLainLastMonth = json['pendapatan_lain_last_month'];
+    totalPendapatanLain = json['total_pendapatan_lain'];
+    totalPendapatanLainLastMonth = json['total_pendapatan_lain_last_month'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['penarikan_bank'] = penarikanBank;
-    data['penarikan_bank_last_month'] = penarikanBankLastMonth;
     data['tenant'] = tenant;
     data['tenant_last_month'] = tenantLastMonth;
     data['lain_lain'] = lainLain;
     data['lain_lain_last_month'] = lainLainLastMonth;
-    data['pendapatan_lain'] = pendapatanLain;
-    data['pendapatan_lain_last_month'] = pendapatanLainLastMonth;
+    data['total_pendapatan_lain'] = totalPendapatanLain;
+    data['total_pendapatan_lain_last_month'] = totalPendapatanLainLastMonth;
     return data;
   }
 }

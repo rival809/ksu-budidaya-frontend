@@ -121,13 +121,13 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 //A
                 PlutoRow(cells: {
                   'no': PlutoCell(value: 'A'),
-                  'uraian': PlutoCell(value: 'Penjualan'),
+                  'uraian': PlutoCell(value: 'PENJUALAN'),
                   'current_month': PlutoCell(value: ''),
                   'last_month': PlutoCell(value: ''),
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Penjualan Tunai'),
+                  'uraian': PlutoCell(value: 'TUNAI'),
                   'current_month': PlutoCell(
                       value: result.data?.penjualan?.currentMonthCashSale),
                   'last_month': PlutoCell(
@@ -135,7 +135,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Penjualan Kredit'),
+                  'uraian': PlutoCell(value: 'KREDIT'),
                   'current_month': PlutoCell(
                       value: result.data?.penjualan?.currentMonthCreditSale),
                   'last_month': PlutoCell(
@@ -143,15 +143,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Penjualan Kredit'),
-                  'current_month': PlutoCell(
-                      value: result.data?.penjualan?.currentMonthCreditSale),
-                  'last_month': PlutoCell(
-                      value: result.data?.penjualan?.lastMonthCreditSale),
-                }),
-                PlutoRow(cells: {
-                  'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Penjualan QRIS'),
+                  'uraian': PlutoCell(value: 'QRIS'),
                   'current_month': PlutoCell(
                       value: result.data?.penjualan?.currentMonthQrisSale),
                   'last_month': PlutoCell(
@@ -174,13 +166,13 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 //B
                 PlutoRow(cells: {
                   'no': PlutoCell(value: 'B'),
-                  'uraian': PlutoCell(value: 'Harga Pokok Penjualan'),
+                  'uraian': PlutoCell(value: 'HARGA POKOK PENJUALAN'),
                   'current_month': PlutoCell(value: ''),
                   'last_month': PlutoCell(value: ''),
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Persediaan Awal'),
+                  'uraian': PlutoCell(value: 'PERSEDIAAN AWAL'),
                   'current_month': PlutoCell(
                       value: result.data?.hargaPokokPenjualan?.persediaanAwal),
                   'last_month': PlutoCell(
@@ -189,7 +181,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Pembelian Tunai'),
+                  'uraian': PlutoCell(value: 'PEMBELIAN TUNAI'),
                   'current_month': PlutoCell(
                       value: result.data?.hargaPokokPenjualan?.pembelianTunai),
                   'last_month': PlutoCell(
@@ -198,7 +190,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Pembelian Kredit'),
+                  'uraian': PlutoCell(value: 'PEMBELIAN KREDIT'),
                   'current_month': PlutoCell(
                       value: result.data?.hargaPokokPenjualan?.pembelianKredit),
                   'last_month': PlutoCell(
@@ -207,7 +199,15 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Pembelian Bersih'),
+                  'uraian': PlutoCell(value: 'RETUR PEMBELIAN'),
+                  'current_month':
+                      PlutoCell(value: result.data?.hargaPokokPenjualan?.retur),
+                  'last_month': PlutoCell(
+                      value: result.data?.hargaPokokPenjualan?.returLastMonth),
+                }),
+                PlutoRow(cells: {
+                  'no': PlutoCell(value: ''),
+                  'uraian': PlutoCell(value: 'PEMBELIAN BERSIH'),
                   'current_month': PlutoCell(
                       value: result.data?.hargaPokokPenjualan?.pembelianBersih),
                   'last_month': PlutoCell(
@@ -216,7 +216,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Barang Siap Jual'),
+                  'uraian': PlutoCell(value: 'BARANG SIAP JUAL'),
                   'current_month': PlutoCell(
                       value: result.data?.hargaPokokPenjualan?.barangSiapJual),
                   'last_month': PlutoCell(
@@ -225,7 +225,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Persediaan Akhir'),
+                  'uraian': PlutoCell(value: 'PERSEDIAAN AKHIR'),
                   'current_month': PlutoCell(
                       value: result.data?.hargaPokokPenjualan?.persediaanAkhir),
                   'last_month': PlutoCell(
@@ -234,7 +234,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Harga Pokok Penjualan'),
+                  'uraian': PlutoCell(value: 'HARGA POKOK PENJUALAN'),
                   'current_month': PlutoCell(
                       value: result
                           .data?.hargaPokokPenjualan?.hargaPokokPenjualan),
@@ -244,7 +244,13 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Hasil Usaha Kotor'),
+                  'uraian': PlutoCell(value: ''),
+                  'current_month': PlutoCell(value: ''),
+                  'last_month': PlutoCell(value: ''),
+                }),
+                PlutoRow(cells: {
+                  'no': PlutoCell(value: ''),
+                  'uraian': PlutoCell(value: 'HASIL USAHA KOTOR'),
                   'current_month': PlutoCell(
                       value: result.data?.hargaPokokPenjualan?.hasilUsahaKotor),
                   'last_month': PlutoCell(
@@ -260,13 +266,13 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 //C
                 PlutoRow(cells: {
                   'no': PlutoCell(value: 'C'),
-                  'uraian': PlutoCell(value: 'Beban Operasional'),
+                  'uraian': PlutoCell(value: 'BEBAN OPERASIONAL'),
                   'current_month': PlutoCell(value: ''),
                   'last_month': PlutoCell(value: ''),
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Beban Gaji/ Insentif'),
+                  'uraian': PlutoCell(value: 'BEBAN GAJI/INSENTIF'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.bebanGaji),
                   'last_month': PlutoCell(
@@ -274,7 +280,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Uang Makan Karyawan'),
+                  'uraian': PlutoCell(value: 'UANG MAKAN KARYAWAN'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.uangMakan),
                   'last_month': PlutoCell(
@@ -282,25 +288,17 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'THR Karyawan'),
+                  'uraian': PlutoCell(value: 'THR KARYAWAN'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.thrKaryawan),
                   'last_month': PlutoCell(
                       value:
                           result.data?.bebanOperasional?.thrKaryawanLastMonth),
                 }),
+
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Tunjangan Pangan'),
-                  'current_month': PlutoCell(
-                      value: result.data?.bebanOperasional?.tunjanganPangan),
-                  'last_month': PlutoCell(
-                      value: result
-                          .data?.bebanOperasional?.tunjanganPanganLastMonth),
-                }),
-                PlutoRow(cells: {
-                  'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Beban Adm. & Umum'),
+                  'uraian': PlutoCell(value: 'BEBAN ADM. & UMUM'),
                   'current_month':
                       PlutoCell(value: result.data?.bebanOperasional?.bebanAdm),
                   'last_month': PlutoCell(
@@ -308,25 +306,17 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Beban Perlengkapan'),
+                  'uraian': PlutoCell(value: 'BEBAN PERLENGKAPAN'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.bebanPerlengkapan),
                   'last_month': PlutoCell(
                       value: result
                           .data?.bebanOperasional?.bebanPerlengkapanLastMonth),
                 }),
+
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Tunjangan Kesehatan'),
-                  'current_month': PlutoCell(
-                      value: result.data?.bebanOperasional?.tunjanganKesehatan),
-                  'last_month': PlutoCell(
-                      value: result
-                          .data?.bebanOperasional?.tunjanganKesehatanLastMonth),
-                }),
-                PlutoRow(cells: {
-                  'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Beban Peny. Inventaris'),
+                  'uraian': PlutoCell(value: 'BEBAN PENY. INVENTARIS'),
                   'current_month': PlutoCell(
                       value:
                           result.data?.bebanOperasional?.bebanPenyInventaris),
@@ -336,7 +326,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Beban Peny. Gedung'),
+                  'uraian': PlutoCell(value: 'BEBAN PENY. GEDUNG'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.bebanPenyGedung),
                   'last_month': PlutoCell(
@@ -345,7 +335,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Pemeliharaan Inventaris'),
+                  'uraian': PlutoCell(value: 'PEMELIHARAAN INVENTARIS'),
                   'current_month': PlutoCell(
                       value: result
                           .data?.bebanOperasional?.pemeliharaanInventaris),
@@ -355,7 +345,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Pemeliharaan Gedung'),
+                  'uraian': PlutoCell(value: 'PEMELIHARAAN GEDUNG'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.pemeliharaanGedung),
                   'last_month': PlutoCell(
@@ -364,7 +354,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Pengeluaran Lain-lain'),
+                  'uraian': PlutoCell(value: 'PENGELUARAN LAIN-LAIN'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.pengeluaranLain),
                   'last_month': PlutoCell(
@@ -373,16 +363,23 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Total Beban Operasional'),
+                  'uraian': PlutoCell(value: 'TOTAL BEBAN OPERASIONAL'),
                   'current_month': PlutoCell(
-                      value: result.data?.bebanOperasional?.bebanOperasional),
+                      value:
+                          result.data?.bebanOperasional?.totalBebanOperasional),
                   'last_month': PlutoCell(
-                      value: result
-                          .data?.bebanOperasional?.bebanOperasionalLastMonth),
+                      value: result.data?.bebanOperasional
+                          ?.totalBebanOperasionalLastMonth),
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Hasil Usaha Bersih'),
+                  'uraian': PlutoCell(value: ''),
+                  'current_month': PlutoCell(value: ''),
+                  'last_month': PlutoCell(value: ''),
+                }),
+                PlutoRow(cells: {
+                  'no': PlutoCell(value: ''),
+                  'uraian': PlutoCell(value: 'HASIL USAHA BERSIH'),
                   'current_month': PlutoCell(
                       value: result.data?.bebanOperasional?.hasilUsahaBersih),
                   'last_month': PlutoCell(
@@ -398,22 +395,14 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 //D
                 PlutoRow(cells: {
                   'no': PlutoCell(value: 'D'),
-                  'uraian': PlutoCell(value: 'Pendapatan Lain-lain'),
+                  'uraian': PlutoCell(value: 'PENDAPATAN LAIN-LAIN'),
                   'current_month': PlutoCell(value: ''),
                   'last_month': PlutoCell(value: ''),
                 }),
+
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Jasa Bank'),
-                  'current_month': PlutoCell(
-                      value: result.data?.pendapatanLain?.penarikanBank),
-                  'last_month': PlutoCell(
-                      value:
-                          result.data?.pendapatanLain?.penarikanBankLastMonth),
-                }),
-                PlutoRow(cells: {
-                  'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Tenant'),
+                  'uraian': PlutoCell(value: 'TENANT'),
                   'current_month':
                       PlutoCell(value: result.data?.pendapatanLain?.tenant),
                   'last_month': PlutoCell(
@@ -421,7 +410,7 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Pendapatan Lain-lain'),
+                  'uraian': PlutoCell(value: 'PENDAPATAN LAIN-LAIN'),
                   'current_month':
                       PlutoCell(value: result.data?.pendapatanLain?.lainLain),
                   'last_month': PlutoCell(
@@ -429,13 +418,20 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                 }),
                 PlutoRow(cells: {
                   'no': PlutoCell(value: ''),
-                  'uraian': PlutoCell(value: 'Total Pendapatan Lain-Lain'),
+                  'uraian': PlutoCell(value: 'TOTAL PENDAPATAN LAIN-LAIN'),
                   'current_month': PlutoCell(
-                      value: result.data?.pendapatanLain?.pendapatanLain),
+                      value: result.data?.pendapatanLain?.totalPendapatanLain),
                   'last_month': PlutoCell(
-                      value:
-                          result.data?.pendapatanLain?.pendapatanLainLastMonth),
+                      value: result
+                          .data?.pendapatanLain?.totalPendapatanLainLastMonth),
                 }),
+                PlutoRow(cells: {
+                  'no': PlutoCell(value: ''),
+                  'uraian': PlutoCell(value: ''),
+                  'current_month': PlutoCell(value: ''),
+                  'last_month': PlutoCell(value: ''),
+                }),
+
                 //E
                 PlutoRow(cells: {
                   'no': PlutoCell(value: 'E'),

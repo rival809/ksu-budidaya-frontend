@@ -47,19 +47,25 @@ convertTitle(String text) {
 
 bool boldChecker(String? text) {
   switch (trimString(text.toString())) {
-    case "Penjualan":
+    case "PENJUALAN":
       return true;
     case "TOTAL":
       return true;
-    case "Harga Pokok Penjualan":
+    case "HARGA POKOK PENJUALAN":
       return true;
-    case "Beban Operasional":
+    case "HASIL USAHA KOTOR":
       return true;
-    case "Pendapatan Lain-lain":
+    case "BEBAN OPERASIONAL":
       return true;
-    case "Total Pendapatan Lain-Lain":
+    case "TOTAL BEBAN OPERASIONAL":
       return true;
-    case "Sisa Hasil Usaha":
+    case "HASIL USAHA BERSIH":
+      return true;
+    case "PENDAPATAN LAIN-LAIN":
+      return true;
+    case "TOTAL PENDAPATAN LAIN-LAIN":
+      return true;
+    case "SISA HASIL USAHA":
       return true;
     default:
       return false;
