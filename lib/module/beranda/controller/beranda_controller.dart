@@ -80,13 +80,10 @@ class BerandaController extends State<BerandaView> {
 
   List<String> listPenjualanView = [
     "id_penjualan",
-    // "tg_penjualan",
     "jumlah",
     "total_nilai_jual",
     "total_nilai_beli",
     "nm_anggota",
-    // "jenis_pembayaran",
-    // "keterangan",
     "username",
   ];
   cariDataPenjualan() async {
@@ -113,16 +110,19 @@ class BerandaController extends State<BerandaView> {
     }
   }
 
+  initValue() async {
+    await getReferences();
+    await postIncomeDashboard();
+    await postIncomeMonthly();
+    dataFuture = cariDataPenjualan();
+    update();
+  }
+
   @override
   void initState() {
     instance = this;
     super.initState();
-    dataFuture = cariDataPenjualan();
-    getReferences();
-    postIncomeDashboard();
-    postIncomeMonthly();
-    update();
-    update();
+    initValue();
   }
 
   @override
