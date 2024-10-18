@@ -15,6 +15,7 @@
         "koperasi/anggota",
         "transaksi/pembelian",
         "transaksi/penjualan",
+        "transaksi/retur",
         "pdf_viewer"
     ],
     "module_directory_name": "module",

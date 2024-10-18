@@ -30,7 +30,7 @@ class BerandaController extends State<BerandaView> {
 
   int monthNow = DateTime.now().month;
 
-  bool loading = false;
+  bool loading = true;
   postIncomeDashboard() async {
     loading = true;
     update();

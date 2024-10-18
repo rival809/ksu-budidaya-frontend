@@ -37,8 +37,8 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     textController[0].text = trimString(widget.data?.idProduct);
     textController[1].text = trimString(widget.data?.nmProduk);
     textController[2].text = trimString(widget.data?.jumlah.toString());
-    textController[3].text = formatMoney(trimString(widget.data?.hargaBeli));
-    textController[4].text = formatMoney(trimString(widget.data?.hargaJual));
+    textController[3].text = formatMoney(trimString(widget.data?.hargaJual));
+    textController[4].text = formatMoney(trimString(widget.data?.hargaBeli));
     textController[5].text =
         formatMoney(trimString(widget.data?.diskon ?? "0"));
     dataEdit.diskon = widget.data?.diskon ?? "0";

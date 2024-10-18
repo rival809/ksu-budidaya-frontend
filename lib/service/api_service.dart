@@ -844,6 +844,91 @@ class ApiService {
     }
   }
 
+  //Retur
+  static Future<ReturResult> listRetur({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/retur/list-retur",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ReturResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listRetur');
+    }
+  }
+
+  // static Future<DetailPembelianResult> detailPembelian({
+  //   required DataMap data,
+  // }) async {
+  //   var response = await dio.post(
+  //     "$_baseUrl/api/purchase/detail-purchase",
+  //     options: options,
+  //     data: data,
+  //     cancelToken: cancelToken,
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     if (response.data["success"] == true) {
+  //       return DetailPembelianResult.fromJson(json.decode(response.toString()));
+  //     } else {
+  //       throw Exception(response.data["message"]);
+  //     }
+  //   } else {
+  //     throw Exception('Failed to detailPembelian');
+  //   }
+  // }
+
+  // static Future<PembelianResult> removePembelian({
+  //   required DataMap data,
+  // }) async {
+  //   var response = await dio.post(
+  //     "$_baseUrl/api/purchase/remove-purchase",
+  //     options: options,
+  //     data: data,
+  //     cancelToken: cancelToken,
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     if (response.data["success"] == true) {
+  //       return PembelianResult.fromJson(json.decode(response.toString()));
+  //     } else {
+  //       throw Exception(response.data["message"]);
+  //     }
+  //   } else {
+  //     throw Exception('Failed to removePembelian');
+  //   }
+  // }
+
+  // static Future<PembelianResult> createPembelian({
+  //   required DataMap data,
+  // }) async {
+  //   var response = await dio.post(
+  //     "$_baseUrl/api/purchase/create-purchase",
+  //     options: options,
+  //     data: data,
+  //     cancelToken: cancelToken,
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     if (response.data["success"] == true) {
+  //       return PembelianResult.fromJson(json.decode(response.toString()));
+  //     } else {
+  //       throw Exception(response.data["message"]);
+  //     }
+  //   } else {
+  //     throw Exception('Failed to createPembelian');
+  //   }
+  // }
+
   static Future<PenjualanResult> listPenjualan({
     required DataMap data,
   }) async {
