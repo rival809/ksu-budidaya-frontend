@@ -1077,4 +1077,48 @@ class ApiService {
       throw Exception('Failed to laporanHasilUsaha');
     }
   }
+
+  //HutangDAgang
+  static Future<HutangDagangResult> listHutangDagang({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-dagang/list-hutang-dagang",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return HutangDagangResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listHutangDagang');
+    }
+  }
+
+  static Future<HistoryHutangDagangResult> listHistoryHutangDagang({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-dagang/list-history-bayar-hutang-dagang",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return HistoryHutangDagangResult.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listHistoryHutangDagang');
+    }
+  }
 }

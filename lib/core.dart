@@ -22,6 +22,8 @@ export 'package:ksu_budidaya/model/cash_in_out/ref_jenis_cash_model.dart';
 export 'package:ksu_budidaya/model/dashboard/income_dashboard_model.dart';
 export 'package:ksu_budidaya/model/dashboard/income_monthly_model.dart';
 export 'package:ksu_budidaya/model/divisi/divisi_model.dart';
+export 'package:ksu_budidaya/model/hutang_dagang/history_hutang_dagang_model.dart';
+export 'package:ksu_budidaya/model/hutang_dagang/hutang_dagang_model.dart';
 export 'package:ksu_budidaya/model/jenis_laporan_model.dart';
 export 'package:ksu_budidaya/model/laporan/laporan_hasil_usaha_model.dart';
 export 'package:ksu_budidaya/model/pembelian/create_pembelian_model.dart';
@@ -79,6 +81,8 @@ export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/controller/
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/view/stock_opname_mobile_view.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/widget/scanner_barcode.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/widget/scanner_button_widgets.dart';
+export 'package:ksu_budidaya/module/transaksi/bayar_hutang_dagang/controller/bayar_hutang_dagang_controller.dart';
+export 'package:ksu_budidaya/module/transaksi/bayar_hutang_dagang/view/bayar_hutang_dagang_view.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/controller/pembelian_controller.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/view/pembelian_view.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_empty.dart';

@@ -16,6 +16,7 @@
         "transaksi/pembelian",
         "transaksi/penjualan",
         "transaksi/retur",
+        "transaksi/bayar_hutang_dagang",
         "pdf_viewer"
     ],
     "module_directory_name": "module",
