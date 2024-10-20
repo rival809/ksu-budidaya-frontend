@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/transaksi/retur/widget/table/footer_retur.dart';
 
 class ContainerRetur extends StatefulWidget {
   final ReturController controller;
@@ -18,18 +17,29 @@ class _ContainerReturState extends State<ContainerRetur> {
   @override
   void initState() {
     super.initState();
+    widget.controller.dataDetailSup = DataDetailSupplier(
+      idSupplier: widget.controller.dataPayloadRetur.idSupplier,
+      nmSupplier: widget.controller.dataPayloadRetur.nmSupplier,
+    );
+    widget.controller.dataPayloadRetur.tgRetur =
+        formatDate(DateTime.now().toString());
+    widget.controller.textControllerRetur[0].text =
+        formatDate(DateTime.now().toString());
   }
 
-  final inputPembelianKey = GlobalKey<FormState>();
+  final inputRetursKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     ReturController controller = widget.controller;
 
+    controller.sumJumlah();
+    controller.sumTotalHargaBeli();
+
     return SizedBox(
       height: MediaQuery.of(context).size.height - 105,
       child: Form(
-        key: inputPembelianKey,
+        key: inputRetursKey,
         child: Column(
           children: [
             Row(
@@ -37,7 +47,7 @@ class _ContainerReturState extends State<ContainerRetur> {
                 InkWell(
                   onTap: () {
                     controller.isList = true;
-                    // controller.dataPembelian = CreatePembelianModel();
+                    controller.dataPayloadRetur = ReturPayloadModel();
                     controller.update();
                     update();
                   },
@@ -74,7 +84,9 @@ class _ContainerReturState extends State<ContainerRetur> {
                     readOnly: true,
                     onTap: () async {
                       DateTime? selectedDate = await initSelectedDate(
-                        initValue: controller.dataPayloadRetur.tgRetur,
+                        initValue: formatDateTimeNow(
+                            controller.dataPayloadRetur.tgRetur ??
+                                DateTime.now().toString()),
                       );
 
                       if (selectedDate != null) {
@@ -107,17 +119,10 @@ class _ContainerReturState extends State<ContainerRetur> {
                     enabled: controller.isDetail ? false : true,
                     itemAsString: (item) => item.supplierAsString(),
                     items: SupplierDatabase.dataSupplier.dataSupplier ?? [],
-                    value: controller.dataPayloadRetur.idSupplier?.isEmpty ??
-                            true
-                        ? null
-                        : DataDetailSupplier(
-                            idSupplier: controller.dataPayloadRetur.idSupplier,
-                            nmSupplier: trimString(
-                              getNamaSupplier(
-                                  idSupplier: trimString(
-                                      controller.dataPayloadRetur.idSupplier)),
-                            ),
-                          ),
+                    value:
+                        controller.dataPayloadRetur.idSupplier?.isEmpty ?? true
+                            ? null
+                            : controller.dataDetailSup,
                     onChanged: (value) {
                       controller.dataPayloadRetur.idSupplier =
                           trimString(value?.idSupplier);
@@ -164,19 +169,15 @@ class _ContainerReturState extends State<ContainerRetur> {
                     isDense: true,
                     prefixIcon: iconAddShoppingCart,
                     onPressed: () async {
-                      // controller.isLoading = true;
-                      // controller.update();
-                      // await showDialogBase(
-                      //   width: 700,
-                      //   content: DialogTambahPembelian(
-                      //     data: DataDetailPembelian(),
-                      //     controller: controller,
-                      //   ),
-                      // );
-                      // await controller.initColumn();
-                      // await controller.initRow();
-                      // controller.isLoading = false;
-                      // controller.update();
+                      await showDialogBase(
+                        width: 700,
+                        content: DialogTambahRetur(
+                          data: DetailsReturPayload(),
+                          controller: controller,
+                        ),
+                      );
+                      controller.update();
+                      update();
                     },
                   ),
                 if (!controller.isDetail)
@@ -188,13 +189,13 @@ class _ContainerReturState extends State<ContainerRetur> {
                     text: "Simpan",
                     isDense: true,
                     onPressed: () {
-                      if (inputPembelianKey.currentState!.validate()) {
+                      if (inputRetursKey.currentState!.validate()) {
                         showDialogBase(
                           content: DialogKonfirmasi(
                             textKonfirmasi:
                                 "Apakah Anda yakin ingin menyimpan data ini?",
                             onConfirm: () {
-                              // controller.postCreatePembelian();
+                              controller.postCreateRetur();
                             },
                           ),
                         );
@@ -208,7 +209,7 @@ class _ContainerReturState extends State<ContainerRetur> {
             ),
             const HeaderRetur(),
             ListView.builder(
-              itemCount: controller.dataPayloadRetur.details?.length ?? 1,
+              itemCount: controller.dataPayloadRetur.details?.length ?? 0,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
@@ -228,10 +229,27 @@ class _ContainerReturState extends State<ContainerRetur> {
                     ),
                   );
                 } else {
-                  return BodyRetur(
-                    controller: controller,
-                    index: index,
-                    color: neutralWhite,
+                  return InkWell(
+                    onTap: controller.isDetail
+                        ? null
+                        : () async {
+                            await showDialogBase(
+                              width: 700,
+                              content: DialogTambahRetur(
+                                index: index,
+                                data:
+                                    controller.dataPayloadRetur.details?[index],
+                                controller: controller,
+                              ),
+                            );
+                            controller.update();
+                            update();
+                          },
+                    child: BodyRetur(
+                      controller: controller,
+                      index: index,
+                      color: neutralWhite,
+                    ),
                   );
                 }
               },

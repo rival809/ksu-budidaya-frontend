@@ -1,3 +1,5 @@
+import 'package:ksu_budidaya/core.dart';
+
 class ReturPayloadModel {
   String? tgRetur;
   String? idPembelian;
@@ -31,8 +33,31 @@ class ReturPayloadModel {
       json['details'].forEach((v) {
         details!.add(DetailsReturPayload.fromJson(v));
       });
+    } else {
+      details = [];
     }
   }
+
+  ReturPayloadModel copyWith({
+    String? tgRetur,
+    String? idPembelian,
+    String? idSupplier,
+    String? nmSupplier,
+    String? jumlah,
+    String? totalNilaiBeli,
+    String? keterangan,
+    List<DetailsReturPayload>? details,
+  }) =>
+      ReturPayloadModel(
+        tgRetur: tgRetur ?? this.tgRetur,
+        idPembelian: idPembelian ?? this.idPembelian,
+        idSupplier: idSupplier ?? this.idSupplier,
+        nmSupplier: nmSupplier ?? this.nmSupplier,
+        jumlah: jumlah ?? this.jumlah,
+        totalNilaiBeli: totalNilaiBeli ?? this.totalNilaiBeli,
+        keterangan: keterangan ?? this.keterangan,
+        details: details ?? this.details,
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -53,7 +78,6 @@ class ReturPayloadModel {
 }
 
 class DetailsReturPayload {
-  String? idPembelian;
   String? nmDivisi;
   String? idProduct;
   String? nmProduk;
@@ -63,7 +87,6 @@ class DetailsReturPayload {
 
   DetailsReturPayload(
       {this.nmDivisi,
-      this.idPembelian,
       this.idProduct,
       this.nmProduk,
       this.hargaBeli,
@@ -71,18 +94,16 @@ class DetailsReturPayload {
       this.totalNilaiBeli});
 
   DetailsReturPayload.fromJson(Map<String, dynamic> json) {
-    idPembelian = json['id_pembelian'];
     nmDivisi = json['nm_divisi'];
     idProduct = json['id_product'];
     nmProduk = json['nm_produk'];
     hargaBeli = json['harga_beli'];
-    jumlah = json['jumlah'];
+    jumlah = checkModel(json['jumlah']);
     totalNilaiBeli = json['total_nilai_beli'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id_pembelian'] = idPembelian;
     data['nm_divisi'] = nmDivisi;
     data['id_product'] = idProduct;
     data['nm_produk'] = nmProduk;

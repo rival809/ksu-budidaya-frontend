@@ -66,12 +66,132 @@ class ReturController extends State<ReturView> {
     }
   }
 
-  ReturPayloadModel dataPayloadRetur = ReturPayloadModel();
+  ReturPayloadModel dataPayloadRetur = ReturPayloadModel(details: []);
+  DataDetailSupplier dataDetailSup = DataDetailSupplier();
 
   List<TextEditingController> textControllerRetur = [
     TextEditingController(),
     TextEditingController(),
   ];
+
+  double totalHargaBeli = 0;
+  double jumlah = 0;
+
+  sumTotalHargaBeli() {
+    totalHargaBeli = 0;
+    for (var i = 0; i < (dataPayloadRetur.details?.length ?? 0); i++) {
+      totalHargaBeli +=
+          double.parse(dataPayloadRetur.details?[i].totalNilaiBeli ?? "0");
+    }
+    dataPayloadRetur.totalNilaiBeli = totalHargaBeli.toString();
+  }
+
+  sumJumlah() {
+    jumlah = 0;
+    for (var i = 0; i < (dataPayloadRetur.details?.length ?? 0); i++) {
+      jumlah += int.parse(dataPayloadRetur.details?[i].jumlah ?? "0");
+    }
+    dataPayloadRetur.jumlah = jumlah.toString();
+  }
+
+  postCreateRetur() async {
+    Get.back();
+
+    showCircleDialogLoading();
+    try {
+      var payload = dataPayloadRetur.toJson();
+
+      if (trimString(payload['keterangan']).toString().isEmpty) {
+        payload.removeWhere(
+          (key, value) => key == "keterangan",
+        );
+      }
+
+      ReturResult result = await ApiService.createRetur(
+        data: payload,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        await showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        router.push("/transaksi/retur");
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postRemoveRetur(String idRetur) async {
+    Get.back();
+    showCircleDialogLoading();
+    try {
+      ReturResult result = await ApiService.removeRetur(
+        data: {"id_retur": idRetur},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataRetur();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postDetailPurchase(String idRetur) async {
+    showCircleDialogLoading();
+    try {
+      DetailReturResult result = await ApiService.detailRetur(
+        data: {"id_retur": idRetur},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        isList = false;
+        isDetail = true;
+        dataPayloadRetur = dataPayloadRetur.copyWith(
+          details: result.data,
+        );
+
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
 
   @override
   void initState() {

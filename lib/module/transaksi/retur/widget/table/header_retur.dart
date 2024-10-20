@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
-import 'package:ksu_budidaya/shared/theme/theme_config.dart';
+import 'package:ksu_budidaya/core.dart';
 
 class HeaderRetur extends StatefulWidget {
   const HeaderRetur({
@@ -25,13 +25,17 @@ class _HeaderReturState extends State<HeaderRetur> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            Container(
-              width: 50,
-            ),
-            Container(
-              width: 1,
-              color: blueGray50,
-            ),
+            ReturController.instance.isDetail
+                ? Container()
+                : Container(
+                    width: 50,
+                  ),
+            ReturController.instance.isDetail
+                ? Container()
+                : Container(
+                    width: 1,
+                    color: blueGray50,
+                  ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(8),

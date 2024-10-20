@@ -96,7 +96,7 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                 ),
                 BasePrimaryButton(
                   onPressed: () {
-                    // controller.dataRetur.dataRetur = [];
+                    controller.dataPayloadRetur = ReturPayloadModel();
                     controller.update();
                     controller.isList = false;
                     controller.isDetail = false;
@@ -211,12 +211,26 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                                   result.data?.dataRetur?[rowIndex] ??
                                       DetailDataRetur();
 
-                              // controller.postDetailPurchase(
-                              //   trimString(
-                              //     result.data?.dataPembelian?[rowIndex]
-                              //         .idPembelian,
-                              //   ),
-                              // );
+                              controller.dataPayloadRetur.idPembelian =
+                                  dataDetail.idPembelian;
+                              controller.dataPayloadRetur.idSupplier =
+                                  dataDetail.idSupplier;
+                              controller.dataPayloadRetur.jumlah =
+                                  dataDetail.jumlah.toString();
+                              controller.dataPayloadRetur.keterangan =
+                                  dataDetail.keterangan;
+                              controller.dataPayloadRetur.nmSupplier =
+                                  dataDetail.nmSupplier;
+                              controller.dataPayloadRetur.tgRetur =
+                                  dataDetail.tgRetur;
+                              controller.dataPayloadRetur.totalNilaiBeli =
+                                  dataDetail.totalNilaiBeli;
+
+                              controller.postDetailPurchase(
+                                trimString(
+                                  result.data?.dataRetur?[rowIndex].idRetur,
+                                ),
+                              );
                               update();
                             } else if (value == 2) {
                               showDialogBase(
@@ -224,12 +238,12 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                                   textKonfirmasi:
                                       "Apakah Anda yakin ingin Menghapus Data Pembelian",
                                   onConfirm: () async {
-                                    // controller.postRemovePurchase(
-                                    //   trimString(
-                                    //     result.data?.dataPembelian?[rowIndex]
-                                    //         .idPembelian,
-                                    //   ),
-                                    // );
+                                    controller.postRemoveRetur(
+                                      trimString(
+                                        result
+                                            .data?.dataRetur?[rowIndex].idRetur,
+                                      ),
+                                    );
                                   },
                                 ),
                               );

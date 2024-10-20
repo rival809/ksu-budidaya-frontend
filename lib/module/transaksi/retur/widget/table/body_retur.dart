@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class BodyRetur extends StatefulWidget {
   final ReturController controller;
@@ -35,31 +34,36 @@ class _BodyReturState extends State<BodyRetur> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            InkWell(
-              onTap: () {
-                controller.dataPayloadRetur.details?.removeAt(widget.index);
-                controller.update();
-              },
-              child: Container(
-                width: 50,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
-                child: SvgPicture.asset(
-                  iconDelete,
-                  width: 24,
-                  colorFilter: colorFilterRed800,
-                ),
-              ),
-            ),
-            Container(
-              width: 1,
-              color: blueGray50,
-            ),
+            controller.isDetail
+                ? Container()
+                : InkWell(
+                    onTap: () {
+                      controller.dataPayloadRetur.details
+                          ?.removeAt(widget.index);
+                      controller.update();
+                    },
+                    child: Container(
+                      width: 50,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 13, vertical: 8),
+                      child: SvgPicture.asset(
+                        iconDelete,
+                        width: 24,
+                        colorFilter: colorFilterRed800,
+                      ),
+                    ),
+                  ),
+            controller.isDetail
+                ? Container()
+                : Container(
+                    width: 1,
+                    color: blueGray50,
+                  ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  trimStringStrip(dataIndex?.idPembelian),
+                  trimStringStrip(controller.dataPayloadRetur.idPembelian),
                   style: myTextTheme.bodyMedium,
                 ),
               ),
@@ -139,6 +143,7 @@ class _BodyReturState extends State<BodyRetur> {
               padding: const EdgeInsets.all(8),
               child: Text(
                 formatMoney(dataIndex?.totalNilaiBeli),
+                textAlign: TextAlign.end,
                 style: myTextTheme.bodyMedium,
               ),
             ),
