@@ -227,7 +227,7 @@ class SupplierView extends StatefulWidget {
                                     onChange: (value) {
                                       if (value == 1) {
                                         showDialogBase(
-                                          width: 1000,
+                                          width: 1200,
                                           content: DialogDetailSupplier(
                                             data: result
                                                 .data?.dataSupplier?[rowIndex],

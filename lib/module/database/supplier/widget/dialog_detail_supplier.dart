@@ -26,18 +26,30 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
   bool step1 = true;
   bool step2 = false;
   bool step3 = false;
+  bool step4 = false;
 
   Future<dynamic>? dataFuture;
 
   DataProduct dataProduct = DataProduct();
   ProductResult result = ProductResult();
+  DataPembelian dataPembelian = DataPembelian();
+  PembelianResult resultPembelian = PembelianResult();
 
   List<String> listProdukView = [
-    "id_supplier",
+    "id_product",
     "nm_product",
     "harga_beli",
     "harga_jual",
     "jumlah",
+  ];
+
+  List<String> listPenjualanView = [
+    "tg_pembelian",
+    "id_pembelian",
+    "jenis_pembayaran",
+    "jumlah",
+    "total_harga_beli",
+    "total_harga_jual",
   ];
 
   String page = "1";
@@ -77,6 +89,41 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
     }
   }
 
+  cariDataPembelian({
+    bool? isAsc,
+    String? field,
+  }) async {
+    try {
+      resultPembelian = PembelianResult();
+      DataMap dataCari = {
+        "page": page,
+        "size": size,
+      };
+
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
+
+      resultPembelian = await ApiService.listPembelian(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
+
+      return resultPembelian;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   PlutoColumnType typeField(String field) {
     switch (field) {
       case "jumlah":
@@ -106,22 +153,32 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
         step1 = true;
         step2 = false;
         step3 = false;
+        step4 = false;
         break;
       case "2":
         step1 = false;
         step2 = true;
         step3 = false;
+        step4 = false;
         dataFuture = cariDataProduct();
         break;
       case "3":
         step1 = false;
         step2 = false;
         step3 = true;
+        step4 = false;
+        dataFuture = cariDataPembelian();
+      case "4":
+        step1 = false;
+        step2 = false;
+        step3 = false;
+        step4 = true;
         break;
       default:
         step1 = true;
         step2 = false;
         step3 = false;
+        step4 = false;
     }
     update();
   }
@@ -381,6 +438,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                           rows: rows,
                           createFooter: (stateManager) {
                             return FooterTableWidget(
+                              widthDialog: 1168,
                               page: page,
                               itemPerpage: size,
                               maxPage: dataProduct.paging?.totalPage ?? 0,
@@ -470,6 +528,236 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                         ],
                       ),
                     ],
+                  );
+                }
+              },
+            ),
+          if (step3)
+            FutureBuilder(
+              future: dataFuture,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return const ContainerError();
+                  } else if (snapshot.hasData) {
+                    PembelianResult result = snapshot.data;
+                    dataPembelian = result.data ?? DataPembelian();
+                    for (var i = 0;
+                        i < (dataPembelian.dataPembelian?.length ?? 0);
+                        i++) {
+                      dataPembelian.dataPembelian?[i].tgPembelian =
+                          formatDateForView(trimString(
+                              dataPembelian.dataPembelian?[i].tgPembelian));
+                    }
+                    List<dynamic> listData =
+                        dataPembelian.toJson()["data_pembelian"] ?? [];
+
+                    if (listData.isNotEmpty) {
+                      List<PlutoRow> rows = [];
+                      List<PlutoColumn> columns = [];
+
+                      columns.addAll(
+                        List.generate(
+                          listPenjualanView.length,
+                          (index) {
+                            if (listPenjualanView[index] ==
+                                "jenis_pembayaran") {
+                              return PlutoColumn(
+                                // width: 75,
+                                backgroundColor: primaryColor,
+                                filterHintText:
+                                    "Cari ${listPenjualanView[index]}",
+                                title: convertTitle(
+                                  listPenjualanView[index],
+                                ),
+                                field: listPenjualanView[index],
+                                type: PlutoColumnType.text(),
+                                renderer: (rendererContext) {
+                                  Map<String, dynamic> dataRow =
+                                      rendererContext.row.toJson();
+                                  return CardLabel(
+                                    cardColor: yellow50,
+                                    cardTitle: dataRow["jenis_pembayaran"]
+                                        .toString()
+                                        .toUpperCase(),
+                                    cardTitleColor: yellow900,
+                                    cardBorderColor: yellow50,
+                                  );
+                                },
+                              );
+                            }
+                            if (listPenjualanView[index] == "jumlah") {
+                              return PlutoColumn(
+                                width: 75,
+                                backgroundColor: primaryColor,
+                                filterHintText:
+                                    "Cari ${listPenjualanView[index]}",
+                                title: "Jumlah",
+                                field: listPenjualanView[index],
+                                type: PlutoColumnType.number(
+                                  locale: "id",
+                                ),
+                              );
+                            }
+                            if (listPenjualanView[index] == "tg_pembelian") {
+                              return PlutoColumn(
+                                  // width: 75,
+                                  backgroundColor: primaryColor,
+                                  filterHintText: "Cari Tgl. Pembelian",
+                                  title: "Tanggal",
+                                  field: listPenjualanView[index],
+                                  type: PlutoColumnType.date(
+                                      format: 'dd-MM-yyyy'));
+                            }
+                            return PlutoColumn(
+                              backgroundColor: primaryColor,
+                              filterHintText:
+                                  "Cari ${listPenjualanView[index]}",
+                              title: convertTitle(
+                                listPenjualanView[index],
+                              ),
+                              field: listPenjualanView[index],
+                              type: (listPenjualanView[index] ==
+                                          "total_harga_beli" ||
+                                      listPenjualanView[index] ==
+                                          "total_harga_jual" ||
+                                      listPenjualanView[index] == "jumlah")
+                                  ? PlutoColumnType.number(
+                                      locale: "id",
+                                    )
+                                  : PlutoColumnType.text(),
+                            );
+                          },
+                        ),
+                      );
+
+                      List<dynamic> listDataWithIndex =
+                          List.generate(listData.length, (index) {
+                        return {
+                          ...listData[index],
+                          'persistentIndex': index + 1,
+                        };
+                      });
+                      rows = listDataWithIndex.map((item) {
+                        Map<String, PlutoCell> cells = {};
+
+                        cells['Aksi'] = PlutoCell(
+                          value: null,
+                        );
+
+                        for (String column in listPenjualanView) {
+                          if (item.containsKey(column)) {
+                            cells[column] = PlutoCell(
+                              value: column == "id_supplier"
+                                  ? getNamaSupplier(
+                                      idSupplier: trimString(
+                                      item[column].toString(),
+                                    ))
+                                  : trimStringStrip(
+                                      item[column].toString(),
+                                    ),
+                            );
+                          }
+                        }
+
+                        return PlutoRow(cells: cells);
+                      }).toList();
+
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height -
+                            AppBar().preferredSize.height -
+                            248 -
+                            16,
+                        child: PlutoGrid(
+                          noRowsWidget: const ContainerTidakAda(
+                            entity: 'Pembelian',
+                          ),
+                          mode: PlutoGridMode.select,
+                          onLoaded: (event) {
+                            event.stateManager.setShowColumnFilter(true);
+                          },
+                          onSorted: (event) {
+                            if (event.column.field != "Aksi") {
+                              isAsc = !isAsc;
+                              update();
+                              dataFuture = cariDataPembelian(
+                                isAsc: isAsc,
+                                field: event.column.field,
+                              );
+                              update();
+                            }
+                          },
+                          configuration: PlutoGridConfiguration(
+                            columnSize: const PlutoGridColumnSizeConfig(
+                              autoSizeMode: PlutoAutoSizeMode.scale,
+                            ),
+                            style: PlutoGridStyleConfig(
+                              columnTextStyle: myTextTheme.titleSmall
+                                      ?.copyWith(color: neutralWhite) ??
+                                  const TextStyle(),
+                              gridBorderColor: blueGray50,
+                              gridBorderRadius: BorderRadius.circular(8),
+                            ),
+                            localeText: configLocale,
+                          ),
+                          columns: columns,
+                          rows: rows,
+                          createFooter: (stateManager) {
+                            return FooterTableWidget(
+                              widthDialog: 1168,
+                              page: page,
+                              itemPerpage: size,
+                              maxPage: dataPembelian.paging?.totalPage ?? 0,
+                              onChangePage: (value) {
+                                page = trimString(value);
+                                update();
+                                dataFuture = cariDataPembelian();
+                                update();
+                              },
+                              onChangePerPage: (value) {
+                                page = "1";
+                                size = trimString(value);
+                                update();
+                                dataFuture = cariDataPembelian();
+                                update();
+                              },
+                              totalRow: dataPembelian.paging?.totalItem ?? 0,
+                              onPressLeft: () {
+                                if (int.parse(page) > 1) {
+                                  page = (int.parse(page) - 1).toString();
+                                  update();
+                                  dataFuture = cariDataPembelian();
+                                  update();
+                                }
+                              },
+                              onPressRight: () {
+                                if (int.parse(page) <
+                                    (result.data?.paging?.totalPage ?? 0)) {
+                                  page = (int.parse(page) + 1).toString();
+                                  update();
+                                  dataFuture = cariDataPembelian();
+                                  update();
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return const ContainerTidakAda(
+                        entity: 'Pembelian',
+                      );
+                    }
+                  } else {
+                    return const ContainerError();
+                  }
+                } else {
+                  return const ContainerTidakAda(
+                    entity: "Pembelian",
                   );
                 }
               },
