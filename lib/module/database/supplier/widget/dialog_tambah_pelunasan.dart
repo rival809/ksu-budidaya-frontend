@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class DialogTambahPelunasan extends StatefulWidget {
-  final DataDetailSupplier? data;
+  final String? idSupplier;
 
   const DialogTambahPelunasan({
     Key? key,
-    required this.data,
+    required this.idSupplier,
   }) : super(key: key);
 
   @override
@@ -20,18 +20,90 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
     TextEditingController(),
     TextEditingController(),
     TextEditingController(),
+    TextEditingController(),
   ];
 
-  DataDetailSupplier dataEdit = DataDetailSupplier();
+  BayarHutangDagangPayload dataEdit = BayarHutangDagangPayload();
 
   final tambahPelunasanKey = GlobalKey<FormState>();
 
+  HutangDagangResult result = HutangDagangResult();
+
+  cariDataHutangDagang({
+    required String supplierName,
+  }) async {
+    try {
+      result = HutangDagangResult();
+      DataMap dataCari = {};
+
+      dataCari.addAll({"id_supplier": trimString(supplierName)});
+
+      result = await ApiService.listHutangDagang(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
+      update();
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postBayarHutangDagang(DataMap dataCreate) async {
+    showCircleDialogLoading();
+    try {
+      BayarHutangDagangResult result = await ApiService.bayarHutangDagang(
+        data: dataCreate,
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        await showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        router.push("/database/supplier");
+
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  List<DataDetailHutangDagang> getDetailSuggestions(
+      String query, List<DataDetailHutangDagang>? states) {
+    List<DataDetailHutangDagang> matches = [];
+
+    if (states != null) {
+      matches.addAll(states);
+      matches.retainWhere((s) => trimString(s.idPembelian)
+          .toLowerCase()
+          .contains(query.toLowerCase()));
+    }
+
+    return matches;
+  }
+
   @override
   void initState() {
-    dataEdit = widget.data?.copyWith() ?? DataDetailSupplier();
-    textController[0].text = trimString(dataEdit.idSupplier);
-    textController[1].text = trimString(dataEdit.nmSupplier);
-    textController[2].text = trimString(dataEdit.nmPemilik);
+    cariDataHutangDagang(supplierName: trimString(widget.idSupplier));
+    dataEdit.tgBayar = formatDate(DateTime.now().toString());
+    textController[0].text = formatDate(DateTime.now().toString());
+    textController[1].clear();
+    textController[2].clear();
+    textController[3].clear();
     super.initState();
   }
 
@@ -40,6 +112,7 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
     textController[0].dispose();
     textController[1].dispose();
     textController[2].dispose();
+    textController[3].dispose();
     super.dispose();
   }
 
@@ -73,8 +146,15 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
                     suffixIcon: iconCalendarMonth,
                     onTap: () async {
                       DateTime? selectedDate = await initSelectedDate(
-                        initValue: DateTime.now().toString(),
+                        initValue: formatDateTimeNow(
+                            dataEdit.tgBayar ?? DateTime.now().toString()),
                       );
+                      if (selectedDate != null) {
+                        dataEdit.tgBayar = selectedDate.toString();
+                        textController[0].text =
+                            formatDate(selectedDate.toString());
+                        update();
+                      }
                     },
                     readOnly: true,
                     textEditingController: textController[0],
@@ -94,17 +174,17 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
                     label: "Nama Supplier",
                     itemAsString: (item) => item.supplierAsString(),
                     items: SupplierDatabase.dataSupplier.dataSupplier ?? [],
-                    value: dataEdit.idSupplier?.isEmpty ?? true
-                        ? null
-                        : DataDetailSupplier(
-                            idSupplier: dataEdit.idSupplier,
-                            nmSupplier: trimString(
-                              getNamaSupplier(
-                                  idSupplier: trimString(dataEdit.idSupplier)),
-                            ),
-                          ),
+                    value: DataDetailSupplier(
+                      idSupplier: widget.idSupplier,
+                      nmSupplier:
+                          getNamaSupplier(idSupplier: widget.idSupplier),
+                    ),
                     onChanged: (value) {
-                      dataEdit.idSupplier = trimString(value?.idSupplier);
+                      cariDataHutangDagang(
+                          supplierName: trimString(value?.idSupplier));
+                      dataEdit.idHutangDagang = null;
+                      textController[3].clear();
+
                       update();
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
@@ -119,26 +199,41 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
             Row(
               children: [
                 Expanded(
-                  child: BaseDropdownButton<DataDetailSupplier>(
-                    hint: "Pilih ID Transaksi",
+                  child: SearchForm(
                     label: "ID Transaksi",
-                    itemAsString: (item) => item.supplierAsString(),
-                    items: SupplierDatabase.dataSupplier.dataSupplier ?? [],
-                    value: dataEdit.idSupplier?.isEmpty ?? true
-                        ? null
-                        : DataDetailSupplier(
-                            idSupplier: dataEdit.idSupplier,
-                            nmSupplier: trimString(
-                              getNamaSupplier(
-                                  idSupplier: trimString(dataEdit.idSupplier)),
-                            ),
-                          ),
+                    enabled: true,
+                    validator: Validatorless.required("Data Wajib DIisi"),
+                    textEditingController: textController[3],
+                    items: (search) => getDetailSuggestions(
+                      search,
+                      result.data?.dataHutangDagang,
+                    ),
+                    itemBuilder: (context, dataPembelian) {
+                      return ListTile(
+                        title: Text(trimString(dataPembelian.idPembelian)),
+                      );
+                    },
                     onChanged: (value) {
-                      dataEdit.idSupplier = trimString(value?.idSupplier);
+                      var data = result.data?.dataHutangDagang?.firstWhere(
+                          (element) =>
+                              element.idPembelian == trimString(value));
+                      dataEdit.idHutangDagang =
+                          trimString(data?.idHutangDagang);
+                      textController[3].text = trimString(data?.idPembelian);
+                      textController[1].text = formatMoney(data?.nominal);
+                      dataEdit.nominalBayar =
+                          removeComma(trimString(data?.nominal));
                       update();
                     },
-                    autoValidate: AutovalidateMode.onUserInteraction,
-                    validator: Validatorless.required("Data Wajib Diisi"),
+                    onSelected: (data) {
+                      dataEdit.idHutangDagang = trimString(data.idHutangDagang);
+                      textController[3].text = trimString(data.idPembelian);
+                      textController[1].text = formatMoney(data.nominal);
+                      dataEdit.nominalBayar =
+                          removeComma(trimString(data.nominal));
+
+                      update();
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -156,7 +251,7 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                     ],
                     onChanged: (value) {
-                      // dataEdit.limitPinjaman = removeComma(trimString(value));
+                      dataEdit.nominalBayar = removeComma(trimString(value));
                       update();
                     },
                   ),
@@ -171,10 +266,9 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
               hintText: "Masukkan Keterangan",
               textEditingController: textController[2],
               onChanged: (value) {
-                dataEdit.alamat = trimString(value);
+                dataEdit.keterangan = trimString(value);
                 update();
               },
-              validator: Validatorless.required("Data Wajib Diisi"),
             ),
             const SizedBox(
               height: 16.0,
@@ -198,12 +292,13 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
                     onPressed: () {
                       if (tambahPelunasanKey.currentState!.validate()) {
                         DataMap payload = dataEdit.toJson();
-                        payload.removeWhere(
-                          (key, value) => key == "created_at",
-                        );
-                        payload.removeWhere(
-                          (key, value) => key == "updated_at",
-                        );
+                        if (trimString(dataEdit.keterangan)
+                            .toString()
+                            .isEmpty) {
+                          payload
+                              .removeWhere((key, value) => key == "keterangan");
+                        }
+                        postBayarHutangDagang(payload);
                       }
                     },
                   ),

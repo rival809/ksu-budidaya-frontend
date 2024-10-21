@@ -100,4 +100,8 @@ class DataDetailHutangDagang {
     data['updated_at'] = updatedAt;
     return data;
   }
+
+  String hutangDagangAsString() {
+    return "$idPembelian";
+  }
 }

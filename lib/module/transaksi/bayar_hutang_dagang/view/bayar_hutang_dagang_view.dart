@@ -363,58 +363,133 @@ class BayarHutangDagangView extends StatefulWidget {
                                       columns: columns,
                                       rows: rows,
                                       createFooter: (stateManager) {
-                                        return FooterTableWidget(
-                                          page: controller.page,
-                                          itemPerpage: controller.size,
-                                          maxPage: controller.dataHutangDagang
-                                                  .paging?.totalPage ??
-                                              0,
-                                          onChangePage: (value) {
-                                            controller.page = trimString(value);
-                                            controller.update();
-                                            controller.dataFuture = controller
-                                                .cariDataHutangDagang();
-                                            controller.update();
-                                          },
-                                          onChangePerPage: (value) {
-                                            controller.page = "1";
-                                            controller.size = trimString(value);
-                                            controller.update();
-                                            controller.dataFuture = controller
-                                                .cariDataHutangDagang();
-                                            controller.update();
-                                          },
-                                          totalRow: controller.dataHutangDagang
-                                                  .paging?.totalItem ??
-                                              0,
-                                          onPressLeft: () {
-                                            if (int.parse(controller.page) >
-                                                1) {
-                                              controller.page =
-                                                  (int.parse(controller.page) -
-                                                          1)
-                                                      .toString();
-                                              controller.update();
-                                              controller.dataFuture = controller
-                                                  .cariDataHutangDagang();
-                                              controller.update();
-                                            }
-                                          },
-                                          onPressRight: () {
-                                            if (int.parse(controller.page) <
-                                                (result.data?.paging
+                                        double totalHutang = 0;
+                                        for (var i = 0;
+                                            i <
+                                                (result.data?.dataHutangDagang
+                                                        ?.length ??
+                                                    0);
+                                            i++) {
+                                          totalHutang += double.parse(result
+                                                  .data
+                                                  ?.dataHutangDagang?[i]
+                                                  .nominal ??
+                                              "0");
+                                        }
+                                        return SingleChildScrollView(
+                                          controller: ScrollController(),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 8,
+                                                ),
+                                                decoration: const BoxDecoration(
+                                                  color: gray100,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(),
+                                                    ),
+                                                    Text(
+                                                      "TOTAL HUTANG",
+                                                      style: myTextTheme
+                                                          .displayLarge
+                                                          ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(),
+                                                    ),
+                                                    Text(
+                                                      formatMoney(totalHutang),
+                                                      style: myTextTheme
+                                                          .displayLarge
+                                                          ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              FooterTableWidget(
+                                                page: controller.page,
+                                                itemPerpage: controller.size,
+                                                maxPage: controller
+                                                        .dataHutangDagang
+                                                        .paging
                                                         ?.totalPage ??
-                                                    0)) {
-                                              controller.page =
-                                                  (int.parse(controller.page) +
-                                                          1)
-                                                      .toString();
-                                              controller.update();
-                                              controller.dataFuture = controller
-                                                  .cariDataHutangDagang();
-                                              controller.update();
-                                            }
-                                          },
+                                                    0,
+                                                onChangePage: (value) {
+                                                  controller.page =
+                                                      trimString(value);
+                                                  controller.update();
+                                                  controller.dataFuture =
+                                                      controller
+                                                          .cariDataHutangDagang();
+                                                  controller.update();
+                                                },
+                                                onChangePerPage: (value) {
+                                                  controller.page = "1";
+                                                  controller.size =
+                                                      trimString(value);
+                                                  controller.update();
+                                                  controller.dataFuture =
+                                                      controller
+                                                          .cariDataHutangDagang();
+                                                  controller.update();
+                                                },
+                                                totalRow: controller
+                                                        .dataHutangDagang
+                                                        .paging
+                                                        ?.totalItem ??
+                                                    0,
+                                                onPressLeft: () {
+                                                  if (int.parse(
+                                                          controller.page) >
+                                                      1) {
+                                                    controller.page =
+                                                        (int.parse(controller
+                                                                    .page) -
+                                                                1)
+                                                            .toString();
+                                                    controller.update();
+                                                    controller.dataFuture =
+                                                        controller
+                                                            .cariDataHutangDagang();
+                                                    controller.update();
+                                                  }
+                                                },
+                                                onPressRight: () {
+                                                  if (int.parse(
+                                                          controller.page) <
+                                                      (result.data?.paging
+                                                              ?.totalPage ??
+                                                          0)) {
+                                                    controller.page =
+                                                        (int.parse(controller
+                                                                    .page) +
+                                                                1)
+                                                            .toString();
+                                                    controller.update();
+                                                    controller.dataFuture =
+                                                        controller
+                                                            .cariDataHutangDagang();
+                                                    controller.update();
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       },
                                     ),

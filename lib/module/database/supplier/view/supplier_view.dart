@@ -246,8 +246,10 @@ class SupplierView extends StatefulWidget {
                                         showDialogBase(
                                           width: 700,
                                           content: DialogTambahPelunasan(
-                                            data: result
-                                                .data?.dataSupplier?[rowIndex],
+                                            idSupplier: result
+                                                .data
+                                                ?.dataSupplier?[rowIndex]
+                                                .idSupplier,
                                           ),
                                         );
                                       } else if (value == 4) {

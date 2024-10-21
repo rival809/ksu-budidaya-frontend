@@ -174,11 +174,17 @@ class _SearchFormState<T> extends State<SearchForm<T>> {
         TypeAheadField<T>(
           controller: widget.textEditingController,
           suggestionsCallback: widget.items,
+          emptyBuilder: (context) {
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Tidak Ada Data"),
+            );
+          },
           builder: (context, controller, focusNode) {
             return TextFormField(
               controller: controller,
               focusNode: focusNode,
-              autofocus: true,
+              autofocus: false,
               key: widget.keyForm,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: widget.enabled ?? true ? gray900 : gray600,
