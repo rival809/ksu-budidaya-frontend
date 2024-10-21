@@ -47,7 +47,7 @@ dependencies:
   image_picker: ^1.1.2
   flutter_staggered_grid_view: ^0.7.0
   universal_html: ^2.2.4
-  searchfield: ^1.0.5
+  flutter_typeahead: ^5.2.0
   permission_handler: ^11.3.1
   mime: ^1.0.5
   pluto_grid_plus: ^8.4.0

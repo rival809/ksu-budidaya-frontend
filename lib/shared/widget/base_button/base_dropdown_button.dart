@@ -85,6 +85,8 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
 
   @override
   Widget build(BuildContext context) {
+    selectedItem = widget.value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

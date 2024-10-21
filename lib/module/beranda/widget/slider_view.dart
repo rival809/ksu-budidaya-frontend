@@ -137,6 +137,8 @@ class SliderView extends StatelessWidget {
                             [
                               "/transaksi/pembelian",
                               "/transaksi/penjualan",
+                              "/transaksi/retur",
+                              "/transaksi/bayar-hutang-dagang",
                             ],
                           ),
                           onTap: () {},
@@ -162,6 +164,29 @@ class SliderView extends StatelessWidget {
                                 onTap: () {
                                   router.go(
                                     "/transaksi/penjualan",
+                                  );
+                                },
+                              ),
+                            if (dataLogin.roleData?.stsRetur == true)
+                              DrawerMenu(
+                                title: "Retur",
+                                isSubMenu: true,
+                                isSelected: currentRoute == "/transaksi/retur",
+                                onTap: () {
+                                  router.go(
+                                    "/transaksi/retur",
+                                  );
+                                },
+                              ),
+                            if (dataLogin.roleData?.stsRetur == true)
+                              DrawerMenu(
+                                title: "Bayar Hutang Dagang",
+                                isSubMenu: true,
+                                isSelected: currentRoute ==
+                                    "/transaksi/bayar-hutang-dagang",
+                                onTap: () {
+                                  router.go(
+                                    "/transaksi/bayar-hutang-dagang",
                                   );
                                 },
                               ),

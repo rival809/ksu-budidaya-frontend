@@ -844,6 +844,91 @@ class ApiService {
     }
   }
 
+  //Retur
+  static Future<ReturResult> listRetur({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/retur/list-retur",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ReturResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listRetur');
+    }
+  }
+
+  static Future<DetailReturResult> detailRetur({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/retur/detail-retur",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailReturResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to detailRetur');
+    }
+  }
+
+  static Future<ReturResult> removeRetur({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/retur/remove-retur",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ReturResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeRetur');
+    }
+  }
+
+  static Future<ReturResult> createRetur({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/retur/create-retur",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ReturResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createRetur');
+    }
+  }
+
   static Future<PenjualanResult> listPenjualan({
     required DataMap data,
   }) async {
@@ -990,6 +1075,72 @@ class ApiService {
       }
     } else {
       throw Exception('Failed to laporanHasilUsaha');
+    }
+  }
+
+  //HutangDAgang
+  static Future<HutangDagangResult> listHutangDagang({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-dagang/list-hutang-dagang",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return HutangDagangResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listHutangDagang');
+    }
+  }
+
+  static Future<HistoryHutangDagangResult> listHistoryHutangDagang({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-dagang/list-history-bayar-hutang-dagang",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return HistoryHutangDagangResult.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listHistoryHutangDagang');
+    }
+  }
+
+  static Future<BayarHutangDagangResult> bayarHutangDagang({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-dagang/bayar-hutang-dagang",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return BayarHutangDagangResult.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to bayarHutangDagang');
     }
   }
 }
