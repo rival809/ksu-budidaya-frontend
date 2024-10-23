@@ -34,6 +34,8 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
   ProductResult result = ProductResult();
   DataPembelian dataPembelian = DataPembelian();
   PembelianResult resultPembelian = PembelianResult();
+  DataHutangDagang dataHutangDagang = DataHutangDagang();
+  HutangDagangResult resultHutangDagang = HutangDagangResult();
 
   List<String> listProdukView = [
     "id_product",
@@ -52,6 +54,14 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
     "total_harga_jual",
   ];
 
+  List<String> listHutangDagangView = [
+    "id_pembelian",
+    "tg_hutang",
+    "nm_supplier",
+    "nominal",
+    "keterangan",
+  ];
+
   String page = "1";
   String size = "10";
   bool isAsc = true;
@@ -62,6 +72,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
       DataMap dataCari = {
         "page": page,
         "size": size,
+        "id_supplier": trimString(widget.data?.idSupplier),
       };
 
       if (isAsc != null) {
@@ -72,7 +83,6 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
           "sort_by": [field]
         });
       }
-      dataCari.addAll({"id_supplier": trimString(widget.data?.idSupplier)});
 
       result = await ApiService.listProduct(
         data: dataCari,
@@ -98,6 +108,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
       DataMap dataCari = {
         "page": page,
         "size": size,
+        "id_supplier": trimString(widget.data?.idSupplier),
       };
 
       if (isAsc != null) {
@@ -114,6 +125,42 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
       ).timeout(const Duration(seconds: 30));
 
       return resultPembelian;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  cariDataHutangDagang({
+    bool? isAsc,
+    String? field,
+  }) async {
+    try {
+      resultHutangDagang = HutangDagangResult();
+      DataMap dataCari = {
+        "page": page,
+        "size": size,
+        "id_supplier": trimString(widget.data?.idSupplier),
+      };
+
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
+
+      resultHutangDagang = await ApiService.listHutangDagang(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
+
+      return resultHutangDagang;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog(
@@ -173,6 +220,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
         step2 = false;
         step3 = false;
         step4 = true;
+        dataFuture = cariDataHutangDagang();
         break;
       default:
         step1 = true;
@@ -251,6 +299,11 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
               onSwitchStep("3");
             },
             textStep3: "Transaksi",
+            step4: step4,
+            onTapStep4: () {
+              onSwitchStep("4");
+            },
+            textStep4: "Hutang",
           ),
           const SizedBox(
             height: 16.0,
@@ -758,6 +811,309 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                 } else {
                   return const ContainerTidakAda(
                     entity: "Pembelian",
+                  );
+                }
+              },
+            ),
+          if (step4)
+            FutureBuilder(
+              future: dataFuture,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const ContainerLoadingRole();
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return const ContainerError();
+                  } else if (snapshot.hasData) {
+                    HutangDagangResult result = snapshot.data;
+                    dataHutangDagang = result.data ?? DataHutangDagang();
+                    List<dynamic> listData =
+                        dataHutangDagang.toJson()["data_hutang_dagang"] ?? [];
+
+                    if (listData.isNotEmpty) {
+                      List<PlutoRow> rows = [];
+                      List<PlutoColumn> columns = [];
+
+                      columns.addAll(
+                        List.generate(
+                          listHutangDagangView.length,
+                          (index) {
+                            return PlutoColumn(
+                              backgroundColor: primaryColor,
+                              filterHintText:
+                                  "Cari ${listHutangDagangView[index]}",
+                              title: convertTitle(
+                                listHutangDagangView[index],
+                              ),
+                              field: listHutangDagangView[index],
+                              type: (listHutangDagangView[index] == "nominal")
+                                  ? PlutoColumnType.number(
+                                      locale: "id",
+                                    )
+                                  : PlutoColumnType.text(),
+                            );
+                          },
+                        ),
+                      );
+
+                      columns.add(
+                        PlutoColumn(
+                          width: 150,
+                          backgroundColor: primaryColor,
+                          frozen: PlutoColumnFrozen.end,
+                          title: "AKSI",
+                          field: "Aksi",
+                          filterHintText: "",
+                          type: PlutoColumnType.text(),
+                          enableEditingMode: false,
+                          renderer: (rendererContext) {
+                            final rowIndex = rendererContext.rowIdx;
+                            Map<String, dynamic> dataRow =
+                                rendererContext.row.toJson();
+                            return DropdownAksi(
+                              text: "Aksi",
+                              listItem: [
+                                PopupMenuItem(
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconInfo,
+                                        colorFilter: colorFilterGray600,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          'Detail Data',
+                                          style: myTextTheme.bodyMedium,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 2,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        iconAccountBalanceWallet,
+                                        colorFilter: colorFilterGray600,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Bayar Hutang',
+                                        style: myTextTheme.bodyMedium,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                              onChange: (value) async {
+                                if (value == 1) {
+                                  try {
+                                    DetailPembelianResult result =
+                                        await ApiService.detailPembelian(
+                                      data: {
+                                        "id_pembelian":
+                                            trimString(dataRow["id_pembelian"])
+                                      },
+                                    ).timeout(const Duration(seconds: 30));
+
+                                    if (result.success == true) {
+                                      showDialogBase(
+                                        barrierDismissible: true,
+                                        width: Get.width,
+                                        content: DialogDetailPembelian(
+                                          dataPembelian: result,
+                                          nmSuplier: trimString(
+                                              widget.data?.nmSupplier),
+                                          idSuplier: trimString(
+                                              widget.data?.idSupplier),
+                                          tgTransaksi: trimString(
+                                              resultHutangDagang
+                                                  .data
+                                                  ?.dataHutangDagang?[rowIndex]
+                                                  .tgHutang),
+                                        ),
+                                      );
+
+                                      update();
+                                    }
+                                  } catch (e) {
+                                    if (e
+                                        .toString()
+                                        .contains("TimeoutException")) {
+                                      showInfoDialog(
+                                          "Tidak Mendapat Respon Dari Server! Silakan coba lagi.",
+                                          context);
+                                    } else {
+                                      showInfoDialog(
+                                          e
+                                              .toString()
+                                              .replaceAll("Exception: ", ""),
+                                          context);
+                                    }
+                                  }
+                                } else if (value == 2) {
+                                  showDialogBase(
+                                    width: 700,
+                                    content: DialogTambahPelunasan(
+                                      nominal: trimString(resultHutangDagang
+                                          .data
+                                          ?.dataHutangDagang?[rowIndex]
+                                          .nominal),
+                                      idHutangDagang: trimString(
+                                          resultHutangDagang
+                                              .data
+                                              ?.dataHutangDagang?[rowIndex]
+                                              .idHutangDagang),
+                                      idTransaksi: trimString(resultHutangDagang
+                                          .data
+                                          ?.dataHutangDagang?[rowIndex]
+                                          .idPembelian),
+                                      idSupplier:
+                                          trimString(widget.data?.idSupplier),
+                                    ),
+                                  );
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      );
+
+                      List<dynamic> listDataWithIndex =
+                          List.generate(listData.length, (index) {
+                        return {
+                          ...listData[index],
+                          'persistentIndex': index + 1,
+                        };
+                      });
+                      rows = listDataWithIndex.map((item) {
+                        Map<String, PlutoCell> cells = {};
+
+                        cells['Aksi'] = PlutoCell(
+                          value: null,
+                        );
+
+                        for (String column in listHutangDagangView) {
+                          if (item.containsKey(column)) {
+                            cells[column] = PlutoCell(
+                              value: trimStringStrip(
+                                item[column].toString(),
+                              ),
+                            );
+                          }
+                        }
+
+                        return PlutoRow(cells: cells);
+                      }).toList();
+
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height -
+                            AppBar().preferredSize.height -
+                            144 -
+                            64 -
+                            56,
+                        child: PlutoGrid(
+                          noRowsWidget: const ContainerTidakAda(
+                            entity: 'Hutang Dagang',
+                          ),
+                          mode: PlutoGridMode.select,
+                          onLoaded: (event) {
+                            event.stateManager.setShowColumnFilter(true);
+                          },
+                          onSorted: (event) {
+                            if (event.column.field != "Aksi") {
+                              isAsc = !isAsc;
+                              update();
+                              dataFuture = cariDataHutangDagang(
+                                isAsc: isAsc,
+                                field: (event.column.field == "cash_in" ||
+                                        event.column.field == "cash_out")
+                                    ? "nominal"
+                                    : event.column.field,
+                              );
+                              update();
+                            }
+                          },
+                          configuration: PlutoGridConfiguration(
+                            columnSize: const PlutoGridColumnSizeConfig(
+                              autoSizeMode: PlutoAutoSizeMode.scale,
+                            ),
+                            style: PlutoGridStyleConfig(
+                              columnTextStyle: myTextTheme.titleSmall
+                                      ?.copyWith(color: neutralWhite) ??
+                                  const TextStyle(),
+                              gridBorderColor: blueGray50,
+                              gridBorderRadius: BorderRadius.circular(8),
+                            ),
+                            localeText: configLocale,
+                          ),
+                          columns: columns,
+                          rows: rows,
+                          createFooter: (stateManager) {
+                            double totalHutang = 0;
+                            for (var i = 0;
+                                i <
+                                    (result.data?.dataHutangDagang?.length ??
+                                        0);
+                                i++) {
+                              totalHutang += double.parse(
+                                  result.data?.dataHutangDagang?[i].nominal ??
+                                      "0");
+                            }
+                            return FooterTableWidget(
+                              widthDialog: 1162,
+                              page: page,
+                              itemPerpage: size,
+                              maxPage: dataHutangDagang.paging?.totalPage ?? 0,
+                              onChangePage: (value) {
+                                page = trimString(value);
+                                update();
+                                dataFuture = cariDataHutangDagang();
+                                update();
+                              },
+                              onChangePerPage: (value) {
+                                page = "1";
+                                size = trimString(value);
+                                update();
+                                dataFuture = cariDataHutangDagang();
+                                update();
+                              },
+                              totalRow: dataHutangDagang.paging?.totalItem ?? 0,
+                              onPressLeft: () {
+                                if (int.parse(page) > 1) {
+                                  page = (int.parse(page) - 1).toString();
+                                  update();
+                                  dataFuture = cariDataHutangDagang();
+                                  update();
+                                }
+                              },
+                              onPressRight: () {
+                                if (int.parse(page) <
+                                    (result.data?.paging?.totalPage ?? 0)) {
+                                  page = (int.parse(page) + 1).toString();
+                                  update();
+                                  dataFuture = cariDataHutangDagang();
+                                  update();
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return const ContainerTidakAda(
+                        entity: 'Hutang Dagang',
+                      );
+                    }
+                  } else {
+                    return const ContainerError();
+                  }
+                } else {
+                  return const ContainerTidakAda(
+                    entity: "Hutang Dagang",
                   );
                 }
               },

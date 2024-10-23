@@ -64,6 +64,7 @@ export 'package:ksu_budidaya/module/database/produk/widget/dialog_tambah_produk.
 export 'package:ksu_budidaya/module/database/produk/widget/step_status_produk.dart';
 export 'package:ksu_budidaya/module/database/supplier/controller/supplier_controller.dart';
 export 'package:ksu_budidaya/module/database/supplier/view/supplier_view.dart';
+export 'package:ksu_budidaya/module/database/supplier/widget/dialog_detail_pembelian.dart';
 export 'package:ksu_budidaya/module/database/supplier/widget/dialog_detail_supplier.dart';
 export 'package:ksu_budidaya/module/database/supplier/widget/dialog_supplier.dart';
 export 'package:ksu_budidaya/module/database/supplier/widget/dialog_tambah_pelunasan.dart';

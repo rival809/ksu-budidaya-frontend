@@ -5,10 +5,16 @@ import 'package:ksu_budidaya/core.dart';
 
 class DialogTambahPelunasan extends StatefulWidget {
   final String? idSupplier;
+  final String? idTransaksi;
+  final String? idHutangDagang;
+  final String? nominal;
 
   const DialogTambahPelunasan({
     Key? key,
     required this.idSupplier,
+    required this.idTransaksi,
+    required this.idHutangDagang,
+    required this.nominal,
   }) : super(key: key);
 
   @override
@@ -101,9 +107,11 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
     cariDataHutangDagang(supplierName: trimString(widget.idSupplier));
     dataEdit.tgBayar = formatDate(DateTime.now().toString());
     textController[0].text = formatDate(DateTime.now().toString());
-    textController[1].clear();
+    textController[1].text = formatMoney(widget.nominal);
     textController[2].clear();
-    textController[3].clear();
+    textController[3].text = trimString(widget.idTransaksi);
+    dataEdit.idHutangDagang = trimString(widget.idHutangDagang);
+    dataEdit.nominalBayar = trimString(widget.nominal);
     super.initState();
   }
 

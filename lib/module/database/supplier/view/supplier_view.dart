@@ -191,22 +191,6 @@ class SupplierView extends StatefulWidget {
                                         ),
                                       ),
                                       PopupMenuItem(
-                                        value: 3,
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                                iconAccountBalanceWallet),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                              child: Text(
-                                                'Bayar Hutang',
-                                                style: myTextTheme.bodyMedium,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      PopupMenuItem(
                                         value: 4,
                                         child: Row(
                                           children: [
@@ -240,16 +224,6 @@ class SupplierView extends StatefulWidget {
                                             isDetail: true,
                                             data: result
                                                 .data?.dataSupplier?[rowIndex],
-                                          ),
-                                        );
-                                      } else if (value == 3) {
-                                        showDialogBase(
-                                          width: 700,
-                                          content: DialogTambahPelunasan(
-                                            idSupplier: result
-                                                .data
-                                                ?.dataSupplier?[rowIndex]
-                                                .idSupplier,
                                           ),
                                         );
                                       } else if (value == 4) {
