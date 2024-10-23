@@ -958,6 +958,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                                   showDialogBase(
                                     width: 700,
                                     content: DialogTambahPelunasan(
+                                      isPageBayarHutang: false,
                                       nominal: trimString(resultHutangDagang
                                           .data
                                           ?.dataHutangDagang?[rowIndex]
