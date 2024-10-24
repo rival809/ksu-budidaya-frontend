@@ -3,7 +3,11 @@ import 'package:ksu_budidaya/core.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class BayarHutangAnggotaView extends StatefulWidget {
-  const BayarHutangAnggotaView({Key? key}) : super(key: key);
+  final String idAnggota;
+  const BayarHutangAnggotaView({
+    Key? key,
+    required this.idAnggota,
+  }) : super(key: key);
 
   Widget build(context, BayarHutangAnggotaController controller) {
     controller.view = this;
@@ -20,9 +24,27 @@ class BayarHutangAnggotaView extends StatefulWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Pembayaran Hutang",
-                    style: myTextTheme.headlineLarge,
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: SvgPicture.asset(
+                          iconChevronLeft,
+                          height: 24,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Detail Anggota",
+                          style: myTextTheme.headlineLarge,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 16.0,

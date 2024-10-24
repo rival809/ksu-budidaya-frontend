@@ -183,22 +183,6 @@ class AnggotaView extends StatefulWidget {
                                         ),
                                       ),
                                       PopupMenuItem(
-                                        value: 2,
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                                iconAccountBalanceWallet),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                              child: Text(
-                                                'Bayar Pinjaman',
-                                                style: myTextTheme.bodyMedium,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      PopupMenuItem(
                                         value: 3,
                                         child: Row(
                                           children: [
@@ -218,15 +202,17 @@ class AnggotaView extends StatefulWidget {
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {
-                                        showDialogBase(
-                                          width: 700,
-                                          content: DialogAnggota(
-                                            data: result
-                                                .data?.dataAnggota?[rowIndex],
-                                            isDetail: true,
-                                          ),
+                                        router.go(
+                                          Uri(
+                                            path: "/koperasi/pembayaran-hutang",
+                                            queryParameters: {
+                                              'id': trimString(result
+                                                  .data
+                                                  ?.dataAnggota?[rowIndex]
+                                                  .idAnggota)
+                                            },
+                                          ).toString(),
                                         );
-                                      } else if (value == 2) {
                                       } else if (value == 3) {
                                         showDialogBase(
                                           content: DialogKonfirmasi(

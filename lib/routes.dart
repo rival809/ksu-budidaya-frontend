@@ -143,8 +143,11 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: 'koperasi/pembayaran-hutang',
           builder: (BuildContext context, GoRouterState state) {
-            return const SelectionArea(
-              child: BayarHutangAnggotaView(),
+            final idAnggota = trimString(state.uri.queryParameters['id']);
+            return SelectionArea(
+              child: BayarHutangAnggotaView(
+                idAnggota: idAnggota,
+              ),
             );
           },
         ),
