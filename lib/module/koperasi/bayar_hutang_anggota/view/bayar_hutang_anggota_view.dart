@@ -11,7 +11,6 @@ class BayarHutangAnggotaView extends StatefulWidget {
 
   Widget build(context, BayarHutangAnggotaController controller) {
     controller.view = this;
-
     return BodyContainer(
       contentBody: Container(
         color: appLightBackground,
@@ -28,7 +27,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Get.back();
+                          router.go("/koperasi/anggota");
                         },
                         child: SvgPicture.asset(
                           iconChevronLeft,
@@ -56,7 +55,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
                       constraints: BoxConstraints(
                         minWidth:
                             Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 260
+                                ? MediaQuery.of(context).size.width - 32 - 265
                                 : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(

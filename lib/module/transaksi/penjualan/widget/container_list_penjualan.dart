@@ -36,7 +36,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
-                  ? MediaQuery.of(context).size.width - 32 - 260
+                  ? MediaQuery.of(context).size.width - 32 - 265
                   : MediaQuery.of(context).size.width - 32,
             ),
             child: Row(

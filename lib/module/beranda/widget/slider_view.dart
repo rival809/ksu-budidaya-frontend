@@ -267,7 +267,7 @@ class SliderView extends StatelessWidget {
                             "/koperasi",
                             [
                               "/koperasi/anggota",
-                              "/koperasi/pembayaran-hutang",
+                              "/koperasi/anggota/pembayaran-hutang",
                             ],
                           ),
                           onTap: () {},
@@ -285,8 +285,8 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Pembayaran Hutang",
                                 isSubMenu: true,
-                                isSelected: currentRoute ==
-                                    "/koperasi/pembayaran-hutang",
+                                isSelected: currentRoute.contains(
+                                    "/koperasi/anggota/pembayaran-hutang"),
                                 onTap: () {
                                   // router.go("/koperasi/pembayaran-hutang");
                                 },

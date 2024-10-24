@@ -133,24 +133,25 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          path: 'koperasi/anggota',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SelectionArea(
-              child: AnggotaView(),
-            );
-          },
-        ),
-        GoRoute(
-          path: 'koperasi/pembayaran-hutang',
-          builder: (BuildContext context, GoRouterState state) {
-            final idAnggota = trimString(state.uri.queryParameters['id']);
-            return SelectionArea(
-              child: BayarHutangAnggotaView(
-                idAnggota: idAnggota,
+            path: 'koperasi/anggota',
+            builder: (BuildContext context, GoRouterState state) {
+              return const SelectionArea(
+                child: AnggotaView(),
+              );
+            },
+            routes: [
+              GoRoute(
+                path: 'pembayaran-hutang',
+                builder: (BuildContext context, GoRouterState state) {
+                  final idAnggota = trimString(state.uri.queryParameters['id']);
+                  return SelectionArea(
+                    child: BayarHutangAnggotaView(
+                      idAnggota: idAnggota,
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ]),
         GoRoute(
           path: 'transaksi/pembelian',
           builder: (BuildContext context, GoRouterState state) {

@@ -34,7 +34,7 @@ class AnggotaView extends StatefulWidget {
                       constraints: BoxConstraints(
                         minWidth:
                             Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 260
+                                ? MediaQuery.of(context).size.width - 32 - 265
                                 : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
@@ -204,7 +204,8 @@ class AnggotaView extends StatefulWidget {
                                       if (value == 1) {
                                         router.go(
                                           Uri(
-                                            path: "/koperasi/pembayaran-hutang",
+                                            path:
+                                                "/koperasi/anggota/pembayaran-hutang",
                                             queryParameters: {
                                               'id': trimString(result
                                                   .data

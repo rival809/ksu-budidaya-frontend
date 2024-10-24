@@ -56,7 +56,7 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                 minWidth: widget.widthDialog != null
                     ? (double.parse(widget.widthDialog?.toString() ?? "0"))
                     : Provider.of<DrawerProvider>(context).isDrawerOpen
-                        ? MediaQuery.of(context).size.width - 36 - 260
+                        ? MediaQuery.of(context).size.width - 36 - 265
                         : MediaQuery.of(context).size.width - 36,
               ),
               child: Row(
