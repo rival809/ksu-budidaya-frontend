@@ -77,6 +77,13 @@ export 'package:ksu_budidaya/module/koperasi/anggota/widget/dialog_anggota.dart'
 export 'package:ksu_budidaya/module/koperasi/bayar_hutang_anggota/controller/bayar_hutang_anggota_controller.dart';
 export 'package:ksu_budidaya/module/koperasi/bayar_hutang_anggota/view/bayar_hutang_anggota_view.dart';
 export 'package:ksu_budidaya/module/koperasi/bayar_hutang_anggota/widget/dialog_pelunasan_anggota.dart';
+export 'package:ksu_budidaya/module/koperasi/detail_transaksi/controller/detail_transaksi_controller.dart';
+export 'package:ksu_budidaya/module/koperasi/detail_transaksi/view/detail_transaksi_view.dart';
+export 'package:ksu_budidaya/module/koperasi/detail_transaksi/widget/body_nota_detail.dart';
+export 'package:ksu_budidaya/module/koperasi/detail_transaksi/widget/body_penjualan_detail.dart';
+export 'package:ksu_budidaya/module/koperasi/detail_transaksi/widget/container_nota_detail.dart';
+export 'package:ksu_budidaya/module/koperasi/detail_transaksi/widget/footer_penjualan_detail.dart';
+export 'package:ksu_budidaya/module/koperasi/detail_transaksi/widget/header_penjualan_detail.dart';
 export 'package:ksu_budidaya/module/laporan/controller/laporan_controller.dart';
 export 'package:ksu_budidaya/module/laporan/view/laporan_view.dart';
 export 'package:ksu_budidaya/module/laporan/widget/container_tidak_ada_laporan.dart';

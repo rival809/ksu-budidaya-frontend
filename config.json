@@ -14,6 +14,7 @@
         "database/produk",
         "koperasi/anggota",
         "koperasi/bayar_hutang_anggota",
+        "koperasi/detail_transaksi",
         "transaksi/pembelian",
         "transaksi/penjualan",
         "transaksi/retur",

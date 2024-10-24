@@ -162,7 +162,9 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
               },
               textEditingController: controller.textControllerDialog[2],
               enabled: true,
-              validator: Validatorless.required("Data Wajib Diisi"),
+              validator: controller.dataPenjualan.jenisPembayaran == "kredit"
+                  ? null
+                  : Validatorless.required("Data Wajib Diisi"),
               autoValidate: AutovalidateMode.onUserInteraction,
             ),
             const SizedBox(
@@ -219,13 +221,21 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 Expanded(
                   child: BasePrimaryButton(
                     text: "Simpan",
-                    onPressed: controller.totalKembali < 0
-                        ? null
-                        : () {
+                    onPressed: controller.dataPenjualan.jenisPembayaran ==
+                            "kredit"
+                        ? () {
                             if (inputPenjualanKey.currentState!.validate()) {
                               controller.postCreatePenjualan();
                             }
-                          },
+                          }
+                        : controller.totalKembali < 0
+                            ? null
+                            : () {
+                                if (inputPenjualanKey.currentState!
+                                    .validate()) {
+                                  controller.postCreatePenjualan();
+                                }
+                              },
                   ),
                 ),
               ],

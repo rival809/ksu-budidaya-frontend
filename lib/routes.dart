@@ -141,16 +141,30 @@ final GoRouter router = GoRouter(
             },
             routes: [
               GoRoute(
-                path: 'pembayaran-hutang',
-                builder: (BuildContext context, GoRouterState state) {
-                  final idAnggota = trimString(state.uri.queryParameters['id']);
-                  return SelectionArea(
-                    child: BayarHutangAnggotaView(
-                      idAnggota: idAnggota,
+                  path: 'pembayaran-hutang',
+                  builder: (BuildContext context, GoRouterState state) {
+                    final idAnggota =
+                        trimString(state.uri.queryParameters['id']);
+                    return SelectionArea(
+                      child: BayarHutangAnggotaView(
+                        idAnggota: idAnggota,
+                      ),
+                    );
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'detail',
+                      builder: (BuildContext context, GoRouterState state) {
+                        final idPenjualan =
+                            trimString(state.uri.queryParameters['id']);
+                        return SelectionArea(
+                          child: DetailTransaksiView(
+                            idPenjualan: idPenjualan,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
+                  ]),
             ]),
         GoRoute(
           path: 'transaksi/pembelian',

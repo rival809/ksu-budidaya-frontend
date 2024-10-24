@@ -668,6 +668,26 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                             child: Row(
                                               children: [
                                                 SvgPicture.asset(
+                                                  iconMiscInfo,
+                                                  colorFilter:
+                                                      colorFilterGray600,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Expanded(
+                                                  child: Text(
+                                                    'Detail Data',
+                                                    style:
+                                                        myTextTheme.bodyMedium,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            value: 2,
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
                                                   iconAccountBalanceWallet,
                                                   colorFilter:
                                                       colorFilterGray600,
@@ -686,6 +706,21 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                         ],
                                         onChange: (value) {
                                           if (value == 1) {
+                                            router.go(
+                                              Uri(
+                                                path:
+                                                    "/koperasi/anggota/pembayaran-hutang/detail",
+                                                queryParameters: {
+                                                  'id': trimString(controller
+                                                      .result
+                                                      .data
+                                                      ?.dataHutangAnggota?[
+                                                          rowIndex]
+                                                      .idPenjualan)
+                                                },
+                                              ).toString(),
+                                            );
+                                          } else if (value == 2) {
                                             showDialogBase(
                                               width: 700,
                                               content: DialogPelunasanAnggota(
