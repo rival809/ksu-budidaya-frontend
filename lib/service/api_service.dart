@@ -361,6 +361,29 @@ class ApiService {
     }
   }
 
+  static Future<DetailAnggotaResult> detailAnggota({
+    required String idAnggota,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/anggota/detail-anggota",
+      options: options,
+      data: {
+        "id_anggota": idAnggota,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailAnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to detailAnggota');
+    }
+  }
+
   static Future<AnggotaResult> createAnggota({
     required DataMap data,
   }) async {

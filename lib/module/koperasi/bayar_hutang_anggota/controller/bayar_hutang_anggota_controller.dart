@@ -10,40 +10,67 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
   bool isAsc = true;
   TextEditingController hutangNameController = TextEditingController();
 
-  bool step1 = true;
-  bool step2 = false;
   Future<dynamic>? dataFuture;
   Future<dynamic>? dataFutureHistory;
+
+  bool step1 = true;
+  bool step2 = false;
+  bool step3 = false;
 
   onSwitchStep(String valueStep) {
     switch (valueStep) {
       case "1":
         step1 = true;
         step2 = false;
+        step3 = false;
         update();
-        dataFuture = cariDataHutangAnggota();
+        dataFuture = cariDetailAnggota();
 
         break;
       case "2":
         step1 = false;
         step2 = true;
+        step3 = false;
         update();
-        dataFutureHistory = cariDataHistoryHutangDagang();
+        dataFuture = cariDataPenjualan();
+        break;
+      case "3":
+        step1 = false;
+        step2 = false;
+        step3 = true;
+        update();
+        dataFuture = cariDataHutangAnggota();
         break;
 
       default:
         step1 = true;
         step2 = false;
+        step3 = false;
         update();
-        dataFuture = cariDataHutangAnggota();
+        dataFuture = cariDetailAnggota();
     }
     update();
   }
 
+  DetailAnggotaResult detailAnggota = DetailAnggotaResult();
+  PenjualanResult transaksiAnggota = PenjualanResult();
   DataHutangAnggota dataHutangAnggota = DataHutangAnggota();
   DataHistoryHutangDagang dataHistoryHutangDagang = DataHistoryHutangDagang();
   HutangAnggotaResult result = HutangAnggotaResult();
   HistoryHutangDagangResult resultHistory = HistoryHutangDagangResult();
+  DataPenjualan dataListPenjualan = DataPenjualan();
+  List<String> listPenjualanView = [
+    "id_penjualan",
+    "tg_penjualan",
+    "jumlah",
+    "total_nilai_beli",
+    "total_nilai_jual",
+    "nm_anggota",
+    "jenis_pembayaran",
+    "keterangan",
+    "username",
+  ];
+
   List<String> listHutangAnggotaView = [
     "id_penjualan",
     "tg_hutang",
@@ -58,6 +85,61 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
     "keterangan",
   ];
 
+  cariDetailAnggota() async {
+    try {
+      detailAnggota = DetailAnggotaResult();
+      detailAnggota = await ApiService.detailAnggota(
+        idAnggota: widget.idAnggota,
+      ).timeout(const Duration(seconds: 30));
+
+      return detailAnggota;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  cariDataPenjualan({
+    bool? isAsc,
+    String? field,
+  }) async {
+    try {
+      transaksiAnggota = PenjualanResult();
+      DataMap dataCari = {
+        "page": page,
+        "size": size,
+      };
+
+      // dataCari.addAll({"id_anggota": trimString(widget.idAnggota)});
+
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
+
+      transaksiAnggota = await ApiService.listPenjualan(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
+
+      return transaksiAnggota;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   cariDataHutangAnggota({
     bool? isAsc,
     String? field,
@@ -69,9 +151,7 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
         "size": size,
       };
 
-      if (trimString(hutangNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"id_anggota": trimString(hutangNameController.text)});
-      }
+      dataCari.addAll({"id_anggota": trimString(widget.idAnggota)});
 
       if (isAsc != null) {
         dataCari.addAll({
@@ -97,45 +177,45 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
     }
   }
 
-  cariDataHistoryHutangDagang({
-    bool? isAsc,
-    String? field,
-  }) async {
-    try {
-      resultHistory = HistoryHutangDagangResult();
-      DataMap dataCari = {
-        "page": page,
-        "size": size,
-      };
+  // cariDataHistoryHutangDagang({
+  //   bool? isAsc,
+  //   String? field,
+  // }) async {
+  //   try {
+  //     resultHistory = HistoryHutangDagangResult();
+  //     DataMap dataCari = {
+  //       "page": page,
+  //       "size": size,
+  //     };
 
-      if (isAsc != null) {
-        dataCari.addAll({
-          "sort_order": [isAsc == true ? "asc" : "desc"]
-        });
-        dataCari.addAll({
-          "sort_by": [field]
-        });
-      }
+  //     if (isAsc != null) {
+  //       dataCari.addAll({
+  //         "sort_order": [isAsc == true ? "asc" : "desc"]
+  //       });
+  //       dataCari.addAll({
+  //         "sort_by": [field]
+  //       });
+  //     }
 
-      resultHistory = await ApiService.listHistoryHutangDagang(
-        data: dataCari,
-      ).timeout(const Duration(seconds: 30));
+  //     resultHistory = await ApiService.listHistoryHutangDagang(
+  //       data: dataCari,
+  //     ).timeout(const Duration(seconds: 30));
 
-      return resultHistory;
-    } catch (e) {
-      if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-      } else {
-        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-      }
-    }
-  }
+  //     return resultHistory;
+  //   } catch (e) {
+  //     if (e.toString().contains("TimeoutException")) {
+  //       showInfoDialog(
+  //           "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+  //     } else {
+  //       showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+  //     }
+  //   }
+  // }
 
   @override
   void initState() {
     instance = this;
-    dataFuture = cariDataHutangAnggota();
+    dataFuture = cariDetailAnggota();
     super.initState();
   }
 

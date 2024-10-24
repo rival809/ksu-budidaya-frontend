@@ -30,7 +30,7 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
 
   final pelunasanHutangAnggotaKey = GlobalKey<FormState>();
 
-  postBayarHutangDagang(DataMap dataCreate) async {
+  postBayarHutangAnggota(DataMap dataCreate) async {
     showCircleDialogLoading();
     try {
       BayarHutangAnggotaResult result = await ApiService.bayarHutangAnggota(
@@ -40,9 +40,14 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
       Get.back();
 
       if (result.success == true) {
-        showDialogBase(
+        Get.back();
+        await showDialogBase(
           content: const DialogBerhasil(),
         );
+
+        BayarHutangAnggotaController.instance.dataFuture =
+            BayarHutangAnggotaController.instance.cariDataHutangAnggota();
+        BayarHutangAnggotaController.instance.update();
       }
     } catch (e) {
       Get.back();
@@ -72,8 +77,12 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
   @override
   void initState() {
     super.initState();
-    dataEdit = BayarHutangAnggotaPayload.fromJson(
-        widget.dataHutang?.copyWith().toJson() ?? {});
+
+    dataEdit = BayarHutangAnggotaPayload(
+      idHutangAnggota: widget.dataHutang?.idHutangAnggota,
+      nominalBayar: widget.dataHutang?.nominal,
+      tgBayar: formatDate(DateTime.now().toString()),
+    );
     valueHutang = DetailDataHutangAnggota(
       idAnggota: widget.dataHutang?.idAnggota,
       idHutangAnggota: widget.dataHutang?.idHutangAnggota,
@@ -82,6 +91,8 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
       idPenjualan: widget.dataHutang?.idPenjualan,
       nominal: widget.dataHutang?.nominal,
     );
+    textController[0].text = formatDate(DateTime.now().toString());
+    textController[1].text = formatMoney(dataEdit.nominalBayar);
   }
 
   @override
@@ -231,7 +242,7 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
                           payload
                               .removeWhere((key, value) => key == "keterangan");
                         }
-                        postBayarHutangDagang(payload);
+                        postBayarHutangAnggota(payload);
                       }
                     },
                   ),
