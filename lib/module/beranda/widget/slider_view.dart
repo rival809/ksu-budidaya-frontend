@@ -178,7 +178,7 @@ class SliderView extends StatelessWidget {
                                   );
                                 },
                               ),
-                            if (dataLogin.roleData?.stsRetur == true)
+                            if (dataLogin.roleData?.stsPembayaranHutang == true)
                               DrawerMenu(
                                 title: "Bayar Hutang Dagang",
                                 isSubMenu: true,
@@ -278,6 +278,16 @@ class SliderView extends StatelessWidget {
                                 isSelected: currentRoute == "/koperasi/anggota",
                                 onTap: () {
                                   router.go("/koperasi/anggota");
+                                },
+                              ),
+                            if (dataLogin.roleData?.stsPembayaranHutang == true)
+                              DrawerMenu(
+                                title: "Pembayaran Hutang",
+                                isSubMenu: true,
+                                isSelected: currentRoute ==
+                                    "/koperasi/pembayaran-hutang",
+                                onTap: () {
+                                  router.go("/koperasi/pembayaran-hutang");
                                 },
                               ),
                             // DrawerMenu(

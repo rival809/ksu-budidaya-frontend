@@ -13,6 +13,7 @@
         "database/divisi",
         "database/produk",
         "koperasi/anggota",
+        "koperasi/bayar_hutang_anggota",
         "transaksi/pembelian",
         "transaksi/penjualan",
         "transaksi/retur",
