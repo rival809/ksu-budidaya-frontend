@@ -46,95 +46,9 @@ class LaporanView extends StatefulWidget {
                             ),
                       onChanged: (value) {
                         controller.idLaporan = value?.id ?? 1;
-                        controller.update();
+                        controller.hasData = false;
                         controller.update();
                       },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  SingleChildScrollView(
-                    controller: ScrollController(),
-                    scrollDirection: Axis.horizontal,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: 500,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Expanded(
-                                  child: BaseDropdownButton<Month>(
-                                    sortItem: false,
-                                    label: "Bulan",
-                                    itemAsString: (item) =>
-                                        item.monthAsString(),
-                                    items: Year.fromJson(monthData).months,
-                                    value: Month(
-                                      id: controller.monthNow,
-                                      month: trimString(
-                                          getNamaMonth(controller.monthNow)),
-                                    ),
-                                    onChanged: (value) {
-                                      controller.monthNow = value?.id ?? 1;
-                                      controller.update();
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 16.0,
-                                ),
-                                Expanded(
-                                  child: BaseDropdownButton<int>(
-                                    sortItem: false,
-                                    label: "Tahun",
-                                    items: controller.yearData,
-                                    value: controller.yearNow,
-                                    itemAsString: (item) => item.toString(),
-                                    onChanged: (value) {
-                                      controller.yearNow = value ?? 2023;
-                                      controller.update();
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 16.0,
-                                ),
-                                BasePrimaryButton(
-                                  onPressed: () {
-                                    controller
-                                        .onSearchLaporan(controller.idLaporan);
-                                    controller.update();
-                                  },
-                                  text: "Lihat Data",
-                                  isDense: true,
-                                ),
-                              ],
-                            ),
-                          ),
-                          BaseSecondaryButton(
-                            onPressed: controller.hasData
-                                ? () {
-                                    doGenerateLaporanHasilUsaha(
-                                        controller: controller);
-                                  }
-                                : null,
-                            text: "Cetak Laporan",
-                            suffixIcon: iconPrint,
-                            isDense: true,
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                   const SizedBox(

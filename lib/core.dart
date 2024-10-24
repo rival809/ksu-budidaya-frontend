@@ -31,6 +31,7 @@ export 'package:ksu_budidaya/model/hutang_dagang/history_hutang_dagang_model.dar
 export 'package:ksu_budidaya/model/hutang_dagang/hutang_dagang_model.dart';
 export 'package:ksu_budidaya/model/jenis_laporan_model.dart';
 export 'package:ksu_budidaya/model/laporan/laporan_hasil_usaha_model.dart';
+export 'package:ksu_budidaya/model/laporan/laporan_realisasi_pendapatan_model.dart';
 export 'package:ksu_budidaya/model/pembelian/create_pembelian_model.dart';
 export 'package:ksu_budidaya/model/pembelian/detail_pembelian_model.dart';
 export 'package:ksu_budidaya/model/pembelian/pembelian_model.dart';
@@ -89,6 +90,7 @@ export 'package:ksu_budidaya/module/laporan/view/laporan_view.dart';
 export 'package:ksu_budidaya/module/laporan/widget/container_tidak_ada_laporan.dart';
 export 'package:ksu_budidaya/module/laporan/widget/generate_laporan.dart';
 export 'package:ksu_budidaya/module/laporan/widget/laporan_hasil_usaha.dart';
+export 'package:ksu_budidaya/module/laporan/widget/laporan_realisasi_pendapatan.dart';
 export 'package:ksu_budidaya/module/pdf_viewer/controller/pdf_viewer_controller.dart';
 export 'package:ksu_budidaya/module/pdf_viewer/view/pdf_viewer_view.dart';
 export 'package:ksu_budidaya/module/splashscreen/controller/splashscreen_controller.dart';

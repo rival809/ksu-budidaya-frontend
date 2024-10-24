@@ -6,6 +6,7 @@ class LaporanController extends State<LaporanView> {
   late LaporanView view;
 
   Future<dynamic>? dataFutureHasilUsaha;
+  Future<dynamic>? dataFutureRealisasiPendapatan;
   int monthNow = DateTime.now().month;
   int idLaporan = 0;
   int yearNow = DateTime.now().year;
@@ -15,6 +16,8 @@ class LaporanController extends State<LaporanView> {
       DateTime.now().year - 2023 + 2, (index) => 2023 + index);
 
   LaporanHasilUsahaResult resultHasilUsaha = LaporanHasilUsahaResult();
+  LaporanRealisasiPendapatanResult resultRealisasiPendapatan =
+      LaporanRealisasiPendapatanResult();
 
   cariDataLaporanHasilUsaha() async {
     try {
@@ -41,10 +44,35 @@ class LaporanController extends State<LaporanView> {
     }
   }
 
+  cariDataLaporanRealisasiPendapatan() async {
+    try {
+      resultRealisasiPendapatan = LaporanRealisasiPendapatanResult();
+
+      resultRealisasiPendapatan = await ApiService.laporanRealisasiPendapatan(
+        year: yearNow.toString(),
+      ).timeout(const Duration(seconds: 30));
+
+      if (resultRealisasiPendapatan.success == true) {
+        hasData = true;
+      }
+
+      return resultRealisasiPendapatan;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   Widget contentLaporan(int idLaporan) {
     switch (idLaporan) {
       case 1:
         return LaporanHasilUsaha(controller: instance);
+      case 2:
+        return LaporanRealisasiPendapatan(controller: instance);
 
       default:
         return const ContainerTidakAdaLaporan();
@@ -55,6 +83,10 @@ class LaporanController extends State<LaporanView> {
     switch (idLaporan) {
       case 1:
         dataFutureHasilUsaha = cariDataLaporanHasilUsaha();
+        update();
+        break;
+      case 2:
+        dataFutureRealisasiPendapatan = cariDataLaporanRealisasiPendapatan();
         update();
         break;
 

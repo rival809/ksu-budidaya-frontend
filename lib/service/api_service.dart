@@ -1101,6 +1101,30 @@ class ApiService {
     }
   }
 
+  static Future<LaporanRealisasiPendapatanResult> laporanRealisasiPendapatan({
+    required String year,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/laporan/realisasi-pendapatan",
+      options: options,
+      data: {
+        "year": year,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return LaporanRealisasiPendapatanResult.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to laporanRealisasiPendapatan');
+    }
+  }
+
   //HutangDAgang
   static Future<HutangDagangResult> listHutangDagang({
     required DataMap data,

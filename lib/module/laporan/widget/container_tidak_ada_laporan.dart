@@ -20,8 +20,7 @@ class _ContainerTidakAdaLaporanState extends State<ContainerTidakAdaLaporan> {
         constraints: BoxConstraints.loose(
           Size.fromHeight(
             MediaQuery.of(context).size.height -
-                144 -
-                64 -
+                108 -
                 AppBar().preferredSize.height -
                 32,
           ),
@@ -72,8 +71,7 @@ class _ContainerTidakAdaLaporanState extends State<ContainerTidakAdaLaporan> {
         constraints: BoxConstraints.loose(
           Size.fromHeight(
             MediaQuery.of(context).size.height -
-                120 -
-                64 -
+                108 -
                 AppBar().preferredSize.height -
                 40,
           ),
