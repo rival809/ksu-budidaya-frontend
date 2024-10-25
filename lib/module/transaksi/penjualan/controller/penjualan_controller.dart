@@ -24,6 +24,19 @@ class PenjualanController extends State<PenjualanView> {
 
   FocusNode focusNodeInputPenjualan = FocusNode();
 
+  List<DataDetailProduct> getDetailSuggestions(
+      String query, List<DataDetailProduct>? states) {
+    List<DataDetailProduct> matches = [];
+
+    if (states != null) {
+      matches.addAll(states);
+      matches.retainWhere((s) =>
+          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()));
+    }
+
+    return matches;
+  }
+
   DataPenjualan dataListPenjualan = DataPenjualan();
   PenjualanResult result = PenjualanResult();
   List<String> listPenjualanView = [

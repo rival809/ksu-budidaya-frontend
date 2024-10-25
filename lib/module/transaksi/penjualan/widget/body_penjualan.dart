@@ -26,18 +26,25 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
   hitDiskon() {
     var diskon = double.parse(
       removeComma(
-          widget.controller.dataPenjualan.details?[widget.index].diskon ?? "0"),
+        widget.controller.dataPenjualan.details?[widget.index].diskon ?? "0",
+      ),
     );
 
     var hargaJual = double.parse(
       removeComma(
-          widget.controller.dataPenjualan.details?[widget.index].harga ?? "0"),
+        widget.controller.dataPenjualan.details?[widget.index].harga ?? "0",
+      ),
     );
 
-    persenDiskon = formatMoney(
+    if (hargaJual == 0) {
+      persenDiskon = "0";
+    } else {
+      persenDiskon = formatMoney(
         (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100)
             .round()
-            .toString());
+            .toString(),
+      );
+    }
 
     diskonController.text = trimString(persenDiskon);
   }
@@ -56,6 +63,19 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
   Widget build(BuildContext context) {
     PenjualanController controller = widget.controller;
     controller.sumTotalIndex();
+
+    double harga = double.tryParse(
+            controller.dataPenjualan.details?[widget.index].harga ?? "0") ??
+        0;
+    double diskon = double.tryParse(
+            controller.dataPenjualan.details?[widget.index].diskon ?? "0") ??
+        0;
+    double jumlah = double.tryParse(
+            controller.dataPenjualan.details?[widget.index].jumlah ?? "0") ??
+        0;
+
+    double total = ((harga - diskon) * jumlah);
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -178,13 +198,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                                   controller
                                       .dataPenjualan
                                       .details?[widget.index]
-                                      .jumlah = (int.parse(controller
-                                                  .dataPenjualan
-                                                  .details?[widget.index]
-                                                  .jumlah ??
-                                              "0") +
-                                          1)
-                                      .toString();
+                                      .jumlah = (jumlah + 1).toString();
                                   controller.focusNodeInputPenjualan
                                       .requestFocus();
 
@@ -199,37 +213,16 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                           onTap: controller.isDetail
                               ? null
                               : () {
-                                  if (int.parse(controller.dataPenjualan
-                                              .details?[widget.index].jumlah ??
-                                          "1") >
-                                      1) {
+                                  if (jumlah > 1) {
                                     controller
                                         .dataPenjualan
                                         .details?[widget.index]
-                                        .jumlah = (int.parse(controller
-                                                    .dataPenjualan
-                                                    .details?[widget.index]
-                                                    .jumlah ??
-                                                "0") -
-                                            1)
-                                        .toString();
+                                        .jumlah = (jumlah - 1).toString();
                                     controller
                                         .dataPenjualan
                                         .details?[widget.index]
-                                        .total = ((double.parse(controller
-                                                        .dataPenjualan
-                                                        .details?[widget.index]
-                                                        .harga ??
-                                                    "0") *
-                                                double.parse(controller
-                                                        .dataPenjualan
-                                                        .details?[widget.index]
-                                                        .jumlah ??
-                                                    "0")) -
-                                            (double.parse(controller.dataPenjualan.details?[widget.index].harga ?? "0") *
-                                                    double.parse(
-                                                        controller.dataPenjualan.details?[widget.index].jumlah ?? "0")) *
-                                                (double.parse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") / 100))
+                                        .total = ((harga * jumlah) -
+                                            (harga * jumlah) * (diskon / 100))
                                         .toString();
                                     controller.focusNodeInputPenjualan
                                         .requestFocus();
@@ -319,16 +312,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                 child: Text(
                   formatMoney(
                     trimString(
-                      ((double.parse(controller.dataPenjualan
-                                          .details?[widget.index].harga ??
-                                      "0") -
-                                  double.parse(controller.dataPenjualan
-                                          .details?[widget.index].diskon ??
-                                      "0")) *
-                              double.parse(controller.dataPenjualan
-                                      .details?[widget.index].jumlah ??
-                                  "0"))
-                          .toString(),
+                      ((harga - diskon) * jumlah).toString(),
                     ),
                   ),
                   style: myTextTheme.bodyMedium,

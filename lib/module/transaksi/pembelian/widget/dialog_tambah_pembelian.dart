@@ -94,6 +94,19 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
 
   DetailProductResult dataResult = DetailProductResult();
 
+  List<DataDetailProduct> getDetailSuggestions(
+      String query, List<DataDetailProduct>? states) {
+    List<DataDetailProduct> matches = [];
+
+    if (states != null) {
+      matches.addAll(states);
+      matches.retainWhere((s) =>
+          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()));
+    }
+
+    return matches;
+  }
+
   postDetailProduct(String idProduct) async {
     showCircleDialogLoading();
     try {
@@ -161,21 +174,40 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               children: [
-                BaseForm(
+                SearchForm(
+                  label: "ID Product",
                   enabled: controller.isDetail ? false : true,
-                  label: "ID",
                   autoFocus: true,
-                  hintText: "Masukkan ID Product",
-                  textInputFormater: [
-                    UpperCaseTextFormatter(),
-                  ],
-                  textEditingController: textController[0],
-                  onChanged: (value) {
-                    dataEdit.idProduct = trimString(value);
-                    onBarcodeChanged(value);
-                    update();
-                  },
                   validator: Validatorless.required("Data Wajib Diisi"),
+                  textEditingController: textController[0],
+                  items: (search) => getDetailSuggestions(
+                    search,
+                    ProductDatabase.productResult.data?.dataProduct,
+                  ),
+                  itemBuilder: (context, dataPembelian) {
+                    return ListTile(
+                      title: Text(trimString(dataPembelian.idProduct)),
+                    );
+                  },
+                  onChanged: (value) {
+                    onBarcodeChanged(value);
+                    controller.update();
+                  },
+                  onEditComplete: () async {
+                    var data = ProductDatabase.productResult.data?.dataProduct;
+                    for (var i = 0; i < (data?.length ?? 0); i++) {
+                      if (trimString(data?[i].idProduct) ==
+                          trimString(textController[0].text)) {
+                        onBarcodeChanged(trimString(data?[i].idProduct));
+                        controller.update();
+                      }
+                    }
+                  },
+                  onSelected: (data) async {
+                    onBarcodeChanged(trimString(data.idProduct));
+                    textController[0].text = trimString(data.idProduct);
+                    controller.update();
+                  },
                 ),
                 BaseForm(
                   label: "Nama Produk",

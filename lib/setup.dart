@@ -35,6 +35,9 @@ Future initialize() async {
     Hive.registerAdapter(DataProductAdapter());
     Hive.registerAdapter(DataDetailProductAdapter());
     Hive.registerAdapter(TotalKeseluruhanAdapter());
+    Hive.registerAdapter(DataListUserAdapter());
+    //21
+    Hive.registerAdapter(DataUsersAdapter());
   }
 
   mainStorage = await Hive.openBox('mainStorage');

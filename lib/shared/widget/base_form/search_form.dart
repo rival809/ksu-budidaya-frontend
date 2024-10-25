@@ -173,6 +173,7 @@ class _SearchFormState<T> extends State<SearchForm<T>> {
           const SizedBox(height: 2.0),
         TypeAheadField<T>(
           controller: widget.textEditingController,
+          focusNode: widget.focusNode,
           suggestionsCallback: widget.items,
           emptyBuilder: (context) {
             return const Padding(
@@ -184,7 +185,7 @@ class _SearchFormState<T> extends State<SearchForm<T>> {
             return TextFormField(
               controller: controller,
               focusNode: focusNode,
-              autofocus: false,
+              autofocus: widget.autoFocus ?? false,
               key: widget.keyForm,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: widget.enabled ?? true ? gray900 : gray600,

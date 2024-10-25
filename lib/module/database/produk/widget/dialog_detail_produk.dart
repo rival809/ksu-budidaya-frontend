@@ -60,11 +60,14 @@ class _DialogDetailProdukState extends State<DialogDetailProduk> {
               onSwitchStep("1");
             },
             textStep1: "Detail",
-            step2: step2,
-            onTapStep2: () {
-              onSwitchStep("2");
-            },
-            textStep2: "Movement",
+            // step2: step2,
+            // onTapStep2: () {
+            //   onSwitchStep("2");
+            // },
+            // textStep2: "Movement",
+          ),
+          const SizedBox(
+            height: 8.0,
           ),
           if (step1)
             StaggeredGrid.count(

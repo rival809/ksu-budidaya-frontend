@@ -1,4 +1,5 @@
 import 'package:ksu_budidaya/core.dart';
+part 'list_user_model.g.dart';
 
 class ListUserResult {
   bool? success;
@@ -24,8 +25,11 @@ class ListUserResult {
   }
 }
 
+@HiveType(typeId: 20)
 class DataListUser {
+  @HiveField(0)
   List<DataUsers>? dataUsers;
+  @HiveField(1)
   Paging? paging;
 
   DataListUser({this.dataUsers, this.paging});
@@ -52,15 +56,25 @@ class DataListUser {
   }
 }
 
+@HiveType(typeId: 21)
 class DataUsers {
+  @HiveField(0)
   String? username;
+  @HiveField(1)
   String? name;
+  @HiveField(2)
   String? idRole;
+  @HiveField(3)
   String? createdAt;
+  @HiveField(4)
   String? updatedAt;
 
   DataUsers(
       {this.username, this.name, this.idRole, this.createdAt, this.updatedAt});
+
+  String userAsString() {
+    return trimString(username);
+  }
 
   DataUsers.fromJson(Map<String, dynamic> json) {
     username = json['username'];

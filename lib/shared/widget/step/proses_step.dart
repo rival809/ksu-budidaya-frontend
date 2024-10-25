@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class ProsesStep extends StatefulWidget {
   final bool step1;
   final Function()? onTapStep1;
   final String textStep1;
-  final bool step2;
+  final bool? step2;
   final Function()? onTapStep2;
-  final String textStep2;
+  final String? textStep2;
   final bool? step3;
   final Function()? onTapStep3;
   final String? textStep3;
@@ -20,9 +21,9 @@ class ProsesStep extends StatefulWidget {
     required this.step1,
     required this.onTapStep1,
     required this.textStep1,
-    required this.step2,
-    required this.onTapStep2,
-    required this.textStep2,
+    this.step2,
+    this.onTapStep2,
+    this.textStep2,
     this.step3,
     this.onTapStep3,
     this.textStep3,
@@ -66,31 +67,32 @@ class _ProsesStepState extends State<ProsesStep> {
             ],
           ),
         ),
-        IntrinsicWidth(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: InkWell(
-                  onTap: widget.onTapStep2,
-                  child: Text(
-                    widget.textStep2,
-                    style: myTextTheme.bodyLarge?.copyWith(
-                      color: widget.step2 ? primaryColor : gray500,
+        if (widget.textStep2?.isNotEmpty ?? false)
+          IntrinsicWidth(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: InkWell(
+                    onTap: widget.onTapStep2,
+                    child: Text(
+                      trimString(widget.textStep2),
+                      style: myTextTheme.bodyLarge?.copyWith(
+                        color: widget.step2 ?? false ? primaryColor : gray500,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Container(
-                color: widget.step2 ? primaryColor : gray200,
-                height: 2,
-              ),
-            ],
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Container(
+                  color: widget.step2 ?? false ? primaryColor : gray200,
+                  height: 2,
+                ),
+              ],
+            ),
           ),
-        ),
         if (widget.textStep3?.isNotEmpty ?? false)
           IntrinsicWidth(
             child: Column(

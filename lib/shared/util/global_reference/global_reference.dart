@@ -66,10 +66,22 @@ class GlobalReference {
   productReference() async {
     try {
       ProductResult result = await ApiService.listProduct(
-        data: {},
+        data: {"status_product": true},
       ).timeout(const Duration(seconds: 30));
 
       ProductDatabase.save(result);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  userReference() async {
+    try {
+      ListUserResult result = await ApiService.listUser(
+        data: {},
+      ).timeout(const Duration(seconds: 30));
+
+      ListUserDatabase.save(result.data ?? DataListUser());
     } catch (e) {
       log(e.toString());
     }

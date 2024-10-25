@@ -10,8 +10,8 @@ class TutupKasirController extends State<TutupKasirView> {
   bool isAsc = true;
   TextEditingController penjualanNameController = TextEditingController();
   Future<dynamic>? dataFuture;
-  PenjualanResult result = PenjualanResult();
-  DataPenjualan dataListPenjualan = DataPenjualan();
+  ListTutupKasirResult result = ListTutupKasirResult();
+  DataTutupKasir dataListTutupKasir = DataTutupKasir();
 
   List<String> listTutupKasir = [
     "tg_tutup_kasir",
@@ -32,7 +32,7 @@ class TutupKasirController extends State<TutupKasirView> {
     String? field,
   }) async {
     try {
-      result = PenjualanResult();
+      result = ListTutupKasirResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
@@ -51,7 +51,7 @@ class TutupKasirController extends State<TutupKasirView> {
         });
       }
 
-      result = await ApiService.listPenjualan(
+      result = await ApiService.listTutupKasir(
         data: dataCari,
       ).timeout(const Duration(seconds: 30));
 
@@ -66,9 +66,69 @@ class TutupKasirController extends State<TutupKasirView> {
     }
   }
 
+  TotalPenjualanResult dataPenjualan = TotalPenjualanResult();
+
+  cariDataTotalPenjualan() async {
+    try {
+      showCircleDialogLoading();
+      dataPenjualan = TotalPenjualanResult();
+
+      dataPenjualan = await ApiService.totalPenjualan(
+        data: {
+          "tg_tutup_kasir": formatDateTimeNow(DateTime.now().toString()),
+        },
+      ).timeout(const Duration(seconds: 30));
+      Get.back();
+      if (dataPenjualan.success == true) {
+        DetailDataTutupKasir data = DetailDataTutupKasir();
+        data.qris =
+            trimString(dataPenjualan.data?.penjualan?.penjualanQris.toString());
+        data.kredit = trimString(
+            dataPenjualan.data?.penjualan?.penjualanKredit.toString());
+        data.tunai = trimString(
+            dataPenjualan.data?.penjualan?.penjualanTunai.toString());
+        data.totalNilaiBeli = trimString(
+            dataPenjualan.data?.keuntungan?.totalNilaiBeli.toString());
+        data.totalNilaiJual = trimString(
+            dataPenjualan.data?.keuntungan?.totalNilaiJual.toString());
+        data.totalKeuntungan = trimString(
+            dataPenjualan.data?.keuntungan?.totalKeuntungan.toString());
+        data.total = trimString(
+            dataPenjualan.data?.penjualan?.totalPenjualan.toString());
+        data.shift = dataPenjualan.data?.keterangan?.contains("siang") ?? false
+            ? "SIANG"
+            : "PAGI";
+        data.namaKasir = trimString(
+          UserDatabase.userDatabase.data?.userData?.username,
+        );
+        data.username = trimString(
+          UserDatabase.userDatabase.data?.userData?.username,
+        );
+        data.tgTutupKasir = formatDateTime(DateTime.now().toString());
+        showDialogBase(
+          width: 700,
+          content: DialogTutupKasir(
+            detail: data,
+            isEdit: null,
+          ),
+        );
+      }
+    } catch (e) {
+      Get.back();
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   @override
   void initState() {
     instance = this;
+    dataFuture = cariDataTutupKasir();
     super.initState();
   }
 
