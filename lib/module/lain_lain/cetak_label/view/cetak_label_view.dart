@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class CetakLabelView extends StatefulWidget {

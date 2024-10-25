@@ -801,16 +801,52 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                         ),
                       );
                     } else {
-                      return const ContainerTidakAda(
-                        entity: 'Pembelian',
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Tidak ada data Pembelian.",
+                                  style: myTextTheme.bodyLarge,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       );
                     }
                   } else {
-                    return const ContainerError();
+                    return Center(
+                      child: Text(
+                        "Terjadi kesalahan saat mengambil data.",
+                        textAlign: TextAlign.center,
+                        style: myTextTheme.bodyMedium,
+                      ),
+                    );
                   }
                 } else {
-                  return const ContainerTidakAda(
-                    entity: "Pembelian",
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Tidak ada data Pembelian.",
+                              style: myTextTheme.bodyLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   );
                 }
               },
@@ -1105,16 +1141,52 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                         ),
                       );
                     } else {
-                      return const ContainerTidakAda(
-                        entity: 'Hutang Dagang',
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Tidak ada data Hutang Dagang.",
+                                  style: myTextTheme.bodyLarge,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       );
                     }
                   } else {
-                    return const ContainerError();
+                    return Center(
+                      child: Text(
+                        "Terjadi kesalahan saat mengambil data.",
+                        textAlign: TextAlign.center,
+                        style: myTextTheme.bodyMedium,
+                      ),
+                    );
                   }
                 } else {
-                  return const ContainerTidakAda(
-                    entity: "Hutang Dagang",
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Tidak ada data Hutang Dagang.",
+                              style: myTextTheme.bodyLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   );
                 }
               },
