@@ -137,3 +137,28 @@ class DataDetailAnggota {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 }
+
+class DetailAnggotaResult {
+  bool? success;
+  DataDetailAnggota? data;
+  String? message;
+
+  DetailAnggotaResult({this.success, this.data, this.message});
+
+  DetailAnggotaResult.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    data =
+        json['data'] != null ? DataDetailAnggota.fromJson(json['data']) : null;
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['message'] = message;
+    return data;
+  }
+}

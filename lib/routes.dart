@@ -133,13 +133,39 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          path: 'koperasi/anggota',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SelectionArea(
-              child: AnggotaView(),
-            );
-          },
-        ),
+            path: 'koperasi/anggota',
+            builder: (BuildContext context, GoRouterState state) {
+              return const SelectionArea(
+                child: AnggotaView(),
+              );
+            },
+            routes: [
+              GoRoute(
+                  path: 'pembayaran-hutang',
+                  builder: (BuildContext context, GoRouterState state) {
+                    final idAnggota =
+                        trimString(state.uri.queryParameters['id']);
+                    return SelectionArea(
+                      child: BayarHutangAnggotaView(
+                        idAnggota: idAnggota,
+                      ),
+                    );
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'detail',
+                      builder: (BuildContext context, GoRouterState state) {
+                        final idPenjualan =
+                            trimString(state.uri.queryParameters['id']);
+                        return SelectionArea(
+                          child: DetailTransaksiView(
+                            idPenjualan: idPenjualan,
+                          ),
+                        );
+                      },
+                    ),
+                  ]),
+            ]),
         GoRoute(
           path: 'transaksi/pembelian',
           builder: (BuildContext context, GoRouterState state) {
@@ -169,6 +195,22 @@ final GoRouter router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(
               child: BayarHutangDagangView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'transaksi/tutup-kasir',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: TutupKasirView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'lain-lain/cetak-label',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: CetakLabelView(),
             );
           },
         ),

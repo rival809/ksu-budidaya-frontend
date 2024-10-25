@@ -361,6 +361,29 @@ class ApiService {
     }
   }
 
+  static Future<DetailAnggotaResult> detailAnggota({
+    required String idAnggota,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/anggota/detail-anggota",
+      options: options,
+      data: {
+        "id_anggota": idAnggota,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailAnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to detailAnggota');
+    }
+  }
+
   static Future<AnggotaResult> createAnggota({
     required DataMap data,
   }) async {
@@ -1078,6 +1101,30 @@ class ApiService {
     }
   }
 
+  static Future<LaporanRealisasiPendapatanResult> laporanRealisasiPendapatan({
+    required String year,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/laporan/realisasi-pendapatan",
+      options: options,
+      data: {
+        "year": year,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return LaporanRealisasiPendapatanResult.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to laporanRealisasiPendapatan');
+    }
+  }
+
   //HutangDAgang
   static Future<HutangDagangResult> listHutangDagang({
     required DataMap data,
@@ -1135,6 +1182,72 @@ class ApiService {
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
         return BayarHutangDagangResult.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to bayarHutangDagang');
+    }
+  }
+
+  // //HutangDAgang
+  static Future<HutangAnggotaResult> listHutangAnggota({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-anggota/list-hutang-anggota",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return HutangAnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listHutangDagang');
+    }
+  }
+
+  // static Future<HistoryHutangDagangResult> listHistoryHutangDagang({
+  //   required DataMap data,
+  // }) async {
+  //   var response = await dio.post(
+  //     "$_baseUrl/api/hutang-dagang/list-history-bayar-hutang-dagang",
+  //     options: options,
+  //     data: data,
+  //     cancelToken: cancelToken,
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     if (response.data["success"] == true) {
+  //       return HistoryHutangDagangResult.fromJson(
+  //           json.decode(response.toString()));
+  //     } else {
+  //       throw Exception(response.data["message"]);
+  //     }
+  //   } else {
+  //     throw Exception('Failed to listHistoryHutangDagang');
+  //   }
+  // }
+
+  static Future<BayarHutangAnggotaResult> bayarHutangAnggota({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-anggota/bayar-hutang-anggota",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return BayarHutangAnggotaResult.fromJson(
             json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);

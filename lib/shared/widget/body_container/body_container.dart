@@ -102,7 +102,7 @@ class _BodyContainerState extends State<BodyContainer> {
                   ),
                   drawerProvider.isDrawerOpen
                       ? Container(
-                          width: 260,
+                          width: 265,
                         )
                       : Container(),
                 ],
@@ -128,7 +128,7 @@ class _BodyContainerState extends State<BodyContainer> {
               ),
               drawerProvider.isDrawerOpen
                   ? Container(
-                      width: 260,
+                      width: 265,
                     )
                   : Container(),
             ],

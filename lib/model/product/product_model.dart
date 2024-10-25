@@ -1,8 +1,13 @@
 import 'package:ksu_budidaya/core.dart';
+part 'product_model.g.dart';
 
+@HiveType(typeId: 16)
 class ProductResult {
+  @HiveField(0)
   bool? success;
+  @HiveField(1)
   DataProduct? data;
+  @HiveField(2)
   String? message;
 
   ProductResult({this.success, this.data, this.message});
@@ -24,9 +29,13 @@ class ProductResult {
   }
 }
 
+@HiveType(typeId: 17)
 class DataProduct {
+  @HiveField(0)
   List<DataDetailProduct>? dataProduct;
+  @HiveField(1)
   Paging? paging;
+  @HiveField(2)
   TotalKeseluruhan? totalKeseluruhan;
 
   DataProduct({this.dataProduct, this.paging, this.totalKeseluruhan});
@@ -59,19 +68,33 @@ class DataProduct {
   }
 }
 
+@HiveType(typeId: 18)
 class DataDetailProduct {
+  @HiveField(0)
   String? idProduct;
+  @HiveField(1)
   String? nmProduct;
+  @HiveField(2)
   String? idDivisi;
+  @HiveField(3)
   String? idSupplier;
+  @HiveField(4)
   String? hargaJual;
+  @HiveField(5)
   String? hargaBeli;
+  @HiveField(6)
   bool? statusProduct;
+  @HiveField(7)
   int? jumlah;
+  @HiveField(8)
   String? keterangan;
+  @HiveField(9)
   String? createdAt;
+  @HiveField(10)
   String? updatedAt;
+  @HiveField(11)
   int? totalJual;
+  @HiveField(12)
   int? totalBeli;
 
   DataDetailProduct(
@@ -155,9 +178,13 @@ class DataDetailProduct {
   }
 }
 
+@HiveType(typeId: 19)
 class TotalKeseluruhan {
+  @HiveField(0)
   int? totalJumlah;
+  @HiveField(1)
   int? totalJual;
+  @HiveField(2)
   int? totalBeli;
 
   TotalKeseluruhan({this.totalJumlah, this.totalJual, this.totalBeli});

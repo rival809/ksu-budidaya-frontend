@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class FooterTableWidget extends StatefulWidget {
+  final int? widthDialog;
   final String? itemPerpage;
   final String? page;
   final Function(String?)? onChangePerPage;
@@ -14,6 +15,7 @@ class FooterTableWidget extends StatefulWidget {
   final Function()? onPressRight;
   const FooterTableWidget({
     Key? key,
+    this.widthDialog,
     required this.itemPerpage,
     required this.page,
     required this.onChangePerPage,
@@ -51,9 +53,11 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
             scrollDirection: Axis.horizontal,
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
-                    ? MediaQuery.of(context).size.width - 36 - 260
-                    : MediaQuery.of(context).size.width - 36,
+                minWidth: widget.widthDialog != null
+                    ? (double.parse(widget.widthDialog?.toString() ?? "0"))
+                    : Provider.of<DrawerProvider>(context).isDrawerOpen
+                        ? MediaQuery.of(context).size.width - 36 - 265
+                        : MediaQuery.of(context).size.width - 36,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

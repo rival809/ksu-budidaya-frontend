@@ -72,6 +72,21 @@ bool boldChecker(String? text) {
   }
 }
 
+bool boldCheckerRealisasiPendapatan(String? text) {
+  switch (trimString(text.toString())) {
+    case "PENJUALAN":
+      return true;
+    case "JUMLAH":
+      return true;
+    case "PENGELUARAN":
+      return true;
+    case "SISA HASIL USAHA SEBELUM PAJAK":
+      return true;
+    default:
+      return false;
+  }
+}
+
 trimStringStrip(String? string) {
   if (string == null) {
     return "-";

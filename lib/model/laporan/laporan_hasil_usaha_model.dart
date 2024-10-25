@@ -399,3 +399,72 @@ class RowLaporanHasilUsaha {
     return data;
   }
 }
+
+class RowLaporanRealisasiPendapatan {
+  String? uraian;
+  double? jan;
+  double? feb;
+  double? mar;
+  double? apr;
+  double? mei;
+  double? jun;
+  double? jul;
+  double? agu;
+  double? sep;
+  double? okt;
+  double? nov;
+  double? des;
+  double? jumlah;
+
+  RowLaporanRealisasiPendapatan({
+    this.uraian,
+    this.jan,
+    this.feb,
+    this.mar,
+    this.apr,
+    this.mei,
+    this.jun,
+    this.jul,
+    this.agu,
+    this.sep,
+    this.okt,
+    this.nov,
+    this.des,
+    this.jumlah,
+  });
+  RowLaporanRealisasiPendapatan.fromJson(Map<String, dynamic> json) {
+    uraian = json['uraian'];
+    jan = json['jan'];
+    feb = json['feb'];
+    mar = json['mar'];
+    apr = json['apr'];
+    mei = json['mei'];
+    jun = json['jun'];
+    jul = json['jul'];
+    agu = json['agu'];
+    sep = json['sep'];
+    okt = json['okt'];
+    nov = json['nov'];
+    des = json['des'];
+    jumlah = json['jumlah'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['uraian'] = uraian;
+    data['jan'] = jan;
+    data['feb'] = feb;
+    data['mar'] = mar;
+    data['apr'] = apr;
+    data['mei'] = mei;
+    data['jun'] = jun;
+    data['jul'] = jul;
+    data['agu'] = agu;
+    data['sep'] = sep;
+    data['okt'] = okt;
+    data['nov'] = nov;
+    data['des'] = des;
+    data['jumlah'] = jumlah;
+    return data;
+  }
+}

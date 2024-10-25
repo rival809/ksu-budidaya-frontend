@@ -62,6 +62,18 @@ class GlobalReference {
       log(e.toString());
     }
   }
+
+  productReference() async {
+    try {
+      ProductResult result = await ApiService.listProduct(
+        data: {},
+      ).timeout(const Duration(seconds: 30));
+
+      ProductDatabase.save(result);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }
 
 getNamaRole({String? idRole}) {

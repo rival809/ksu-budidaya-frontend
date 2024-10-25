@@ -5,10 +5,18 @@ import 'package:ksu_budidaya/core.dart';
 
 class DialogTambahPelunasan extends StatefulWidget {
   final String? idSupplier;
+  final String? idTransaksi;
+  final String? idHutangDagang;
+  final String? nominal;
+  final bool isPageBayarHutang;
 
   const DialogTambahPelunasan({
     Key? key,
     required this.idSupplier,
+    required this.idTransaksi,
+    required this.idHutangDagang,
+    required this.nominal,
+    required this.isPageBayarHutang,
   }) : super(key: key);
 
   @override
@@ -29,6 +37,8 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
 
   HutangDagangResult result = HutangDagangResult();
 
+  DataDetailSupplier dataSupplier = DataDetailSupplier();
+
   cariDataHutangDagang({
     required String supplierName,
   }) async {
@@ -36,7 +46,9 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
       result = HutangDagangResult();
       DataMap dataCari = {};
 
-      dataCari.addAll({"id_supplier": trimString(supplierName)});
+      if (supplierName.isNotEmpty) {
+        dataCari.addAll({"id_supplier": trimString(supplierName)});
+      }
 
       result = await ApiService.listHutangDagang(
         data: dataCari,
@@ -66,7 +78,9 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
           content: const DialogBerhasil(),
         );
 
-        router.push("/database/supplier");
+        widget.isPageBayarHutang
+            ? router.push("/transaksi/bayar-hutang-dagang")
+            : router.push("/database/supplier");
 
         update();
       }
@@ -101,9 +115,15 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
     cariDataHutangDagang(supplierName: trimString(widget.idSupplier));
     dataEdit.tgBayar = formatDate(DateTime.now().toString());
     textController[0].text = formatDate(DateTime.now().toString());
-    textController[1].clear();
+    textController[1].text = formatMoney(widget.nominal);
     textController[2].clear();
-    textController[3].clear();
+    textController[3].text = trimString(widget.idTransaksi);
+    dataEdit.idHutangDagang = trimString(widget.idHutangDagang);
+    dataEdit.nominalBayar = trimString(widget.nominal);
+    dataSupplier = DataDetailSupplier(
+      idSupplier: widget.idSupplier,
+      nmSupplier: getNamaSupplier(idSupplier: trimString(widget.idSupplier)),
+    );
     super.initState();
   }
 
@@ -174,17 +194,15 @@ class _DialogTambahPelunasanState extends State<DialogTambahPelunasan> {
                     label: "Nama Supplier",
                     itemAsString: (item) => item.supplierAsString(),
                     items: SupplierDatabase.dataSupplier.dataSupplier ?? [],
-                    value: DataDetailSupplier(
-                      idSupplier: widget.idSupplier,
-                      nmSupplier:
-                          getNamaSupplier(idSupplier: widget.idSupplier),
-                    ),
+                    value: dataSupplier,
                     onChanged: (value) {
                       cariDataHutangDagang(
                           supplierName: trimString(value?.idSupplier));
                       dataEdit.idHutangDagang = null;
                       textController[3].clear();
 
+                      dataSupplier.idSupplier = trimString(value?.idSupplier);
+                      dataSupplier.nmSupplier = trimString(value?.nmSupplier);
                       update();
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,

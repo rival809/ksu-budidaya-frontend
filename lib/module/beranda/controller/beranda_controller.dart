@@ -23,6 +23,9 @@ class BerandaController extends State<BerandaView> {
     if (RefCashDatabase.refCashResult.data?.isEmpty ?? true) {
       await GlobalReference().cashReference();
     }
+    if (ProductDatabase.productResult.data?.dataProduct?.isEmpty ?? true) {
+      await GlobalReference().productReference();
+    }
   }
 
   IncomeDashboardResult resultDashboard = IncomeDashboardResult();

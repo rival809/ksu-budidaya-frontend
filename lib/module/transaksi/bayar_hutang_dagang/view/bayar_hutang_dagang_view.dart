@@ -34,7 +34,7 @@ class BayarHutangDagangView extends StatefulWidget {
                       constraints: BoxConstraints(
                         minWidth:
                             Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 260
+                                ? MediaQuery.of(context).size.width - 32 - 265
                                 : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
@@ -87,10 +87,13 @@ class BayarHutangDagangView extends StatefulWidget {
                           BasePrimaryButton(
                             onPressed: () {
                               showDialogBase(
-                                width: 1000,
-                                content: DialogCashInOut(
-                                  isDetail: false,
-                                  data: DataDetailCashInOut(),
+                                width: 700,
+                                content: DialogTambahPelunasan(
+                                  isPageBayarHutang: true,
+                                  nominal: trimString(null),
+                                  idHutangDagang: trimString(null),
+                                  idTransaksi: trimString(null),
+                                  idSupplier: trimString(null),
                                 ),
                               );
                             },
@@ -215,11 +218,14 @@ class BayarHutangDagangView extends StatefulWidget {
                                               child: Row(
                                                 children: [
                                                   SvgPicture.asset(
-                                                      iconEditSquare),
+                                                    iconAccountBalanceWallet,
+                                                    colorFilter:
+                                                        colorFilterGray600,
+                                                  ),
                                                   const SizedBox(width: 8),
                                                   Expanded(
                                                     child: Text(
-                                                      'Edit Data',
+                                                      'Bayar Hutang',
                                                       style: myTextTheme
                                                           .bodyMedium,
                                                     ),
@@ -227,52 +233,37 @@ class BayarHutangDagangView extends StatefulWidget {
                                                 ],
                                               ),
                                             ),
-                                            PopupMenuItem(
-                                              value: 2,
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    iconDelete,
-                                                    colorFilter: colorFilter(
-                                                        color: red600),
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  Text(
-                                                    'Hapus',
-                                                    style:
-                                                        myTextTheme.bodyMedium,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
                                           ],
                                           onChange: (value) {
                                             if (value == 1) {
-                                              // showDialogBase(
-                                              //   width: 1000,
-                                              //   content: DialogCashInOut(
-                                              //     isDetail: true,
-                                              //     data: result
-                                              //         .data?.dataHutangDagang?[rowIndex],
-                                              //   ),
-                                              // );
-                                            } else if (value == 2) {
-                                              // showDialogBase(
-                                              //   content: DialogKonfirmasi(
-                                              //     textKonfirmasi:
-                                              //         "Apakah Anda yakin ingin Menghapus Data Cash In Out",
-                                              //     onConfirm: () async {
-                                              //       controller.postRemoveCashInOut(
-                                              //         trimString(
-                                              //           result
-                                              //               .data
-                                              //               ?.dataHutangDagang?[rowIndex]
-                                              //               .idHutangDagang,
-                                              //         ),
-                                              //       );
-                                              //     },
-                                              //   ),
-                                              // );
+                                              showDialogBase(
+                                                width: 700,
+                                                content: DialogTambahPelunasan(
+                                                  isPageBayarHutang: true,
+                                                  nominal: trimString(controller
+                                                      .result
+                                                      .data
+                                                      ?.dataHutangDagang?[
+                                                          rowIndex]
+                                                      .nominal),
+                                                  idHutangDagang: trimString(
+                                                      result
+                                                          .data
+                                                          ?.dataHutangDagang?[
+                                                              rowIndex]
+                                                          .idHutangDagang),
+                                                  idTransaksi: trimString(result
+                                                      .data
+                                                      ?.dataHutangDagang?[
+                                                          rowIndex]
+                                                      .idPembelian),
+                                                  idSupplier: trimString(result
+                                                      .data
+                                                      ?.dataHutangDagang?[
+                                                          rowIndex]
+                                                      .idSupplier),
+                                                ),
+                                              );
                                             }
                                           },
                                         );
@@ -584,94 +575,6 @@ class BayarHutangDagangView extends StatefulWidget {
                                       },
                                     ),
                                   );
-
-                                  columns.add(
-                                    PlutoColumn(
-                                      width: 150,
-                                      backgroundColor: primaryColor,
-                                      frozen: PlutoColumnFrozen.end,
-                                      title: "AKSI",
-                                      field: "Aksi",
-                                      filterHintText: "",
-                                      type: PlutoColumnType.text(),
-                                      enableEditingMode: false,
-                                      renderer: (rendererContext) {
-                                        final rowIndex = rendererContext.rowIdx;
-                                        Map<String, dynamic> dataRow =
-                                            rendererContext.row.toJson();
-                                        return DropdownAksi(
-                                          text: "Aksi",
-                                          listItem: [
-                                            PopupMenuItem(
-                                              value: 1,
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      iconEditSquare),
-                                                  const SizedBox(width: 8),
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Edit Data',
-                                                      style: myTextTheme
-                                                          .bodyMedium,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            PopupMenuItem(
-                                              value: 2,
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    iconDelete,
-                                                    colorFilter: colorFilter(
-                                                        color: red600),
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  Text(
-                                                    'Hapus',
-                                                    style:
-                                                        myTextTheme.bodyMedium,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                          onChange: (value) {
-                                            if (value == 1) {
-                                              // showDialogBase(
-                                              //   width: 1000,
-                                              //   content: DialogCashInOut(
-                                              //     isDetail: true,
-                                              //     data: result
-                                              //         .data?.dataHutangDagang?[rowIndex],
-                                              //   ),
-                                              // );
-                                            } else if (value == 2) {
-                                              // showDialogBase(
-                                              //   content: DialogKonfirmasi(
-                                              //     textKonfirmasi:
-                                              //         "Apakah Anda yakin ingin Menghapus Data Cash In Out",
-                                              //     onConfirm: () async {
-                                              //       controller.postRemoveCashInOut(
-                                              //         trimString(
-                                              //           result
-                                              //               .data
-                                              //               ?.dataHutangDagang?[rowIndex]
-                                              //               .idHutangDagang,
-                                              //         ),
-                                              //       );
-                                              //     },
-                                              //   ),
-                                              // );
-                                            }
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  );
-
                                   List<dynamic> listDataWithIndex =
                                       List.generate(listData.length, (index) {
                                     return {

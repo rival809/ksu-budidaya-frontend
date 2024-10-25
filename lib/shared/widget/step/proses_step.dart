@@ -11,6 +11,9 @@ class ProsesStep extends StatefulWidget {
   final bool? step3;
   final Function()? onTapStep3;
   final String? textStep3;
+  final bool? step4;
+  final Function()? onTapStep4;
+  final String? textStep4;
 
   const ProsesStep({
     Key? key,
@@ -23,6 +26,9 @@ class ProsesStep extends StatefulWidget {
     this.step3,
     this.onTapStep3,
     this.textStep3,
+    this.step4,
+    this.onTapStep4,
+    this.textStep4,
   }) : super(key: key);
 
   @override
@@ -106,6 +112,32 @@ class _ProsesStepState extends State<ProsesStep> {
                 ),
                 Container(
                   color: widget.step3 ?? false ? primaryColor : gray200,
+                  height: 2,
+                ),
+              ],
+            ),
+          ),
+        if (widget.textStep4?.isNotEmpty ?? false)
+          IntrinsicWidth(
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: widget.onTapStep4,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      trimString(widget.textStep4),
+                      style: myTextTheme.bodyLarge?.copyWith(
+                        color: widget.step4 ?? false ? primaryColor : gray500,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Container(
+                  color: widget.step4 ?? false ? primaryColor : gray200,
                   height: 2,
                 ),
               ],
