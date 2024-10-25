@@ -45,6 +45,7 @@ export 'package:ksu_budidaya/model/retur/detail_retur_model.dart';
 export 'package:ksu_budidaya/model/retur/retur_model.dart';
 export 'package:ksu_budidaya/model/retur/retur_payload_model.dart';
 export 'package:ksu_budidaya/model/supplier/supplier_model.dart';
+export 'package:ksu_budidaya/model/tutup_kasir/total_penjualan_model.dart';
 export 'package:ksu_budidaya/model/user/create_role_model.dart';
 export 'package:ksu_budidaya/model/user/detail_user_model.dart';
 export 'package:ksu_budidaya/model/user/list_role_model.dart';
@@ -88,6 +89,7 @@ export 'package:ksu_budidaya/module/koperasi/detail_transaksi/widget/footer_penj
 export 'package:ksu_budidaya/module/koperasi/detail_transaksi/widget/header_penjualan_detail.dart';
 export 'package:ksu_budidaya/module/lain_lain/cetak_label/controller/cetak_label_controller.dart';
 export 'package:ksu_budidaya/module/lain_lain/cetak_label/view/cetak_label_view.dart';
+export 'package:ksu_budidaya/module/lain_lain/cetak_label/widget/body_cetak_label.dart';
 export 'package:ksu_budidaya/module/lain_lain/cetak_label/widget/header_cetak_label.dart';
 export 'package:ksu_budidaya/module/laporan/controller/laporan_controller.dart';
 export 'package:ksu_budidaya/module/laporan/view/laporan_view.dart';
