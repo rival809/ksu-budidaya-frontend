@@ -19,6 +19,8 @@
         "transaksi/penjualan",
         "transaksi/retur",
         "transaksi/bayar_hutang_dagang",
+        "transaksi/tutup_kasir",
+        "lain_lain/cetak_label",
         "pdf_viewer"
     ],
     "module_directory_name": "module",

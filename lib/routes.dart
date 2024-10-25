@@ -199,6 +199,22 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
+          path: 'transaksi/tutup-kasir',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: TutupKasirView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'lain-lain/cetak-label',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: CetakLabelView(),
+            );
+          },
+        ),
+        GoRoute(
           path: 'laporan',
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(

@@ -129,7 +129,10 @@ class SliderView extends StatelessWidget {
                         ),
                     if (kIsWeb)
                       if (dataLogin.roleData?.stsPembelian == true ||
-                          dataLogin.roleData?.stsPenjualan == true)
+                          dataLogin.roleData?.stsPenjualan == true ||
+                          dataLogin.roleData?.stsRetur == true ||
+                          dataLogin.roleData?.stsPembayaranHutang == true ||
+                          dataLogin.roleData?.stsAwalAkhirHari == true)
                         DrawerMenu(
                           title: "Transaksi",
                           isSelected: isParentSelected(
@@ -139,6 +142,7 @@ class SliderView extends StatelessWidget {
                               "/transaksi/penjualan",
                               "/transaksi/retur",
                               "/transaksi/bayar-hutang-dagang",
+                              "/transaksi/tutup-kasir",
                             ],
                           ),
                           onTap: () {},
@@ -187,6 +191,18 @@ class SliderView extends StatelessWidget {
                                 onTap: () {
                                   router.go(
                                     "/transaksi/bayar-hutang-dagang",
+                                  );
+                                },
+                              ),
+                            if (dataLogin.roleData?.stsAwalAkhirHari == true)
+                              DrawerMenu(
+                                title: "Tutup Kasir",
+                                isSubMenu: true,
+                                isSelected:
+                                    currentRoute == "/transaksi/tutup-kasir",
+                                onTap: () {
+                                  router.go(
+                                    "/transaksi/tutup-kasir",
                                   );
                                 },
                               ),
@@ -301,6 +317,39 @@ class SliderView extends StatelessWidget {
                             // ),
                           ],
                         ),
+                    DrawerMenu(
+                      title: "Lain - lain",
+                      isSelected: isParentSelected(
+                        "/lain-lain",
+                        [
+                          "/lain-lain/cetak-label",
+                          // "/user-management/role",
+                        ],
+                      ),
+                      onTap: () {},
+                      children: [
+                        if (dataLogin.roleData?.stsCetakLabel == true)
+                          DrawerMenu(
+                            title: "Cetak Label",
+                            isSubMenu: true,
+                            isSelected:
+                                currentRoute == "/lain-lain/cetak-label",
+                            onTap: () {
+                              router.go("/lain-lain/cetak-label");
+                            },
+                          ),
+                        // if (dataLogin.roleData?.stsRole == true)
+                        //   DrawerMenu(
+                        //     title: "Role",
+                        //     isSubMenu: true,
+                        //     isSelected:
+                        //         currentRoute == "/user-management/role",
+                        //     onTap: () {
+                        //       router.go("/user-management/role");
+                        //     },
+                        // ),
+                      ],
+                    ),
                     if (kIsWeb)
                       if (dataLogin.roleData?.stsUser == true)
                         DrawerMenu(

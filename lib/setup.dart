@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ksu_budidaya/model/product/product_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -30,6 +31,10 @@ Future initialize() async {
     Hive.registerAdapter(AnggotaResultAdapter());
     Hive.registerAdapter(DataAnggotaAdapter());
     Hive.registerAdapter(DataDetailAnggotaAdapter());
+    Hive.registerAdapter(ProductResultAdapter());
+    Hive.registerAdapter(DataProductAdapter());
+    Hive.registerAdapter(DataDetailProductAdapter());
+    Hive.registerAdapter(TotalKeseluruhanAdapter());
   }
 
   mainStorage = await Hive.openBox('mainStorage');
@@ -40,7 +45,7 @@ Future initialize() async {
   await DivisiDatabase.load();
   await AnggotaDatabase.load();
   await RefCashDatabase.load();
-  // await PembelianDatabase.load();
+  await ProductDatabase.load();
   // await UserDatabase.load();
   // await PenetapanDatabase.load();
   // await ReferencesDatabase.load();
