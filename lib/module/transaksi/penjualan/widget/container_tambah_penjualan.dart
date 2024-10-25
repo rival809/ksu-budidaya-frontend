@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class ContainerTambahPenjualan extends StatefulWidget {
   final PenjualanController controller;
@@ -67,15 +68,10 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                 children: [
                   SizedBox(
                     width: 250,
-                    child: BaseForm(
+                    child: SearchForm(
+                      label: "ID Product",
+                      enabled: true,
                       focusNode: controller.focusNodeInputPenjualan,
-                      autoFocus: true,
-                      textEditingController: controller.cariProdukController,
-                      onChanged: (value) {
-                        controller.onProdctSearch(value);
-                        controller.update();
-                      },
-                      hintText: "Cari Produk",
                       suffix: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: BasePrimaryButton(
@@ -89,6 +85,39 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                           isDense: true,
                         ),
                       ),
+                      textEditingController: controller.cariProdukController,
+                      items: (search) => controller.getDetailSuggestions(
+                        search,
+                        ProductDatabase.productResult.data?.dataProduct,
+                      ),
+                      itemBuilder: (context, dataPembelian) {
+                        return ListTile(
+                          title: Text(trimString(dataPembelian.idProduct)),
+                        );
+                      },
+                      onChanged: (value) {
+                        controller.onProdctSearch(value);
+                        controller.update();
+                      },
+                      onEditComplete: () async {
+                        var data =
+                            ProductDatabase.productResult.data?.dataProduct;
+                        for (var i = 0; i < (data?.length ?? 0); i++) {
+                          if (trimString(data?[i].idProduct) ==
+                              trimString(
+                                  controller.cariProdukController.text)) {
+                            controller
+                                .onProdctSearch(trimString(data?[i].idProduct));
+                            controller.update();
+                          }
+                        }
+                      },
+                      onSelected: (data) async {
+                        controller.onProdctSearch(trimString(data.idProduct));
+                        controller.cariProdukController.text =
+                            trimString(data.idProduct);
+                        controller.update();
+                      },
                     ),
                   ),
                   const SizedBox(

@@ -83,7 +83,9 @@ class TutupKasirView extends StatefulWidget {
                             ],
                           ),
                           BasePrimaryButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.cariDataTotalPenjualan();
+                            },
                             text: "Tambah Tutup Kasir",
                             suffixIcon: iconAdd,
                             isDense: true,
@@ -105,82 +107,66 @@ class TutupKasirView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          PenjualanResult result = snapshot.data;
-                          controller.dataListPenjualan =
-                              result.data ?? DataPenjualan();
-                          List<dynamic> listData = controller.dataListPenjualan
-                                  .toJson()["data_penjualan"] ??
+                          ListTutupKasirResult result = snapshot.data;
+                          controller.dataListTutupKasir =
+                              result.data ?? DataTutupKasir();
+                          List<dynamic> listData = controller.dataListTutupKasir
+                                  .toJson()["data_tutup_kasir"] ??
                               [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
+                            List<PlutoColumnGroup> col = [
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "TOTAL KEUNTUNGAN",
+                                fields: [
+                                  "total_nilai_beli",
+                                  "total_nilai_jual",
+                                  "total_keuntungan",
+                                ],
+                              ),
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "TOTAL PENJUALAN",
+                                fields: [
+                                  "tunai",
+                                  "qris",
+                                  "kredit",
+                                  "total",
+                                ],
+                              ),
+                            ];
 
                             columns.addAll(
                               List.generate(
                                 controller.listTutupKasir.length,
                                 (index) {
-                                  if (controller.listTutupKasir[index] ==
-                                      "jenis_pembayaran") {
-                                    return PlutoColumn(
-                                      width: 75,
-                                      backgroundColor: primaryColor,
-                                      filterHintText:
-                                          "Cari ${controller.listTutupKasir[index]}",
-                                      title: convertTitle(
-                                        controller.listTutupKasir[index],
-                                      ),
-                                      field: controller.listTutupKasir[index],
-                                      type: PlutoColumnType.text(),
-                                      renderer: (rendererContext) {
-                                        Map<String, dynamic> dataRow =
-                                            rendererContext.row.toJson();
-                                        return CardLabel(
-                                          cardColor: yellow50,
-                                          cardTitle: dataRow["jenis_pembayaran"]
-                                              .toString()
-                                              .toUpperCase(),
-                                          cardTitleColor: yellow900,
-                                          cardBorderColor: yellow50,
-                                        );
-                                      },
-                                    );
-                                  }
-                                  if (controller.listTutupKasir[index] ==
-                                      "jumlah") {
-                                    return PlutoColumn(
-                                      width: 75,
-                                      backgroundColor: primaryColor,
-                                      filterHintText:
-                                          "Cari ${controller.listTutupKasir[index]}",
-                                      title: "Qnt",
-                                      field: controller.listTutupKasir[index],
-                                      type: PlutoColumnType.number(
-                                        locale: "id",
-                                      ),
-                                    );
-                                  }
+                                  var list = controller.listTutupKasir[index];
                                   return PlutoColumn(
                                     backgroundColor: primaryColor,
                                     filterHintText:
                                         "Cari ${controller.listTutupKasir[index]}",
-                                    title: convertTitle(
-                                      controller.listTutupKasir[index],
-                                    ),
+                                    title: list == "total_nilai_beli"
+                                        ? "HARGA BELI"
+                                        : list == "total_nilai_jual"
+                                            ? "HARGA JUAL"
+                                            : convertTitle(
+                                                controller
+                                                    .listTutupKasir[index],
+                                              ),
                                     field: controller.listTutupKasir[index],
                                     type: (controller.listTutupKasir[index] ==
-                                                "total_nilai_beli" ||
+                                                "shift" ||
                                             controller.listTutupKasir[index] ==
-                                                "total_nilai_jual" ||
+                                                "tg_tutup_kasir" ||
                                             controller.listTutupKasir[index] ==
-                                                "jumlah")
-                                        ? PlutoColumnType.number(
+                                                "nama_kasir")
+                                        ? PlutoColumnType.text()
+                                        : PlutoColumnType.number(
                                             locale: "id",
-                                          )
-                                        : (controller.listTutupKasir[index] ==
-                                                "tg_pembelian")
-                                            ? PlutoColumnType.date()
-                                            : PlutoColumnType.text(),
+                                          ),
                                   );
                                 },
                               ),
@@ -192,7 +178,7 @@ class TutupKasirView extends StatefulWidget {
                                 backgroundColor: primaryColor,
                                 frozen: PlutoColumnFrozen.end,
                                 title: "AKSI",
-                                field: "Aksi",
+                                field: "id_tutup_kasir",
                                 filterHintText: "",
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
@@ -200,6 +186,17 @@ class TutupKasirView extends StatefulWidget {
                                   final rowIndex = rendererContext.rowIdx;
                                   Map<String, dynamic> dataRow =
                                       rendererContext.row.toJson();
+
+                                  DetailDataTutupKasir? data = controller
+                                      .dataListTutupKasir.dataTutupKasir
+                                      ?.firstWhere((element) =>
+                                          trimString(element.idTutupKasir
+                                              .toString()) ==
+                                          trimString(dataRow["id_tutup_kasir"]
+                                              .toString()));
+
+                                  dataRow.updateAll(
+                                      (key, value) => value.toString());
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -222,14 +219,10 @@ class TutupKasirView extends StatefulWidget {
                                         value: 2,
                                         child: Row(
                                           children: [
-                                            SvgPicture.asset(
-                                              iconDelete,
-                                              colorFilter:
-                                                  colorFilter(color: red600),
-                                            ),
+                                            SvgPicture.asset(iconEditSquare),
                                             const SizedBox(width: 8),
                                             Text(
-                                              'Hapus',
+                                              'Edit Data',
                                               style: myTextTheme.bodyMedium,
                                             ),
                                           ],
@@ -238,40 +231,27 @@ class TutupKasirView extends StatefulWidget {
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {
-                                        // DetailDataPenjualan dataDetail = result
-                                        //         .data
-                                        //         ?.dataPenjualan?[rowIndex] ??
-                                        //     DetailDataPenjualan();
-                                        // controller
-                                        //         .dataPenjualan.jenisPembayaran =
-                                        //     dataDetail.jenisPembayaran;
-
-                                        // controller.postDetailPenjualan(
-                                        //   trimString(
-                                        //     result
-                                        //         .data
-                                        //         ?.dataPenjualan?[rowIndex]
-                                        //         .idPenjualan,
-                                        //   ),
-                                        // );
-                                        // update();
+                                        dataRow.update("id_tutup_kasir",
+                                            (value) => int.parse(value));
+                                        showDialogBase(
+                                          width: 700,
+                                          content: DialogTutupKasir(
+                                            detail:
+                                                data ?? DetailDataTutupKasir(),
+                                            isEdit: false,
+                                          ),
+                                        );
                                       } else if (value == 2) {
-                                        // showDialogBase(
-                                        //   content: DialogKonfirmasi(
-                                        //     textKonfirmasi:
-                                        //         "Apakah Anda yakin ingin Menghapus Data Tutup Kasir",
-                                        //     onConfirm: () async {
-                                        //       controller.postRemoveSale(
-                                        //         trimString(
-                                        //           result
-                                        //               .data
-                                        //               ?.dataPenjualan?[rowIndex]
-                                        //               .idPenjualan,
-                                        //         ),
-                                        //       );
-                                        //     },
-                                        //   ),
-                                        // );
+                                        dataRow.update("id_tutup_kasir",
+                                            (value) => int.parse(value));
+                                        showDialogBase(
+                                          width: 700,
+                                          content: DialogTutupKasir(
+                                            detail:
+                                                data ?? DetailDataTutupKasir(),
+                                            isEdit: true,
+                                          ),
+                                        );
                                       }
                                     },
                                   );
@@ -289,8 +269,8 @@ class TutupKasirView extends StatefulWidget {
                             rows = listDataWithIndex.map((item) {
                               Map<String, PlutoCell> cells = {};
 
-                              cells['Aksi'] = PlutoCell(
-                                value: null,
+                              cells['id_tutup_kasir'] = PlutoCell(
+                                value: item["id_tutup_kasir"].toString(),
                               );
 
                               for (String column in controller.listTutupKasir) {
@@ -351,12 +331,13 @@ class TutupKasirView extends StatefulWidget {
                                 ),
                                 columns: columns,
                                 rows: rows,
+                                columnGroups: col,
                                 createFooter: (stateManager) {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller.dataListPenjualan.paging
-                                            ?.totalPage ??
+                                    maxPage: controller.dataListTutupKasir
+                                            .paging?.totalPage ??
                                         0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
@@ -373,7 +354,7 @@ class TutupKasirView extends StatefulWidget {
                                           controller.cariDataTutupKasir();
                                       controller.update();
                                     },
-                                    totalRow: controller.dataListPenjualan
+                                    totalRow: controller.dataListTutupKasir
                                             .paging?.totalItem ??
                                         0,
                                     onPressLeft: () {

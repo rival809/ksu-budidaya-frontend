@@ -19,19 +19,27 @@ class _BodyNotaState extends State<BodyNota> {
   String persenDiskon = "0";
 
   hitDiskon() {
-    var diskon = double.parse(
-      removeComma(
-          widget.controller.dataPenjualan.details?[widget.index].diskon ?? "0"),
-    );
+    var diskon = double.tryParse(
+          removeComma(
+              widget.controller.dataPenjualan.details?[widget.index].diskon ??
+                  "0"),
+        ) ??
+        0;
 
-    var hargaJual = double.parse(
-      removeComma(
-          widget.controller.dataPenjualan.details?[widget.index].harga ?? "0"),
-    );
+    var hargaJual = double.tryParse(
+          removeComma(
+              widget.controller.dataPenjualan.details?[widget.index].harga ??
+                  "0"),
+        ) ??
+        0;
 
-    persenDiskon = (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100)
-        .round()
-        .toString();
+    if (hargaJual > 0) {
+      persenDiskon = (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100)
+          .round()
+          .toString();
+    } else {
+      persenDiskon = "0";
+    }
   }
 
   @override
