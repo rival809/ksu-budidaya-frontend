@@ -75,7 +75,7 @@ class TutupKasirController extends State<TutupKasirView> {
 
       dataPenjualan = await ApiService.totalPenjualan(
         data: {
-          "tg_tutup_kasir": formatDateTimeNow(DateTime.now().toString()),
+          "tg_tutup_kasir": formatDateTime(DateTime.now().toString()),
         },
       ).timeout(const Duration(seconds: 30));
       Get.back();
