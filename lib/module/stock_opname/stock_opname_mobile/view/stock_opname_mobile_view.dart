@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
@@ -13,7 +14,82 @@ class StockOpnameMobileView extends StatefulWidget {
       key: controller.stockOpnameKey,
       child: BodyContainer(
         floatingActionButton: drawerProvider.isDrawerOpen
-            ? null
+            ? kIsWeb
+                ? ScreenTypeLayout.builder(
+                    mobile: (context) => Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: BaseSecondaryButton(
+                              text: "Reset",
+                              onPressed: () {
+                                controller.resetData();
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 16.0,
+                          ),
+                          Expanded(
+                            child: BasePrimaryButton(
+                              text: "Simpan",
+                              onPressed: (controller.dataResult.data?.idProduct
+                                          ?.isEmpty ??
+                                      true)
+                                  ? null
+                                  : () {
+                                      if (controller
+                                          .stockOpnameKey.currentState!
+                                          .validate()) {
+                                        controller.postUpdateProduct(
+                                          trimString(controller
+                                              .dataResult.data?.idProduct),
+                                          controller.textStockController.text,
+                                        );
+                                      }
+                                    },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    desktop: (context) => Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: BaseSecondaryButton(
+                              text: "Reset",
+                              onPressed: () {
+                                controller.resetData();
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 16.0,
+                          ),
+                          Expanded(
+                            child: BasePrimaryButton(
+                              text: "Simpan",
+                              onPressed: () {
+                                if (controller.stockOpnameKey.currentState!
+                                    .validate()) {
+                                  controller.postUpdateProduct(
+                                    trimString(
+                                        controller.dataResult.data?.idProduct),
+                                    controller.textStockController.text,
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : null
             : ScreenTypeLayout.builder(
                 mobile: (context) => Padding(
                   padding: const EdgeInsets.all(16.0),

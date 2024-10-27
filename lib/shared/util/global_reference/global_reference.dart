@@ -66,7 +66,7 @@ class GlobalReference {
   productReference() async {
     try {
       ProductResult result = await ApiService.listProduct(
-        data: {"status_product": true},
+        data: {},
       ).timeout(const Duration(seconds: 30));
 
       ProductDatabase.save(result);

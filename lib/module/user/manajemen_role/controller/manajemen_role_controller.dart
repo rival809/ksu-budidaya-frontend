@@ -77,6 +77,8 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().roleReference();
+
         dataFuture = cariDataRole();
         update();
       }
@@ -109,6 +111,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().roleReference();
         dataFuture = cariDataRole();
         update();
       }
@@ -141,6 +144,7 @@ class ManajemenRoleController extends State<ManajemenRoleView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().roleReference();
         dataFuture = cariDataRole();
         update();
       }

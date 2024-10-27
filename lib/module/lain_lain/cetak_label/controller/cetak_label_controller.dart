@@ -18,7 +18,8 @@ class CetakLabelController extends State<CetakLabelView> {
     if (states != null) {
       matches.addAll(states);
       matches.retainWhere((s) =>
-          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()));
+          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) &&
+          s.statusProduct == true);
     }
 
     return matches;
@@ -97,6 +98,7 @@ class CetakLabelController extends State<CetakLabelView> {
   @override
   void initState() {
     instance = this;
+    GlobalReference().productReference();
     super.initState();
   }
 

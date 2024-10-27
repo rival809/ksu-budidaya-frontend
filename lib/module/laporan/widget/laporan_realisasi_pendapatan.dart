@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/laporan/widget/generate_laporan_realisasi_pendapatan.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class LaporanRealisasiPendapatan extends StatefulWidget {
@@ -33,63 +32,127 @@ class _LaporanRealisasiPendapatanState
                   ? MediaQuery.of(context).size.width - 32 - 265
                   : MediaQuery.of(context).size.width - 32,
             ),
-            child: SingleChildScrollView(
-              controller: ScrollController(),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+            child: ScreenTypeLayout.builder(
+              mobile: (p0) => Column(
                 children: [
-                  SizedBox(
-                    width: 500,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          child: BaseDropdownButton<int>(
-                            sortItem: false,
-                            label: "Tahun",
-                            items: controller.yearData,
-                            value: controller.yearNow,
-                            itemAsString: (item) => item.toString(),
-                            onChanged: (value) {
-                              controller.yearNow = value ?? 2023;
-                              controller.update();
-                            },
+                  SingleChildScrollView(
+                    controller: ScrollController(),
+                    scrollDirection: Axis.horizontal,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width - 32,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: BaseDropdownButton<int>(
+                              sortItem: false,
+                              label: "Tahun",
+                              items: controller.yearData,
+                              value: controller.yearNow,
+                              itemAsString: (item) => item.toString(),
+                              onChanged: (value) {
+                                controller.yearNow = value ?? 2023;
+                                controller.update();
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 16.0,
-                        ),
-                        BasePrimaryButton(
-                          onPressed: () {
-                            controller.onSearchLaporan(controller.idLaporan);
-                            controller.update();
-                          },
-                          text: "Lihat Data",
-                          isDense: true,
-                        ),
-                        const SizedBox(
-                          width: 16.0,
-                        ),
-                        Expanded(
-                          child: Container(),
-                        ),
-                      ],
+                          const SizedBox(
+                            width: 16.0,
+                          ),
+                          Expanded(
+                            child: BasePrimaryButton(
+                              onPressed: () {
+                                controller
+                                    .onSearchLaporan(controller.idLaporan);
+                                controller.update();
+                              },
+                              text: "Lihat Data",
+                              isDense: true,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
                   ),
                   BaseSecondaryButton(
                     onPressed: controller.hasData
                         ? () {
                             doGenerateLaporanRealisasiPendapatan(
-                                controller: controller);
+                              controller: controller,
+                            );
                           }
                         : null,
                     text: "Cetak Laporan",
                     suffixIcon: iconPrint,
-                    isDense: true,
+                    // isDense: true,
                   ),
                 ],
+              ),
+              desktop: (p0) => SingleChildScrollView(
+                controller: ScrollController(),
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 32,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        width: 500,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: BaseDropdownButton<int>(
+                                sortItem: false,
+                                label: "Tahun",
+                                items: controller.yearData,
+                                value: controller.yearNow,
+                                itemAsString: (item) => item.toString(),
+                                onChanged: (value) {
+                                  controller.yearNow = value ?? 2023;
+                                  controller.update();
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 16.0,
+                            ),
+                            BasePrimaryButton(
+                              onPressed: () {
+                                controller
+                                    .onSearchLaporan(controller.idLaporan);
+                                controller.update();
+                              },
+                              text: "Lihat Data",
+                              isDense: true,
+                            ),
+                            const SizedBox(
+                              width: 16.0,
+                            ),
+                            Expanded(
+                              child: Container(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      BaseSecondaryButton(
+                        onPressed: controller.hasData
+                            ? () {
+                                doGenerateLaporanRealisasiPendapatan(
+                                    controller: controller);
+                              }
+                            : null,
+                        text: "Cetak Laporan",
+                        suffixIcon: iconPrint,
+                        isDense: true,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

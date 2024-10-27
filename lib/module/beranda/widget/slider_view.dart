@@ -317,39 +317,40 @@ class SliderView extends StatelessWidget {
                             // ),
                           ],
                         ),
-                    DrawerMenu(
-                      title: "Lain - lain",
-                      isSelected: isParentSelected(
-                        "/lain-lain",
-                        [
-                          "/lain-lain/cetak-label",
-                          // "/user-management/role",
+                    if (dataLogin.roleData?.stsCetakLabel == true)
+                      DrawerMenu(
+                        title: "Lain - lain",
+                        isSelected: isParentSelected(
+                          "/lain-lain",
+                          [
+                            "/lain-lain/cetak-label",
+                            // "/user-management/role",
+                          ],
+                        ),
+                        onTap: () {},
+                        children: [
+                          if (dataLogin.roleData?.stsCetakLabel == true)
+                            DrawerMenu(
+                              title: "Cetak Label",
+                              isSubMenu: true,
+                              isSelected:
+                                  currentRoute == "/lain-lain/cetak-label",
+                              onTap: () {
+                                router.go("/lain-lain/cetak-label");
+                              },
+                            ),
+                          // if (dataLogin.roleData?.stsRole == true)
+                          //   DrawerMenu(
+                          //     title: "Role",
+                          //     isSubMenu: true,
+                          //     isSelected:
+                          //         currentRoute == "/user-management/role",
+                          //     onTap: () {
+                          //       router.go("/user-management/role");
+                          //     },
+                          // ),
                         ],
                       ),
-                      onTap: () {},
-                      children: [
-                        if (dataLogin.roleData?.stsCetakLabel == true)
-                          DrawerMenu(
-                            title: "Cetak Label",
-                            isSubMenu: true,
-                            isSelected:
-                                currentRoute == "/lain-lain/cetak-label",
-                            onTap: () {
-                              router.go("/lain-lain/cetak-label");
-                            },
-                          ),
-                        // if (dataLogin.roleData?.stsRole == true)
-                        //   DrawerMenu(
-                        //     title: "Role",
-                        //     isSubMenu: true,
-                        //     isSelected:
-                        //         currentRoute == "/user-management/role",
-                        //     onTap: () {
-                        //       router.go("/user-management/role");
-                        //     },
-                        // ),
-                      ],
-                    ),
                     if (kIsWeb)
                       if (dataLogin.roleData?.stsUser == true)
                         DrawerMenu(

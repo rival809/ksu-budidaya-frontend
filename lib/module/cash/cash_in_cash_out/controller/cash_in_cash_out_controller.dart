@@ -129,6 +129,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
                   ? "2"
                   : "3",
         );
+        GlobalReference().cashReference();
         update();
       }
     } catch (e) {
@@ -164,6 +165,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
                   ? "2"
                   : "3",
         );
+        GlobalReference().cashReference();
         update();
       }
     } catch (e) {
@@ -201,6 +203,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
                   ? "2"
                   : "3",
         );
+        GlobalReference().cashReference();
         update();
       }
     } catch (e) {

@@ -76,6 +76,7 @@ class AnggotaController extends State<AnggotaView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().anggotaReference();
         dataFuture = cariDataAnggota();
         update();
       }
@@ -106,6 +107,7 @@ class AnggotaController extends State<AnggotaView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().anggotaReference();
         dataFuture = cariDataAnggota();
         update();
       }
@@ -137,6 +139,7 @@ class AnggotaController extends State<AnggotaView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().anggotaReference();
         dataFuture = cariDataAnggota();
         update();
       }

@@ -101,7 +101,8 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     if (states != null) {
       matches.addAll(states);
       matches.retainWhere((s) =>
-          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()));
+          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) &&
+          s.statusProduct == true);
     }
 
     return matches;
@@ -186,7 +187,8 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   ),
                   itemBuilder: (context, dataPembelian) {
                     return ListTile(
-                      title: Text(trimString(dataPembelian.idProduct)),
+                      title: Text(
+                          "${trimString(dataPembelian.idProduct)} - ${trimString(dataPembelian.nmProduct)}"),
                     );
                   },
                   onChanged: (value) {
