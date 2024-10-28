@@ -187,11 +187,11 @@ class _DialogCashInOutState extends State<DialogCashInOut> {
                   value: trimString(dataEdit.idCash).toString().isEmpty
                       ? null
                       : DataRefCash(
-                          idCash: widget.data?.idCash,
+                          idCash: dataEdit.idCash,
                           nmCash: trimString(
                             getNamaCash(
                               idCash: trimString(
-                                widget.data?.idCash,
+                                dataEdit.idCash,
                               ),
                             ),
                           ),
