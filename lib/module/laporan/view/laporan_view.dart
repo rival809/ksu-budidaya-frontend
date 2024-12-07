@@ -46,6 +46,8 @@ class LaporanView extends StatefulWidget {
                             ),
                       onChanged: (value) {
                         controller.idLaporan = value?.id ?? 1;
+                        controller.monthNow = DateTime.now().month;
+                        controller.yearNow = DateTime.now().year;
                         controller.hasData = false;
                         controller.update();
                       },

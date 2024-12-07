@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/laporan/widget/laporan_neraca_lajur.dart';
 
 class LaporanController extends State<LaporanView> {
   static late LaporanController instance;
@@ -7,6 +8,8 @@ class LaporanController extends State<LaporanView> {
 
   Future<dynamic>? dataFutureHasilUsaha;
   Future<dynamic>? dataFutureRealisasiPendapatan;
+  Future<dynamic>? dataFutureNeracaLajur;
+  Future<dynamic>? dataFutureNeraca;
   int monthNow = DateTime.now().month;
   int idLaporan = 0;
   int yearNow = DateTime.now().year;
@@ -18,6 +21,7 @@ class LaporanController extends State<LaporanView> {
   LaporanHasilUsahaResult resultHasilUsaha = LaporanHasilUsahaResult();
   LaporanRealisasiPendapatanResult resultRealisasiPendapatan =
       LaporanRealisasiPendapatanResult();
+  LaporanHasilUsahaResult resultNeracaLajur = LaporanHasilUsahaResult();
 
   cariDataLaporanHasilUsaha() async {
     try {
@@ -34,6 +38,31 @@ class LaporanController extends State<LaporanView> {
       }
 
       return resultHasilUsaha;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  cariDataLaporanNeracaLajur() async {
+    try {
+      resultNeracaLajur = LaporanHasilUsahaResult();
+
+      resultNeracaLajur = await ApiService.laporanHasilUsaha(
+        month: monthNow.toString(),
+        year: yearNow.toString(),
+      ).timeout(const Duration(seconds: 30));
+
+      if (resultHasilUsaha.success == true) {
+        hasData = true;
+        // update();
+      }
+
+      return resultNeracaLajur;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog(
@@ -73,6 +102,10 @@ class LaporanController extends State<LaporanView> {
         return LaporanHasilUsaha(controller: instance);
       case 2:
         return LaporanRealisasiPendapatan(controller: instance);
+      case 3:
+        return LaporanNeracaLajur(controller: instance);
+      case 4:
+        return LaporanRealisasiPendapatan(controller: instance);
 
       default:
         return const ContainerTidakAdaLaporan();
@@ -86,6 +119,14 @@ class LaporanController extends State<LaporanView> {
         update();
         break;
       case 2:
+        dataFutureRealisasiPendapatan = cariDataLaporanRealisasiPendapatan();
+        update();
+        break;
+      case 3:
+        dataFutureNeracaLajur = cariDataLaporanNeracaLajur();
+        update();
+        break;
+      case 4:
         dataFutureRealisasiPendapatan = cariDataLaporanRealisasiPendapatan();
         update();
         break;
