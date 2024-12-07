@@ -400,6 +400,32 @@ class RowLaporanHasilUsaha {
   }
 }
 
+class RowLaporanNeraca {
+  String? uraian;
+  double? currentMonth;
+  double? lastMonth;
+
+  RowLaporanNeraca({
+    this.uraian,
+    this.currentMonth,
+    this.lastMonth,
+  });
+
+  RowLaporanNeraca.fromJson(Map<String, dynamic> json) {
+    uraian = json['uraian'];
+    currentMonth = json['current_month'];
+    lastMonth = json['last_month'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['uraian'] = uraian;
+    data['current_month'] = currentMonth;
+    data['last_month'] = lastMonth;
+    return data;
+  }
+}
+
 class RowLaporanRealisasiPendapatan {
   String? uraian;
   double? jan;

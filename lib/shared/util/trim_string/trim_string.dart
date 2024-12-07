@@ -87,6 +87,31 @@ bool boldCheckerRealisasiPendapatan(String? text) {
   }
 }
 
+bool boldCheckerNeraca(String? text) {
+  switch (trimString(text.toString())) {
+    case "JUMLAH":
+      return true;
+    case "ACTIVA LANCAR":
+      return true;
+    case "ACTIVA TETAP":
+      return true;
+    case "AKUMULASI PENYUSUTAN":
+      return true;
+    case "ACTIVA LAIN":
+      return true;
+    case "TOTAL ACTIVA":
+      return true;
+    case "HUTANG LANCAR":
+      return true;
+    case "DANA, MODAL, & SHU":
+      return true;
+    case "TOTAL PASSIVA":
+      return true;
+    default:
+      return false;
+  }
+}
+
 trimStringStrip(String? string) {
   if (string == null) {
     return "-";
