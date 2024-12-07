@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class DialogTutupKasir extends StatefulWidget {
   final DetailDataTutupKasir detail;
@@ -59,6 +60,8 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
           content: const DialogBerhasil(),
         );
 
+        await doGeneratePdfAndPrint();
+
         router.push("/transaksi/tutup-kasir");
       }
     } catch (e) {
@@ -86,6 +89,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
         await showDialogBase(
           content: const DialogBerhasil(),
         );
+        await doGeneratePdfAndPrint();
 
         router.push("/transaksi/tutup-kasir");
       }
@@ -99,6 +103,351 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
     }
+  }
+
+  doGeneratePdfAndPrint() async {
+    showCircleDialogLoading();
+    try {
+      final pdf = pw.Document();
+
+      final ttfRegular =
+          await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
+
+      final regularFont = pw.Font.ttf(ttfRegular);
+      final ttfBold = await rootBundle.load("assets/fonts/Roboto-Bold.ttf");
+
+      final boldFont = pw.Font.ttf(ttfBold);
+
+      pdf.addPage(
+        pw.Page(
+          // pageTheme: const pw.PageTheme(
+          //   pageFormat: PdfPageFormat.roll80,
+          //   margin: pw.EdgeInsets.zero,
+
+          // ),
+          build: (pw.Context context) {
+            int selisih = ((int.tryParse(trimString(dataEdit.uangTunai)) ?? 0) -
+                (int.tryParse(trimString(dataEdit.tunai)) ?? 0));
+            return pw.Container(
+              // padding: const pw.EdgeInsets.all(16),
+              decoration: const pw.BoxDecoration(
+                // border: pw.Border.all(
+                //   width: 1.0,
+                //   color: PdfColors.grey500,
+                // ),
+                // borderRadius: const pw.BorderRadius.all(
+                //   pw.Radius.circular(8.0),
+                // ),
+                color: PdfColors.white,
+              ),
+              width: 800,
+              child: pw.Column(
+                children: [
+                  pw.Text(
+                    "KSU BUDI DAYA",
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      font: boldFont,
+                      fontSize: 20,
+                    ),
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          trimString(dataEdit.namaKasir),
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          trimString(dataEdit.tgTutupKasir),
+                          textAlign: pw.TextAlign.end,
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: List.generate(
+                      (500 / (10 + 10)).floor(),
+                      (_) => pw.Padding(
+                        padding: const pw.EdgeInsets.only(right: 9.6),
+                        child: pw.Container(
+                          width: 10,
+                          height: 1,
+                          color: PdfColors.grey500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "TUNAI",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(dataEdit.tunai),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "QRIS",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(dataEdit.qris),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "KREDIT",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(dataEdit.kredit),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: regularFont,
+                            fontSize: 18,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: List.generate(
+                      (500 / (10 + 10)).floor(),
+                      (_) => pw.Padding(
+                        padding: const pw.EdgeInsets.only(right: 9.6),
+                        child: pw.Container(
+                          width: 10,
+                          height: 1,
+                          color: PdfColors.grey500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "TOTAL",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(dataEdit.total),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: boldFont,
+                            fontSize: 20,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: List.generate(
+                      (500 / (10 + 10)).floor(),
+                      (_) => pw.Padding(
+                        padding: const pw.EdgeInsets.only(right: 9.6),
+                        child: pw.Container(
+                          width: 10,
+                          height: 1,
+                          color: PdfColors.grey500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "UANG TUNAI",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(dataEdit.uangTunai),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: boldFont,
+                            fontSize: 20,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "SELISIH",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          font: regularFont,
+                          fontSize: 20,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          formatMoney(selisih),
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            font: boldFont,
+                            fontSize: 20,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+
+      Uint8List pdfData = await pdf.save();
+      await Printing.layoutPdf(
+          onLayout: (PdfPageFormat format) async => pdfData);
+    } catch (e) {
+      Navigator.pop(context);
+      showInfoDialog(e.toString(), context);
+    }
+
+    Navigator.pop(context);
   }
 
   @override
@@ -460,7 +809,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                 ),
                 Expanded(
                   child: BasePrimaryButton(
-                      text: "Simpan",
+                      text: widget.isEdit == false ? "Cetak Ulang" : "Simpan",
                       onPressed: widget.isEdit ?? true
                           ? () {
                               if (tutupKasirKey.currentState!.validate()) {
@@ -497,7 +846,9 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                                 }
                               }
                             }
-                          : null),
+                          : () async {
+                              await doGeneratePdfAndPrint();
+                            }),
                 ),
               ],
             ),

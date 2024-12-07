@@ -95,20 +95,23 @@ class ProdukView extends StatefulWidget {
                               // ),
                             ],
                           ),
-                          BasePrimaryButton(
-                            onPressed: () {
-                              showDialogBase(
-                                width: 700,
-                                content: DialogTambahProduk(
-                                  isDetail: false,
-                                  data: DataDetailProduct(),
-                                ),
-                              );
-                            },
-                            text: "Tambah Product",
-                            suffixIcon: iconAdd,
-                            isDense: true,
-                          ),
+                          if (UserDatabase
+                                  .userDatabase.data?.roleData?.idRole !=
+                              "ROLE002")
+                            BasePrimaryButton(
+                              onPressed: () {
+                                showDialogBase(
+                                  width: 700,
+                                  content: DialogTambahProduk(
+                                    isDetail: false,
+                                    data: DataDetailProduct(),
+                                  ),
+                                );
+                              },
+                              text: "Tambah Product",
+                              suffixIcon: iconAdd,
+                              isDense: true,
+                            ),
                         ],
                       ),
                     ),
@@ -613,38 +616,44 @@ class ProdukView extends StatefulWidget {
                                           ],
                                         ),
                                       ),
-                                      PopupMenuItem(
-                                        value: 2,
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(iconEditSquare),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                              child: Text(
-                                                'Edit Data',
+                                      if (UserDatabase.userDatabase.data
+                                              ?.roleData?.idRole !=
+                                          "ROLE002")
+                                        PopupMenuItem(
+                                          value: 2,
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(iconEditSquare),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                child: Text(
+                                                  'Edit Data',
+                                                  style: myTextTheme.bodyMedium,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      if (UserDatabase.userDatabase.data
+                                              ?.roleData?.idRole !=
+                                          "ROLE002")
+                                        PopupMenuItem(
+                                          value: 3,
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                iconDelete,
+                                                colorFilter:
+                                                    colorFilter(color: red600),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                'Hapus',
                                                 style: myTextTheme.bodyMedium,
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      PopupMenuItem(
-                                        value: 3,
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              iconDelete,
-                                              colorFilter:
-                                                  colorFilter(color: red600),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            Text(
-                                              'Hapus',
-                                              style: myTextTheme.bodyMedium,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {

@@ -45,8 +45,8 @@ class CetakLabelView extends StatefulWidget {
                               ),
                               itemBuilder: (context, dataPembelian) {
                                 return ListTile(
-                                  title:
-                                      Text(trimString(dataPembelian.idProduct)),
+                                  title: Text(
+                                      "${trimString(dataPembelian.idProduct)} - ${trimString(dataPembelian.nmProduct)}"),
                                 );
                               },
                               onEditComplete: () async {

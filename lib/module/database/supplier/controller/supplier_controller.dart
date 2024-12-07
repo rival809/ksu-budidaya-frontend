@@ -81,6 +81,7 @@ class SupplierController extends State<SupplierView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().supplierReference();
         dataFuture = cariDataSupplier();
         update();
       }
@@ -111,6 +112,7 @@ class SupplierController extends State<SupplierView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().supplierReference();
         dataFuture = cariDataSupplier();
         update();
       }
@@ -142,6 +144,7 @@ class SupplierController extends State<SupplierView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().supplierReference();
         dataFuture = cariDataSupplier();
         update();
       }

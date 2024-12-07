@@ -92,7 +92,8 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                       ),
                       itemBuilder: (context, dataPembelian) {
                         return ListTile(
-                          title: Text(trimString(dataPembelian.idProduct)),
+                          title: Text(
+                              "${trimString(dataPembelian.idProduct)} - ${trimString(dataPembelian.nmProduct)}"),
                         );
                       },
                       onChanged: (value) {

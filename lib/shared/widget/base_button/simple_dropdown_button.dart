@@ -123,12 +123,9 @@ class _SimpleDropdownButtonState extends State<SimpleDropdownButton> {
         DropdownSearch(
           validator: widget.enabled ?? true
               ? (value) {
-                  final error = widget.validator?.call(value.toString());
+                  final error = widget.validator?.call(value?.toString());
                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                    final isValid = error == null;
-                    if (_isValid.value != isValid) {
-                      _isValid.value = isValid;
-                    }
+                    _isValid.value = error == null;
                   });
                   return error;
                 }

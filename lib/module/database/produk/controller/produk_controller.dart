@@ -127,6 +127,7 @@ class ProdukController extends State<ProdukView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().productReference();
         dataFuture = cariDataProduct();
         update();
       }
@@ -157,6 +158,7 @@ class ProdukController extends State<ProdukView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().productReference();
         dataFuture = cariDataProduct();
         update();
       }
@@ -188,6 +190,7 @@ class ProdukController extends State<ProdukView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().productReference();
         dataFuture = cariDataProduct();
         update();
       }

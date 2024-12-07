@@ -124,6 +124,10 @@ class _ContainerReturState extends State<ContainerRetur> {
                             ? null
                             : controller.dataDetailSup,
                     onChanged: (value) {
+                      controller.dataDetailSup.idSupplier =
+                          trimString(value?.idSupplier);
+                      controller.dataDetailSup.nmSupplier =
+                          trimString(value?.nmSupplier);
                       controller.dataPayloadRetur.idSupplier =
                           trimString(value?.idSupplier);
                       controller.dataPayloadRetur.nmSupplier =

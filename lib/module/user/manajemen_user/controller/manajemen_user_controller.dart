@@ -105,6 +105,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().userReference();
         dataFuture = cariDataUser();
         update();
       }
@@ -135,6 +136,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().userReference();
         dataFuture = cariDataUser();
         update();
       }
@@ -166,6 +168,7 @@ class ManajemenUserController extends State<ManajemenUserView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().userReference();
         dataFuture = cariDataUser();
         update();
       }

@@ -72,6 +72,7 @@ class DivisiController extends State<DivisiView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().divisiReference();
         dataFuture = cariDataDivisi();
         update();
       }
@@ -104,6 +105,7 @@ class DivisiController extends State<DivisiView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().divisiReference();
         dataFuture = cariDataDivisi();
         update();
       }
@@ -134,6 +136,7 @@ class DivisiController extends State<DivisiView> {
           content: const DialogBerhasil(),
         );
 
+        GlobalReference().divisiReference();
         dataFuture = cariDataDivisi();
         update();
       }

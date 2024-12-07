@@ -102,11 +102,23 @@ class BayarHutangAnggotaView extends StatefulWidget {
                         controller.onSwitchStep("2");
                       },
                       textStep2: "Transaksi",
-                      step3: controller.step3,
-                      onTapStep3: () {
-                        controller.onSwitchStep("3");
-                      },
-                      textStep3: "Hutang",
+                      step3: (UserDatabase.userDatabase.data?.roleData
+                                  ?.stsPembayaranHutang ==
+                              true)
+                          ? controller.step3
+                          : null,
+                      onTapStep3: (UserDatabase.userDatabase.data?.roleData
+                                  ?.stsPembayaranHutang ==
+                              true)
+                          ? () {
+                              controller.onSwitchStep("3");
+                            }
+                          : null,
+                      textStep3: (UserDatabase.userDatabase.data?.roleData
+                                  ?.stsPembayaranHutang ==
+                              true)
+                          ? "Hutang"
+                          : null,
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -246,67 +258,87 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                             Expanded(
                                               child: BasePrimaryButton(
                                                 text: "Simpan",
-                                                onPressed: () async {
-                                                  if (anggotaKey.currentState!
-                                                      .validate()) {
-                                                    DataMap payload =
-                                                        dataEdit.toJson();
-                                                    payload.removeWhere(
-                                                      (key, value) =>
-                                                          key == "created_at",
-                                                    );
-                                                    payload.removeWhere(
-                                                      (key, value) =>
-                                                          key == "updated_at",
-                                                    );
-                                                    payload.removeWhere(
-                                                      (key, value) =>
-                                                          key == "hutang",
-                                                    );
+                                                onPressed: (UserDatabase
+                                                            .userDatabase
+                                                            .data
+                                                            ?.roleData
+                                                            ?.idRole !=
+                                                        "ROLE002")
+                                                    ? () async {
+                                                        if (anggotaKey
+                                                            .currentState!
+                                                            .validate()) {
+                                                          DataMap payload =
+                                                              dataEdit.toJson();
+                                                          payload.removeWhere(
+                                                            (key, value) =>
+                                                                key ==
+                                                                "created_at",
+                                                          );
+                                                          payload.removeWhere(
+                                                            (key, value) =>
+                                                                key ==
+                                                                "updated_at",
+                                                          );
+                                                          payload.removeWhere(
+                                                            (key, value) =>
+                                                                key == "hutang",
+                                                          );
 
-                                                    showCircleDialogLoading();
-                                                    try {
-                                                      AnggotaResult result =
-                                                          await ApiService
-                                                              .updateAnggota(
-                                                        data: payload,
-                                                      ).timeout(const Duration(
-                                                              seconds: 30));
+                                                          showCircleDialogLoading();
+                                                          try {
+                                                            AnggotaResult
+                                                                result =
+                                                                await ApiService
+                                                                    .updateAnggota(
+                                                              data: payload,
+                                                            ).timeout(
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            30));
 
-                                                      Navigator.pop(context);
+                                                            Navigator.pop(
+                                                                context);
 
-                                                      if (result.success ==
-                                                          true) {
-                                                        showDialogBase(
-                                                          content:
-                                                              const DialogBerhasil(),
-                                                        );
+                                                            if (result
+                                                                    .success ==
+                                                                true) {
+                                                              showDialogBase(
+                                                                content:
+                                                                    const DialogBerhasil(),
+                                                              );
 
-                                                        controller.dataFuture =
-                                                            controller
-                                                                .cariDetailAnggota();
-                                                        controller.update();
-                                                      }
-                                                    } catch (e) {
-                                                      Navigator.pop(context);
+                                                              controller
+                                                                      .dataFuture =
+                                                                  controller
+                                                                      .cariDetailAnggota();
+                                                              controller
+                                                                  .update();
+                                                            }
+                                                          } catch (e) {
+                                                            Navigator.pop(
+                                                                context);
 
-                                                      if (e.toString().contains(
-                                                          "TimeoutException")) {
-                                                        showInfoDialog(
-                                                            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.",
-                                                            context);
-                                                      } else {
-                                                        showInfoDialog(
-                                                            e
+                                                            if (e
                                                                 .toString()
-                                                                .replaceAll(
-                                                                    "Exception: ",
-                                                                    ""),
-                                                            context);
+                                                                .contains(
+                                                                    "TimeoutException")) {
+                                                              showInfoDialog(
+                                                                  "Tidak Mendapat Respon Dari Server! Silakan coba lagi.",
+                                                                  context);
+                                                            } else {
+                                                              showInfoDialog(
+                                                                  e
+                                                                      .toString()
+                                                                      .replaceAll(
+                                                                          "Exception: ",
+                                                                          ""),
+                                                                  context);
+                                                            }
+                                                          }
+                                                        }
                                                       }
-                                                    }
-                                                  }
-                                                },
+                                                    : null,
                                               ),
                                             )
                                           ],
@@ -579,311 +611,319 @@ class BayarHutangAnggotaView extends StatefulWidget {
                           }
                         },
                       ),
-                    if (controller.step3)
-                      FutureBuilder(
-                        future: controller.dataFuture,
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const ContainerLoadingRole();
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            if (snapshot.hasError) {
-                              return const ContainerError();
-                            } else if (snapshot.hasData) {
-                              HutangAnggotaResult result = snapshot.data;
-                              controller.dataHutangAnggota =
-                                  result.data ?? DataHutangAnggota();
-                              List<dynamic> listData = controller
-                                      .dataHutangAnggota
-                                      .toJson()["data_hutang_anggota"] ??
-                                  [];
-                              if (listData.isNotEmpty) {
-                                List<PlutoRow> rows = [];
-                                List<PlutoColumn> columns = [];
-                                columns.add(
-                                  PlutoColumn(
-                                    width: 30,
-                                    backgroundColor: primaryColor,
-                                    title: "No.",
-                                    field: "no",
-                                    filterHintText: "Cari ",
-                                    type: PlutoColumnType.text(),
-                                    enableEditingMode: false,
-                                    renderer: (rendererContext) {
-                                      final rowIndex =
-                                          rendererContext.rowIdx + 1;
-                                      return Text(
-                                        rendererContext.cell.value.toString(),
-                                        style: myTextTheme.bodyMedium,
-                                      );
-                                    },
-                                  ),
-                                );
-                                columns.addAll(
-                                  List.generate(
-                                    controller.listHutangAnggotaView.length,
-                                    (index) {
-                                      return PlutoColumn(
-                                        backgroundColor: primaryColor,
-                                        filterHintText:
-                                            "Cari ${controller.listHutangAnggotaView[index]}",
-                                        title: convertTitle(
-                                          controller
+                    if (UserDatabase
+                            .userDatabase.data?.roleData?.stsPembayaranHutang ==
+                        true)
+                      if (controller.step3)
+                        FutureBuilder(
+                          future: controller.dataFuture,
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const ContainerLoadingRole();
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.hasError) {
+                                return const ContainerError();
+                              } else if (snapshot.hasData) {
+                                HutangAnggotaResult result = snapshot.data;
+                                controller.dataHutangAnggota =
+                                    result.data ?? DataHutangAnggota();
+                                List<dynamic> listData = controller
+                                        .dataHutangAnggota
+                                        .toJson()["data_hutang_anggota"] ??
+                                    [];
+                                if (listData.isNotEmpty) {
+                                  List<PlutoRow> rows = [];
+                                  List<PlutoColumn> columns = [];
+                                  columns.add(
+                                    PlutoColumn(
+                                      width: 30,
+                                      backgroundColor: primaryColor,
+                                      title: "No.",
+                                      field: "no",
+                                      filterHintText: "Cari ",
+                                      type: PlutoColumnType.text(),
+                                      enableEditingMode: false,
+                                      renderer: (rendererContext) {
+                                        final rowIndex =
+                                            rendererContext.rowIdx + 1;
+                                        return Text(
+                                          rendererContext.cell.value.toString(),
+                                          style: myTextTheme.bodyMedium,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                  columns.addAll(
+                                    List.generate(
+                                      controller.listHutangAnggotaView.length,
+                                      (index) {
+                                        return PlutoColumn(
+                                          backgroundColor: primaryColor,
+                                          filterHintText:
+                                              "Cari ${controller.listHutangAnggotaView[index]}",
+                                          title: convertTitle(
+                                            controller
+                                                .listHutangAnggotaView[index],
+                                          ),
+                                          field: controller
                                               .listHutangAnggotaView[index],
-                                        ),
-                                        field: controller
-                                            .listHutangAnggotaView[index],
-                                        type: (controller.listHutangAnggotaView[
-                                                    index] ==
-                                                "nominal")
-                                            ? PlutoColumnType.number(
-                                                locale: "id",
-                                              )
-                                            : PlutoColumnType.text(),
-                                      );
-                                    },
-                                  ),
-                                );
-                                columns.add(
-                                  PlutoColumn(
-                                    width: 150,
-                                    backgroundColor: primaryColor,
-                                    frozen: PlutoColumnFrozen.end,
-                                    title: "AKSI",
-                                    field: "Aksi",
-                                    filterHintText: "",
-                                    type: PlutoColumnType.text(),
-                                    enableEditingMode: false,
-                                    renderer: (rendererContext) {
-                                      final rowIndex = rendererContext.rowIdx;
-                                      Map<String, dynamic> dataRow =
-                                          rendererContext.row.toJson();
-                                      return DropdownAksi(
-                                        text: "Aksi",
-                                        listItem: [
-                                          PopupMenuItem(
-                                            value: 1,
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  iconMiscInfo,
-                                                  colorFilter:
-                                                      colorFilterGray600,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Expanded(
-                                                  child: Text(
-                                                    'Detail Data',
-                                                    style:
-                                                        myTextTheme.bodyMedium,
+                                          type:
+                                              (controller.listHutangAnggotaView[
+                                                          index] ==
+                                                      "nominal")
+                                                  ? PlutoColumnType.number(
+                                                      locale: "id",
+                                                    )
+                                                  : PlutoColumnType.text(),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                  columns.add(
+                                    PlutoColumn(
+                                      width: 150,
+                                      backgroundColor: primaryColor,
+                                      frozen: PlutoColumnFrozen.end,
+                                      title: "AKSI",
+                                      field: "Aksi",
+                                      filterHintText: "",
+                                      type: PlutoColumnType.text(),
+                                      enableEditingMode: false,
+                                      renderer: (rendererContext) {
+                                        final rowIndex = rendererContext.rowIdx;
+                                        Map<String, dynamic> dataRow =
+                                            rendererContext.row.toJson();
+                                        return DropdownAksi(
+                                          text: "Aksi",
+                                          listItem: [
+                                            PopupMenuItem(
+                                              value: 1,
+                                              child: Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    iconMiscInfo,
+                                                    colorFilter:
+                                                        colorFilterGray600,
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          PopupMenuItem(
-                                            value: 2,
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  iconAccountBalanceWallet,
-                                                  colorFilter:
-                                                      colorFilterGray600,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Expanded(
-                                                  child: Text(
-                                                    'Bayar Hutang',
-                                                    style:
-                                                        myTextTheme.bodyMedium,
+                                                  const SizedBox(width: 8),
+                                                  Expanded(
+                                                    child: Text(
+                                                      'Detail Data',
+                                                      style: myTextTheme
+                                                          .bodyMedium,
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                        onChange: (value) {
-                                          if (value == 1) {
-                                            router.go(
-                                              Uri(
-                                                path:
-                                                    "/koperasi/anggota/pembayaran-hutang/detail",
-                                                queryParameters: {
-                                                  'id': trimString(controller
-                                                      .result
-                                                      .data
-                                                      ?.dataHutangAnggota?[
-                                                          rowIndex]
-                                                      .idPenjualan)
-                                                },
-                                              ).toString(),
-                                            );
-                                          } else if (value == 2) {
-                                            showDialogBase(
-                                              width: 700,
-                                              content: DialogPelunasanAnggota(
-                                                listHutang: result
-                                                    .data?.dataHutangAnggota,
-                                                dataHutang: controller
+                                            PopupMenuItem(
+                                              value: 2,
+                                              child: Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    iconAccountBalanceWallet,
+                                                    colorFilter:
+                                                        colorFilterGray600,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Expanded(
+                                                    child: Text(
+                                                      'Bayar Hutang',
+                                                      style: myTextTheme
+                                                          .bodyMedium,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                          onChange: (value) {
+                                            if (value == 1) {
+                                              router.go(
+                                                Uri(
+                                                  path:
+                                                      "/koperasi/anggota/pembayaran-hutang/detail",
+                                                  queryParameters: {
+                                                    'id': trimString(controller
                                                         .result
                                                         .data
                                                         ?.dataHutangAnggota?[
-                                                    rowIndex],
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                );
-                                List<dynamic> listDataWithIndex =
-                                    List.generate(listData.length, (index) {
-                                  return {
-                                    ...listData[index],
-                                    'persistentIndex': index + 1,
-                                  };
-                                });
-                                rows = listDataWithIndex.map((item) {
-                                  Map<String, PlutoCell> cells = {};
-                                  cells['no'] = PlutoCell(
-                                    value: item['persistentIndex'].toString(),
-                                  );
-                                  cells['Aksi'] = PlutoCell(
-                                    value: null,
-                                  );
-                                  for (String column
-                                      in controller.listHutangAnggotaView) {
-                                    if (item.containsKey(column)) {
-                                      cells[column] = PlutoCell(
-                                        value: trimStringStrip(
-                                          item[column].toString(),
-                                        ),
-                                      );
-                                    }
-                                  }
-                                  return PlutoRow(cells: cells);
-                                }).toList();
-                                return SizedBox(
-                                  height: MediaQuery.of(context).size.height -
-                                      AppBar().preferredSize.height -
-                                      144 -
-                                      50 -
-                                      38,
-                                  child: PlutoGrid(
-                                    noRowsWidget: const ContainerTidakAda(
-                                      entity: 'Hutang Anggota',
-                                    ),
-                                    mode: PlutoGridMode.select,
-                                    onLoaded: (event) {
-                                      event.stateManager
-                                          .setShowColumnFilter(true);
-                                    },
-                                    onSorted: (event) {
-                                      if (event.column.field != "Aksi") {
-                                        controller.isAsc = !controller.isAsc;
-                                        controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataHutangAnggota(
-                                          isAsc: controller.isAsc,
-                                          field: (event.column.field ==
-                                                      "cash_in" ||
-                                                  event.column.field ==
-                                                      "cash_out")
-                                              ? "nominal"
-                                              : event.column.field,
+                                                            rowIndex]
+                                                        .idPenjualan)
+                                                  },
+                                                ).toString(),
+                                              );
+                                            } else if (value == 2) {
+                                              showDialogBase(
+                                                width: 700,
+                                                content: DialogPelunasanAnggota(
+                                                  listHutang: result
+                                                      .data?.dataHutangAnggota,
+                                                  dataHutang: controller
+                                                          .result
+                                                          .data
+                                                          ?.dataHutangAnggota?[
+                                                      rowIndex],
+                                                ),
+                                              );
+                                            }
+                                          },
                                         );
-                                        controller.update();
-                                      }
-                                    },
-                                    configuration: PlutoGridConfiguration(
-                                      columnSize:
-                                          const PlutoGridColumnSizeConfig(
-                                        autoSizeMode: PlutoAutoSizeMode.scale,
-                                      ),
-                                      style: PlutoGridStyleConfig(
-                                        columnTextStyle: myTextTheme.titleSmall
-                                                ?.copyWith(
-                                                    color: neutralWhite) ??
-                                            const TextStyle(),
-                                        gridBorderColor: blueGray50,
-                                        gridBorderRadius:
-                                            BorderRadius.circular(8),
-                                      ),
-                                      localeText: configLocale,
+                                      },
                                     ),
-                                    columns: columns,
-                                    rows: rows,
-                                    createFooter: (stateManager) {
-                                      return FooterTableWidget(
-                                        page: controller.page,
-                                        itemPerpage: controller.size,
-                                        maxPage: controller.dataHutangAnggota
-                                                .paging?.totalPage ??
-                                            0,
-                                        onChangePage: (value) {
-                                          controller.page = trimString(value);
+                                  );
+                                  List<dynamic> listDataWithIndex =
+                                      List.generate(listData.length, (index) {
+                                    return {
+                                      ...listData[index],
+                                      'persistentIndex': index + 1,
+                                    };
+                                  });
+                                  rows = listDataWithIndex.map((item) {
+                                    Map<String, PlutoCell> cells = {};
+                                    cells['no'] = PlutoCell(
+                                      value: item['persistentIndex'].toString(),
+                                    );
+                                    cells['Aksi'] = PlutoCell(
+                                      value: null,
+                                    );
+                                    for (String column
+                                        in controller.listHutangAnggotaView) {
+                                      if (item.containsKey(column)) {
+                                        cells[column] = PlutoCell(
+                                          value: trimStringStrip(
+                                            item[column].toString(),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                    return PlutoRow(cells: cells);
+                                  }).toList();
+                                  return SizedBox(
+                                    height: MediaQuery.of(context).size.height -
+                                        AppBar().preferredSize.height -
+                                        144 -
+                                        50 -
+                                        38,
+                                    child: PlutoGrid(
+                                      noRowsWidget: const ContainerTidakAda(
+                                        entity: 'Hutang Anggota',
+                                      ),
+                                      mode: PlutoGridMode.select,
+                                      onLoaded: (event) {
+                                        event.stateManager
+                                            .setShowColumnFilter(true);
+                                      },
+                                      onSorted: (event) {
+                                        if (event.column.field != "Aksi") {
+                                          controller.isAsc = !controller.isAsc;
                                           controller.update();
-                                          controller.dataFuture = controller
-                                              .cariDataHutangAnggota();
+                                          controller.dataFuture =
+                                              controller.cariDataHutangAnggota(
+                                            isAsc: controller.isAsc,
+                                            field: (event.column.field ==
+                                                        "cash_in" ||
+                                                    event.column.field ==
+                                                        "cash_out")
+                                                ? "nominal"
+                                                : event.column.field,
+                                          );
                                           controller.update();
-                                        },
-                                        onChangePerPage: (value) {
-                                          controller.page = "1";
-                                          controller.size = trimString(value);
-                                          controller.update();
-                                          controller.dataFuture = controller
-                                              .cariDataHutangAnggota();
-                                          controller.update();
-                                        },
-                                        totalRow: controller.dataHutangAnggota
-                                                .paging?.totalItem ??
-                                            0,
-                                        onPressLeft: () {
-                                          if (int.parse(controller.page) > 1) {
-                                            controller.page =
-                                                (int.parse(controller.page) - 1)
-                                                    .toString();
+                                        }
+                                      },
+                                      configuration: PlutoGridConfiguration(
+                                        columnSize:
+                                            const PlutoGridColumnSizeConfig(
+                                          autoSizeMode: PlutoAutoSizeMode.scale,
+                                        ),
+                                        style: PlutoGridStyleConfig(
+                                          columnTextStyle:
+                                              myTextTheme.titleSmall?.copyWith(
+                                                      color: neutralWhite) ??
+                                                  const TextStyle(),
+                                          gridBorderColor: blueGray50,
+                                          gridBorderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        localeText: configLocale,
+                                      ),
+                                      columns: columns,
+                                      rows: rows,
+                                      createFooter: (stateManager) {
+                                        return FooterTableWidget(
+                                          page: controller.page,
+                                          itemPerpage: controller.size,
+                                          maxPage: controller.dataHutangAnggota
+                                                  .paging?.totalPage ??
+                                              0,
+                                          onChangePage: (value) {
+                                            controller.page = trimString(value);
                                             controller.update();
                                             controller.dataFuture = controller
                                                 .cariDataHutangAnggota();
                                             controller.update();
-                                          }
-                                        },
-                                        onPressRight: () {
-                                          if (int.parse(controller.page) <
-                                              (result.data?.paging?.totalPage ??
-                                                  0)) {
-                                            controller.page =
-                                                (int.parse(controller.page) + 1)
-                                                    .toString();
+                                          },
+                                          onChangePerPage: (value) {
+                                            controller.page = "1";
+                                            controller.size = trimString(value);
                                             controller.update();
                                             controller.dataFuture = controller
                                                 .cariDataHutangAnggota();
                                             controller.update();
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                );
+                                          },
+                                          totalRow: controller.dataHutangAnggota
+                                                  .paging?.totalItem ??
+                                              0,
+                                          onPressLeft: () {
+                                            if (int.parse(controller.page) >
+                                                1) {
+                                              controller.page =
+                                                  (int.parse(controller.page) -
+                                                          1)
+                                                      .toString();
+                                              controller.update();
+                                              controller.dataFuture = controller
+                                                  .cariDataHutangAnggota();
+                                              controller.update();
+                                            }
+                                          },
+                                          onPressRight: () {
+                                            if (int.parse(controller.page) <
+                                                (result.data?.paging
+                                                        ?.totalPage ??
+                                                    0)) {
+                                              controller.page =
+                                                  (int.parse(controller.page) +
+                                                          1)
+                                                      .toString();
+                                              controller.update();
+                                              controller.dataFuture = controller
+                                                  .cariDataHutangAnggota();
+                                              controller.update();
+                                            }
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  return const ContainerTidakAda(
+                                    entity: 'Hutang Anggota',
+                                  );
+                                }
                               } else {
-                                return const ContainerTidakAda(
-                                  entity: 'Hutang Anggota',
-                                );
+                                return const ContainerError();
                               }
                             } else {
-                              return const ContainerError();
+                              return const ContainerTidakAda(
+                                entity: "Hutang Anggota",
+                              );
                             }
-                          } else {
-                            return const ContainerTidakAda(
-                              entity: "Hutang Anggota",
-                            );
-                          }
-                        },
-                      )
+                          },
+                        )
                   ],
                 ),
               ),
