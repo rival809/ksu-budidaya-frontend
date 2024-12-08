@@ -33,6 +33,7 @@ export 'package:ksu_budidaya/model/hutang_dagang/history_hutang_dagang_model.dar
 export 'package:ksu_budidaya/model/hutang_dagang/hutang_dagang_model.dart';
 export 'package:ksu_budidaya/model/jenis_laporan_model.dart';
 export 'package:ksu_budidaya/model/laporan/laporan_hasil_usaha_model.dart';
+export 'package:ksu_budidaya/model/laporan/laporan_neraca_lajur_model.dart';
 export 'package:ksu_budidaya/model/laporan/laporan_realisasi_pendapatan_model.dart';
 export 'package:ksu_budidaya/model/pembelian/create_pembelian_model.dart';
 export 'package:ksu_budidaya/model/pembelian/detail_pembelian_model.dart';
