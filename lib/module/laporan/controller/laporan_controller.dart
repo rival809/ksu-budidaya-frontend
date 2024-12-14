@@ -7,6 +7,8 @@ class LaporanController extends State<LaporanView> {
 
   Future<dynamic>? dataFutureHasilUsaha;
   Future<dynamic>? dataFutureRealisasiPendapatan;
+  Future<dynamic>? dataFutureNeracaLajur;
+  Future<dynamic>? dataFutureNeraca;
   int monthNow = DateTime.now().month;
   int idLaporan = 0;
   int yearNow = DateTime.now().year;
@@ -18,6 +20,8 @@ class LaporanController extends State<LaporanView> {
   LaporanHasilUsahaResult resultHasilUsaha = LaporanHasilUsahaResult();
   LaporanRealisasiPendapatanResult resultRealisasiPendapatan =
       LaporanRealisasiPendapatanResult();
+  LaporanNeracaLajurModel resultNeracaLajur = LaporanNeracaLajurModel();
+  LaporanHasilUsahaResult resultNeraca = LaporanHasilUsahaResult();
 
   cariDataLaporanHasilUsaha() async {
     try {
@@ -34,6 +38,56 @@ class LaporanController extends State<LaporanView> {
       }
 
       return resultHasilUsaha;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  cariDataLaporanNeracaLajur() async {
+    try {
+      resultNeracaLajur = LaporanNeracaLajurModel();
+
+      resultNeracaLajur = await ApiService.laporanNeracaLajur(
+        month: monthNow.toString(),
+        year: yearNow.toString(),
+      ).timeout(const Duration(seconds: 30));
+
+      if (resultNeracaLajur.success == true) {
+        hasData = true;
+        // update();
+      }
+
+      return resultNeracaLajur;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  cariDataLaporanNeraca() async {
+    try {
+      resultNeraca = LaporanHasilUsahaResult();
+
+      resultNeraca = await ApiService.laporanHasilUsaha(
+        month: monthNow.toString(),
+        year: yearNow.toString(),
+      ).timeout(const Duration(seconds: 30));
+
+      if (resultNeraca.success == true) {
+        hasData = true;
+        // update();
+      }
+
+      return resultNeraca;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog(
@@ -73,7 +127,10 @@ class LaporanController extends State<LaporanView> {
         return LaporanHasilUsaha(controller: instance);
       case 2:
         return LaporanRealisasiPendapatan(controller: instance);
-
+      case 3:
+        return LaporanNeracaLajur(controller: instance);
+      case 4:
+        return LaporanNeraca(controller: instance);
       default:
         return const ContainerTidakAdaLaporan();
     }
@@ -87,6 +144,14 @@ class LaporanController extends State<LaporanView> {
         break;
       case 2:
         dataFutureRealisasiPendapatan = cariDataLaporanRealisasiPendapatan();
+        update();
+        break;
+      case 3:
+        dataFutureNeracaLajur = cariDataLaporanNeracaLajur();
+        update();
+        break;
+      case 4:
+        dataFutureNeraca = cariDataLaporanNeraca();
         update();
         break;
 

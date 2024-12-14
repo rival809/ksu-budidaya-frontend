@@ -42,4 +42,6 @@ class JenisLaporan {
 List<Map<String, dynamic>> dataItemLaporan = [
   {"id": 1, "nm_laporan": "LAPORAN HASIL USAHA"},
   {"id": 2, "nm_laporan": "REALISASI ANGGARAN PENDAPATAN DAN BIAYA"},
+  {"id": 3, "nm_laporan": "LAPORAN NERACA LAJUR"},
+  {"id": 4, "nm_laporan": "LAPORAN NERACA"},
 ];

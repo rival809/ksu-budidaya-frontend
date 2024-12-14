@@ -1185,6 +1185,32 @@ class ApiService {
     }
   }
 
+  static Future<LaporanNeracaLajurModel> laporanNeracaLajur({
+    required String month,
+    required String year,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/laporan/neraca-lajur",
+      options: options,
+      data: {
+        "month": month,
+        "year": year,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return LaporanNeracaLajurModel.fromJson(
+            json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to load laporanNeracaLajur');
+    }
+  }
+
   static Future<LaporanRealisasiPendapatanResult> laporanRealisasiPendapatan({
     required String year,
   }) async {
