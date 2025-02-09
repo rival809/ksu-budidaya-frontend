@@ -24,8 +24,7 @@ class PenjualanController extends State<PenjualanView> {
 
   FocusNode focusNodeInputPenjualan = FocusNode();
 
-  List<DataDetailProduct> getDetailSuggestions(
-      String query, List<DataDetailProduct>? states) {
+  List<DataDetailProduct> getDetailSuggestions(String query, List<DataDetailProduct>? states) {
     List<DataDetailProduct> matches = [];
 
     if (states != null) {
@@ -64,8 +63,7 @@ class PenjualanController extends State<PenjualanView> {
       };
 
       if (trimString(penjualanNameController.text).toString().isNotEmpty) {
-        dataCari
-            .addAll({"keterangan": trimString(penjualanNameController.text)});
+        dataCari.addAll({"keterangan": trimString(penjualanNameController.text)});
       }
 
       if (isAsc != null) {
@@ -84,8 +82,7 @@ class PenjualanController extends State<PenjualanView> {
       return result;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -114,8 +111,7 @@ class PenjualanController extends State<PenjualanView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -145,8 +141,7 @@ class PenjualanController extends State<PenjualanView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -158,11 +153,9 @@ class PenjualanController extends State<PenjualanView> {
 
     showCircleDialogLoading();
     try {
-      dataPenjualan.username =
-          trimString(UserDatabase.userDatabase.data?.userData?.username);
+      dataPenjualan.username = trimString(UserDatabase.userDatabase.data?.userData?.username);
       dataPenjualan.jenisPembayaran = trimString(metodeBayar);
-      dataPenjualan.tgPenjualan =
-          formatDateTimePayload(DateTime.now().toString());
+      dataPenjualan.tgPenjualan = formatDateTimePayload(DateTime.now().toString());
       update();
       var payload = dataPenjualan.toJson();
 
@@ -212,8 +205,7 @@ class PenjualanController extends State<PenjualanView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -236,12 +228,9 @@ class PenjualanController extends State<PenjualanView> {
 
   hitBayar() {
     totalKembali = double.parse(removeComma(
-                trimString(textControllerDialog[2].text.toString())
-                        .toString()
-                        .isEmpty
+                trimString(textControllerDialog[2].text.toString()).toString().isEmpty
                     ? "0"
-                    : trimString(textControllerDialog[2].text.toString()) ??
-                        "0"))
+                    : trimString(textControllerDialog[2].text.toString()) ?? "0"))
             .round() -
         double.parse(removeComma(dataPenjualan.totalNilaiJual ?? "0")).round();
     totalBayar = formatMoney(removeComma(totalKembali.toString()));
@@ -256,9 +245,8 @@ class PenjualanController extends State<PenjualanView> {
       totalNilaiJual += ((double.parse(dataPenjualan.details?[i].harga ?? "0") -
               double.parse(dataPenjualan.details?[i].diskon ?? "0")) *
           double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
-      totalNilaiBeli +=
-          (double.parse(dataPenjualan.details?[i].hargaBeli ?? "0") *
-              double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
+      totalNilaiBeli += (double.parse(dataPenjualan.details?[i].hargaBeli ?? "0") *
+          double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
       jumlah += double.parse(dataPenjualan.details?[i].jumlah ?? "0");
     }
 
@@ -322,12 +310,9 @@ class PenjualanController extends State<PenjualanView> {
             jumlah: "1",
             nmProduk: trimString(result.data?.nmProduct),
             hargaBeli: trimString(result.data?.hargaBeli),
-            nmDivisi:
-                getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
+            nmDivisi: getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
             diskon: "0",
-            total: (double.parse(result.data?.hargaJual ?? "0") *
-                    double.parse("1"))
-                .toString(),
+            total: (double.parse(result.data?.hargaJual ?? "0") * double.parse("1")).toString(),
           ),
         );
 
@@ -451,45 +436,70 @@ class PenjualanController extends State<PenjualanView> {
     try {
       final pdf = pw.Document();
 
-      final ttfRegular =
-          await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
+      final ttfRegular = await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
 
       final regularFont = pw.Font.ttf(ttfRegular);
 
       pdf.addPage(
         pw.Page(
-          // pageTheme: const pw.PageTheme(
-          //   pageFormat: PdfPageFormat.roll80,
-          //   margin: pw.EdgeInsets.zero,
-
-          // ),
+          pageTheme: const pw.PageTheme(
+            pageFormat: PdfPageFormat(71 * PdfPageFormat.mm, double.infinity),
+            orientation: pw.PageOrientation.natural,
+            margin: pw.EdgeInsets.all(8),
+          ),
           build: (pw.Context context) {
             return pw.Container(
-              // padding: const pw.EdgeInsets.all(16),
               decoration: const pw.BoxDecoration(
-                // border: pw.Border.all(
-                //   width: 1.0,
-                //   color: PdfColors.blueGrey50,
-                // ),
-                // borderRadius: const pw.BorderRadius.all(
-                //   pw.Radius.circular(8.0),
-                // ),
                 color: PdfColors.white,
               ),
-              width: 800,
               child: pw.Column(
                 children: [
                   pw.Text(
-                    "KSU BUDI DAYA",
+                    'Koperasi Serba Usaha\n"BUDIDAYA"\nJL. Rajamantri ll no 9 Bandung',
+                    textAlign: pw.TextAlign.center,
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       font: regularFont,
-                      fontSize: 20,
+                      fontSize: 8,
                     ),
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Text(
+                          "ID",
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 7,
+                          ),
+                        ),
+                      ),
+                      pw.Text(
+                        ":",
+                        style: const pw.TextStyle(
+                          fontSize: 7,
+                        ),
+                      ),
+                      pw.Expanded(
+                        child: pw.Text(
+                          trimString(
+                            dataPenjualan.details?.first.idPenjualan,
+                          ),
+                          style: pw.TextStyle(
+                            font: regularFont,
+                            fontSize: 7,
+                          ),
+                          textAlign: pw.TextAlign.end,
+                        ),
+                      )
+                    ],
                   ),
                   if (dataPenjualan.idAnggota?.isNotEmpty ?? false)
                     pw.SizedBox(
-                      height: 8.0,
+                      height: 2.0,
                     ),
                   if (dataPenjualan.idAnggota?.isNotEmpty ?? false)
                     pw.Row(
@@ -499,31 +509,33 @@ class PenjualanController extends State<PenjualanView> {
                             "Nama Anggota",
                             style: pw.TextStyle(
                               font: regularFont,
-                              fontSize: 20,
+                              fontSize: 7,
                             ),
                           ),
                         ),
                         pw.Text(
                           ":",
                           style: const pw.TextStyle(
-                            fontSize: 20,
+                            fontSize: 7,
                           ),
                         ),
                         pw.Expanded(
                           child: pw.Text(
                             trimString(
-                              getNamaAnggota(
-                                  idAnggota: dataPenjualan.idAnggota),
+                              getNamaAnggota(idAnggota: dataPenjualan.idAnggota),
                             ),
                             style: pw.TextStyle(
                               font: regularFont,
-                              fontSize: 18,
+                              fontSize: 7,
                             ),
                             textAlign: pw.TextAlign.end,
                           ),
                         )
                       ],
                     ),
+                  pw.SizedBox(
+                    height: 2.0,
+                  ),
                   if (dataPenjualan.jenisPembayaran?.isNotEmpty ?? false)
                     pw.Row(
                       children: [
@@ -532,7 +544,7 @@ class PenjualanController extends State<PenjualanView> {
                             "Metode Bayar",
                             style: pw.TextStyle(
                               font: regularFont,
-                              fontSize: 18,
+                              fontSize: 7,
                             ),
                           ),
                         ),
@@ -540,16 +552,15 @@ class PenjualanController extends State<PenjualanView> {
                           ":",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 7,
                           ),
                         ),
                         pw.Expanded(
                           child: pw.Text(
-                            trimString(dataPenjualan.jenisPembayaran)
-                                .toUpperCase(),
+                            trimString(dataPenjualan.jenisPembayaran).toUpperCase(),
                             style: pw.TextStyle(
                               font: regularFont,
-                              fontSize: 18,
+                              fontSize: 7,
                             ),
                             textAlign: pw.TextAlign.end,
                           ),
@@ -558,24 +569,18 @@ class PenjualanController extends State<PenjualanView> {
                     ),
                   if ((dataPenjualan.idAnggota?.isNotEmpty ?? false) ||
                       (dataPenjualan.jenisPembayaran?.isNotEmpty ?? false))
-                    pw.SizedBox(
-                      height: 8.0,
-                    ),
-                  if ((dataPenjualan.idAnggota?.isNotEmpty ?? false) ||
-                      (dataPenjualan.jenisPembayaran?.isNotEmpty ?? false))
                     // pw.LineDash(),
                     pw.SizedBox(
-                      height: 8.0,
+                      height: 2.0,
                     ),
                   pw.Row(
                     children: [
                       pw.Expanded(
                         child: pw.Text(
-                          trimString(
-                              UserDatabase.userDatabase.data?.userData?.name),
+                          trimString(UserDatabase.userDatabase.data?.userData?.name),
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                         ),
                       ),
@@ -585,16 +590,12 @@ class PenjualanController extends State<PenjualanView> {
                           textAlign: pw.TextAlign.end,
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  pw.SizedBox(
-                    height: 8.0,
-                  ),
-                  // const LineDash(),
                   pw.SizedBox(
                     height: 8.0,
                   ),
@@ -604,8 +605,7 @@ class PenjualanController extends State<PenjualanView> {
                       String persenDiskon = "0";
 
                       var diskon = double.parse(
-                        removeComma(
-                            dataPenjualan.details?[index].diskon ?? "0"),
+                        removeComma(dataPenjualan.details?[index].diskon ?? "0"),
                       );
 
                       var hargaJual = double.parse(
@@ -613,82 +613,82 @@ class PenjualanController extends State<PenjualanView> {
                       );
 
                       persenDiskon = formatMoney(
-                          (((hargaJual - (hargaJual - diskon)) / hargaJual) *
-                                  100)
-                              .toString());
+                          (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100).toString());
 
                       return pw.Padding(
-                        padding: const pw.EdgeInsets.only(bottom: 4.0),
+                        padding: const pw.EdgeInsets.only(bottom: 1.0),
                         child: pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
+                            pw.Text(
+                              trimString(
+                                dataPenjualan.details?[index].nmProduk,
+                              ),
+                              style: pw.TextStyle(
+                                font: regularFont,
+                                fontSize: 7,
+                              ),
+                            ),
                             pw.Row(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: [
                                 pw.Expanded(
-                                  child: pw.Text(
-                                    trimString(
-                                      dataPenjualan.details?[index].nmProduk,
-                                    ),
-                                    style: pw.TextStyle(
-                                      font: regularFont,
-                                      fontSize: 18,
-                                    ),
+                                  flex: 5,
+                                  child: pw.Row(
+                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.Expanded(
+                                        child: pw.Text(
+                                          trimString(
+                                            dataPenjualan.details?[index].idProduct,
+                                          ),
+                                          style: pw.TextStyle(
+                                            font: regularFont,
+                                            fontSize: 7,
+                                          ),
+                                        ),
+                                      ),
+                                      pw.Text(
+                                        "x ${trimString(
+                                          dataPenjualan.details?[index].jumlah,
+                                        )} ",
+                                        style: pw.TextStyle(
+                                          font: regularFont,
+                                          fontSize: 7,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 pw.Expanded(
+                                  flex: 6,
                                   child: pw.Row(
                                     children: [
                                       pw.Expanded(
-                                        child: pw.Row(
-                                          children: [
-                                            pw.Expanded(
-                                              child: pw.Text(
-                                                trimString(
-                                                      dataPenjualan
-                                                          .details?[index]
-                                                          .jumlah,
-                                                    ) +
-                                                    "x",
-                                                style: pw.TextStyle(
-                                                  font: regularFont,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                            ),
-                                            pw.SizedBox(
-                                              width: 16.0,
-                                            ),
-                                            pw.Expanded(
-                                              child: pw.Text(
-                                                formatMoney(trimString(
-                                                  dataPenjualan
-                                                      .details?[index].harga,
-                                                )),
-                                                style: pw.TextStyle(
-                                                  font: regularFont,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                            )
-                                          ],
+                                        child: pw.Text(
+                                          formatMoney(trimString(
+                                            dataPenjualan.details?[index].harga,
+                                          )),
+                                          style: pw.TextStyle(
+                                            font: regularFont,
+                                            fontSize: 7,
+                                          ),
+                                          textAlign: pw.TextAlign.end,
                                         ),
                                       ),
                                       pw.Expanded(
                                         child: pw.Text(
                                           formatMoney(trimString(
-                                            ((double.parse(dataPenjualan
-                                                            .details?[index]
-                                                            .harga ??
+                                            ((double.parse(dataPenjualan.details?[index].harga ??
                                                         "0") *
-                                                    double.parse(dataPenjualan
-                                                            .details?[index]
-                                                            .jumlah ??
-                                                        "0")))
+                                                    double.parse(
+                                                        dataPenjualan.details?[index].jumlah ??
+                                                            "0")))
                                                 .toString(),
                                           )),
                                           style: pw.TextStyle(
                                             font: regularFont,
-                                            fontSize: 18,
+                                            fontSize: 7,
                                           ),
                                           textAlign: pw.TextAlign.end,
                                         ),
@@ -707,7 +707,7 @@ class PenjualanController extends State<PenjualanView> {
                                       "Diskon",
                                       style: pw.TextStyle(
                                         font: regularFont,
-                                        fontSize: 18,
+                                        fontSize: 7,
                                       ),
                                     ),
                                   ),
@@ -721,7 +721,7 @@ class PenjualanController extends State<PenjualanView> {
                                                 child: pw.Text(
                                                   "",
                                                   style: pw.TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 7,
                                                     font: regularFont,
                                                   ),
                                                 ),
@@ -731,12 +731,11 @@ class PenjualanController extends State<PenjualanView> {
                                               ),
                                               pw.Expanded(
                                                 child: pw.Text(
-                                                  trimString(persenDiskon) +
-                                                      "%",
+                                                  trimString(persenDiskon) + "%",
                                                   textAlign: pw.TextAlign.start,
                                                   style: pw.TextStyle(
                                                     font: regularFont,
-                                                    fontSize: 18,
+                                                    fontSize: 7,
                                                   ),
                                                 ),
                                               )
@@ -747,22 +746,18 @@ class PenjualanController extends State<PenjualanView> {
                                           child: pw.Text(
                                             formatMoney(
                                               trimString(
-                                                (double.parse(dataPenjualan
-                                                                .details?[index]
-                                                                .diskon ??
-                                                            "0") *
+                                                (double.parse(
+                                                            dataPenjualan.details?[index].diskon ??
+                                                                "0") *
                                                         double.parse(removeComma(
-                                                            dataPenjualan
-                                                                    .details?[
-                                                                        index]
-                                                                    .jumlah ??
+                                                            dataPenjualan.details?[index].jumlah ??
                                                                 "0")))
                                                     .toString(),
                                               ),
                                             ),
                                             style: pw.TextStyle(
                                               font: regularFont,
-                                              fontSize: 18,
+                                              fontSize: 7,
                                             ),
                                             textAlign: pw.TextAlign.end,
                                           ),
@@ -780,10 +775,6 @@ class PenjualanController extends State<PenjualanView> {
                   pw.SizedBox(
                     height: 8.0,
                   ),
-                  // const LineDash(),
-                  pw.SizedBox(
-                    height: 8.0,
-                  ),
                   pw.Row(
                     children: [
                       pw.Expanded(
@@ -791,7 +782,8 @@ class PenjualanController extends State<PenjualanView> {
                           "Total",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 7,
+                            fontWeight: pw.FontWeight.bold,
                           ),
                         ),
                       ),
@@ -800,7 +792,7 @@ class PenjualanController extends State<PenjualanView> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 7,
                         ),
                       ),
                       pw.Expanded(
@@ -809,7 +801,7 @@ class PenjualanController extends State<PenjualanView> {
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
@@ -823,7 +815,7 @@ class PenjualanController extends State<PenjualanView> {
                           "Bayar",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 7,
                           ),
                         ),
                       ),
@@ -832,17 +824,16 @@ class PenjualanController extends State<PenjualanView> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 7,
                         ),
                       ),
                       pw.Expanded(
                         child: pw.Text(
-                          formatMoney(trimString(
-                              removeComma(textControllerDialog[2].text))),
+                          formatMoney(trimString(removeComma(textControllerDialog[2].text))),
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
@@ -856,7 +847,7 @@ class PenjualanController extends State<PenjualanView> {
                           "Kembali",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 7,
                           ),
                         ),
                       ),
@@ -865,22 +856,36 @@ class PenjualanController extends State<PenjualanView> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 7,
                         ),
                       ),
                       pw.Expanded(
                         child: pw.Text(
-                          formatMoney(trimString(
-                              removeComma(textControllerDialog[3].text))),
+                          formatMoney(trimString(removeComma(textControllerDialog[3].text))),
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
                       )
                     ],
+                  ),
+                  pw.SizedBox(
+                    height: 8.0,
+                  ),
+                  pw.Text(
+                    'TERIMA KASIH\nATAS KUNJUNGAN ANDA',
+                    textAlign: pw.TextAlign.center,
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      font: regularFont,
+                      fontSize: 8,
+                    ),
+                  ),
+                  pw.SizedBox(
+                    height: 42.0,
                   ),
                 ],
               ),
@@ -890,8 +895,7 @@ class PenjualanController extends State<PenjualanView> {
       );
 
       Uint8List pdfData = await pdf.save();
-      await Printing.layoutPdf(
-          onLayout: (PdfPageFormat format) async => pdfData);
+      await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdfData);
     } catch (e) {
       Navigator.pop(context);
       showInfoDialog(e.toString(), context);
