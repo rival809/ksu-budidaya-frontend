@@ -32,10 +32,9 @@ class ProdukView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
+                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                            ? MediaQuery.of(context).size.width - 32 - 265
+                            : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,16 +44,14 @@ class ProdukView extends StatefulWidget {
                               SizedBox(
                                 width: 250,
                                 child: BaseForm(
-                                  textEditingController:
-                                      controller.productNameController,
+                                  textEditingController: controller.productNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
-                                        controller.dataFuture =
-                                            controller.cariDataProduct();
+                                        controller.dataFuture = controller.cariDataProduct();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -69,8 +66,7 @@ class ProdukView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
-                                  controller.dataFuture =
-                                      controller.cariDataProduct();
+                                  controller.dataFuture = controller.cariDataProduct();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -95,9 +91,7 @@ class ProdukView extends StatefulWidget {
                               // ),
                             ],
                           ),
-                          if (UserDatabase
-                                  .userDatabase.data?.roleData?.idRole !=
-                              "ROLE002")
+                          if (UserDatabase.userDatabase.data?.roleData?.idRole != "ROLE002")
                             BasePrimaryButton(
                               onPressed: () {
                                 showDialogBase(
@@ -143,16 +137,14 @@ class ProdukView extends StatefulWidget {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ContainerLoadingRole();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
+                      } else if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           ProductResult result = snapshot.data;
                           controller.dataProduct = result.data ?? DataProduct();
                           List<dynamic> listSource =
-                              controller.dataProduct.toJson()["data_product"] ??
-                                  [];
+                              controller.dataProduct.toJson()["data_product"] ?? [];
 
                           List<dynamic> listData = [];
                           if (controller.step1) {
@@ -178,9 +170,10 @@ class ProdukView extends StatefulWidget {
 
                             columns.add(
                               PlutoColumn(
-                                width: 30,
+                                width: 60,
                                 backgroundColor: primaryColor,
                                 title: "No.",
+                                suppressedAutoSize: true,
                                 field: "no",
                                 filterHintText: "Cari ",
                                 type: PlutoColumnType.text(),
@@ -195,8 +188,7 @@ class ProdukView extends StatefulWidget {
                                 },
                                 footerRenderer: (context) {
                                   return Container(
-                                    width:
-                                        MediaQuery.of(globalContext).size.width,
+                                    width: MediaQuery.of(globalContext).size.width,
                                     decoration: const BoxDecoration(
                                       color: gray100,
                                       border: Border(
@@ -217,20 +209,16 @@ class ProdukView extends StatefulWidget {
                                 (index) {
                                   return PlutoColumn(
                                     footerRenderer: (context) {
-                                      if (controller.listProdukView[index] ==
-                                          "id_divisi") {
+                                      if (controller.listProdukView[index] == "id_divisi") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
                                             height: 68,
-                                            width: MediaQuery.of(globalContext)
-                                                .size
-                                                .width,
+                                            width: MediaQuery.of(globalContext).size.width,
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: Alignment.centerLeft,
                                                   padding: const EdgeInsets.all(
                                                     8,
                                                   ),
@@ -243,17 +231,13 @@ class ProdukView extends StatefulWidget {
                                                   ),
                                                   child: Text(
                                                     "Jumlah",
-                                                    style: myTextTheme
-                                                        .titleSmall
-                                                        ?.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                    style: myTextTheme.titleSmall?.copyWith(
+                                                      fontWeight: FontWeight.w700,
                                                     ),
                                                   ),
                                                 ),
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: Alignment.centerLeft,
                                                   padding: const EdgeInsets.all(
                                                     8,
                                                   ),
@@ -266,11 +250,8 @@ class ProdukView extends StatefulWidget {
                                                   ),
                                                   child: Text(
                                                     "Total",
-                                                    style: myTextTheme
-                                                        .titleSmall
-                                                        ?.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                    style: myTextTheme.titleSmall?.copyWith(
+                                                      fontWeight: FontWeight.w700,
                                                     ),
                                                   ),
                                                 ),
@@ -278,23 +259,17 @@ class ProdukView extends StatefulWidget {
                                             ),
                                           ),
                                         );
-                                      } else if (controller
-                                              .listProdukView[index] ==
-                                          "jumlah") {
+                                      } else if (controller.listProdukView[index] == "jumlah") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
                                             height: 68,
-                                            width: MediaQuery.of(globalContext)
-                                                .size
-                                                .width,
+                                            width: MediaQuery.of(globalContext).size.width,
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
+                                                  alignment: Alignment.centerLeft,
+                                                  padding: const EdgeInsets.symmetric(
                                                     vertical: 8,
                                                   ),
                                                   decoration: BoxDecoration(
@@ -304,27 +279,22 @@ class ProdukView extends StatefulWidget {
                                                       color: blueGray50,
                                                     ),
                                                   ),
-                                                  child:
-                                                      PlutoAggregateColumnFooter(
+                                                  child: PlutoAggregateColumnFooter(
                                                     rendererContext: context,
                                                     locale: "id",
-                                                    type:
-                                                        PlutoAggregateColumnType
-                                                            .sum,
+                                                    type: PlutoAggregateColumnType.sum,
                                                     titleSpanBuilder: (text) {
                                                       return [
                                                         TextSpan(
                                                           text: text,
-                                                          style: myTextTheme
-                                                              .bodyMedium,
+                                                          style: myTextTheme.bodyMedium,
                                                         ),
                                                       ];
                                                     },
                                                   ),
                                                 ),
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: Alignment.centerLeft,
                                                   padding: const EdgeInsets.all(
                                                     8,
                                                   ),
@@ -338,36 +308,27 @@ class ProdukView extends StatefulWidget {
                                                   child: Text(
                                                     formatCurrency(
                                                       trimString(result
-                                                          .data
-                                                          ?.totalKeseluruhan
-                                                          ?.totalJumlah
+                                                          .data?.totalKeseluruhan?.totalJumlah
                                                           .toString()),
                                                     ),
-                                                    style:
-                                                        myTextTheme.bodyMedium,
+                                                    style: myTextTheme.bodyMedium,
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                         );
-                                      } else if (controller
-                                              .listProdukView[index] ==
-                                          "total_jual") {
+                                      } else if (controller.listProdukView[index] == "total_jual") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
                                             height: 68,
-                                            width: MediaQuery.of(globalContext)
-                                                .size
-                                                .width,
+                                            width: MediaQuery.of(globalContext).size.width,
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
+                                                  alignment: Alignment.centerLeft,
+                                                  padding: const EdgeInsets.symmetric(
                                                     vertical: 8,
                                                   ),
                                                   decoration: BoxDecoration(
@@ -377,27 +338,22 @@ class ProdukView extends StatefulWidget {
                                                       color: blueGray50,
                                                     ),
                                                   ),
-                                                  child:
-                                                      PlutoAggregateColumnFooter(
+                                                  child: PlutoAggregateColumnFooter(
                                                     locale: "id",
                                                     rendererContext: context,
-                                                    type:
-                                                        PlutoAggregateColumnType
-                                                            .sum,
+                                                    type: PlutoAggregateColumnType.sum,
                                                     titleSpanBuilder: (text) {
                                                       return [
                                                         TextSpan(
                                                           text: text,
-                                                          style: myTextTheme
-                                                              .bodyMedium,
+                                                          style: myTextTheme.bodyMedium,
                                                         ),
                                                       ];
                                                     },
                                                   ),
                                                 ),
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: Alignment.centerLeft,
                                                   padding: const EdgeInsets.all(
                                                     8,
                                                   ),
@@ -411,36 +367,27 @@ class ProdukView extends StatefulWidget {
                                                   child: Text(
                                                     formatCurrency(
                                                       trimString(result
-                                                          .data
-                                                          ?.totalKeseluruhan
-                                                          ?.totalJual
+                                                          .data?.totalKeseluruhan?.totalJual
                                                           .toString()),
                                                     ),
-                                                    style:
-                                                        myTextTheme.bodyMedium,
+                                                    style: myTextTheme.bodyMedium,
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                         );
-                                      } else if (controller
-                                              .listProdukView[index] ==
-                                          "total_beli") {
+                                      } else if (controller.listProdukView[index] == "total_beli") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
                                             height: 68,
-                                            width: MediaQuery.of(globalContext)
-                                                .size
-                                                .width,
+                                            width: MediaQuery.of(globalContext).size.width,
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
+                                                  alignment: Alignment.centerLeft,
+                                                  padding: const EdgeInsets.symmetric(
                                                     vertical: 8,
                                                   ),
                                                   decoration: BoxDecoration(
@@ -450,27 +397,22 @@ class ProdukView extends StatefulWidget {
                                                       color: blueGray50,
                                                     ),
                                                   ),
-                                                  child:
-                                                      PlutoAggregateColumnFooter(
+                                                  child: PlutoAggregateColumnFooter(
                                                     locale: "id",
                                                     rendererContext: context,
-                                                    type:
-                                                        PlutoAggregateColumnType
-                                                            .sum,
+                                                    type: PlutoAggregateColumnType.sum,
                                                     titleSpanBuilder: (text) {
                                                       return [
                                                         TextSpan(
                                                           text: text,
-                                                          style: myTextTheme
-                                                              .bodyMedium,
+                                                          style: myTextTheme.bodyMedium,
                                                         ),
                                                       ];
                                                     },
                                                   ),
                                                 ),
                                                 Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: Alignment.centerLeft,
                                                   padding: const EdgeInsets.all(
                                                     8,
                                                   ),
@@ -484,13 +426,10 @@ class ProdukView extends StatefulWidget {
                                                   child: Text(
                                                     formatCurrency(
                                                       trimString(result
-                                                          .data
-                                                          ?.totalKeseluruhan
-                                                          ?.totalBeli
+                                                          .data?.totalKeseluruhan?.totalBeli
                                                           .toString()),
                                                     ),
-                                                    style:
-                                                        myTextTheme.bodyMedium,
+                                                    style: myTextTheme.bodyMedium,
                                                   ),
                                                 ),
                                               ],
@@ -504,10 +443,7 @@ class ProdukView extends StatefulWidget {
                                             children: [
                                               Container(
                                                 height: 34,
-                                                width:
-                                                    MediaQuery.of(globalContext)
-                                                        .size
-                                                        .width,
+                                                width: MediaQuery.of(globalContext).size.width,
                                                 decoration: BoxDecoration(
                                                   color: gray100,
                                                   border: Border.all(
@@ -518,10 +454,7 @@ class ProdukView extends StatefulWidget {
                                               ),
                                               Container(
                                                 height: 34,
-                                                width:
-                                                    MediaQuery.of(globalContext)
-                                                        .size
-                                                        .width,
+                                                width: MediaQuery.of(globalContext).size.width,
                                                 decoration: BoxDecoration(
                                                   color: gray100,
                                                   border: Border.all(
@@ -538,19 +471,14 @@ class ProdukView extends StatefulWidget {
                                     backgroundColor: primaryColor,
                                     filterHintText:
                                         "Cari ${controller.listProdukView[index] == "id_divisi" ? "divisi" : controller.listProdukView[index] == "id_supplier" ? "supplier" : controller.listProdukView[index] == "jumlah" ? "stock" : controller.listProdukView[index]}",
-                                    title: controller.listProdukView[index] ==
-                                            "id_divisi"
+                                    title: controller.listProdukView[index] == "id_divisi"
                                         ? "DIVISI"
-                                        : controller.listProdukView[index] ==
-                                                "id_supplier"
+                                        : controller.listProdukView[index] == "id_supplier"
                                             ? "SUPPLIER"
-                                            : controller.listProdukView[
-                                                        index] ==
-                                                    "jumlah"
+                                            : controller.listProdukView[index] == "jumlah"
                                                 ? "STOCK"
                                                 : convertTitle(
-                                                    controller
-                                                        .listProdukView[index],
+                                                    controller.listProdukView[index],
                                                   ),
                                     field: controller.listProdukView[index],
                                     type: controller.typeField(
@@ -563,7 +491,8 @@ class ProdukView extends StatefulWidget {
 
                             columns.add(
                               PlutoColumn(
-                                width: 150,
+                                width: 110,
+                                suppressedAutoSize: true,
                                 backgroundColor: primaryColor,
                                 frozen: PlutoColumnFrozen.end,
                                 title: "AKSI",
@@ -573,8 +502,7 @@ class ProdukView extends StatefulWidget {
                                 enableEditingMode: false,
                                 footerRenderer: (context) {
                                   return Container(
-                                    width:
-                                        MediaQuery.of(globalContext).size.width,
+                                    width: MediaQuery.of(globalContext).size.width,
                                     decoration: const BoxDecoration(
                                       color: gray100,
                                     ),
@@ -582,20 +510,15 @@ class ProdukView extends StatefulWidget {
                                 },
                                 renderer: (rendererContext) {
                                   final rowIndex = rendererContext.rowIdx;
-                                  Map<String, dynamic> dataRow =
-                                      rendererContext.row.toJson();
+                                  Map<String, dynamic> dataRow = rendererContext.row.toJson();
 
-                                  dataRow.update("harga_jual",
-                                      (value) => value.toString());
-                                  dataRow.update("harga_beli",
-                                      (value) => value.toString());
+                                  dataRow.update("harga_jual", (value) => value.toString());
+                                  dataRow.update("harga_beli", (value) => value.toString());
 
-                                  DataDetailProduct data = controller
-                                          .dataProduct.dataProduct
+                                  DataDetailProduct data = controller.dataProduct.dataProduct
                                           ?.firstWhere((element) =>
                                               trimString(element.idProduct) ==
-                                              trimString(
-                                                  dataRow["id_product"])) ??
+                                              trimString(dataRow["id_product"])) ??
                                       DataDetailProduct();
 
                                   return DropdownAksi(
@@ -616,8 +539,7 @@ class ProdukView extends StatefulWidget {
                                           ],
                                         ),
                                       ),
-                                      if (UserDatabase.userDatabase.data
-                                              ?.roleData?.idRole !=
+                                      if (UserDatabase.userDatabase.data?.roleData?.idRole !=
                                           "ROLE002")
                                         PopupMenuItem(
                                           value: 2,
@@ -634,8 +556,7 @@ class ProdukView extends StatefulWidget {
                                             ],
                                           ),
                                         ),
-                                      if (UserDatabase.userDatabase.data
-                                              ?.roleData?.idRole !=
+                                      if (UserDatabase.userDatabase.data?.roleData?.idRole !=
                                           "ROLE002")
                                         PopupMenuItem(
                                           value: 3,
@@ -643,8 +564,7 @@ class ProdukView extends StatefulWidget {
                                             children: [
                                               SvgPicture.asset(
                                                 iconDelete,
-                                                colorFilter:
-                                                    colorFilter(color: red600),
+                                                colorFilter: colorFilter(color: red600),
                                               ),
                                               const SizedBox(width: 8),
                                               Text(
@@ -727,8 +647,7 @@ class ProdukView extends StatefulWidget {
                                                   item[column].toString(),
                                                 ),
                                               )
-                                            : trimStringStrip(
-                                                item[column].toString()),
+                                            : trimStringStrip(item[column].toString()),
                                   );
                                 }
                               }
@@ -750,13 +669,37 @@ class ProdukView extends StatefulWidget {
                                 onLoaded: (event) {
                                   event.stateManager.setShowColumnFilter(true);
                                   event.stateManager.columnFooterHeight = 68;
+
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "nm_product")
+                                      .suppressedAutoSize = true;
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "nm_product")
+                                      .width = 400;
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "jumlah")
+                                      .suppressedAutoSize = true;
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "jumlah")
+                                      .width = 75;
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "harga_jual")
+                                      .suppressedAutoSize = true;
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "harga_jual")
+                                      .width = 150;
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "harga_beli")
+                                      .suppressedAutoSize = true;
+                                  event.stateManager.columns
+                                      .firstWhere((element) => element.field == "harga_beli")
+                                      .width = 150;
                                 },
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
                                     controller.update();
-                                    controller.dataFuture =
-                                        controller.cariDataProduct(
+                                    controller.dataFuture = controller.cariDataProduct(
                                       isAsc: controller.isAsc,
                                       field: event.column.field,
                                     );
@@ -768,15 +711,12 @@ class ProdukView extends StatefulWidget {
                                     autoSizeMode: PlutoAutoSizeMode.scale,
                                   ),
                                   style: PlutoGridStyleConfig(
-                                    cellTextStyle: myTextTheme.bodyMedium
-                                            ?.copyWith(
-                                                color: controller.step1
-                                                    ? gray900
-                                                    : red700) ??
+                                    cellTextStyle: myTextTheme.bodyMedium?.copyWith(
+                                            color: controller.step1 ? gray900 : red700) ??
                                         const TextStyle(),
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -788,48 +728,37 @@ class ProdukView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller
-                                            .dataProduct.paging?.totalPage ??
-                                        0,
+                                    maxPage: controller.dataProduct.paging?.totalPage ?? 0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataProduct();
+                                      controller.dataFuture = controller.cariDataProduct();
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataProduct();
+                                      controller.dataFuture = controller.cariDataProduct();
                                       controller.update();
                                     },
-                                    totalRow: controller
-                                            .dataProduct.paging?.totalItem ??
-                                        0,
+                                    totalRow: controller.dataProduct.paging?.totalItem ?? 0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {
                                         controller.page =
-                                            (int.parse(controller.page) - 1)
-                                                .toString();
+                                            (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataProduct();
+                                        controller.dataFuture = controller.cariDataProduct();
                                         controller.update();
                                       }
                                     },
                                     onPressRight: () {
                                       if (int.parse(controller.page) <
-                                          (result.data?.paging?.totalPage ??
-                                              0)) {
+                                          (result.data?.paging?.totalPage ?? 0)) {
                                         controller.page =
-                                            (int.parse(controller.page) + 1)
-                                                .toString();
+                                            (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataProduct();
+                                        controller.dataFuture = controller.cariDataProduct();
                                         controller.update();
                                       }
                                     },
