@@ -46,16 +46,14 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     SizedBox(
                       width: 250,
                       child: BaseForm(
-                        textEditingController:
-                            controller.pembelianNameController,
+                        textEditingController: controller.pembelianNameController,
                         onChanged: (value) {},
                         hintText: "Pencarian",
                         suffix: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: BasePrimaryButton(
                             onPressed: () {
-                              controller.dataFuture =
-                                  controller.cariDataPembelian();
+                              controller.dataFuture = controller.cariDataPembelian();
                               controller.update();
                             },
                             text: "Cari",
@@ -128,15 +126,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
               } else if (snapshot.hasData) {
                 PembelianResult result = snapshot.data;
                 controller.dataCashInOut = result.data ?? DataPembelian();
-                for (var i = 0;
-                    i < (controller.dataCashInOut.dataPembelian?.length ?? 0);
-                    i++) {
-                  controller.dataCashInOut.dataPembelian?[i].tgPembelian =
-                      formatDateForView(trimString(controller
-                          .dataCashInOut.dataPembelian?[i].tgPembelian));
-                }
-                List<dynamic> listData =
-                    controller.dataCashInOut.toJson()["data_pembelian"] ?? [];
+
+                List<dynamic> listData = controller.dataCashInOut.toJson()["data_pembelian"] ?? [];
 
                 if (listData.isNotEmpty) {
                   List<PlutoRow> rows = [];
@@ -146,26 +137,21 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     List.generate(
                       controller.listRoleView.length,
                       (index) {
-                        if (controller.listRoleView[index] ==
-                            "jenis_pembayaran") {
+                        if (controller.listRoleView[index] == "jenis_pembayaran") {
                           return PlutoColumn(
                             width: 75,
                             backgroundColor: primaryColor,
-                            filterHintText:
-                                "Cari ${controller.listRoleView[index]}",
+                            filterHintText: "Cari ${controller.listRoleView[index]}",
                             title: convertTitle(
                               controller.listRoleView[index],
                             ),
                             field: controller.listRoleView[index],
                             type: PlutoColumnType.text(),
                             renderer: (rendererContext) {
-                              Map<String, dynamic> dataRow =
-                                  rendererContext.row.toJson();
+                              Map<String, dynamic> dataRow = rendererContext.row.toJson();
                               return CardLabel(
                                 cardColor: yellow50,
-                                cardTitle: dataRow["jenis_pembayaran"]
-                                    .toString()
-                                    .toUpperCase(),
+                                cardTitle: dataRow["jenis_pembayaran"].toString().toUpperCase(),
                                 cardTitleColor: yellow900,
                                 cardBorderColor: yellow50,
                               );
@@ -176,8 +162,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           return PlutoColumn(
                             width: 75,
                             backgroundColor: primaryColor,
-                            filterHintText:
-                                "Cari ${controller.listRoleView[index]}",
+                            filterHintText: "Cari ${controller.listRoleView[index]}",
                             title: "Qnt",
                             field: controller.listRoleView[index],
                             type: PlutoColumnType.number(
@@ -185,27 +170,16 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                             ),
                           );
                         }
-                        if (controller.listRoleView[index] == "tg_pembelian") {
-                          return PlutoColumn(
-                              // width: 85,
-                              backgroundColor: primaryColor,
-                              filterHintText: "Cari Tgl. Pembelian",
-                              title: "TGL. PEMBELIAN",
-                              field: controller.listRoleView[index],
-                              type: PlutoColumnType.date(format: 'dd-MM-yyyy'));
-                        }
+
                         return PlutoColumn(
                           backgroundColor: primaryColor,
-                          filterHintText:
-                              "Cari ${controller.listRoleView[index]}",
+                          filterHintText: "Cari ${controller.listRoleView[index]}",
                           title: convertTitle(
                             controller.listRoleView[index],
                           ),
                           field: controller.listRoleView[index],
-                          type: (controller.listRoleView[index] ==
-                                      "total_harga_beli" ||
-                                  controller.listRoleView[index] ==
-                                      "total_harga_jual" ||
+                          type: (controller.listRoleView[index] == "total_harga_beli" ||
+                                  controller.listRoleView[index] == "total_harga_jual" ||
                                   controller.listRoleView[index] == "jumlah")
                               ? PlutoColumnType.number(
                                   locale: "id",
@@ -228,8 +202,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                       enableEditingMode: false,
                       renderer: (rendererContext) {
                         final rowIndex = rendererContext.rowIdx;
-                        Map<String, dynamic> dataRow =
-                            rendererContext.row.toJson();
+                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
                         return DropdownAksi(
                           text: "Aksi",
                           listItem: [
@@ -268,29 +241,21 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           onChange: (value) {
                             if (value == 1) {
                               DetailDataPembelian dataDetail =
-                                  result.data?.dataPembelian?[rowIndex] ??
+                                  result.data?.dataPembelian?[rowIndex].copyWith() ??
                                       DetailDataPembelian();
-                              controller.dataPembelian.jenisPembayaran =
-                                  dataDetail.jenisPembayaran;
-                              controller.dataPembelian.idSupplier =
-                                  dataDetail.idSupplier;
+                              controller.dataPembelian.jenisPembayaran = dataDetail.jenisPembayaran;
+                              controller.dataPembelian.idSupplier = dataDetail.idSupplier;
                               controller.dataPembelian.jumlah =
                                   trimString(dataDetail.jumlah.toString());
-                              controller.dataPembelian.keterangan =
-                                  dataDetail.keterangan;
-                              controller.dataPembelian.nmSupplier =
-                                  dataDetail.nmSupplier;
-                              controller.dataPembelian.tgPembelian =
-                                  dataDetail.tgPembelian;
-                              controller.dataPembelian.totalHargaBeli =
-                                  dataDetail.totalHargaBeli;
-                              controller.dataPembelian.totalHargaJual =
-                                  dataDetail.totalHargaJual;
+                              controller.dataPembelian.keterangan = dataDetail.keterangan;
+                              controller.dataPembelian.nmSupplier = dataDetail.nmSupplier;
+                              controller.dataPembelian.tgPembelian = dataDetail.tgPembelian;
+                              controller.dataPembelian.totalHargaBeli = dataDetail.totalHargaBeli;
+                              controller.dataPembelian.totalHargaJual = dataDetail.totalHargaJual;
 
                               controller.postDetailPurchase(
                                 trimString(
-                                  result.data?.dataPembelian?[rowIndex]
-                                      .idPembelian,
+                                  result.data?.dataPembelian?[rowIndex].idPembelian,
                                 ),
                               );
                               update();
@@ -302,8 +267,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                                   onConfirm: () async {
                                     controller.postRemovePurchase(
                                       trimString(
-                                        result.data?.dataPembelian?[rowIndex]
-                                            .idPembelian,
+                                        result.data?.dataPembelian?[rowIndex].idPembelian,
                                       ),
                                     );
                                   },
@@ -316,8 +280,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     ),
                   );
 
-                  List<dynamic> listDataWithIndex =
-                      List.generate(listData.length, (index) {
+                  List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
                     return {
                       ...listData[index],
                       'persistentIndex': index + 1,
@@ -377,8 +340,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           autoSizeMode: PlutoAutoSizeMode.scale,
                         ),
                         style: PlutoGridStyleConfig(
-                          columnTextStyle: myTextTheme.titleSmall
-                                  ?.copyWith(color: neutralWhite) ??
+                          columnTextStyle: myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
                               const TextStyle(),
                           gridBorderColor: blueGray50,
                           gridBorderRadius: BorderRadius.circular(8),
@@ -391,43 +353,35 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                         return FooterTableWidget(
                           page: controller.page,
                           itemPerpage: controller.size,
-                          maxPage:
-                              controller.dataCashInOut.paging?.totalPage ?? 0,
+                          maxPage: controller.dataCashInOut.paging?.totalPage ?? 0,
                           onChangePage: (value) {
                             controller.page = trimString(value);
                             controller.update();
-                            controller.dataFuture =
-                                controller.cariDataPembelian();
+                            controller.dataFuture = controller.cariDataPembelian();
                             controller.update();
                           },
                           onChangePerPage: (value) {
                             controller.page = "1";
                             controller.size = trimString(value);
                             controller.update();
-                            controller.dataFuture =
-                                controller.cariDataPembelian();
+                            controller.dataFuture = controller.cariDataPembelian();
                             controller.update();
                           },
-                          totalRow:
-                              controller.dataCashInOut.paging?.totalItem ?? 0,
+                          totalRow: controller.dataCashInOut.paging?.totalItem ?? 0,
                           onPressLeft: () {
                             if (int.parse(controller.page) > 1) {
-                              controller.page =
-                                  (int.parse(controller.page) - 1).toString();
+                              controller.page = (int.parse(controller.page) - 1).toString();
                               controller.update();
-                              controller.dataFuture =
-                                  controller.cariDataPembelian();
+                              controller.dataFuture = controller.cariDataPembelian();
                               controller.update();
                             }
                           },
                           onPressRight: () {
                             if (int.parse(controller.page) <
                                 (result.data?.paging?.totalPage ?? 0)) {
-                              controller.page =
-                                  (int.parse(controller.page) + 1).toString();
+                              controller.page = (int.parse(controller.page) + 1).toString();
                               controller.update();
-                              controller.dataFuture =
-                                  controller.cariDataPembelian();
+                              controller.dataFuture = controller.cariDataPembelian();
                               controller.update();
                             }
                           },

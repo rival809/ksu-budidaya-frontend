@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class ContainerTambahPenjualan extends StatefulWidget {
   final PenjualanController controller;
@@ -12,8 +11,7 @@ class ContainerTambahPenjualan extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ContainerTambahPenjualan> createState() =>
-      _ContainerTambahPenjualanState();
+  State<ContainerTambahPenjualan> createState() => _ContainerTambahPenjualanState();
 }
 
 class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
@@ -76,8 +74,7 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                         padding: const EdgeInsets.all(8.0),
                         child: BasePrimaryButton(
                           onPressed: () {
-                            controller.postDetailProduct(
-                                controller.cariProdukController.text);
+                            controller.postDetailProduct(controller.cariProdukController.text);
                             controller.update();
                           },
                           text: "Cari",
@@ -101,22 +98,18 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                         controller.update();
                       },
                       onEditComplete: () async {
-                        var data =
-                            ProductDatabase.productResult.data?.dataProduct;
+                        var data = ProductDatabase.productResult.data?.dataProduct;
                         for (var i = 0; i < (data?.length ?? 0); i++) {
                           if (trimString(data?[i].idProduct) ==
-                              trimString(
-                                  controller.cariProdukController.text)) {
-                            controller
-                                .onProdctSearch(trimString(data?[i].idProduct));
+                              trimString(controller.cariProdukController.text)) {
+                            controller.onProdctSearch(trimString(data?[i].idProduct));
                             controller.update();
                           }
                         }
                       },
                       onSelected: (data) async {
                         controller.onProdctSearch(trimString(data.idProduct));
-                        controller.cariProdukController.text =
-                            trimString(data.idProduct);
+                        controller.cariProdukController.text = trimString(data.idProduct);
                         controller.update();
                       },
                     ),
@@ -133,21 +126,20 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                   BasePrimaryButton(
                       text: "Bayar",
                       isDense: true,
-                      onPressed:
-                          (controller.dataPenjualan.details?.isEmpty ?? true)
-                              ? null
-                              : () {
-                                  controller.onInitDialog();
-                                  controller.update();
-                                  update();
+                      onPressed: (controller.dataPenjualan.details?.isEmpty ?? true)
+                          ? null
+                          : () {
+                              controller.onInitDialog();
+                              controller.update();
+                              update();
 
-                                  showDialogBase(
-                                    width: 700,
-                                    content: DialogProsesPembayaran(
-                                      controller: controller,
-                                    ),
-                                  );
-                                }),
+                              showDialogBase(
+                                width: 700,
+                                content: DialogProsesPembayaran(
+                                  controller: controller,
+                                ),
+                              );
+                            }),
                 ],
               ),
             if (controller.isDetail)
@@ -188,8 +180,7 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
                             itemBuilder: (context, index) {
-                              if (controller.dataPenjualan.details?.isEmpty ??
-                                  true) {
+                              if (controller.dataPenjualan.details?.isEmpty ?? true) {
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
                                   decoration: const BoxDecoration(
@@ -251,18 +242,14 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                             Container(
                               // height: 300,
                               constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height - 310,
+                                maxHeight: MediaQuery.of(context).size.height - 310,
                               ),
                               child: ListView.builder(
-                                itemCount:
-                                    controller.dataPenjualan.details?.length,
+                                itemCount: controller.dataPenjualan.details?.length,
                                 shrinkWrap: true,
                                 physics: const ScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  if (controller
-                                          .dataPenjualan.details?.isEmpty ??
-                                      true) {
+                                  if (controller.dataPenjualan.details?.isEmpty ?? true) {
                                     return Container(
                                       width: MediaQuery.of(context).size.width,
                                       decoration: const BoxDecoration(
@@ -281,8 +268,7 @@ class _ContainerTambahPenjualanState extends State<ContainerTambahPenjualan> {
                                       child: Center(
                                         child: Text(
                                           "Silakan Tambahkan Produk",
-                                          style:
-                                              myTextTheme.bodyMedium?.copyWith(
+                                          style: myTextTheme.bodyMedium?.copyWith(
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),

@@ -39,8 +39,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     textController[2].text = trimString(widget.data?.jumlah.toString());
     textController[3].text = formatMoney(trimString(widget.data?.hargaJual));
     textController[4].text = formatMoney(trimString(widget.data?.hargaBeli));
-    textController[5].text =
-        formatMoney(trimString(widget.data?.diskon ?? "0"));
+    textController[5].text = formatMoney(trimString(widget.data?.diskon ?? "0"));
     dataEdit.diskon = widget.data?.diskon ?? "0";
     dataEdit.nmDivisi = trimString(widget.data?.nmDivisi).toString().isNotEmpty
         ? trimString(widget.data?.nmDivisi)
@@ -50,11 +49,8 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     } else {
       jenisDiskon = "Nominal";
     }
-    for (var i = 0;
-        i < (DivisiDatabase.dataDivisi.dataDivisi?.length ?? 0);
-        i++) {
-      itemDivisi
-          .add(trimString(DivisiDatabase.dataDivisi.dataDivisi?[i].nmDivisi));
+    for (var i = 0; i < (DivisiDatabase.dataDivisi.dataDivisi?.length ?? 0); i++) {
+      itemDivisi.add(trimString(DivisiDatabase.dataDivisi.dataDivisi?[i].nmDivisi));
     }
     super.initState();
   }
@@ -94,14 +90,14 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
 
   DetailProductResult dataResult = DetailProductResult();
 
-  List<DataDetailProduct> getDetailSuggestions(
-      String query, List<DataDetailProduct>? states) {
+  List<DataDetailProduct> getDetailSuggestions(String query, List<DataDetailProduct>? states) {
     List<DataDetailProduct> matches = [];
 
     if (states != null) {
       matches.addAll(states);
       matches.retainWhere((s) =>
-          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) &&
+          (trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) ||
+              trimString(s.nmProduct).toLowerCase().contains(query.toLowerCase())) &&
           s.statusProduct == true);
     }
 
@@ -126,11 +122,9 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
         dataEdit.nmProduk = trimString(result.data?.nmProduct);
         textController[2].text = trimString(result.data?.jumlah.toString());
         dataEdit.jumlah = result.data?.jumlah;
-        textController[3].text =
-            formatMoney(trimString(result.data?.hargaBeli));
+        textController[3].text = formatMoney(trimString(result.data?.hargaJual));
         dataEdit.hargaBeli = trimString(result.data?.hargaBeli);
-        textController[4].text =
-            formatMoney(trimString(result.data?.hargaJual));
+        textController[4].text = formatMoney(trimString(result.data?.hargaBeli));
         dataEdit.hargaJual = trimString(result.data?.hargaJual);
 
         dataEdit.nmDivisi = trimString(result.data?.idDivisi).toString().isEmpty
@@ -198,8 +192,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   onEditComplete: () async {
                     var data = ProductDatabase.productResult.data?.dataProduct;
                     for (var i = 0; i < (data?.length ?? 0); i++) {
-                      if (trimString(data?[i].idProduct) ==
-                          trimString(textController[0].text)) {
+                      if (trimString(data?[i].idProduct) == trimString(textController[0].text)) {
                         onBarcodeChanged(trimString(data?[i].idProduct));
                         controller.update();
                       }
@@ -242,8 +235,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                   hintText: "Masukkan Jumlah",
                   textEditingController: textController[2],
                   onChanged: (value) {
-                    dataEdit.jumlah =
-                        int.tryParse(removeComma(trimString(value)));
+                    dataEdit.jumlah = int.tryParse(removeComma(trimString(value)));
                     update();
                   },
                   textInputFormater: [
@@ -298,9 +290,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                 BaseForm(
                   enabled: controller.isDetail ? false : true,
                   label: "Diskon",
-                  prefix: jenisDiskon == "Nominal"
-                      ? const BasePrefixRupiah()
-                      : null,
+                  prefix: jenisDiskon == "Nominal" ? const BasePrefixRupiah() : null,
                   hintText: "Masukkan Diskon",
                   textInputFormater: [
                     ThousandsFormatter(),
@@ -337,12 +327,9 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                       onPressed: controller.isDetail
                           ? null
                           : () {
-                              controller.dataPembelian.details?.removeWhere(
-                                  (element) =>
-                                      trimString(element.idDetailPembelian
-                                          .toString()) ==
-                                      trimString(widget.data?.idDetailPembelian
-                                          .toString()));
+                              controller.dataPembelian.details?.removeWhere((element) =>
+                                  trimString(element.idDetailPembelian.toString()) ==
+                                  trimString(widget.data?.idDetailPembelian.toString()));
                               controller.update();
                               Get.back();
                             },
@@ -373,10 +360,8 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                                 );
                                 if (jenisDiskon == "Persen") {
                                   payload.update("diskon", (value) {
-                                    return roundDouble((double.parse(
-                                                dataEdit.hargaBeli ?? "0") *
-                                            ((double.parse(value ?? "0")) /
-                                                100) *
+                                    return roundDouble((double.parse(dataEdit.hargaBeli ?? "0") *
+                                            ((double.parse(value ?? "0")) / 100) *
                                             (dataEdit.jumlah ?? 0)))
                                         .toString();
                                   });
@@ -386,17 +371,14 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                                   });
                                 }
                                 payload.update("total_nilai_beli", (value) {
-                                  return (double.parse(
-                                                  dataEdit.hargaBeli ?? "0") *
+                                  return (double.parse(dataEdit.hargaBeli ?? "0") *
                                               (dataEdit.jumlah ?? 0) -
-                                          double.parse(
-                                              payload["diskon"] ?? "0"))
+                                          double.parse(payload["diskon"] ?? "0"))
                                       .round()
                                       .toString();
                                 });
                                 payload.update("total_nilai_jual", (value) {
-                                  return (double.parse(
-                                              dataEdit.hargaJual ?? "0") *
+                                  return (double.parse(dataEdit.hargaJual ?? "0") *
                                           (dataEdit.jumlah ?? 0))
                                       .round()
                                       .toString();
@@ -406,34 +388,25 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                                     "id_detail_pembelian",
                                     (value) => widget.data?.idDetailPembelian,
                                   );
-                                  controller.dataPembelian.details?.removeWhere(
-                                      (element) =>
-                                          trimString(element.idDetailPembelian
-                                              .toString()) ==
-                                          trimString(widget
-                                              .data?.idDetailPembelian
-                                              .toString()));
+                                  controller.dataPembelian.details?.removeWhere((element) =>
+                                      trimString(element.idDetailPembelian.toString()) ==
+                                      trimString(widget.data?.idDetailPembelian.toString()));
                                   controller.update();
 
                                   DataDetailPembelian dataPayload =
                                       DataDetailPembelian.fromJson(payload);
-                                  controller.dataPembelian.details
-                                      ?.add(dataPayload);
+                                  controller.dataPembelian.details?.add(dataPayload);
                                   controller.update();
                                 } else {
                                   payload.update(
                                     "id_detail_pembelian",
-                                    (value) =>
-                                        controller
-                                            .dataPembelian.details?.length ??
-                                        0,
+                                    (value) => controller.dataPembelian.details?.length ?? 0,
                                   );
 
                                   DataDetailPembelian dataPayload =
                                       DataDetailPembelian.fromJson(payload);
 
-                                  controller.dataPembelian.details
-                                      ?.add(dataPayload);
+                                  controller.dataPembelian.details?.add(dataPayload);
                                   controller.update();
                                 }
 
