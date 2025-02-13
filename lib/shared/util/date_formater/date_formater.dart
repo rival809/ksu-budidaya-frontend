@@ -57,6 +57,18 @@ String formatDateToYearMonthDay(String originalDateString) {
   }
 }
 
+String formatDateOnlyDate(String originalDateString) {
+  try {
+    List<String> parts = originalDateString.split("-");
+    String formattedDate = "${parts[2]}-${parts[1]}-${parts[0]}";
+
+    return formattedDate;
+  } catch (e) {
+    print("Error parsing date: $e");
+    return "";
+  }
+}
+
 String formatDateForView(String originalDateString) {
   try {
     DateFormat originalFormat = DateFormat("dd-MM-yyyy");
@@ -77,6 +89,22 @@ String formatDateTimeNow(String originalDateString) {
   try {
     DateFormat originalFormat = DateFormat("dd-MM-yyyy");
     DateFormat desiredFormat = DateFormat("dd-MM-yyyy, HH:mm");
+
+    DateTime dateTime = originalFormat.parse(originalDateString);
+
+    String formattedDateString = desiredFormat.format(dateTime);
+
+    return formattedDateString;
+  } catch (e) {
+    print("Error parsing date: $e");
+    return "";
+  }
+}
+
+String formatDateTimeNormal(String originalDateString) {
+  try {
+    DateFormat originalFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+    DateFormat desiredFormat = DateFormat("dd-MM-yyyy");
 
     DateTime dateTime = originalFormat.parse(originalDateString);
 
@@ -115,8 +143,12 @@ formatDateTimePayload(String? dateTime) {
 }
 
 formatSelectedDate(DateTime selectedDate) {
-  String selectedDateString = DateFormat('yyyy-MM-dd').format(selectedDate);
-  return selectedDateString;
+  try {
+    String selectedDateString = DateFormat('yyyy-MM-dd').format(selectedDate);
+    return selectedDateString;
+  } catch (e) {
+    formatOnlyDate(selectedDate.toString());
+  }
 }
 
 formatSelectedTime(DateTime selectedDate) {
@@ -125,8 +157,7 @@ formatSelectedTime(DateTime selectedDate) {
 }
 
 String formatSelectedDateFull(DateTime selectedDate) {
-  String selectedDateString =
-      DateFormat('yyyy-MM-dd HH:mm:ss').format(selectedDate);
+  String selectedDateString = DateFormat('yyyy-MM-dd HH:mm:ss').format(selectedDate);
   return selectedDateString;
 }
 

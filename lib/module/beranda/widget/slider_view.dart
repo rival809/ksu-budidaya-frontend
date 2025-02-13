@@ -10,8 +10,7 @@ class SliderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter.of(context);
-    final String currentRoute =
-        router.routerDelegate.currentConfiguration.uri.toString();
+    final String currentRoute = router.routerDelegate.currentConfiguration.uri.toString();
 
     bool isParentSelected(String parentRoute, List<String> childRoutes) {
       return currentRoute == parentRoute ||
@@ -63,8 +62,7 @@ class SliderView extends StatelessWidget {
               controller: ScrollController(),
               physics: const ScrollPhysics(),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
                     if (kIsWeb)
@@ -95,8 +93,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Supplier",
                                 isSubMenu: true,
-                                isSelected:
-                                    currentRoute == "/database/supplier",
+                                isSelected: currentRoute == "/database/supplier",
                                 onTap: () {
                                   router.go(
                                     "/database/supplier",
@@ -151,8 +148,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Pembelian",
                                 isSubMenu: true,
-                                isSelected:
-                                    currentRoute == "/transaksi/pembelian",
+                                isSelected: currentRoute == "/transaksi/pembelian",
                                 onTap: () {
                                   router.go(
                                     "/transaksi/pembelian",
@@ -163,8 +159,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Penjualan",
                                 isSubMenu: true,
-                                isSelected:
-                                    currentRoute == "/transaksi/penjualan",
+                                isSelected: currentRoute == "/transaksi/penjualan",
                                 onTap: () {
                                   router.go(
                                     "/transaksi/penjualan",
@@ -186,8 +181,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Bayar Hutang Dagang",
                                 isSubMenu: true,
-                                isSelected: currentRoute ==
-                                    "/transaksi/bayar-hutang-dagang",
+                                isSelected: currentRoute == "/transaksi/bayar-hutang-dagang",
                                 onTap: () {
                                   router.go(
                                     "/transaksi/bayar-hutang-dagang",
@@ -198,8 +192,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Tutup Kasir",
                                 isSubMenu: true,
-                                isSelected:
-                                    currentRoute == "/transaksi/tutup-kasir",
+                                isSelected: currentRoute == "/transaksi/tutup-kasir",
                                 onTap: () {
                                   router.go(
                                     "/transaksi/tutup-kasir",
@@ -224,8 +217,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Cash In dan Cash Out",
                                 isSubMenu: true,
-                                isSelected:
-                                    currentRoute == "/cash/cash-in-cash-out",
+                                isSelected: currentRoute == "/cash/cash-in-cash-out",
                                 onTap: () {
                                   router.go(
                                     "/cash/cash-in-cash-out",
@@ -267,8 +259,7 @@ class SliderView extends StatelessWidget {
                             DrawerMenu(
                               title: "Stock Opname",
                               isSubMenu: true,
-                              isSelected:
-                                  currentRoute == "/stock-opname/mobile",
+                              isSelected: currentRoute == "/stock-opname/mobile",
                               onTap: () {
                                 router.go("/stock-opname/mobile");
                               },
@@ -297,16 +288,16 @@ class SliderView extends StatelessWidget {
                                   router.go("/koperasi/anggota");
                                 },
                               ),
-                            if (dataLogin.roleData?.stsPembayaranHutang == true)
-                              DrawerMenu(
-                                title: "Pembayaran Hutang",
-                                isSubMenu: true,
-                                isSelected: currentRoute.contains(
-                                    "/koperasi/anggota/pembayaran-hutang"),
-                                onTap: () {
-                                  // router.go("/koperasi/pembayaran-hutang");
-                                },
-                              ),
+                            // if (dataLogin.roleData?.stsPembayaranHutang == true)
+                            //   DrawerMenu(
+                            //     title: "Pembayaran Hutang",
+                            //     isSubMenu: true,
+                            //     isSelected: currentRoute.contains(
+                            //         "/koperasi/anggota/pembayaran-hutang"),
+                            //     onTap: () {
+                            //       // router.go("/koperasi/pembayaran-hutang");
+                            //     },
+                            //   ),
                             // DrawerMenu(
                             //   title: "Stock Opname",
                             //   isSubMenu: true,
@@ -333,8 +324,7 @@ class SliderView extends StatelessWidget {
                             DrawerMenu(
                               title: "Cetak Label",
                               isSubMenu: true,
-                              isSelected:
-                                  currentRoute == "/lain-lain/cetak-label",
+                              isSelected: currentRoute == "/lain-lain/cetak-label",
                               onTap: () {
                                 router.go("/lain-lain/cetak-label");
                               },
@@ -368,8 +358,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "User",
                                 isSubMenu: true,
-                                isSelected:
-                                    currentRoute == "/user-management/user",
+                                isSelected: currentRoute == "/user-management/user",
                                 onTap: () {
                                   router.go("/user-management/user");
                                 },
@@ -378,8 +367,7 @@ class SliderView extends StatelessWidget {
                               DrawerMenu(
                                 title: "Role",
                                 isSubMenu: true,
-                                isSelected:
-                                    currentRoute == "/user-management/role",
+                                isSelected: currentRoute == "/user-management/role",
                                 onTap: () {
                                   router.go("/user-management/role");
                                 },
@@ -411,8 +399,7 @@ class SliderView extends StatelessWidget {
                         content: SingleChildScrollView(
                           controller: ScrollController(),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

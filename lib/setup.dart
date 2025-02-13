@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ksu_budidaya/model/product/product_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -49,21 +48,6 @@ Future initialize() async {
   await AnggotaDatabase.load();
   await RefCashDatabase.load();
   await ProductDatabase.load();
-  // await UserDatabase.load();
-  // await PenetapanDatabase.load();
-  // await ReferencesDatabase.load();
-  // await ProsesPenetapanDatabase.load();
-  // await MetodeBayarDatabase.load();
-  // await InfoAbDatabase.load();
-  // await SubjekPajakDatabase.load();
-  // await TambahPotensiDatabase.load();
-  // await GetPermissionDatabase.load();
-  // await NilaiJualDatabase.load();
-  // await ModelAbDatabase.load();
-  // await ColumnTableDatabase.load();
-  // await DetailControlTableDatabase.load();
-  // await EditConfigDatabase.load();
-  // await ControlInfoDatabase.load();
 
   AppSession.token = mainStorage.get("token") ?? "";
 }
