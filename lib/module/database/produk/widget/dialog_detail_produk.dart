@@ -39,6 +39,7 @@ class _DialogDetailProdukState extends State<DialogDetailProduk> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.data?.statusProduct);
     return Container(
       padding: const EdgeInsets.all(16),
       width: MediaQuery.of(context).size.width,
@@ -124,9 +125,7 @@ class _DialogDetailProdukState extends State<DialogDetailProduk> {
                       : DataDetailSupplier(
                           idSupplier: widget.data?.idSupplier,
                           nmSupplier: trimString(
-                            getNamaSupplier(
-                                idSupplier:
-                                    trimString(widget.data?.idSupplier)),
+                            getNamaSupplier(idSupplier: trimString(widget.data?.idSupplier)),
                           ),
                         ),
                   onChanged: (value) {},
@@ -152,11 +151,9 @@ class _DialogDetailProdukState extends State<DialogDetailProduk> {
                   hint: "Pilih Status",
                   enabled: false,
                   items: const ["Aktif", "Nonaktif"],
-                  value:
-                      widget.data?.statusProduct == true ? "Aktif" : "Nonaktif",
+                  value: widget.data?.statusProduct == true ? "Aktif" : "Nonaktif",
                   onChanged: (value) {
-                    widget.data?.statusProduct =
-                        value == "Aktif" ? true : false;
+                    widget.data?.statusProduct = value == "Aktif" ? true : false;
                     update();
                   },
                 ),

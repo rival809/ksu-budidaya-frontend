@@ -515,6 +515,8 @@ class ProdukView extends StatefulWidget {
                                   dataRow.update("harga_jual", (value) => value.toString());
                                   dataRow.update("harga_beli", (value) => value.toString());
 
+                                  dataRow["status_product"] = dataRow["aksi"];
+
                                   DataDetailProduct data = controller.dataProduct.dataProduct
                                           ?.firstWhere((element) =>
                                               trimString(element.idProduct) ==
@@ -580,9 +582,7 @@ class ProdukView extends StatefulWidget {
                                         showDialogBase(
                                           width: 1000,
                                           content: DialogDetailProduk(
-                                            data: DataDetailProduct.fromJson(
-                                              dataRow,
-                                            ),
+                                            data: data,
                                           ),
                                         );
                                       } else if (value == 2) {
@@ -629,7 +629,7 @@ class ProdukView extends StatefulWidget {
                               );
 
                               cells['Aksi'] = PlutoCell(
-                                value: null,
+                                value: item["status_product"],
                               );
 
                               for (String column in controller.listProdukView) {
