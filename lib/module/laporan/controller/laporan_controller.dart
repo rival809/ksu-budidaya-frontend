@@ -14,12 +14,10 @@ class LaporanController extends State<LaporanView> {
   int yearNow = DateTime.now().year;
   bool hasData = false;
 
-  List<int> yearData = List<int>.generate(
-      DateTime.now().year - 2023 + 2, (index) => 2023 + index);
+  List<int> yearData = List<int>.generate(DateTime.now().year - 2025 + 2, (index) => 2025 + index);
 
   LaporanHasilUsahaResult resultHasilUsaha = LaporanHasilUsahaResult();
-  LaporanRealisasiPendapatanResult resultRealisasiPendapatan =
-      LaporanRealisasiPendapatanResult();
+  LaporanRealisasiPendapatanResult resultRealisasiPendapatan = LaporanRealisasiPendapatanResult();
   LaporanNeracaLajurModel resultNeracaLajur = LaporanNeracaLajurModel();
   LaporanHasilUsahaResult resultNeraca = LaporanHasilUsahaResult();
 
@@ -40,8 +38,7 @@ class LaporanController extends State<LaporanView> {
       return resultHasilUsaha;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -65,8 +62,7 @@ class LaporanController extends State<LaporanView> {
       return resultNeracaLajur;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -90,8 +86,7 @@ class LaporanController extends State<LaporanView> {
       return resultNeraca;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -113,8 +108,7 @@ class LaporanController extends State<LaporanView> {
       return resultRealisasiPendapatan;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
