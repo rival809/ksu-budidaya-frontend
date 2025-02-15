@@ -129,7 +129,7 @@ generatePdfEstimasi({
         },
         headerStyle: pw.TextStyle(
           color: PdfColor.fromHex("#212121"),
-          fontSize: 5,
+          fontSize: 7,
           font: boldFont,
           fontWeight: pw.FontWeight.bold,
         ),
@@ -139,7 +139,7 @@ generatePdfEstimasi({
         cellStyle: pw.TextStyle(
           font: regularFont,
           color: PdfColor.fromHex("#212121"),
-          fontSize: 5,
+          fontSize: 7,
         ),
         headers: List<String>.generate(
           itemTitle.length,
@@ -167,7 +167,7 @@ generatePdfEstimasi({
             "LAPORAN PEMBELIAN\n${controller.dataPembelian.nmSupplier}\nTANGGAL: ${controller.dataPembelian.tgPembelian}",
             textAlign: pw.TextAlign.center,
             style: pw.TextStyle(
-              fontSize: 7,
+              fontSize: 10,
               fontWeight: pw.FontWeight.bold,
             ),
           ),
