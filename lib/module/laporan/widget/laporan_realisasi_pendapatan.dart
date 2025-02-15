@@ -12,12 +12,10 @@ class LaporanRealisasiPendapatan extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<LaporanRealisasiPendapatan> createState() =>
-      _LaporanRealisasiPendapatanState();
+  State<LaporanRealisasiPendapatan> createState() => _LaporanRealisasiPendapatanState();
 }
 
-class _LaporanRealisasiPendapatanState
-    extends State<LaporanRealisasiPendapatan> {
+class _LaporanRealisasiPendapatanState extends State<LaporanRealisasiPendapatan> {
   @override
   Widget build(BuildContext context) {
     LaporanController controller = widget.controller;
@@ -51,7 +49,7 @@ class _LaporanRealisasiPendapatanState
                               value: controller.yearNow,
                               itemAsString: (item) => item.toString(),
                               onChanged: (value) {
-                                controller.yearNow = value ?? 2023;
+                                controller.yearNow = value ?? 2025;
                                 controller.update();
                               },
                             ),
@@ -62,8 +60,7 @@ class _LaporanRealisasiPendapatanState
                           Expanded(
                             child: BasePrimaryButton(
                               onPressed: () {
-                                controller
-                                    .onSearchLaporan(controller.idLaporan);
+                                controller.onSearchLaporan(controller.idLaporan);
                                 controller.update();
                               },
                               text: "Lihat Data",
@@ -113,7 +110,7 @@ class _LaporanRealisasiPendapatanState
                                 value: controller.yearNow,
                                 itemAsString: (item) => item.toString(),
                                 onChanged: (value) {
-                                  controller.yearNow = value ?? 2023;
+                                  controller.yearNow = value ?? 2025;
                                   controller.update();
                                 },
                               ),
@@ -123,8 +120,7 @@ class _LaporanRealisasiPendapatanState
                             ),
                             BasePrimaryButton(
                               onPressed: () {
-                                controller
-                                    .onSearchLaporan(controller.idLaporan);
+                                controller.onSearchLaporan(controller.idLaporan);
                                 controller.update();
                               },
                               text: "Lihat Data",
@@ -142,8 +138,7 @@ class _LaporanRealisasiPendapatanState
                       BaseSecondaryButton(
                         onPressed: controller.hasData
                             ? () {
-                                doGenerateLaporanRealisasiPendapatan(
-                                    controller: controller);
+                                doGenerateLaporanRealisasiPendapatan(controller: controller);
                               }
                             : null,
                         text: "Cetak Laporan",
@@ -188,10 +183,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             trimString(data["uraian"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.left,
                           );
@@ -209,10 +203,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["jan"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -230,10 +223,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["feb"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -251,10 +243,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["mar"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -272,10 +263,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["apr"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -293,10 +283,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["mei"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -314,10 +303,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["jun"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -335,10 +323,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["jul"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -356,10 +343,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["agu"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -377,10 +363,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["sep"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -398,10 +383,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["okt"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -419,10 +403,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["nov"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -440,10 +423,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["des"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -461,10 +443,9 @@ class _LaporanRealisasiPendapatanState
                           return Text(
                             formatMoney(data["jumlah"]),
                             style: TextStyle(
-                              fontWeight:
-                                  boldCheckerRealisasiPendapatan(data["uraian"])
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
+                              fontWeight: boldCheckerRealisasiPendapatan(data["uraian"])
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                             textAlign: TextAlign.end,
                           );
@@ -492,269 +473,218 @@ class _LaporanRealisasiPendapatanState
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Hasil Usaha Waserda'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[0].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[0].totalNilaiJual
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[1].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[1].totalNilaiJual
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[2].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[2].totalNilaiJual
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[3].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[3].totalNilaiJual
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[4].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[4].totalNilaiJual
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[5].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[5].totalNilaiJual
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[6].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[6].totalNilaiJual
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[7].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[7].totalNilaiJual
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[8].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[8].totalNilaiJual
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[9].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[9].totalNilaiJual
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[10].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[10].totalNilaiJual
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.hasilUsahaWaserda?.data?[11].totalNilaiJual
+                            value: trimString(result
+                                .data?.pendapatan?.hasilUsahaWaserda?.data?[11].totalNilaiJual
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pendapatan?.hasilUsahaWaserda?.jumlah
-                                .toString())),
+                            value: trimString(
+                                result.data?.pendapatan?.hasilUsahaWaserda?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Pendapatan Lain-lain'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[0].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[0].nominal
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[1].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[1].nominal
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[2].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[2].nominal
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[3].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[3].nominal
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[4].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[4].nominal
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[5].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[5].nominal
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[6].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[6].nominal
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[7].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[7].nominal
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[8].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[8].nominal
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[9].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[9].nominal
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[10].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[10].nominal
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.pendapatanLainlain?.data?[11].nominal
+                            value: trimString(result
+                                .data?.pendapatan?.pendapatanLainlain?.data?[11].nominal
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pendapatan?.pendapatanLainlain?.jumlah
-                                .toString())),
+                            value: trimString(
+                                result.data?.pendapatan?.pendapatanLainlain?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Retur Pembelian'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[0].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[0].totalNilaiBeli
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[1].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[1].totalNilaiBeli
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[2].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[2].totalNilaiBeli
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[3].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[3].totalNilaiBeli
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[4].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[4].totalNilaiBeli
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[5].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[5].totalNilaiBeli
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[6].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[6].totalNilaiBeli
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[7].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[7].totalNilaiBeli
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[8].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[8].totalNilaiBeli
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[9].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[9].totalNilaiBeli
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[10].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[10].totalNilaiBeli
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.returPembelian?.data?[11].totalNilaiBeli
+                            value: trimString(result
+                                .data?.pendapatan?.returPembelian?.data?[11].totalNilaiBeli
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pendapatan?.returPembelian?.jumlah
-                                .toString())),
+                            value: trimString(
+                                result.data?.pendapatan?.returPembelian?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'JUMLAH'),
                         'jan': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[0]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[0].totalPendapatan
                                 .toString())),
                         'feb': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[1]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[1].totalPendapatan
                                 .toString())),
                         'mar': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[2]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[2].totalPendapatan
                                 .toString())),
                         'apr': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[3]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[3].totalPendapatan
                                 .toString())),
                         'mei': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[4]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[4].totalPendapatan
                                 .toString())),
                         'jun': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[5]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[5].totalPendapatan
                                 .toString())),
                         'jul': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[6]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[6].totalPendapatan
                                 .toString())),
                         'agu': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[7]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[7].totalPendapatan
                                 .toString())),
                         'sep': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[8]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[8].totalPendapatan
                                 .toString())),
                         'okt': PlutoCell(
                             value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[9]
-                                .totalPendapatan
+                                .data?.pendapatan?.totalPendapatanPerBulan?.data?[9].totalPendapatan
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[10]
-                                .totalPendapatan
+                            value: trimString(result.data?.pendapatan?.totalPendapatanPerBulan
+                                ?.data?[10].totalPendapatan
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pendapatan
-                                ?.totalPendapatanPerBulan
-                                ?.data?[11]
-                                .totalPendapatan
+                            value: trimString(result.data?.pendapatan?.totalPendapatanPerBulan
+                                ?.data?[11].totalPendapatan
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result.data?.pendapatan
-                                ?.totalPendapatanPerBulan?.jumlah
+                            value: trimString(result
+                                .data?.pendapatan?.totalPendapatanPerBulan?.jumlah
                                 .toString())),
                       }),
                       PlutoRow(cells: {
@@ -792,599 +722,508 @@ class _LaporanRealisasiPendapatanState
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Beban Gaji/ Insentif'),
                         'jan': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[0].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[0].nominal.toString())),
                         'feb': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[1].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[1].nominal.toString())),
                         'mar': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[2].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[2].nominal.toString())),
                         'apr': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[3].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[3].nominal.toString())),
                         'mei': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[4].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[4].nominal.toString())),
                         'jun': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[5].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[5].nominal.toString())),
                         'jul': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[6].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[6].nominal.toString())),
                         'agu': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[7].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[7].nominal.toString())),
                         'sep': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[8].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[8].nominal.toString())),
                         'okt': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[9].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[9].nominal.toString())),
                         'nov': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[10].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[10].nominal.toString())),
                         'des': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.data?[11].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanGaji?.data?[11].nominal.toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanGaji?.jumlah
-                                .toString())),
+                            value:
+                                trimString(result.data?.pengeluaran?.bebanGaji?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Uang Makan Karyawan'),
                         'jan': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[0].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[0].nominal.toString())),
                         'feb': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[1].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[1].nominal.toString())),
                         'mar': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[2].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[2].nominal.toString())),
                         'apr': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[3].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[3].nominal.toString())),
                         'mei': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[4].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[4].nominal.toString())),
                         'jun': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[5].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[5].nominal.toString())),
                         'jul': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[6].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[6].nominal.toString())),
                         'agu': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[7].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[7].nominal.toString())),
                         'sep': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[8].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[8].nominal.toString())),
                         'okt': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[9].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[9].nominal.toString())),
                         'nov': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[10].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[10].nominal.toString())),
                         'des': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.data?[11].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.uangMakan?.data?[11].nominal.toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.uangMakan?.jumlah
-                                .toString())),
+                            value:
+                                trimString(result.data?.pengeluaran?.uangMakan?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'THR Karyawan'),
                         'jan': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[0].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[0].nominal.toString())),
                         'feb': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[1].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[1].nominal.toString())),
                         'mar': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[2].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[2].nominal.toString())),
                         'apr': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[3].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[3].nominal.toString())),
                         'mei': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[4].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[4].nominal.toString())),
                         'jun': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[5].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[5].nominal.toString())),
                         'jul': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[6].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[6].nominal.toString())),
                         'agu': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[7].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[7].nominal.toString())),
                         'sep': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[8].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[8].nominal.toString())),
                         'okt': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[9].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[9].nominal.toString())),
                         'nov': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[10].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[10].nominal.toString())),
                         'des': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.data?[11].nominal
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.thr?.data?[11].nominal.toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.thr?.jumlah
-                                .toString())),
+                            value: trimString(result.data?.pengeluaran?.thr?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Beban Adm. & Umum'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[0].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[0].nominal
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[1].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[1].nominal
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[2].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[2].nominal
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[3].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[3].nominal
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[4].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[4].nominal
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[5].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[5].nominal
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[6].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[6].nominal
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[7].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[7].nominal
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[8].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[8].nominal
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[9].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[9].nominal
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[10].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[10].nominal
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanAdmUmum?.data?[11].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanAdmUmum?.data?[11].nominal
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanAdmUmum?.jumlah
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanAdmUmum?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Beban Perlengkapan'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[0].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[0].nominal
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[1].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[1].nominal
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[2].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[2].nominal
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[3].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[3].nominal
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[4].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[4].nominal
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[5].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[5].nominal
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[6].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[6].nominal
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[7].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[7].nominal
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[8].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[8].nominal
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[9].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[9].nominal
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[10].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[10].nominal
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPerlengkapan?.data?[11].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPerlengkapan?.data?[11].nominal
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.bebanPerlengkapan?.jumlah
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.bebanPerlengkapan?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Beban Peny. Inventaris'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[0].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[0].nominal
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[1].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[1].nominal
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[2].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[2].nominal
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[3].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[3].nominal
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[4].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[4].nominal
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[5].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[5].nominal
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[6].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[6].nominal
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[7].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[7].nominal
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[8].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[8].nominal
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[9].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[9].nominal
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[10].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[10].nominal
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.data?[11].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.data?[11].nominal
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanInventaris?.jumlah
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanInventaris?.jumlah
                                 .toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Beban Peny. Gedung'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[0].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[0].nominal
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[1].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[1].nominal
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[2].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[2].nominal
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[3].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[3].nominal
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[4].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[4].nominal
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[5].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[5].nominal
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[6].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[6].nominal
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[7].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[7].nominal
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[8].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[8].nominal
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[9].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[9].nominal
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[10].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[10].nominal
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.data?[11].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.data?[11].nominal
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.bebanPenyusutanGedung?.jumlah
+                            value: trimString(result
+                                .data?.pengeluaran?.bebanPenyusutanGedung?.jumlah
                                 .toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Pemeliharaan Inventaris'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[0].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[0].nominal
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[1].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[1].nominal
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[2].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[2].nominal
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[3].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[3].nominal
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[4].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[4].nominal
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[5].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[5].nominal
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[6].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[6].nominal
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[7].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[7].nominal
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[8].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[8].nominal
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[9].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[9].nominal
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[10].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[10].nominal
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.data?[11].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.data?[11].nominal
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanInventaris?.jumlah
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanInventaris?.jumlah
                                 .toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'Pemeliharaan Gedung'),
                         'jan': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[0].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[0].nominal
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[1].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[1].nominal
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[2].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[2].nominal
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[3].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[3].nominal
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[4].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[4].nominal
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[5].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[5].nominal
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[6].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[6].nominal
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[7].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[7].nominal
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[8].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[8].nominal
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[9].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[9].nominal
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[10].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[10].nominal
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.pemeliharaanGedung?.data?[11].nominal
+                            value: trimString(result
+                                .data?.pengeluaran?.pemeliharaanGedung?.data?[11].nominal
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.pengeluaran?.pemeliharaanGedung?.jumlah
-                                .toString())),
+                            value: trimString(
+                                result.data?.pengeluaran?.pemeliharaanGedung?.jumlah.toString())),
                       }),
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'JUMLAH'),
                         'jan': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[0]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[0].totalPengeluaran
                                 .toString())),
                         'feb': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[1]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[1].totalPengeluaran
                                 .toString())),
                         'mar': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[2]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[2].totalPengeluaran
                                 .toString())),
                         'apr': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[3]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[3].totalPengeluaran
                                 .toString())),
                         'mei': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[4]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[4].totalPengeluaran
                                 .toString())),
                         'jun': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[5]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[5].totalPengeluaran
                                 .toString())),
                         'jul': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[6]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[6].totalPengeluaran
                                 .toString())),
                         'agu': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[7]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[7].totalPengeluaran
                                 .toString())),
                         'sep': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[8]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[8].totalPengeluaran
                                 .toString())),
                         'okt': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[9]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[9].totalPengeluaran
                                 .toString())),
                         'nov': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[10]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[10].totalPengeluaran
                                 .toString())),
                         'des': PlutoCell(
-                            value: trimString(result
-                                .data
-                                ?.pengeluaran
-                                ?.totalPengeluaraanPerBulan
-                                ?.data?[11]
-                                .totalPengeluaran
+                            value: trimString(result.data?.pengeluaran?.totalPengeluaraanPerBulan
+                                ?.data?[11].totalPengeluaran
                                 .toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result.data?.pengeluaran
-                                ?.totalPengeluaraanPerBulan?.jumlah
+                            value: trimString(result
+                                .data?.pengeluaran?.totalPengeluaraanPerBulan?.jumlah
                                 .toString())),
                       }),
                       PlutoRow(cells: {
@@ -1404,8 +1243,7 @@ class _LaporanRealisasiPendapatanState
                         'jumlah': PlutoCell(value: ''),
                       }),
                       PlutoRow(cells: {
-                        'uraian':
-                            PlutoCell(value: 'SISA HASIL USAHA SEBELUM PAJAK'),
+                        'uraian': PlutoCell(value: 'SISA HASIL USAHA SEBELUM PAJAK'),
                         'jan': PlutoCell(value: ''),
                         'feb': PlutoCell(value: ''),
                         'mar': PlutoCell(value: ''),
@@ -1423,57 +1261,43 @@ class _LaporanRealisasiPendapatanState
                       PlutoRow(cells: {
                         'uraian': PlutoCell(value: 'JUMLAH'),
                         'jan': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[0].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[0].sisaHasilUsaha.toString())),
                         'feb': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[1].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[1].sisaHasilUsaha.toString())),
                         'mar': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[2].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[2].sisaHasilUsaha.toString())),
                         'apr': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[3].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[3].sisaHasilUsaha.toString())),
                         'mei': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[4].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[4].sisaHasilUsaha.toString())),
                         'jun': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[5].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[5].sisaHasilUsaha.toString())),
                         'jul': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[6].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[6].sisaHasilUsaha.toString())),
                         'agu': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[7].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[7].sisaHasilUsaha.toString())),
                         'sep': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[8].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[8].sisaHasilUsaha.toString())),
                         'okt': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[9].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[9].sisaHasilUsaha.toString())),
                         'nov': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[10].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[10].sisaHasilUsaha.toString())),
                         'des': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.data?[11].sisaHasilUsaha
-                                .toString())),
+                            value: trimString(
+                                result.data?.sisaHasilUsaha?.data?[11].sisaHasilUsaha.toString())),
                         'jumlah': PlutoCell(
-                            value: trimString(result
-                                .data?.sisaHasilUsaha?.jumlah
-                                .toString())),
+                            value: trimString(result.data?.sisaHasilUsaha?.jumlah.toString())),
                       }),
                     ];
 
@@ -1534,9 +1358,9 @@ class _LaporanRealisasiPendapatanState
                                 ),
                                 style: PlutoGridStyleConfig(
                                   rowHeight: 47.5,
-                                  columnTextStyle: myTextTheme.titleSmall
-                                          ?.copyWith(color: neutralWhite) ??
-                                      const TextStyle(),
+                                  columnTextStyle:
+                                      myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                          const TextStyle(),
                                   gridBorderColor: blueGray50,
                                   gridBorderRadius: BorderRadius.circular(8),
                                 ),
@@ -1572,9 +1396,9 @@ class _LaporanRealisasiPendapatanState
                                 ),
                                 style: PlutoGridStyleConfig(
                                   rowHeight: 47.5,
-                                  columnTextStyle: myTextTheme.titleSmall
-                                          ?.copyWith(color: neutralWhite) ??
-                                      const TextStyle(),
+                                  columnTextStyle:
+                                      myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                          const TextStyle(),
                                   gridBorderColor: blueGray50,
                                   gridBorderRadius: BorderRadius.circular(8),
                                 ),
@@ -1592,17 +1416,14 @@ class _LaporanRealisasiPendapatanState
                   }
                 } else {
                   return SizedBox(
-                    height: MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height -
-                        224,
+                    height:
+                        MediaQuery.of(context).size.height - AppBar().preferredSize.height - 224,
                     child: const ContainerError(),
                   );
                 }
               } else {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height -
-                      AppBar().preferredSize.height -
-                      224,
+                  height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 224,
                   child: const ContainerTidakAda(
                     entity: 'Laporan Hasil Usaha',
                   ),

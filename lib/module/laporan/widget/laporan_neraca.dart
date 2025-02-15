@@ -47,8 +47,7 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                           items: Year.fromJson(monthData).months,
                           value: Month(
                             id: controller.monthNow,
-                            month:
-                                trimString(getNamaMonth(controller.monthNow)),
+                            month: trimString(getNamaMonth(controller.monthNow)),
                           ),
                           onChanged: (value) {
                             controller.monthNow = value?.id ?? 1;
@@ -67,7 +66,7 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                           value: controller.yearNow,
                           itemAsString: (item) => item.toString(),
                           onChanged: (value) {
-                            controller.yearNow = value ?? 2023;
+                            controller.yearNow = value ?? 2025;
                             controller.update();
                           },
                         ),
@@ -142,8 +141,7 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                       backgroundColor: primaryColor,
                       titleTextAlign: PlutoColumnTextAlign.center,
                       textAlign: PlutoColumnTextAlign.right,
-                      title:
-                          '${getNamaMonth(controller.monthNow)} -   ${controller.yearNow}',
+                      title: '${getNamaMonth(controller.monthNow)} -   ${controller.yearNow}',
                       field: 'current_month',
                       type: PlutoColumnType.text(),
                       renderer: (rendererContext) {
@@ -163,8 +161,7 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                       backgroundColor: primaryColor,
                       titleTextAlign: PlutoColumnTextAlign.center,
                       textAlign: PlutoColumnTextAlign.right,
-                      title: subtractOneMonth(
-                          controller.monthNow, controller.yearNow),
+                      title: subtractOneMonth(controller.monthNow, controller.yearNow),
                       field: 'last_month',
                       type: PlutoColumnType.text(),
                       renderer: (rendererContext) {
@@ -489,9 +486,9 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                                     rowHeight: 47.5,
                                     oddRowColor: neutralWhite,
                                     evenRowColor: gray50,
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -534,9 +531,9 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                                     rowHeight: 47.5,
                                     oddRowColor: neutralWhite,
                                     evenRowColor: gray50,
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -556,17 +553,13 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                 }
               } else {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height -
-                      AppBar().preferredSize.height -
-                      224,
+                  height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 224,
                   child: const ContainerError(),
                 );
               }
             } else {
               return SizedBox(
-                height: MediaQuery.of(context).size.height -
-                    AppBar().preferredSize.height -
-                    224,
+                height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 224,
                 child: const ContainerTidakAda(
                   entity: 'Laporan Neraca',
                 ),
