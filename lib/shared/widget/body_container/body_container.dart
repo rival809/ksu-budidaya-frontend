@@ -100,12 +100,6 @@ class _BodyContainerState extends State<BodyContainer> {
                     ],
                   ),
                   const SizedBox(
-                    width: 8.0,
-                  ),
-                  SvgPicture.asset(
-                    iconChevronDown,
-                  ),
-                  const SizedBox(
                     width: 24.0,
                   ),
                   drawerProvider.isDrawerOpen
