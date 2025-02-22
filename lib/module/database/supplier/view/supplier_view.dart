@@ -32,10 +32,9 @@ class SupplierView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
+                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                            ? MediaQuery.of(context).size.width - 32 - 265
+                            : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,16 +44,14 @@ class SupplierView extends StatefulWidget {
                               SizedBox(
                                 width: 250,
                                 child: BaseForm(
-                                  textEditingController:
-                                      controller.supplierNameController,
+                                  textEditingController: controller.supplierNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
-                                        controller.dataFuture =
-                                            controller.cariDataSupplier();
+                                        controller.dataFuture = controller.cariDataSupplier();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -69,8 +66,7 @@ class SupplierView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
-                                  controller.dataFuture =
-                                      controller.cariDataSupplier();
+                                  controller.dataFuture = controller.cariDataSupplier();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -108,34 +104,28 @@ class SupplierView extends StatefulWidget {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ContainerLoadingRole();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
+                      } else if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           SupplierResult result = snapshot.data;
-                          controller.dataSupplier =
-                              result.data ?? DataSupplier();
-                          List<dynamic> listData = controller.dataSupplier
-                                  .toJson()["data_supplier"] ??
-                              [];
+                          controller.dataSupplier = result.data ?? DataSupplier();
+                          List<dynamic> listData =
+                              controller.dataSupplier.toJson()["data_supplier"] ?? [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
 
-                            columns.addAll(List.generate(
-                                controller.listRoleView.length, (index) {
+                            columns.addAll(List.generate(controller.listRoleView.length, (index) {
                               return PlutoColumn(
                                 backgroundColor: primaryColor,
-                                filterHintText:
-                                    "Cari ${controller.listRoleView[index]}",
+                                filterHintText: "Cari ${controller.listRoleView[index]}",
                                 title: convertTitle(
                                   controller.listRoleView[index],
                                 ),
                                 field: controller.listRoleView[index],
-                                type: (controller.listRoleView[index] ==
-                                        "hutang_dagang")
+                                type: (controller.listRoleView[index] == "hutang_dagang")
                                     ? PlutoColumnType.number(
                                         locale: "id",
                                       )
@@ -155,8 +145,7 @@ class SupplierView extends StatefulWidget {
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
                                   final rowIndex = rendererContext.rowIdx;
-                                  Map<String, dynamic> dataRow =
-                                      rendererContext.row.toJson();
+                                  Map<String, dynamic> dataRow = rendererContext.row.toJson();
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -196,8 +185,7 @@ class SupplierView extends StatefulWidget {
                                           children: [
                                             SvgPicture.asset(
                                               iconDelete,
-                                              colorFilter:
-                                                  colorFilter(color: red600),
+                                              colorFilter: colorFilter(color: red600),
                                             ),
                                             const SizedBox(width: 8),
                                             Text(
@@ -213,8 +201,7 @@ class SupplierView extends StatefulWidget {
                                         showDialogBase(
                                           width: 1200,
                                           content: DialogDetailSupplier(
-                                            data: result
-                                                .data?.dataSupplier?[rowIndex],
+                                            data: result.data?.dataSupplier?[rowIndex],
                                           ),
                                         );
                                       } else if (value == 2) {
@@ -222,8 +209,7 @@ class SupplierView extends StatefulWidget {
                                           width: 700,
                                           content: DialogSupplier(
                                             isDetail: true,
-                                            data: result
-                                                .data?.dataSupplier?[rowIndex],
+                                            data: result.data?.dataSupplier?[rowIndex],
                                           ),
                                         );
                                       } else if (value == 4) {
@@ -293,8 +279,7 @@ class SupplierView extends StatefulWidget {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
                                     controller.update();
-                                    controller.dataFuture =
-                                        controller.cariDataSupplier(
+                                    controller.dataFuture = controller.cariDataSupplier(
                                       isAsc: controller.isAsc,
                                       field: event.column.field,
                                     );
@@ -306,9 +291,9 @@ class SupplierView extends StatefulWidget {
                                     autoSizeMode: PlutoAutoSizeMode.scale,
                                   ),
                                   style: PlutoGridStyleConfig(
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -320,48 +305,45 @@ class SupplierView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller
-                                            .dataSupplier.paging?.totalPage ??
-                                        0,
+                                    maxPage: controller.dataSupplier.paging?.totalPage ?? 0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataSupplier();
+                                      controller.dataFuture = controller.cariDataSupplier(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataSupplier();
+                                      controller.dataFuture = controller.cariDataSupplier(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
-                                    totalRow: controller
-                                            .dataSupplier.paging?.totalItem ??
-                                        0,
+                                    totalRow: controller.dataSupplier.paging?.totalItem ?? 0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {
                                         controller.page =
-                                            (int.parse(controller.page) - 1)
-                                                .toString();
+                                            (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataSupplier();
+                                        controller.dataFuture = controller.cariDataSupplier(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },
                                     onPressRight: () {
                                       if (int.parse(controller.page) <
-                                          (result.data?.paging?.totalPage ??
-                                              0)) {
+                                          (result.data?.paging?.totalPage ?? 0)) {
                                         controller.page =
-                                            (int.parse(controller.page) + 1)
-                                                .toString();
+                                            (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataSupplier();
+                                        controller.dataFuture = controller.cariDataSupplier(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },

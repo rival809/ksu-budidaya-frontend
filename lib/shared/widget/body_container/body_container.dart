@@ -230,6 +230,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                     "/transaksi/pembelian",
                                     "/transaksi/penjualan",
                                     "/transaksi/retur",
+                                    "/transaksi/bayar-hutang-anggota",
                                     "/transaksi/bayar-hutang-dagang",
                                     "/transaksi/tutup-kasir",
                                   ],
@@ -269,6 +270,17 @@ class _BodyContainerState extends State<BodyContainer> {
                                       onTap: () {
                                         router.go(
                                           "/transaksi/retur",
+                                        );
+                                      },
+                                    ),
+                                  if (dataLogin.roleData?.stsPembayaranHutang == true)
+                                    DrawerMenu(
+                                      title: "Bayar Hutang Anggota",
+                                      isSubMenu: true,
+                                      isSelected: currentRoute == "/transaksi/bayar-hutang-anggota",
+                                      onTap: () {
+                                        router.go(
+                                          "/transaksi/bayar-hutang-anggota",
                                         );
                                       },
                                     ),

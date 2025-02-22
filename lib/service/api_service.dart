@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
 
 class ApiService {
   //CONFIG API
@@ -1339,27 +1340,26 @@ class ApiService {
     }
   }
 
-  // static Future<HistoryHutangDagangResult> listHistoryHutangDagang({
-  //   required DataMap data,
-  // }) async {
-  //   var response = await dio.post(
-  //     "$_baseUrl/api/hutang-dagang/list-history-bayar-hutang-dagang",
-  //     options: options,
-  //     data: data,
-  //     cancelToken: cancelToken,
-  //   );
+  static Future<HistoryHutangAnggotaResult> listHistoryHutangAnggota({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/hutang-anggota/list-history-bayar-hutang-anggota",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
 
-  //   if (response.statusCode == 200) {
-  //     if (response.data["success"] == true) {
-  //       return HistoryHutangDagangResult.fromJson(
-  //           json.decode(response.toString()));
-  //     } else {
-  //       throw Exception(response.data["message"]);
-  //     }
-  //   } else {
-  //     throw Exception('Failed to listHistoryHutangDagang');
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return HistoryHutangAnggotaResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listHistoryHutangAnggota');
+    }
+  }
 
   static Future<BayarHutangAnggotaResult> bayarHutangAnggota({
     required DataMap data,

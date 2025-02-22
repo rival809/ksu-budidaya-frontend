@@ -32,10 +32,9 @@ class CashInCashOutView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
+                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                            ? MediaQuery.of(context).size.width - 32 - 265
+                            : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,16 +44,14 @@ class CashInCashOutView extends StatefulWidget {
                               SizedBox(
                                 width: 250,
                                 child: BaseForm(
-                                  textEditingController:
-                                      controller.supplierNameController,
+                                  textEditingController: controller.supplierNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
-                                        controller.dataFuture =
-                                            controller.cariDataCashInOut();
+                                        controller.dataFuture = controller.cariDataCashInOut();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -134,17 +131,14 @@ class CashInCashOutView extends StatefulWidget {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ContainerLoadingRole();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
+                      } else if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           CashInOutResult result = snapshot.data;
-                          controller.dataCashInOut =
-                              result.data ?? DataCashInOut();
-                          List<dynamic> listData = controller.dataCashInOut
-                                  .toJson()["data_cash_in_out"] ??
-                              [];
+                          controller.dataCashInOut = result.data ?? DataCashInOut();
+                          List<dynamic> listData =
+                              controller.dataCashInOut.toJson()["data_cash_in_out"] ?? [];
 
                           for (var data in listData) {
                             final isCashIn = data["id_cash"] == "1";
@@ -186,16 +180,13 @@ class CashInCashOutView extends StatefulWidget {
                                 (index) {
                                   return PlutoColumn(
                                     backgroundColor: primaryColor,
-                                    filterHintText:
-                                        "Cari ${controller.listRoleView[index]}",
+                                    filterHintText: "Cari ${controller.listRoleView[index]}",
                                     title: convertTitle(
                                       controller.listRoleView[index],
                                     ),
                                     field: controller.listRoleView[index],
-                                    type: (controller.listRoleView[index] ==
-                                                "cash_in" ||
-                                            controller.listRoleView[index] ==
-                                                "cash_out")
+                                    type: (controller.listRoleView[index] == "cash_in" ||
+                                            controller.listRoleView[index] == "cash_out")
                                         ? PlutoColumnType.number(
                                             locale: "id",
                                           )
@@ -217,8 +208,7 @@ class CashInCashOutView extends StatefulWidget {
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
                                   final rowIndex = rendererContext.rowIdx;
-                                  Map<String, dynamic> dataRow =
-                                      rendererContext.row.toJson();
+                                  Map<String, dynamic> dataRow = rendererContext.row.toJson();
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -243,8 +233,7 @@ class CashInCashOutView extends StatefulWidget {
                                           children: [
                                             SvgPicture.asset(
                                               iconDelete,
-                                              colorFilter:
-                                                  colorFilter(color: red600),
+                                              colorFilter: colorFilter(color: red600),
                                             ),
                                             const SizedBox(width: 8),
                                             Text(
@@ -261,8 +250,7 @@ class CashInCashOutView extends StatefulWidget {
                                           width: 1000,
                                           content: DialogCashInOut(
                                             isDetail: true,
-                                            data: result
-                                                .data?.dataCashInOut?[rowIndex],
+                                            data: result.data?.dataCashInOut?[rowIndex],
                                           ),
                                         );
                                       } else if (value == 2) {
@@ -273,10 +261,7 @@ class CashInCashOutView extends StatefulWidget {
                                             onConfirm: () async {
                                               controller.postRemoveCashInOut(
                                                 trimString(
-                                                  result
-                                                      .data
-                                                      ?.dataCashInOut?[rowIndex]
-                                                      .idCashInOut,
+                                                  result.data?.dataCashInOut?[rowIndex].idCashInOut,
                                                 ),
                                               );
                                             },
@@ -338,8 +323,7 @@ class CashInCashOutView extends StatefulWidget {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
                                     controller.update();
-                                    controller.dataFuture =
-                                        controller.cariDataCashInOut(
+                                    controller.dataFuture = controller.cariDataCashInOut(
                                       isAsc: controller.isAsc,
                                       field: (event.column.field == "cash_in" ||
                                               event.column.field == "cash_out")
@@ -354,9 +338,9 @@ class CashInCashOutView extends StatefulWidget {
                                     autoSizeMode: PlutoAutoSizeMode.scale,
                                   ),
                                   style: PlutoGridStyleConfig(
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -368,48 +352,45 @@ class CashInCashOutView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller
-                                            .dataCashInOut.paging?.totalPage ??
-                                        0,
+                                    maxPage: controller.dataCashInOut.paging?.totalPage ?? 0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataCashInOut();
+                                      controller.dataFuture = controller.cariDataCashInOut(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataCashInOut();
+                                      controller.dataFuture = controller.cariDataCashInOut(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
-                                    totalRow: controller
-                                            .dataCashInOut.paging?.totalItem ??
-                                        0,
+                                    totalRow: controller.dataCashInOut.paging?.totalItem ?? 0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {
                                         controller.page =
-                                            (int.parse(controller.page) - 1)
-                                                .toString();
+                                            (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataCashInOut();
+                                        controller.dataFuture = controller.cariDataCashInOut(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },
                                     onPressRight: () {
                                       if (int.parse(controller.page) <
-                                          (result.data?.paging?.totalPage ??
-                                              0)) {
+                                          (result.data?.paging?.totalPage ?? 0)) {
                                         controller.page =
-                                            (int.parse(controller.page) + 1)
-                                                .toString();
+                                            (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataCashInOut();
+                                        controller.dataFuture = controller.cariDataCashInOut(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },

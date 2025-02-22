@@ -732,14 +732,18 @@ class ProdukView extends StatefulWidget {
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture = controller.cariDataProduct();
+                                      controller.dataFuture = controller.cariDataProduct(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture = controller.cariDataProduct();
+                                      controller.dataFuture = controller.cariDataProduct(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
                                     totalRow: controller.dataProduct.paging?.totalItem ?? 0,
@@ -748,7 +752,9 @@ class ProdukView extends StatefulWidget {
                                         controller.page =
                                             (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture = controller.cariDataProduct();
+                                        controller.dataFuture = controller.cariDataProduct(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },
@@ -758,7 +764,9 @@ class ProdukView extends StatefulWidget {
                                         controller.page =
                                             (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture = controller.cariDataProduct();
+                                        controller.dataFuture = controller.cariDataProduct(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },
