@@ -37,8 +37,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
 
     if (states != null) {
       matches.addAll(states);
-      matches.retainWhere(
-          (s) => trimString(s).toLowerCase().contains(query.toLowerCase()));
+      matches.retainWhere((s) => trimString(s).toLowerCase().contains(query.toLowerCase()));
     }
 
     return matches;
@@ -68,8 +67,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -97,8 +95,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -110,8 +107,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
     try {
       final pdf = pw.Document();
 
-      final ttfRegular =
-          await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
+      final ttfRegular = await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
 
       final regularFont = pw.Font.ttf(ttfRegular);
       final ttfBold = await rootBundle.load("assets/fonts/Roboto-Bold.ttf");
@@ -120,11 +116,11 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
 
       pdf.addPage(
         pw.Page(
-          // pageTheme: const pw.PageTheme(
-          //   pageFormat: PdfPageFormat.roll80,
-          //   margin: pw.EdgeInsets.zero,
-
-          // ),
+          pageTheme: const pw.PageTheme(
+            pageFormat: PdfPageFormat(71 * PdfPageFormat.mm, double.infinity),
+            orientation: pw.PageOrientation.natural,
+            margin: pw.EdgeInsets.all(8),
+          ),
           build: (pw.Context context) {
             int selisih = ((int.tryParse(trimString(dataEdit.uangTunai)) ?? 0) -
                 (int.tryParse(trimString(dataEdit.tunai)) ?? 0));
@@ -143,12 +139,15 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
               width: 800,
               child: pw.Column(
                 children: [
+                  pw.SizedBox(
+                    height: 32.0,
+                  ),
                   pw.Text(
                     "KSU BUDI DAYA",
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       font: boldFont,
-                      fontSize: 20,
+                      fontSize: 8,
                     ),
                   ),
                   pw.Row(
@@ -158,7 +157,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           trimString(dataEdit.namaKasir),
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                         ),
                       ),
@@ -168,7 +167,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           textAlign: pw.TextAlign.end,
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                         ),
                       ),
@@ -200,7 +199,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           "TUNAI",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -209,7 +208,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 8,
                         ),
                       ),
                       pw.Expanded(
@@ -218,7 +217,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
@@ -235,7 +234,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           "QRIS",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -244,7 +243,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 8,
                         ),
                       ),
                       pw.Expanded(
@@ -253,7 +252,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
@@ -270,7 +269,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           "KREDIT",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -279,7 +278,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 8,
                         ),
                       ),
                       pw.Expanded(
@@ -288,7 +287,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: regularFont,
-                            fontSize: 18,
+                            fontSize: 7,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
@@ -321,7 +320,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           "TOTAL",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -330,7 +329,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 8,
                         ),
                       ),
                       pw.Expanded(
@@ -339,7 +338,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: boldFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
@@ -372,7 +371,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           "UANG TUNAI",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -381,7 +380,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 8,
                         ),
                       ),
                       pw.Expanded(
@@ -390,7 +389,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: boldFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
@@ -407,7 +406,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           "SELISIH",
                           style: pw.TextStyle(
                             font: regularFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -416,7 +415,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           font: regularFont,
-                          fontSize: 20,
+                          fontSize: 8,
                         ),
                       ),
                       pw.Expanded(
@@ -425,12 +424,15 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             font: boldFont,
-                            fontSize: 20,
+                            fontSize: 8,
                           ),
                           textAlign: pw.TextAlign.end,
                         ),
                       )
                     ],
+                  ),
+                  pw.SizedBox(
+                    height: 32.0,
                   ),
                 ],
               ),
@@ -440,8 +442,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
       );
 
       Uint8List pdfData = await pdf.save();
-      await Printing.layoutPdf(
-          onLayout: (PdfPageFormat format) async => pdfData);
+      await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdfData);
     } catch (e) {
       Navigator.pop(context);
       showInfoDialog(e.toString(), context);
@@ -494,10 +495,8 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                       );
 
                       if (selectedDate != null) {
-                        dataEdit.tgTutupKasir =
-                            formatDateTime(selectedDate.toString());
-                        textController[0].text =
-                            formatDateTime(selectedDate.toString());
+                        dataEdit.tgTutupKasir = formatDateTime(selectedDate.toString());
+                        textController[0].text = formatDateTime(selectedDate.toString());
                         update();
                       }
                     },
@@ -509,8 +508,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                     validator: Validatorless.required("Data Wajib Diisi"),
                     autoValidate: AutovalidateMode.onUserInteraction,
                     textEditingController: textController[0],
-                    enabled: UserDatabase.userDatabase.data?.roleData?.idRole ==
-                            "ROLE001"
+                    enabled: UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001"
                         ? widget.isEdit ?? true
                         : false,
                   ),
@@ -522,8 +520,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                   child: BaseDropdownButton<String>(
                     label: "Shift",
                     hint: "Pilih Shift",
-                    enabled: UserDatabase.userDatabase.data?.roleData?.idRole ==
-                            "ROLE001"
+                    enabled: UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001"
                         ? widget.isEdit ?? true
                         : false,
                     sortItem: false,
@@ -547,8 +544,7 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                   child: BaseDropdownButton<DataUsers>(
                     hint: "Pilih Kasir",
                     label: "Kasir",
-                    enabled: UserDatabase.userDatabase.data?.roleData?.idRole ==
-                            "ROLE001"
+                    enabled: UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001"
                         ? widget.isEdit ?? true
                         : false,
                     itemAsString: (item) => item.userAsString(),
@@ -814,34 +810,22 @@ class _DialogTutupKasirState extends State<DialogTutupKasir> {
                           ? () {
                               if (tutupKasirKey.currentState!.validate()) {
                                 DataMap payload = dataEdit.toJson();
-                                payload.removeWhere(
-                                    (key, value) => key == "created_at");
-                                payload.removeWhere(
-                                    (key, value) => key == "updated_at");
+                                payload.removeWhere((key, value) => key == "created_at");
+                                payload.removeWhere((key, value) => key == "updated_at");
 
                                 if (widget.isEdit == true) {
-                                  payload.removeWhere(
-                                      (key, value) => key == "shift");
-                                  payload.removeWhere(
-                                      (key, value) => key == "tg_tutup_kasir");
-                                  payload.removeWhere(
-                                      (key, value) => key == "tunai");
-                                  payload.removeWhere(
-                                      (key, value) => key == "qris");
-                                  payload.removeWhere(
-                                      (key, value) => key == "kredit");
-                                  payload.removeWhere((key, value) =>
-                                      key == "total_nilai_jual");
-                                  payload.removeWhere(
-                                      (key, value) => key == "total");
-                                  payload.removeWhere((key, value) =>
-                                      key == "total_nilai_beli");
-                                  payload.removeWhere((key, value) =>
-                                      key == "total_keuntungan");
+                                  payload.removeWhere((key, value) => key == "shift");
+                                  payload.removeWhere((key, value) => key == "tg_tutup_kasir");
+                                  payload.removeWhere((key, value) => key == "tunai");
+                                  payload.removeWhere((key, value) => key == "qris");
+                                  payload.removeWhere((key, value) => key == "kredit");
+                                  payload.removeWhere((key, value) => key == "total_nilai_jual");
+                                  payload.removeWhere((key, value) => key == "total");
+                                  payload.removeWhere((key, value) => key == "total_nilai_beli");
+                                  payload.removeWhere((key, value) => key == "total_keuntungan");
                                   postUpdateTutupKasir(payload);
                                 } else {
-                                  payload.removeWhere(
-                                      (key, value) => key == "id_tutup_kasir");
+                                  payload.removeWhere((key, value) => key == "id_tutup_kasir");
                                   postCreateTutupKasir(payload);
                                 }
                               }
