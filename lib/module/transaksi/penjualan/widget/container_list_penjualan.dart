@@ -47,16 +47,14 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                     SizedBox(
                       width: 250,
                       child: BaseForm(
-                        textEditingController:
-                            controller.penjualanNameController,
+                        textEditingController: controller.penjualanNameController,
                         onChanged: (value) {},
                         hintText: "Pencarian",
                         suffix: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: BasePrimaryButton(
                             onPressed: () {
-                              controller.dataFuture =
-                                  controller.cariDataPenjualan();
+                              controller.dataFuture = controller.cariDataPenjualan();
                               controller.update();
                             },
                             text: "Cari",
@@ -129,8 +127,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                 PenjualanResult result = snapshot.data;
                 controller.dataListPenjualan = result.data ?? DataPenjualan();
                 List<dynamic> listData =
-                    controller.dataListPenjualan.toJson()["data_penjualan"] ??
-                        [];
+                    controller.dataListPenjualan.toJson()["data_penjualan"] ?? [];
 
                 if (listData.isNotEmpty) {
                   List<PlutoRow> rows = [];
@@ -140,29 +137,42 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                     List.generate(
                       controller.listPenjualanView.length,
                       (index) {
-                        if (controller.listPenjualanView[index] ==
-                            "jenis_pembayaran") {
+                        if (controller.listPenjualanView[index] == "jenis_pembayaran") {
                           return PlutoColumn(
                             width: 75,
                             backgroundColor: primaryColor,
-                            filterHintText:
-                                "Cari ${controller.listPenjualanView[index]}",
+                            filterHintText: "Cari ${controller.listPenjualanView[index]}",
                             title: convertTitle(
                               controller.listPenjualanView[index],
                             ),
                             field: controller.listPenjualanView[index],
                             type: PlutoColumnType.text(),
                             renderer: (rendererContext) {
-                              Map<String, dynamic> dataRow =
-                                  rendererContext.row.toJson();
-                              return CardLabel(
-                                cardColor: yellow50,
-                                cardTitle: dataRow["jenis_pembayaran"]
-                                    .toString()
-                                    .toUpperCase(),
-                                cardTitleColor: yellow900,
-                                cardBorderColor: yellow50,
-                              );
+                              Map<String, dynamic> dataRow = rendererContext.row.toJson();
+
+                              if (dataRow["jenis_pembayaran"].toString().toUpperCase() == "TUNAI") {
+                                return CardLabel(
+                                  cardColor: green50,
+                                  cardTitle: dataRow["jenis_pembayaran"].toString().toUpperCase(),
+                                  cardTitleColor: green900,
+                                  cardBorderColor: green50,
+                                );
+                              } else if (dataRow["jenis_pembayaran"].toString().toUpperCase() ==
+                                  "KREDIT") {
+                                return CardLabel(
+                                  cardColor: yellow50,
+                                  cardTitle: dataRow["jenis_pembayaran"].toString().toUpperCase(),
+                                  cardTitleColor: yellow900,
+                                  cardBorderColor: yellow50,
+                                );
+                              } else {
+                                return CardLabel(
+                                  cardColor: blue50,
+                                  cardTitle: dataRow["jenis_pembayaran"].toString().toUpperCase(),
+                                  cardTitleColor: blue900,
+                                  cardBorderColor: blue50,
+                                );
+                              }
                             },
                           );
                         }
@@ -170,8 +180,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                           return PlutoColumn(
                             width: 75,
                             backgroundColor: primaryColor,
-                            filterHintText:
-                                "Cari ${controller.listPenjualanView[index]}",
+                            filterHintText: "Cari ${controller.listPenjualanView[index]}",
                             title: "Qnt",
                             field: controller.listPenjualanView[index],
                             type: PlutoColumnType.number(
@@ -181,23 +190,18 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                         }
                         return PlutoColumn(
                           backgroundColor: primaryColor,
-                          filterHintText:
-                              "Cari ${controller.listPenjualanView[index]}",
+                          filterHintText: "Cari ${controller.listPenjualanView[index]}",
                           title: convertTitle(
                             controller.listPenjualanView[index],
                           ),
                           field: controller.listPenjualanView[index],
-                          type: (controller.listPenjualanView[index] ==
-                                      "total_nilai_beli" ||
-                                  controller.listPenjualanView[index] ==
-                                      "total_nilai_jual" ||
-                                  controller.listPenjualanView[index] ==
-                                      "jumlah")
+                          type: (controller.listPenjualanView[index] == "total_nilai_beli" ||
+                                  controller.listPenjualanView[index] == "total_nilai_jual" ||
+                                  controller.listPenjualanView[index] == "jumlah")
                               ? PlutoColumnType.number(
                                   locale: "id",
                                 )
-                              : (controller.listPenjualanView[index] ==
-                                      "tg_pembelian")
+                              : (controller.listPenjualanView[index] == "tg_pembelian")
                                   ? PlutoColumnType.date()
                                   : PlutoColumnType.text(),
                         );
@@ -217,8 +221,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                       enableEditingMode: false,
                       renderer: (rendererContext) {
                         final rowIndex = rendererContext.rowIdx;
-                        Map<String, dynamic> dataRow =
-                            rendererContext.row.toJson();
+                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
                         return DropdownAksi(
                           text: "Aksi",
                           listItem: [
@@ -257,15 +260,12 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                           onChange: (value) {
                             if (value == 1) {
                               DetailDataPenjualan dataDetail =
-                                  result.data?.dataPenjualan?[rowIndex] ??
-                                      DetailDataPenjualan();
-                              controller.dataPenjualan.jenisPembayaran =
-                                  dataDetail.jenisPembayaran;
+                                  result.data?.dataPenjualan?[rowIndex] ?? DetailDataPenjualan();
+                              controller.dataPenjualan.jenisPembayaran = dataDetail.jenisPembayaran;
 
                               controller.postDetailPenjualan(
                                 trimString(
-                                  result.data?.dataPenjualan?[rowIndex]
-                                      .idPenjualan,
+                                  result.data?.dataPenjualan?[rowIndex].idPenjualan,
                                 ),
                               );
                               update();
@@ -277,8 +277,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                                   onConfirm: () async {
                                     controller.postRemoveSale(
                                       trimString(
-                                        result.data?.dataPenjualan?[rowIndex]
-                                            .idPenjualan,
+                                        result.data?.dataPenjualan?[rowIndex].idPenjualan,
                                       ),
                                     );
                                   },
@@ -291,8 +290,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                     ),
                   );
 
-                  List<dynamic> listDataWithIndex =
-                      List.generate(listData.length, (index) {
+                  List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
                     return {
                       ...listData[index],
                       'persistentIndex': index + 1,
@@ -352,8 +350,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                           autoSizeMode: PlutoAutoSizeMode.scale,
                         ),
                         style: PlutoGridStyleConfig(
-                          columnTextStyle: myTextTheme.titleSmall
-                                  ?.copyWith(color: neutralWhite) ??
+                          columnTextStyle: myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
                               const TextStyle(),
                           gridBorderColor: blueGray50,
                           gridBorderRadius: BorderRadius.circular(8),
@@ -366,45 +363,35 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                         return FooterTableWidget(
                           page: controller.page,
                           itemPerpage: controller.size,
-                          maxPage:
-                              controller.dataListPenjualan.paging?.totalPage ??
-                                  0,
+                          maxPage: controller.dataListPenjualan.paging?.totalPage ?? 0,
                           onChangePage: (value) {
                             controller.page = trimString(value);
                             controller.update();
-                            controller.dataFuture =
-                                controller.cariDataPenjualan();
+                            controller.dataFuture = controller.cariDataPenjualan();
                             controller.update();
                           },
                           onChangePerPage: (value) {
                             controller.page = "1";
                             controller.size = trimString(value);
                             controller.update();
-                            controller.dataFuture =
-                                controller.cariDataPenjualan();
+                            controller.dataFuture = controller.cariDataPenjualan();
                             controller.update();
                           },
-                          totalRow:
-                              controller.dataListPenjualan.paging?.totalItem ??
-                                  0,
+                          totalRow: controller.dataListPenjualan.paging?.totalItem ?? 0,
                           onPressLeft: () {
                             if (int.parse(controller.page) > 1) {
-                              controller.page =
-                                  (int.parse(controller.page) - 1).toString();
+                              controller.page = (int.parse(controller.page) - 1).toString();
                               controller.update();
-                              controller.dataFuture =
-                                  controller.cariDataPenjualan();
+                              controller.dataFuture = controller.cariDataPenjualan();
                               controller.update();
                             }
                           },
                           onPressRight: () {
                             if (int.parse(controller.page) <
                                 (result.data?.paging?.totalPage ?? 0)) {
-                              controller.page =
-                                  (int.parse(controller.page) + 1).toString();
+                              controller.page = (int.parse(controller.page) + 1).toString();
                               controller.update();
-                              controller.dataFuture =
-                                  controller.cariDataPenjualan();
+                              controller.dataFuture = controller.cariDataPenjualan();
                               controller.update();
                             }
                           },

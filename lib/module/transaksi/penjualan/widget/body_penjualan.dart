@@ -71,6 +71,10 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
 
     double total = ((harga - diskon) * jumlah);
 
+    if (trimString(qntController.text) != jumlah.toString()) {
+      qntController.text = jumlah.toString();
+    }
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
