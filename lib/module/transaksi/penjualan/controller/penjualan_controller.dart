@@ -30,7 +30,8 @@ class PenjualanController extends State<PenjualanView> {
     if (states != null) {
       matches.addAll(states);
       matches.retainWhere((s) =>
-          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) &&
+          (trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) ||
+              trimString(s.nmProduct).toLowerCase().contains(query.toLowerCase())) &&
           s.statusProduct == true);
     }
 
