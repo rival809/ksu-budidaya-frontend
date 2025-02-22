@@ -40,9 +40,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
       persenDiskon = "0";
     } else {
       persenDiskon = formatMoney(
-        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100)
-            .round()
-            .toString(),
+        (((hargaJual - (hargaJual - diskon)) / hargaJual) * 100).round().toString(),
       );
     }
 
@@ -55,8 +53,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
     hitDiskon();
     diskonController.text = trimString(persenDiskon);
 
-    qntController.text = trimString(
-        widget.controller.dataPenjualan.details?[widget.index].jumlah);
+    qntController.text = trimString(widget.controller.dataPenjualan.details?[widget.index].jumlah);
   }
 
   @override
@@ -64,15 +61,12 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
     PenjualanController controller = widget.controller;
     controller.sumTotalIndex();
 
-    double harga = double.tryParse(
-            controller.dataPenjualan.details?[widget.index].harga ?? "0") ??
-        0;
-    double diskon = double.tryParse(
-            controller.dataPenjualan.details?[widget.index].diskon ?? "0") ??
-        0;
-    double jumlah = double.tryParse(
-            controller.dataPenjualan.details?[widget.index].jumlah ?? "0") ??
-        0;
+    double harga =
+        double.tryParse(controller.dataPenjualan.details?[widget.index].harga ?? "0") ?? 0;
+    double diskon =
+        double.tryParse(controller.dataPenjualan.details?[widget.index].diskon ?? "0") ?? 0;
+    double jumlah =
+        double.tryParse(controller.dataPenjualan.details?[widget.index].jumlah ?? "0") ?? 0;
 
     double total = ((harga - diskon) * jumlah);
 
@@ -86,40 +80,6 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            if (!controller.isDetail)
-              Expanded(
-                flex: 2,
-                child: InkWell(
-                  onTap: controller.isDetail
-                      ? null
-                      : () {
-                          controller.dataPenjualan.details
-                              ?.removeAt(widget.index);
-                          controller.focusNodeInputPenjualan.requestFocus();
-                          controller.update();
-                        },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          width: 1.0,
-                          color: blueGray50,
-                        ),
-                      ),
-                    ),
-                    child: SvgPicture.asset(
-                      iconDelete,
-                      colorFilter: colorFilterRed800,
-                    ),
-                  ),
-                ),
-              ),
-            if (!controller.isDetail)
-              Container(
-                width: 1,
-                color: blueGray50,
-              ),
             Expanded(
               flex: 6,
               child: Container(
@@ -181,8 +141,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                     Expanded(
                       child: Text(
                         trimString(
-                          controller
-                              .dataPenjualan.details?[widget.index].jumlah,
+                          controller.dataPenjualan.details?[widget.index].jumlah,
                         ),
                         style: myTextTheme.bodyMedium,
                       ),
@@ -195,12 +154,9 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                           onTap: controller.isDetail
                               ? null
                               : () {
-                                  controller
-                                      .dataPenjualan
-                                      .details?[widget.index]
-                                      .jumlah = (jumlah + 1).toString();
-                                  controller.focusNodeInputPenjualan
-                                      .requestFocus();
+                                  controller.dataPenjualan.details?[widget.index].jumlah =
+                                      (jumlah + 1).toString();
+                                  controller.focusNodeInputPenjualan.requestFocus();
 
                                   controller.update();
                                 },
@@ -214,18 +170,12 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                               ? null
                               : () {
                                   if (jumlah > 1) {
-                                    controller
-                                        .dataPenjualan
-                                        .details?[widget.index]
-                                        .jumlah = (jumlah - 1).toString();
-                                    controller
-                                        .dataPenjualan
-                                        .details?[widget.index]
-                                        .total = ((harga * jumlah) -
-                                            (harga * jumlah) * (diskon / 100))
-                                        .toString();
-                                    controller.focusNodeInputPenjualan
-                                        .requestFocus();
+                                    controller.dataPenjualan.details?[widget.index].jumlah =
+                                        (jumlah - 1).toString();
+                                    controller.dataPenjualan.details?[widget.index].total =
+                                        ((harga * jumlah) - (harga * jumlah) * (diskon / 100))
+                                            .toString();
+                                    controller.focusNodeInputPenjualan.requestFocus();
                                     controller.update();
                                   }
                                 },
@@ -268,19 +218,16 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                       }
 
                       var hargaJual = double.parse(
-                        removeComma(widget.controller.dataPenjualan
-                                .details?[widget.index].harga ??
-                            "0"),
+                        removeComma(
+                            widget.controller.dataPenjualan.details?[widget.index].harga ?? "0"),
                       );
 
-                      var nilaiDiskon =
-                          ((inputValue / 100) * hargaJual).round();
+                      var nilaiDiskon = ((inputValue / 100) * hargaJual).round();
 
-                      widget.controller.dataPenjualan.details?[widget.index]
-                          .diskon = nilaiDiskon.toString();
+                      widget.controller.dataPenjualan.details?[widget.index].diskon =
+                          nilaiDiskon.toString();
                     } else {
-                      widget.controller.dataPenjualan.details?[widget.index]
-                          .diskon = "0";
+                      widget.controller.dataPenjualan.details?[widget.index].diskon = "0";
                     }
 
                     controller.update();
@@ -319,6 +266,39 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                 ),
               ),
             ),
+            if (!controller.isDetail)
+              Container(
+                width: 1,
+                color: blueGray50,
+              ),
+            if (!controller.isDetail)
+              Expanded(
+                flex: 2,
+                child: InkWell(
+                  onTap: controller.isDetail
+                      ? null
+                      : () {
+                          controller.dataPenjualan.details?.removeAt(widget.index);
+                          controller.focusNodeInputPenjualan.requestFocus();
+                          controller.update();
+                        },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          width: 1.0,
+                          color: blueGray50,
+                        ),
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      iconDelete,
+                      colorFilter: colorFilterRed800,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

@@ -303,18 +303,30 @@ class PenjualanController extends State<PenjualanView> {
       Navigator.pop(context);
 
       if (result.success == true) {
-        dataPenjualan.details?.add(
-          DetailsCreatePenjualan(
-            idProduct: trimString(result.data?.idProduct),
-            harga: trimString(result.data?.hargaJual),
-            jumlah: "1",
-            nmProduk: trimString(result.data?.nmProduct),
-            hargaBeli: trimString(result.data?.hargaBeli),
-            nmDivisi: getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
-            diskon: "0",
-            total: (double.parse(result.data?.hargaJual ?? "0") * double.parse("1")).toString(),
-          ),
-        );
+        if (dataPenjualan.details != null &&
+            dataPenjualan.details!.any((element) => element.idProduct == result.data?.idProduct)) {
+          dataPenjualan.details!
+              .firstWhere((element) => element.idProduct == result.data?.idProduct)
+              .jumlah = (int.parse(dataPenjualan.details
+                          ?.firstWhere((element) => element.idProduct == result.data?.idProduct)
+                          .jumlah ??
+                      "0") +
+                  1)
+              .toString();
+        } else {
+          dataPenjualan.details?.add(
+            DetailsCreatePenjualan(
+              idProduct: trimString(result.data?.idProduct),
+              harga: trimString(result.data?.hargaJual),
+              jumlah: "1",
+              nmProduk: trimString(result.data?.nmProduct),
+              hargaBeli: trimString(result.data?.hargaBeli),
+              nmDivisi: getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
+              diskon: "0",
+              total: (double.parse(result.data?.hargaJual ?? "0") * double.parse("1")).toString(),
+            ),
+          );
+        }
 
         cariProdukController.clear();
 

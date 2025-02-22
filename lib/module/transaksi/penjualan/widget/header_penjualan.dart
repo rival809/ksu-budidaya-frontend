@@ -28,39 +28,12 @@ class _HeaderPenjualanState extends State<HeaderPenjualan> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            if (!PenjualanController.instance.isDetail)
-              Expanded(
-                flex: 2,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    "Aksi ",
-                    style: myTextTheme.titleSmall?.copyWith(
-                      color: neutralWhite,
-                      height: 1.7,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-            if (!PenjualanController.instance.isDetail)
-              Container(
-                width: 1,
-                color: blueGray50,
-              ),
             Expanded(
               flex: 6,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(
-                        !PenjualanController.instance.isDetail ? 0 : 8.0),
+                    topLeft: Radius.circular(8.0),
                   ),
                   color: primaryColor,
                 ),
@@ -166,10 +139,10 @@ class _HeaderPenjualanState extends State<HeaderPenjualan> {
             Expanded(
               flex: 6,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: primaryColor,
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(8.0),
+                    topRight: Radius.circular(!PenjualanController.instance.isDetail ? 0 : 8.0),
                   ),
                 ),
                 padding: const EdgeInsets.all(8),
@@ -183,6 +156,32 @@ class _HeaderPenjualanState extends State<HeaderPenjualan> {
                 ),
               ),
             ),
+            if (!PenjualanController.instance.isDetail)
+              Container(
+                width: 1,
+                color: blueGray50,
+              ),
+            if (!PenjualanController.instance.isDetail)
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(8.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    "Aksi ",
+                    style: myTextTheme.titleSmall?.copyWith(
+                      color: neutralWhite,
+                      height: 1.7,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

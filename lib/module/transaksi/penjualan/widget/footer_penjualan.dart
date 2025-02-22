@@ -35,39 +35,13 @@ class _FooterPenjualanState extends State<FooterPenjualan> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            if (!PenjualanController.instance.isDetail)
-              Expanded(
-                flex: 2,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: gray100,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(8.0),
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    "",
-                    style: myTextTheme.displayLarge?.copyWith(
-                      color: gray100,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            if (!PenjualanController.instance.isDetail)
-              Container(
-                width: 1,
-                color: blueGray50,
-              ),
             Expanded(
               flex: 6,
               child: Container(
                 decoration: BoxDecoration(
                   color: gray100,
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(
-                        PenjualanController.instance.isDetail ? 0 : 8.0),
+                    bottomLeft: Radius.circular(PenjualanController.instance.isDetail ? 0 : 8.0),
                   ),
                 ),
                 padding: const EdgeInsets.all(8),
@@ -165,14 +139,38 @@ class _FooterPenjualanState extends State<FooterPenjualan> {
                 ),
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  formatMoney(
-                      trimString(controller.dataPenjualan.totalNilaiJual)),
+                  formatMoney(trimString(controller.dataPenjualan.totalNilaiJual)),
                   style: myTextTheme.displayLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
+            if (!PenjualanController.instance.isDetail)
+              Container(
+                width: 1,
+                color: blueGray50,
+              ),
+            if (!PenjualanController.instance.isDetail)
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: gray100,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    "",
+                    style: myTextTheme.displayLarge?.copyWith(
+                      color: gray100,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
