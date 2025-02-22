@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class BodyPenjualan extends StatefulWidget {
   final int index;
@@ -139,11 +140,39 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Text(
-                        trimString(
-                          controller.dataPenjualan.details?[widget.index].jumlah,
-                        ),
-                        style: myTextTheme.bodyMedium,
+                      child: BaseForm(
+                        textEditingController: qntController,
+                        onEditComplete: () {
+                          controller.focusNodeInputPenjualan.requestFocus();
+                          controller.update();
+                        },
+                        readOnly: controller.isDetail ? true : false,
+                        onChanged: (value) {
+                          String trimmedValue = removeComma(trimString(value));
+
+                          double? inputValue = double.tryParse(trimmedValue);
+
+                          if (inputValue != null) {
+                            if (inputValue < 1) {
+                              inputValue = 1;
+                              qntController.text = "1";
+                            }
+
+                            widget.controller.dataPenjualan.details?[widget.index].jumlah =
+                                inputValue.toString();
+                          } else {
+                            widget.controller.dataPenjualan.details?[widget.index].jumlah = "1";
+                            qntController.text = "1";
+                          }
+
+                          controller.update();
+                        },
+                        textInputFormater: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          ThousandsFormatter(),
+                        ],
+                        validator: Validatorless.required("minimal 1"),
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                     ),
                     Column(
@@ -156,6 +185,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                               : () {
                                   controller.dataPenjualan.details?[widget.index].jumlah =
                                       (jumlah + 1).toString();
+                                  qntController.text = (jumlah + 1).toString();
                                   controller.focusNodeInputPenjualan.requestFocus();
 
                                   controller.update();
@@ -172,6 +202,7 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                                   if (jumlah > 1) {
                                     controller.dataPenjualan.details?[widget.index].jumlah =
                                         (jumlah - 1).toString();
+                                    qntController.text = (jumlah - 1).toString();
                                     controller.dataPenjualan.details?[widget.index].total =
                                         ((harga * jumlah) - (harga * jumlah) * (diskon / 100))
                                             .toString();
