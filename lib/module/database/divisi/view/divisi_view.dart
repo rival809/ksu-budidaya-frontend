@@ -32,10 +32,9 @@ class DivisiView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
+                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                            ? MediaQuery.of(context).size.width - 32 - 265
+                            : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,16 +44,14 @@ class DivisiView extends StatefulWidget {
                               SizedBox(
                                 width: 250,
                                 child: BaseForm(
-                                  textEditingController:
-                                      controller.divisiNameController,
+                                  textEditingController: controller.divisiNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
-                                        controller.dataFuture =
-                                            controller.cariDataDivisi();
+                                        controller.dataFuture = controller.cariDataDivisi();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -69,8 +66,7 @@ class DivisiView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
-                                  controller.dataFuture =
-                                      controller.cariDataDivisi();
+                                  controller.dataFuture = controller.cariDataDivisi();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -108,27 +104,23 @@ class DivisiView extends StatefulWidget {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ContainerLoadingRole();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
+                      } else if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           DivisiResult result = snapshot.data;
                           controller.dataDivisi = result.data ?? DataDivisi();
                           List<dynamic> listData =
-                              controller.dataDivisi.toJson()["data_divisi"] ??
-                                  [];
+                              controller.dataDivisi.toJson()["data_divisi"] ?? [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
 
-                            columns.addAll(List.generate(
-                                controller.listRoleView.length, (index) {
+                            columns.addAll(List.generate(controller.listRoleView.length, (index) {
                               return PlutoColumn(
                                 backgroundColor: primaryColor,
-                                filterHintText:
-                                    "Cari ${controller.listRoleView[index]}",
+                                filterHintText: "Cari ${controller.listRoleView[index]}",
                                 title: convertTitle(
                                   controller.listRoleView[index],
                                 ),
@@ -157,8 +149,7 @@ class DivisiView extends StatefulWidget {
                                         showDialogBase(
                                           width: 700,
                                           content: DialogDivisi(
-                                            data: result
-                                                .data?.dataDivisi?[rowIndex],
+                                            data: result.data?.dataDivisi?[rowIndex],
                                             isDetail: true,
                                           ),
                                         );
@@ -170,10 +161,7 @@ class DivisiView extends StatefulWidget {
                                             onConfirm: () async {
                                               controller.postRemoveDivisi(
                                                 trimString(
-                                                  result
-                                                      .data
-                                                      ?.dataDivisi?[rowIndex]
-                                                      .idDivisi,
+                                                  result.data?.dataDivisi?[rowIndex].idDivisi,
                                                 ),
                                               );
                                             },
@@ -232,8 +220,7 @@ class DivisiView extends StatefulWidget {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
                                     controller.update();
-                                    controller.dataFuture =
-                                        controller.cariDataDivisi(
+                                    controller.dataFuture = controller.cariDataDivisi(
                                       isAsc: controller.isAsc,
                                       field: event.column.field,
                                     );
@@ -245,9 +232,9 @@ class DivisiView extends StatefulWidget {
                                     autoSizeMode: PlutoAutoSizeMode.scale,
                                   ),
                                   style: PlutoGridStyleConfig(
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -259,48 +246,45 @@ class DivisiView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller
-                                            .dataDivisi.paging?.totalPage ??
-                                        0,
+                                    maxPage: controller.dataDivisi.paging?.totalPage ?? 0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataDivisi();
+                                      controller.dataFuture = controller.cariDataDivisi(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataDivisi();
+                                      controller.dataFuture = controller.cariDataDivisi(
+                                        isAsc: controller.isAsc,
+                                      );
                                       controller.update();
                                     },
-                                    totalRow: controller
-                                            .dataDivisi.paging?.totalItem ??
-                                        0,
+                                    totalRow: controller.dataDivisi.paging?.totalItem ?? 0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {
                                         controller.page =
-                                            (int.parse(controller.page) - 1)
-                                                .toString();
+                                            (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataDivisi();
+                                        controller.dataFuture = controller.cariDataDivisi(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },
                                     onPressRight: () {
                                       if (int.parse(controller.page) <
-                                          (result.data?.paging?.totalPage ??
-                                              0)) {
+                                          (result.data?.paging?.totalPage ?? 0)) {
                                         controller.page =
-                                            (int.parse(controller.page) + 1)
-                                                .toString();
+                                            (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataDivisi();
+                                        controller.dataFuture = controller.cariDataDivisi(
+                                          isAsc: controller.isAsc,
+                                        );
                                         controller.update();
                                       }
                                     },

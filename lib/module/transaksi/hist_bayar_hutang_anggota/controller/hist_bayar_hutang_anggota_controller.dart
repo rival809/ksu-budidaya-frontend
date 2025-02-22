@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
+import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/view/hist_bayar_hutang_angoota_view.dart';
 
-class CashInCashOutController extends State<CashInCashOutView> {
-  static late CashInCashOutController instance;
-  late CashInCashOutView view;
+class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView> {
+  static late HistBayarHutangAnggotaController instance;
+  late HistBayarHutangAnggotaView view;
 
   String page = "1";
   String size = "10";
@@ -12,91 +14,116 @@ class CashInCashOutController extends State<CashInCashOutView> {
 
   bool step1 = true;
   bool step2 = false;
-  bool step3 = false;
+  Future<dynamic>? dataFuture;
+  Future<dynamic>? dataFutureHistory;
 
   onSwitchStep(String valueStep) {
     switch (valueStep) {
       case "1":
         step1 = true;
         step2 = false;
-        step3 = false;
-        dataFuture = cariDataCashInOut();
+        update();
+        dataFuture = cariDataHutangDagang();
 
         break;
       case "2":
         step1 = false;
         step2 = true;
-        step3 = false;
-        dataFuture = cariDataCashInOut();
+        update();
+        dataFutureHistory = cariDataHistoryHutangDagang();
         break;
-      case "3":
-        step1 = false;
-        step2 = false;
-        step3 = true;
-        dataFuture = cariDataCashInOut();
 
-        break;
       default:
         step1 = true;
         step2 = false;
-        step3 = false;
+        update();
+        dataFuture = cariDataHutangDagang();
     }
     update();
   }
 
-  Future<dynamic>? dataFuture;
-
-  DataCashInOut dataCashInOut = DataCashInOut();
-  CashInOutResult result = CashInOutResult();
-  List<String> listRoleView = [
-    "tg_transaksi",
-    "nm_jenis",
-    "nm_detail",
-    "cash_in",
-    "cash_out",
+  DataHutangAnggota dataHutangDagang = DataHutangAnggota();
+  DataHistoryHutangAnggota dataHistoryHutangDagang = DataHistoryHutangAnggota();
+  HutangAnggotaResult result = HutangAnggotaResult();
+  HistoryHutangAnggotaResult resultHistory = HistoryHutangAnggotaResult();
+  List<String> listHutangDagangView = [
+    "id_penjualan",
+    "id_hutang_anggota",
+    "tg_hutang",
+    "nm_anggota",
+    "nominal",
+  ];
+  List<String> listHistoryHutangDagangView = [
+    "id_history_hutang_anggota",
+    "tg_bayar_hutang",
+    "nm_anggota",
+    "nominal",
     "keterangan",
   ];
 
-  cariDataCashInOut({
+  cariDataHutangDagang({
     bool? isAsc,
     String? field,
   }) async {
     try {
-      result = CashInOutResult();
+      result = HutangAnggotaResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
       };
 
-      if (step2 == true) {
-        dataCari.addAll(
-          {"id_cash": "1"},
-        );
-      } else if (step3 == true) {
-        dataCari.addAll(
-          {"id_cash": "2"},
-        );
-      }
-
       if (trimString(supplierNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"keterangan": trimString(supplierNameController.text)});
+        dataCari.addAll({"id_anggota": trimString(supplierNameController.text)});
       }
 
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
-      }
-      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });
       }
-      result = await ApiService.listCashInOut(
+
+      result = await ApiService.listHutangAnggota(
         data: dataCari,
       ).timeout(const Duration(seconds: 30));
 
       return result;
+    } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  cariDataHistoryHutangDagang({
+    bool? isAsc,
+    String? field,
+  }) async {
+    try {
+      resultHistory = HistoryHutangAnggotaResult();
+      DataMap dataCari = {
+        "page": page,
+        "size": size,
+      };
+
+      if (isAsc != null) {
+        dataCari.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"]
+        });
+        dataCari.addAll({
+          "sort_by": [field]
+        });
+      }
+
+      resultHistory = await ApiService.listHistoryHutangAnggota(
+        data: dataCari,
+      ).timeout(const Duration(seconds: 30));
+
+      return resultHistory;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
@@ -128,7 +155,6 @@ class CashInCashOutController extends State<CashInCashOutView> {
                   ? "2"
                   : "3",
         );
-        GlobalReference().cashReference();
         update();
       }
     } catch (e) {
@@ -163,7 +189,6 @@ class CashInCashOutController extends State<CashInCashOutView> {
                   ? "2"
                   : "3",
         );
-        GlobalReference().cashReference();
         update();
       }
     } catch (e) {
@@ -200,7 +225,6 @@ class CashInCashOutController extends State<CashInCashOutView> {
                   ? "2"
                   : "3",
         );
-        GlobalReference().cashReference();
         update();
       }
     } catch (e) {
@@ -217,9 +241,8 @@ class CashInCashOutController extends State<CashInCashOutView> {
   @override
   void initState() {
     instance = this;
-    GlobalReference().cashReference();
-    dataFuture = cariDataCashInOut();
     super.initState();
+    dataFuture = cariDataHutangDagang();
   }
 
   @override

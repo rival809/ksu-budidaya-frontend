@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/view/hist_bayar_hutang_angoota_view.dart';
 
 final GoRouter router = GoRouter(
   navigatorKey: Get.navigatorKey,
@@ -143,8 +144,7 @@ final GoRouter router = GoRouter(
               GoRoute(
                   path: 'pembayaran-hutang',
                   builder: (BuildContext context, GoRouterState state) {
-                    final idAnggota =
-                        trimString(state.uri.queryParameters['id']);
+                    final idAnggota = trimString(state.uri.queryParameters['id']);
                     return SelectionArea(
                       child: BayarHutangAnggotaView(
                         idAnggota: idAnggota,
@@ -155,8 +155,7 @@ final GoRouter router = GoRouter(
                     GoRoute(
                       path: 'detail',
                       builder: (BuildContext context, GoRouterState state) {
-                        final idPenjualan =
-                            trimString(state.uri.queryParameters['id']);
+                        final idPenjualan = trimString(state.uri.queryParameters['id']);
                         return SelectionArea(
                           child: DetailTransaksiView(
                             idPenjualan: idPenjualan,
@@ -187,6 +186,14 @@ final GoRouter router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(
               child: ReturView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'transaksi/bayar-hutang-anggota',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: HistBayarHutangAnggotaView(),
             );
           },
         ),

@@ -2,22 +2,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/controller/hist_bayar_hutang_anggota_controller.dart';
 
-class DialogPelunasanAnggota extends StatefulWidget {
+class DialogPelunasanAnggotaNew extends StatefulWidget {
   final DetailDataHutangAnggota? dataHutang;
   final List<DetailDataHutangAnggota>? listHutang;
 
-  const DialogPelunasanAnggota({
+  const DialogPelunasanAnggotaNew({
     Key? key,
     required this.dataHutang,
     required this.listHutang,
   }) : super(key: key);
 
   @override
-  State<DialogPelunasanAnggota> createState() => _DialogPelunasanAnggotaState();
+  State<DialogPelunasanAnggotaNew> createState() => _DialogPelunasanAnggotaNewState();
 }
 
-class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
+class _DialogPelunasanAnggotaNewState extends State<DialogPelunasanAnggotaNew> {
   List<TextEditingController> textController = [
     TextEditingController(),
     TextEditingController(),
@@ -45,9 +46,9 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
           content: const DialogBerhasil(),
         );
 
-        BayarHutangAnggotaController.instance.dataFuture =
-            BayarHutangAnggotaController.instance.cariDataHutangAnggota();
-        BayarHutangAnggotaController.instance.update();
+        HistBayarHutangAnggotaController.instance.dataFuture =
+            HistBayarHutangAnggotaController.instance.cariDataHutangDagang();
+        HistBayarHutangAnggotaController.instance.update();
       }
     } catch (e) {
       Get.back();
@@ -162,9 +163,11 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
                     itemAsString: (item) => item.hutangAnggotaAsString(),
                     items: widget.listHutang ?? [],
                     value: valueHutang,
-                    enabled: false,
+                    enabled: true,
                     onChanged: (value) {
                       dataEdit = BayarHutangAnggotaPayload.fromJson(value?.toJson() ?? {});
+                      dataEdit.tgBayar = formatDate(DateTime.now().toString());
+                      textController[0].text = formatDate(DateTime.now().toString());
                       update();
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
