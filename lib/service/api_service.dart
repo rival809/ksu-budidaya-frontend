@@ -1057,6 +1057,27 @@ class ApiService {
     }
   }
 
+  static Future<TutupKasirResult> removeTutupKasir({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/tutup-kasir/remove-tutup-kasir",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return TutupKasirResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to removeTutupKasir');
+    }
+  }
+
   static Future<DetailPenjualanResult> detailPenjualan({
     required DataMap data,
   }) async {
@@ -1175,8 +1196,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return LaporanHasilUsahaResult.fromJson(
-            json.decode(response.toString()));
+        return LaporanHasilUsahaResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1201,8 +1221,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return LaporanNeracaLajurModel.fromJson(
-            json.decode(response.toString()));
+        return LaporanNeracaLajurModel.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1225,8 +1244,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return LaporanRealisasiPendapatanResult.fromJson(
-            json.decode(response.toString()));
+        return LaporanRealisasiPendapatanResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1269,8 +1287,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return HistoryHutangDagangResult.fromJson(
-            json.decode(response.toString()));
+        return HistoryHutangDagangResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1291,8 +1308,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return BayarHutangDagangResult.fromJson(
-            json.decode(response.toString()));
+        return BayarHutangDagangResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1357,8 +1373,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return BayarHutangAnggotaResult.fromJson(
-            json.decode(response.toString()));
+        return BayarHutangAnggotaResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }

@@ -32,10 +32,9 @@ class TutupKasirView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
+                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                            ? MediaQuery.of(context).size.width - 32 - 265
+                            : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,16 +44,14 @@ class TutupKasirView extends StatefulWidget {
                               SizedBox(
                                 width: 250,
                                 child: BaseForm(
-                                  textEditingController:
-                                      controller.penjualanNameController,
+                                  textEditingController: controller.penjualanNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
-                                        controller.dataFuture =
-                                            controller.cariDataTutupKasir();
+                                        controller.dataFuture = controller.cariDataTutupKasir();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -69,8 +66,7 @@ class TutupKasirView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
-                                  controller.dataFuture =
-                                      controller.cariDataTutupKasir();
+                                  controller.dataFuture = controller.cariDataTutupKasir();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -102,17 +98,14 @@ class TutupKasirView extends StatefulWidget {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ContainerLoadingRole();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
+                      } else if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           ListTutupKasirResult result = snapshot.data;
-                          controller.dataListTutupKasir =
-                              result.data ?? DataTutupKasir();
-                          List<dynamic> listData = controller.dataListTutupKasir
-                                  .toJson()["data_tutup_kasir"] ??
-                              [];
+                          controller.dataListTutupKasir = result.data ?? DataTutupKasir();
+                          List<dynamic> listData =
+                              controller.dataListTutupKasir.toJson()["data_tutup_kasir"] ?? [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
@@ -146,23 +139,18 @@ class TutupKasirView extends StatefulWidget {
                                   var list = controller.listTutupKasir[index];
                                   return PlutoColumn(
                                     backgroundColor: primaryColor,
-                                    filterHintText:
-                                        "Cari ${controller.listTutupKasir[index]}",
+                                    filterHintText: "Cari ${controller.listTutupKasir[index]}",
                                     title: list == "total_nilai_beli"
                                         ? "HARGA BELI"
                                         : list == "total_nilai_jual"
                                             ? "HARGA JUAL"
                                             : convertTitle(
-                                                controller
-                                                    .listTutupKasir[index],
+                                                controller.listTutupKasir[index],
                                               ),
                                     field: controller.listTutupKasir[index],
-                                    type: (controller.listTutupKasir[index] ==
-                                                "shift" ||
-                                            controller.listTutupKasir[index] ==
-                                                "tg_tutup_kasir" ||
-                                            controller.listTutupKasir[index] ==
-                                                "nama_kasir")
+                                    type: (controller.listTutupKasir[index] == "shift" ||
+                                            controller.listTutupKasir[index] == "tg_tutup_kasir" ||
+                                            controller.listTutupKasir[index] == "nama_kasir")
                                         ? PlutoColumnType.text()
                                         : PlutoColumnType.number(
                                             locale: "id",
@@ -184,19 +172,15 @@ class TutupKasirView extends StatefulWidget {
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
                                   final rowIndex = rendererContext.rowIdx;
-                                  Map<String, dynamic> dataRow =
-                                      rendererContext.row.toJson();
+                                  Map<String, dynamic> dataRow = rendererContext.row.toJson();
 
                                   DetailDataTutupKasir? data = controller
                                       .dataListTutupKasir.dataTutupKasir
                                       ?.firstWhere((element) =>
-                                          trimString(element.idTutupKasir
-                                              .toString()) ==
-                                          trimString(dataRow["id_tutup_kasir"]
-                                              .toString()));
+                                          trimString(element.idTutupKasir.toString()) ==
+                                          trimString(dataRow["id_tutup_kasir"].toString()));
 
-                                  dataRow.updateAll(
-                                      (key, value) => value.toString());
+                                  dataRow.updateAll((key, value) => value.toString());
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -228,28 +212,55 @@ class TutupKasirView extends StatefulWidget {
                                           ],
                                         ),
                                       ),
+                                      PopupMenuItem(
+                                        value: 3,
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              iconDelete,
+                                              colorFilter: colorFilter(color: red600),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Hapus',
+                                              style: myTextTheme.bodyMedium,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                     onChange: (value) {
                                       if (value == 1) {
-                                        dataRow.update("id_tutup_kasir",
-                                            (value) => int.parse(value));
+                                        dataRow.update(
+                                            "id_tutup_kasir", (value) => int.parse(value));
                                         showDialogBase(
                                           width: 700,
                                           content: DialogTutupKasir(
-                                            detail:
-                                                data ?? DetailDataTutupKasir(),
+                                            detail: data ?? DetailDataTutupKasir(),
                                             isEdit: false,
                                           ),
                                         );
                                       } else if (value == 2) {
-                                        dataRow.update("id_tutup_kasir",
-                                            (value) => int.parse(value));
+                                        dataRow.update(
+                                            "id_tutup_kasir", (value) => int.parse(value));
                                         showDialogBase(
                                           width: 700,
                                           content: DialogTutupKasir(
-                                            detail:
-                                                data ?? DetailDataTutupKasir(),
+                                            detail: data ?? DetailDataTutupKasir(),
                                             isEdit: true,
+                                          ),
+                                        );
+                                      } else if (value == 3) {
+                                        showDialogBase(
+                                          width: 400,
+                                          content: DialogKonfirmasi(
+                                            textKonfirmasi:
+                                                "Apakah Anda yakin ingin menghapus data ini?",
+                                            onConfirm: () {
+                                              controller.postRemoveTutupKasir(
+                                                trimString(data?.idTutupKasir.toString()),
+                                              );
+                                            },
                                           ),
                                         );
                                       }
@@ -308,8 +319,7 @@ class TutupKasirView extends StatefulWidget {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
                                     controller.update();
-                                    controller.dataFuture =
-                                        controller.cariDataTutupKasir(
+                                    controller.dataFuture = controller.cariDataTutupKasir(
                                       isAsc: controller.isAsc,
                                       field: event.column.field,
                                     );
@@ -321,9 +331,9 @@ class TutupKasirView extends StatefulWidget {
                                     autoSizeMode: PlutoAutoSizeMode.scale,
                                   ),
                                   style: PlutoGridStyleConfig(
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -336,48 +346,37 @@ class TutupKasirView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller.dataListTutupKasir
-                                            .paging?.totalPage ??
-                                        0,
+                                    maxPage: controller.dataListTutupKasir.paging?.totalPage ?? 0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataTutupKasir();
+                                      controller.dataFuture = controller.cariDataTutupKasir();
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataTutupKasir();
+                                      controller.dataFuture = controller.cariDataTutupKasir();
                                       controller.update();
                                     },
-                                    totalRow: controller.dataListTutupKasir
-                                            .paging?.totalItem ??
-                                        0,
+                                    totalRow: controller.dataListTutupKasir.paging?.totalItem ?? 0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {
                                         controller.page =
-                                            (int.parse(controller.page) - 1)
-                                                .toString();
+                                            (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataTutupKasir();
+                                        controller.dataFuture = controller.cariDataTutupKasir();
                                         controller.update();
                                       }
                                     },
                                     onPressRight: () {
                                       if (int.parse(controller.page) <
-                                          (result.data?.paging?.totalPage ??
-                                              0)) {
+                                          (result.data?.paging?.totalPage ?? 0)) {
                                         controller.page =
-                                            (int.parse(controller.page) + 1)
-                                                .toString();
+                                            (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataTutupKasir();
+                                        controller.dataFuture = controller.cariDataTutupKasir();
                                         controller.update();
                                       }
                                     },

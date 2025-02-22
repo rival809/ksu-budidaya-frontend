@@ -58,8 +58,7 @@ class TutupKasirController extends State<TutupKasirView> {
       return result;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -81,23 +80,15 @@ class TutupKasirController extends State<TutupKasirView> {
       Get.back();
       if (dataPenjualan.success == true) {
         DetailDataTutupKasir data = DetailDataTutupKasir();
-        data.qris =
-            trimString(dataPenjualan.data?.penjualan?.penjualanQris.toString());
-        data.kredit = trimString(
-            dataPenjualan.data?.penjualan?.penjualanKredit.toString());
-        data.tunai = trimString(
-            dataPenjualan.data?.penjualan?.penjualanTunai.toString());
-        data.totalNilaiBeli = trimString(
-            dataPenjualan.data?.keuntungan?.totalNilaiBeli.toString());
-        data.totalNilaiJual = trimString(
-            dataPenjualan.data?.keuntungan?.totalNilaiJual.toString());
-        data.totalKeuntungan = trimString(
-            dataPenjualan.data?.keuntungan?.totalKeuntungan.toString());
-        data.total = trimString(
-            dataPenjualan.data?.penjualan?.totalPenjualan.toString());
-        data.shift = dataPenjualan.data?.keterangan?.contains("siang") ?? false
-            ? "SIANG"
-            : "PAGI";
+        data.qris = trimString(dataPenjualan.data?.penjualan?.penjualanQris.toString());
+        data.kredit = trimString(dataPenjualan.data?.penjualan?.penjualanKredit.toString());
+        data.tunai = trimString(dataPenjualan.data?.penjualan?.penjualanTunai.toString());
+        data.totalNilaiBeli = trimString(dataPenjualan.data?.keuntungan?.totalNilaiBeli.toString());
+        data.totalNilaiJual = trimString(dataPenjualan.data?.keuntungan?.totalNilaiJual.toString());
+        data.totalKeuntungan =
+            trimString(dataPenjualan.data?.keuntungan?.totalKeuntungan.toString());
+        data.total = trimString(dataPenjualan.data?.penjualan?.totalPenjualan.toString());
+        data.shift = dataPenjualan.data?.keterangan?.contains("siang") ?? false ? "SIANG" : "PAGI";
         data.namaKasir = trimString(
           UserDatabase.userDatabase.data?.userData?.username,
         );
@@ -117,8 +108,36 @@ class TutupKasirController extends State<TutupKasirView> {
       Get.back();
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postRemoveTutupKasir(String idTutupKasir) async {
+    try {
+      Get.back();
+      showCircleDialogLoading();
+      TutupKasirResult result = await ApiService.removeTutupKasir(
+        data: {"id_tutup_kasir": idTutupKasir},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        await showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataTutupKasir();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
