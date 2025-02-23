@@ -51,6 +51,7 @@ class CashInCashOutView extends StatefulWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
+                                        controller.field = null;
                                         controller.dataFuture = controller.cariDataCashInOut();
                                         controller.update();
                                       },
@@ -322,6 +323,10 @@ class CashInCashOutView extends StatefulWidget {
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
+                                    controller.field = (event.column.field == "cash_in" ||
+                                            event.column.field == "cash_out")
+                                        ? "nominal"
+                                        : event.column.field;
                                     controller.update();
                                     controller.dataFuture = controller.cariDataCashInOut(
                                       isAsc: controller.isAsc,
@@ -367,6 +372,10 @@ class CashInCashOutView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataCashInOut(
                                         isAsc: controller.isAsc,
+                                        field: (controller.field == "cash_in" ||
+                                                controller.field == "cash_out")
+                                            ? "nominal"
+                                            : controller.field,
                                       );
                                       controller.update();
                                     },
@@ -378,6 +387,10 @@ class CashInCashOutView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataCashInOut(
                                           isAsc: controller.isAsc,
+                                          field: (controller.field == "cash_in" ||
+                                                  controller.field == "cash_out")
+                                              ? "nominal"
+                                              : controller.field,
                                         );
                                         controller.update();
                                       }
@@ -390,6 +403,10 @@ class CashInCashOutView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataCashInOut(
                                           isAsc: controller.isAsc,
+                                          field: (controller.field == "cash_in" ||
+                                                  controller.field == "cash_out")
+                                              ? "nominal"
+                                              : controller.field,
                                         );
                                         controller.update();
                                       }

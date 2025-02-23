@@ -32,10 +32,9 @@ class BayarHutangDagangView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
+                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                            ? MediaQuery.of(context).size.width - 32 - 265
+                            : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,16 +44,15 @@ class BayarHutangDagangView extends StatefulWidget {
                               SizedBox(
                                 width: 250,
                                 child: BaseForm(
-                                  textEditingController:
-                                      controller.supplierNameController,
+                                  textEditingController: controller.supplierNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
-                                        controller.dataFuture =
-                                            controller.cariDataHutangDagang();
+                                        controller.field = null;
+                                        controller.dataFuture = controller.cariDataHutangDagang();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -126,23 +124,18 @@ class BayarHutangDagangView extends StatefulWidget {
                   controller.step1
                       ? FutureBuilder(
                           future: controller.dataFuture,
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
                               return const ContainerLoadingRole();
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.done) {
+                            } else if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
                                 return const ContainerError();
                               } else if (snapshot.hasData) {
                                 HutangDagangResult result = snapshot.data;
-                                controller.dataHutangDagang =
-                                    result.data ?? DataHutangDagang();
-                                List<dynamic> listData = controller
-                                        .dataHutangDagang
-                                        .toJson()["data_hutang_dagang"] ??
-                                    [];
+                                controller.dataHutangDagang = result.data ?? DataHutangDagang();
+                                List<dynamic> listData =
+                                    controller.dataHutangDagang.toJson()["data_hutang_dagang"] ??
+                                        [];
 
                                 if (listData.isNotEmpty) {
                                   List<PlutoRow> rows = [];
@@ -158,8 +151,7 @@ class BayarHutangDagangView extends StatefulWidget {
                                       type: PlutoColumnType.text(),
                                       enableEditingMode: false,
                                       renderer: (rendererContext) {
-                                        final rowIndex =
-                                            rendererContext.rowIdx + 1;
+                                        final rowIndex = rendererContext.rowIdx + 1;
 
                                         return Text(
                                           rendererContext.cell.value.toString(),
@@ -178,15 +170,11 @@ class BayarHutangDagangView extends StatefulWidget {
                                           filterHintText:
                                               "Cari ${controller.listHutangDagangView[index]}",
                                           title: convertTitle(
-                                            controller
-                                                .listHutangDagangView[index],
+                                            controller.listHutangDagangView[index],
                                           ),
-                                          field: controller
-                                              .listHutangDagangView[index],
+                                          field: controller.listHutangDagangView[index],
                                           type:
-                                              (controller.listHutangDagangView[
-                                                          index] ==
-                                                      "nominal")
+                                              (controller.listHutangDagangView[index] == "nominal")
                                                   ? PlutoColumnType.number(
                                                       locale: "id",
                                                     )
@@ -208,8 +196,7 @@ class BayarHutangDagangView extends StatefulWidget {
                                       enableEditingMode: false,
                                       renderer: (rendererContext) {
                                         final rowIndex = rendererContext.rowIdx;
-                                        Map<String, dynamic> dataRow =
-                                            rendererContext.row.toJson();
+                                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
                                         return DropdownAksi(
                                           text: "Aksi",
                                           listItem: [
@@ -219,15 +206,13 @@ class BayarHutangDagangView extends StatefulWidget {
                                                 children: [
                                                   SvgPicture.asset(
                                                     iconAccountBalanceWallet,
-                                                    colorFilter:
-                                                        colorFilterGray600,
+                                                    colorFilter: colorFilterGray600,
                                                   ),
                                                   const SizedBox(width: 8),
                                                   Expanded(
                                                     child: Text(
                                                       'Bayar Hutang',
-                                                      style: myTextTheme
-                                                          .bodyMedium,
+                                                      style: myTextTheme.bodyMedium,
                                                     ),
                                                   ),
                                                 ],
@@ -240,28 +225,14 @@ class BayarHutangDagangView extends StatefulWidget {
                                                 width: 700,
                                                 content: DialogTambahPelunasan(
                                                   isPageBayarHutang: true,
-                                                  nominal: trimString(controller
-                                                      .result
-                                                      .data
-                                                      ?.dataHutangDagang?[
-                                                          rowIndex]
-                                                      .nominal),
-                                                  idHutangDagang: trimString(
-                                                      result
-                                                          .data
-                                                          ?.dataHutangDagang?[
-                                                              rowIndex]
-                                                          .idHutangDagang),
-                                                  idTransaksi: trimString(result
-                                                      .data
-                                                      ?.dataHutangDagang?[
-                                                          rowIndex]
-                                                      .idPembelian),
-                                                  idSupplier: trimString(result
-                                                      .data
-                                                      ?.dataHutangDagang?[
-                                                          rowIndex]
-                                                      .idSupplier),
+                                                  nominal: trimString(controller.result.data
+                                                      ?.dataHutangDagang?[rowIndex].nominal),
+                                                  idHutangDagang: trimString(result.data
+                                                      ?.dataHutangDagang?[rowIndex].idHutangDagang),
+                                                  idTransaksi: trimString(result.data
+                                                      ?.dataHutangDagang?[rowIndex].idPembelian),
+                                                  idSupplier: trimString(result.data
+                                                      ?.dataHutangDagang?[rowIndex].idSupplier),
                                                 ),
                                               );
                                             }
@@ -289,8 +260,7 @@ class BayarHutangDagangView extends StatefulWidget {
                                       value: null,
                                     );
 
-                                    for (String column
-                                        in controller.listHutangDagangView) {
+                                    for (String column in controller.listHutangDagangView) {
                                       if (item.containsKey(column)) {
                                         cells[column] = PlutoCell(
                                           value: trimStringStrip(
@@ -315,20 +285,20 @@ class BayarHutangDagangView extends StatefulWidget {
                                       ),
                                       mode: PlutoGridMode.select,
                                       onLoaded: (event) {
-                                        event.stateManager
-                                            .setShowColumnFilter(true);
+                                        event.stateManager.setShowColumnFilter(true);
                                       },
                                       onSorted: (event) {
                                         if (event.column.field != "Aksi") {
                                           controller.isAsc = !controller.isAsc;
+                                          controller.field = (event.column.field == "cash_in" ||
+                                                  event.column.field == "cash_out")
+                                              ? "nominal"
+                                              : event.column.field;
                                           controller.update();
-                                          controller.dataFuture =
-                                              controller.cariDataHutangDagang(
+                                          controller.dataFuture = controller.cariDataHutangDagang(
                                             isAsc: controller.isAsc,
-                                            field: (event.column.field ==
-                                                        "cash_in" ||
-                                                    event.column.field ==
-                                                        "cash_out")
+                                            field: (event.column.field == "cash_in" ||
+                                                    event.column.field == "cash_out")
                                                 ? "nominal"
                                                 : event.column.field,
                                           );
@@ -336,18 +306,15 @@ class BayarHutangDagangView extends StatefulWidget {
                                         }
                                       },
                                       configuration: PlutoGridConfiguration(
-                                        columnSize:
-                                            const PlutoGridColumnSizeConfig(
+                                        columnSize: const PlutoGridColumnSizeConfig(
                                           autoSizeMode: PlutoAutoSizeMode.scale,
                                         ),
                                         style: PlutoGridStyleConfig(
-                                          columnTextStyle:
-                                              myTextTheme.titleSmall?.copyWith(
-                                                      color: neutralWhite) ??
-                                                  const TextStyle(),
+                                          columnTextStyle: myTextTheme.titleSmall
+                                                  ?.copyWith(color: neutralWhite) ??
+                                              const TextStyle(),
                                           gridBorderColor: blueGray50,
-                                          gridBorderRadius:
-                                              BorderRadius.circular(8),
+                                          gridBorderRadius: BorderRadius.circular(8),
                                         ),
                                         localeText: configLocale,
                                       ),
@@ -356,24 +323,17 @@ class BayarHutangDagangView extends StatefulWidget {
                                       createFooter: (stateManager) {
                                         double totalHutang = 0;
                                         for (var i = 0;
-                                            i <
-                                                (result.data?.dataHutangDagang
-                                                        ?.length ??
-                                                    0);
+                                            i < (result.data?.dataHutangDagang?.length ?? 0);
                                             i++) {
-                                          totalHutang += double.parse(result
-                                                  .data
-                                                  ?.dataHutangDagang?[i]
-                                                  .nominal ??
-                                              "0");
+                                          totalHutang += double.parse(
+                                              result.data?.dataHutangDagang?[i].nominal ?? "0");
                                         }
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: Column(
                                             children: [
                                               Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                   vertical: 8,
                                                 ),
                                                 decoration: const BoxDecoration(
@@ -386,11 +346,8 @@ class BayarHutangDagangView extends StatefulWidget {
                                                     ),
                                                     Text(
                                                       "TOTAL HUTANG",
-                                                      style: myTextTheme
-                                                          .displayLarge
-                                                          ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
+                                                      style: myTextTheme.displayLarge?.copyWith(
+                                                        fontWeight: FontWeight.w600,
                                                       ),
                                                     ),
                                                     Expanded(
@@ -398,11 +355,8 @@ class BayarHutangDagangView extends StatefulWidget {
                                                     ),
                                                     Text(
                                                       formatMoney(totalHutang),
-                                                      style: myTextTheme
-                                                          .displayLarge
-                                                          ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
+                                                      style: myTextTheme.displayLarge?.copyWith(
+                                                        fontWeight: FontWeight.w600,
                                                       ),
                                                     ),
                                                     Expanded(
@@ -415,66 +369,69 @@ class BayarHutangDagangView extends StatefulWidget {
                                               FooterTableWidget(
                                                 page: controller.page,
                                                 itemPerpage: controller.size,
-                                                maxPage: controller
-                                                        .dataHutangDagang
-                                                        .paging
-                                                        ?.totalPage ??
-                                                    0,
+                                                maxPage:
+                                                    controller.dataHutangDagang.paging?.totalPage ??
+                                                        0,
                                                 onChangePage: (value) {
-                                                  controller.page =
-                                                      trimString(value);
+                                                  controller.page = trimString(value);
                                                   controller.update();
                                                   controller.dataFuture =
-                                                      controller
-                                                          .cariDataHutangDagang();
+                                                      controller.cariDataHutangDagang(
+                                                    isAsc: controller.isAsc,
+                                                    field: (controller.field == "cash_in" ||
+                                                            controller.field == "cash_out")
+                                                        ? "nominal"
+                                                        : controller.field,
+                                                  );
                                                   controller.update();
                                                 },
                                                 onChangePerPage: (value) {
                                                   controller.page = "1";
-                                                  controller.size =
-                                                      trimString(value);
+                                                  controller.size = trimString(value);
                                                   controller.update();
                                                   controller.dataFuture =
-                                                      controller
-                                                          .cariDataHutangDagang();
+                                                      controller.cariDataHutangDagang(
+                                                    isAsc: controller.isAsc,
+                                                    field: (controller.field == "cash_in" ||
+                                                            controller.field == "cash_out")
+                                                        ? "nominal"
+                                                        : controller.field,
+                                                  );
                                                   controller.update();
                                                 },
-                                                totalRow: controller
-                                                        .dataHutangDagang
-                                                        .paging
-                                                        ?.totalItem ??
-                                                    0,
+                                                totalRow:
+                                                    controller.dataHutangDagang.paging?.totalItem ??
+                                                        0,
                                                 onPressLeft: () {
-                                                  if (int.parse(
-                                                          controller.page) >
-                                                      1) {
+                                                  if (int.parse(controller.page) > 1) {
                                                     controller.page =
-                                                        (int.parse(controller
-                                                                    .page) -
-                                                                1)
-                                                            .toString();
+                                                        (int.parse(controller.page) - 1).toString();
                                                     controller.update();
                                                     controller.dataFuture =
-                                                        controller
-                                                            .cariDataHutangDagang();
+                                                        controller.cariDataHutangDagang(
+                                                      isAsc: controller.isAsc,
+                                                      field: (controller.field == "cash_in" ||
+                                                              controller.field == "cash_out")
+                                                          ? "nominal"
+                                                          : controller.field,
+                                                    );
                                                     controller.update();
                                                   }
                                                 },
                                                 onPressRight: () {
-                                                  if (int.parse(
-                                                          controller.page) <
-                                                      (result.data?.paging
-                                                              ?.totalPage ??
-                                                          0)) {
+                                                  if (int.parse(controller.page) <
+                                                      (result.data?.paging?.totalPage ?? 0)) {
                                                     controller.page =
-                                                        (int.parse(controller
-                                                                    .page) +
-                                                                1)
-                                                            .toString();
+                                                        (int.parse(controller.page) + 1).toString();
                                                     controller.update();
                                                     controller.dataFuture =
-                                                        controller
-                                                            .cariDataHutangDagang();
+                                                        controller.cariDataHutangDagang(
+                                                      isAsc: controller.isAsc,
+                                                      field: (controller.field == "cash_in" ||
+                                                              controller.field == "cash_out")
+                                                          ? "nominal"
+                                                          : controller.field,
+                                                    );
                                                     controller.update();
                                                   }
                                                 },
@@ -502,22 +459,17 @@ class BayarHutangDagangView extends StatefulWidget {
                         )
                       : FutureBuilder(
                           future: controller.dataFutureHistory,
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
                               return const ContainerLoadingRole();
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.done) {
+                            } else if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
                                 return const ContainerError();
                               } else if (snapshot.hasData) {
-                                HistoryHutangDagangResult result =
-                                    snapshot.data;
+                                HistoryHutangDagangResult result = snapshot.data;
                                 controller.dataHistoryHutangDagang =
                                     result.data ?? DataHistoryHutangDagang();
-                                List<dynamic> listData = controller
-                                        .dataHistoryHutangDagang
+                                List<dynamic> listData = controller.dataHistoryHutangDagang
                                         .toJson()["data_bayar_hutang"] ??
                                     [];
 
@@ -535,8 +487,7 @@ class BayarHutangDagangView extends StatefulWidget {
                                       type: PlutoColumnType.text(),
                                       enableEditingMode: false,
                                       renderer: (rendererContext) {
-                                        final rowIndex =
-                                            rendererContext.rowIdx + 1;
+                                        final rowIndex = rendererContext.rowIdx + 1;
 
                                         return Text(
                                           rendererContext.cell.value.toString(),
@@ -548,29 +499,22 @@ class BayarHutangDagangView extends StatefulWidget {
 
                                   columns.addAll(
                                     List.generate(
-                                      controller
-                                          .listHistoryHutangDagangView.length,
+                                      controller.listHistoryHutangDagangView.length,
                                       (index) {
                                         return PlutoColumn(
                                           backgroundColor: primaryColor,
                                           filterHintText:
                                               "Cari ${controller.listHistoryHutangDagangView[index]}",
                                           title: convertTitle(
-                                            controller
-                                                    .listHistoryHutangDagangView[
-                                                index],
+                                            controller.listHistoryHutangDagangView[index],
                                           ),
-                                          field: controller
-                                                  .listHistoryHutangDagangView[
-                                              index],
-                                          type:
-                                              (controller.listHistoryHutangDagangView[
-                                                          index] ==
-                                                      "nominal")
-                                                  ? PlutoColumnType.number(
-                                                      locale: "id",
-                                                    )
-                                                  : PlutoColumnType.text(),
+                                          field: controller.listHistoryHutangDagangView[index],
+                                          type: (controller.listHistoryHutangDagangView[index] ==
+                                                  "nominal")
+                                              ? PlutoColumnType.number(
+                                                  locale: "id",
+                                                )
+                                              : PlutoColumnType.text(),
                                         );
                                       },
                                     ),
@@ -593,8 +537,7 @@ class BayarHutangDagangView extends StatefulWidget {
                                       value: null,
                                     );
 
-                                    for (String column in controller
-                                        .listHistoryHutangDagangView) {
+                                    for (String column in controller.listHistoryHutangDagangView) {
                                       if (item.containsKey(column)) {
                                         cells[column] = PlutoCell(
                                           value: trimStringStrip(
@@ -619,20 +562,20 @@ class BayarHutangDagangView extends StatefulWidget {
                                       ),
                                       mode: PlutoGridMode.select,
                                       onLoaded: (event) {
-                                        event.stateManager
-                                            .setShowColumnFilter(true);
+                                        event.stateManager.setShowColumnFilter(true);
                                       },
                                       onSorted: (event) {
                                         if (event.column.field != "Aksi") {
                                           controller.isAsc = !controller.isAsc;
+                                          controller.field = (event.column.field == "cash_in" ||
+                                                  event.column.field == "cash_out")
+                                              ? "nominal"
+                                              : event.column.field;
                                           controller.update();
-                                          controller.dataFuture =
-                                              controller.cariDataHutangDagang(
+                                          controller.dataFuture = controller.cariDataHutangDagang(
                                             isAsc: controller.isAsc,
-                                            field: (event.column.field ==
-                                                        "cash_in" ||
-                                                    event.column.field ==
-                                                        "cash_out")
+                                            field: (event.column.field == "cash_in" ||
+                                                    event.column.field == "cash_out")
                                                 ? "nominal"
                                                 : event.column.field,
                                           );
@@ -640,18 +583,15 @@ class BayarHutangDagangView extends StatefulWidget {
                                         }
                                       },
                                       configuration: PlutoGridConfiguration(
-                                        columnSize:
-                                            const PlutoGridColumnSizeConfig(
+                                        columnSize: const PlutoGridColumnSizeConfig(
                                           autoSizeMode: PlutoAutoSizeMode.scale,
                                         ),
                                         style: PlutoGridStyleConfig(
-                                          columnTextStyle:
-                                              myTextTheme.titleSmall?.copyWith(
-                                                      color: neutralWhite) ??
-                                                  const TextStyle(),
+                                          columnTextStyle: myTextTheme.titleSmall
+                                                  ?.copyWith(color: neutralWhite) ??
+                                              const TextStyle(),
                                           gridBorderColor: blueGray50,
-                                          gridBorderRadius:
-                                              BorderRadius.circular(8),
+                                          gridBorderRadius: BorderRadius.circular(8),
                                         ),
                                         localeText: configLocale,
                                       ),
@@ -661,52 +601,65 @@ class BayarHutangDagangView extends StatefulWidget {
                                         return FooterTableWidget(
                                           page: controller.page,
                                           itemPerpage: controller.size,
-                                          maxPage: controller.dataHutangDagang
-                                                  .paging?.totalPage ??
-                                              0,
+                                          maxPage:
+                                              controller.dataHutangDagang.paging?.totalPage ?? 0,
                                           onChangePage: (value) {
                                             controller.page = trimString(value);
                                             controller.update();
-                                            controller.dataFuture = controller
-                                                .cariDataHutangDagang();
+                                            controller.dataFuture = controller.cariDataHutangDagang(
+                                              isAsc: controller.isAsc,
+                                              field: (controller.field == "cash_in" ||
+                                                      controller.field == "cash_out")
+                                                  ? "nominal"
+                                                  : controller.field,
+                                            );
                                             controller.update();
                                           },
                                           onChangePerPage: (value) {
                                             controller.page = "1";
                                             controller.size = trimString(value);
                                             controller.update();
-                                            controller.dataFuture = controller
-                                                .cariDataHutangDagang();
+                                            controller.dataFuture = controller.cariDataHutangDagang(
+                                              isAsc: controller.isAsc,
+                                              field: (controller.field == "cash_in" ||
+                                                      controller.field == "cash_out")
+                                                  ? "nominal"
+                                                  : controller.field,
+                                            );
                                             controller.update();
                                           },
-                                          totalRow: controller.dataHutangDagang
-                                                  .paging?.totalItem ??
-                                              0,
+                                          totalRow:
+                                              controller.dataHutangDagang.paging?.totalItem ?? 0,
                                           onPressLeft: () {
-                                            if (int.parse(controller.page) >
-                                                1) {
+                                            if (int.parse(controller.page) > 1) {
                                               controller.page =
-                                                  (int.parse(controller.page) -
-                                                          1)
-                                                      .toString();
+                                                  (int.parse(controller.page) - 1).toString();
                                               controller.update();
-                                              controller.dataFuture = controller
-                                                  .cariDataHutangDagang();
+                                              controller.dataFuture =
+                                                  controller.cariDataHutangDagang(
+                                                isAsc: controller.isAsc,
+                                                field: (controller.field == "cash_in" ||
+                                                        controller.field == "cash_out")
+                                                    ? "nominal"
+                                                    : controller.field,
+                                              );
                                               controller.update();
                                             }
                                           },
                                           onPressRight: () {
                                             if (int.parse(controller.page) <
-                                                (result.data?.paging
-                                                        ?.totalPage ??
-                                                    0)) {
+                                                (result.data?.paging?.totalPage ?? 0)) {
                                               controller.page =
-                                                  (int.parse(controller.page) +
-                                                          1)
-                                                      .toString();
+                                                  (int.parse(controller.page) + 1).toString();
                                               controller.update();
-                                              controller.dataFuture = controller
-                                                  .cariDataHutangDagang();
+                                              controller.dataFuture =
+                                                  controller.cariDataHutangDagang(
+                                                isAsc: controller.isAsc,
+                                                field: (controller.field == "cash_in" ||
+                                                        controller.field == "cash_out")
+                                                    ? "nominal"
+                                                    : controller.field,
+                                              );
                                               controller.update();
                                             }
                                           },

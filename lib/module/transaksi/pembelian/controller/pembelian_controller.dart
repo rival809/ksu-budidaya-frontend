@@ -17,6 +17,8 @@ class PembelianController extends State<PembelianView> {
   bool isList = true;
   bool isDetail = false;
 
+  String? field;
+
   DataPembelian dataCashInOut = DataPembelian();
   PembelianResult result = PembelianResult();
   List<String> listRoleView = [
@@ -43,6 +45,15 @@ class PembelianController extends State<PembelianView> {
 
       if (trimString(pembelianNameController.text).toString().isNotEmpty) {
         dataCari.addAll({"keterangan": trimString(pembelianNameController.text)});
+      }
+
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
       }
 
       if (isAsc != null) {

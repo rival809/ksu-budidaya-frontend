@@ -15,6 +15,8 @@ class SupplierController extends State<SupplierView> {
   DataSupplier dataSupplier = DataSupplier();
   SupplierResult result = SupplierResult();
 
+  String? field;
+
   List<String> listRoleView = [
     "id_supplier",
     "nm_supplier",

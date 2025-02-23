@@ -12,6 +12,8 @@ class DivisiController extends State<DivisiView> {
 
   Future<dynamic>? dataFuture;
 
+  String? field;
+
   DataDivisi dataDivisi = DataDivisi();
   DivisiResult result = DivisiResult();
 

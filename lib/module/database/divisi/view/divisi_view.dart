@@ -51,6 +51,7 @@ class DivisiView extends StatefulWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
+                                        controller.field = null;
                                         controller.dataFuture = controller.cariDataDivisi();
                                         controller.update();
                                       },
@@ -66,6 +67,7 @@ class DivisiView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
+                                  controller.field = null;
                                   controller.dataFuture = controller.cariDataDivisi();
                                   controller.update();
                                 },
@@ -219,6 +221,7 @@ class DivisiView extends StatefulWidget {
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
+                                    controller.field = event.column.field;
                                     controller.update();
                                     controller.dataFuture = controller.cariDataDivisi(
                                       isAsc: controller.isAsc,
@@ -252,6 +255,7 @@ class DivisiView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataDivisi(
                                         isAsc: controller.isAsc,
+                                        field: controller.field,
                                       );
                                       controller.update();
                                     },

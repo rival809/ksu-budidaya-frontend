@@ -13,8 +13,10 @@ class PenjualanController extends State<PenjualanView> {
 
   String page = "1";
   String size = "10";
-  bool isAsc = true;
+  bool isAsc = false;
   TextEditingController penjualanNameController = TextEditingController();
+
+  String? field;
 
   Future<dynamic>? dataFuture;
 
@@ -67,10 +69,21 @@ class PenjualanController extends State<PenjualanView> {
         dataCari.addAll({"keterangan": trimString(penjualanNameController.text)});
       }
 
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
+      }
+
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });
