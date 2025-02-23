@@ -20,6 +20,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
         step1 = true;
         step2 = false;
         step3 = false;
+        field = null;
         dataFuture = cariDataCashInOut();
 
         break;
@@ -27,12 +28,14 @@ class CashInCashOutController extends State<CashInCashOutView> {
         step1 = false;
         step2 = true;
         step3 = false;
+        field = null;
         dataFuture = cariDataCashInOut();
         break;
       case "3":
         step1 = false;
         step2 = false;
         step3 = true;
+        field = null;
         dataFuture = cariDataCashInOut();
 
         break;
@@ -40,6 +43,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
         step1 = true;
         step2 = false;
         step3 = false;
+        field = null;
     }
     update();
   }
@@ -56,6 +60,8 @@ class CashInCashOutController extends State<CashInCashOutView> {
     "cash_out",
     "keterangan",
   ];
+
+  String? field;
 
   cariDataCashInOut({
     bool? isAsc,
@@ -80,6 +86,15 @@ class CashInCashOutController extends State<CashInCashOutView> {
 
       if (trimString(supplierNameController.text).toString().isNotEmpty) {
         dataCari.addAll({"keterangan": trimString(supplierNameController.text)});
+      }
+
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
       }
 
       if (isAsc != null) {

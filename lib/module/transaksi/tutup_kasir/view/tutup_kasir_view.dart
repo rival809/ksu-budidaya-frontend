@@ -51,6 +51,7 @@ class TutupKasirView extends StatefulWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
+                                        controller.field = null;
                                         controller.dataFuture = controller.cariDataTutupKasir();
                                         controller.update();
                                       },
@@ -66,6 +67,7 @@ class TutupKasirView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
+                                  controller.field = null;
                                   controller.dataFuture = controller.cariDataTutupKasir();
                                   controller.update();
                                 },
@@ -318,6 +320,7 @@ class TutupKasirView extends StatefulWidget {
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
+                                    controller.field = event.column.field;
                                     controller.update();
                                     controller.dataFuture = controller.cariDataTutupKasir(
                                       isAsc: controller.isAsc,
@@ -350,14 +353,20 @@ class TutupKasirView extends StatefulWidget {
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture = controller.cariDataTutupKasir();
+                                      controller.dataFuture = controller.cariDataTutupKasir(
+                                        isAsc: controller.isAsc,
+                                        field: controller.field,
+                                      );
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture = controller.cariDataTutupKasir();
+                                      controller.dataFuture = controller.cariDataTutupKasir(
+                                        isAsc: controller.isAsc,
+                                        field: controller.field,
+                                      );
                                       controller.update();
                                     },
                                     totalRow: controller.dataListTutupKasir.paging?.totalItem ?? 0,
@@ -366,7 +375,10 @@ class TutupKasirView extends StatefulWidget {
                                         controller.page =
                                             (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture = controller.cariDataTutupKasir();
+                                        controller.dataFuture = controller.cariDataTutupKasir(
+                                          isAsc: controller.isAsc,
+                                          field: controller.field,
+                                        );
                                         controller.update();
                                       }
                                     },
@@ -376,7 +388,10 @@ class TutupKasirView extends StatefulWidget {
                                         controller.page =
                                             (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture = controller.cariDataTutupKasir();
+                                        controller.dataFuture = controller.cariDataTutupKasir(
+                                          isAsc: controller.isAsc,
+                                          field: controller.field,
+                                        );
                                         controller.update();
                                       }
                                     },

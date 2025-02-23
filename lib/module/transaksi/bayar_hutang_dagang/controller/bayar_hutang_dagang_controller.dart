@@ -15,11 +15,14 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
   Future<dynamic>? dataFuture;
   Future<dynamic>? dataFutureHistory;
 
+  String? field;
+
   onSwitchStep(String valueStep) {
     switch (valueStep) {
       case "1":
         step1 = true;
         step2 = false;
+        field = null;
         update();
         dataFuture = cariDataHutangDagang();
 
@@ -27,6 +30,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       case "2":
         step1 = false;
         step2 = true;
+        field = null;
         update();
         dataFutureHistory = cariDataHistoryHutangDagang();
         break;
@@ -34,6 +38,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       default:
         step1 = true;
         step2 = false;
+        field = null;
         update();
         dataFuture = cariDataHutangDagang();
     }
@@ -71,14 +76,23 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       };
 
       if (trimString(supplierNameController.text).toString().isNotEmpty) {
-        dataCari
-            .addAll({"id_supplier": trimString(supplierNameController.text)});
+        dataCari.addAll({"id_supplier": trimString(supplierNameController.text)});
       }
-
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
+      }
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });
@@ -91,8 +105,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       return result;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -126,8 +139,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       return resultHistory;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -162,8 +174,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -197,8 +208,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -234,8 +244,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }

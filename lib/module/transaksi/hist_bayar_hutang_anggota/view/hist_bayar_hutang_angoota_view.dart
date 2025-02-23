@@ -54,6 +54,7 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
+                                        controller.field = null;
                                         controller.dataFuture = controller.cariDataHutangDagang();
                                         controller.update();
                                       },
@@ -285,6 +286,11 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                       onSorted: (event) {
                                         if (event.column.field != "Aksi") {
                                           controller.isAsc = !controller.isAsc;
+                                          controller.field = (event.column.field == "cash_in" ||
+                                                  event.column.field == "cash_out")
+                                              ? "nominal"
+                                              : event.column.field;
+
                                           controller.update();
                                           controller.dataFuture = controller.cariDataHutangDagang(
                                             isAsc: controller.isAsc,
@@ -367,7 +373,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                                   controller.page = trimString(value);
                                                   controller.update();
                                                   controller.dataFuture =
-                                                      controller.cariDataHutangDagang();
+                                                      controller.cariDataHutangDagang(
+                                                    isAsc: controller.isAsc,
+                                                    field: (controller.field == "cash_in" ||
+                                                            controller.field == "cash_out")
+                                                        ? "nominal"
+                                                        : controller.field,
+                                                  );
                                                   controller.update();
                                                 },
                                                 onChangePerPage: (value) {
@@ -375,7 +387,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                                   controller.size = trimString(value);
                                                   controller.update();
                                                   controller.dataFuture =
-                                                      controller.cariDataHutangDagang();
+                                                      controller.cariDataHutangDagang(
+                                                    isAsc: controller.isAsc,
+                                                    field: (controller.field == "cash_in" ||
+                                                            controller.field == "cash_out")
+                                                        ? "nominal"
+                                                        : controller.field,
+                                                  );
                                                   controller.update();
                                                 },
                                                 totalRow:
@@ -387,7 +405,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                                         (int.parse(controller.page) - 1).toString();
                                                     controller.update();
                                                     controller.dataFuture =
-                                                        controller.cariDataHutangDagang();
+                                                        controller.cariDataHutangDagang(
+                                                      isAsc: controller.isAsc,
+                                                      field: (controller.field == "cash_in" ||
+                                                              controller.field == "cash_out")
+                                                          ? "nominal"
+                                                          : controller.field,
+                                                    );
                                                     controller.update();
                                                   }
                                                 },
@@ -398,7 +422,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                                         (int.parse(controller.page) + 1).toString();
                                                     controller.update();
                                                     controller.dataFuture =
-                                                        controller.cariDataHutangDagang();
+                                                        controller.cariDataHutangDagang(
+                                                      isAsc: controller.isAsc,
+                                                      field: (controller.field == "cash_in" ||
+                                                              controller.field == "cash_out")
+                                                          ? "nominal"
+                                                          : controller.field,
+                                                    );
                                                     controller.update();
                                                   }
                                                 },
@@ -536,6 +566,10 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                       onSorted: (event) {
                                         if (event.column.field != "Aksi") {
                                           controller.isAsc = !controller.isAsc;
+                                          controller.field = (event.column.field == "cash_in" ||
+                                                  event.column.field == "cash_out")
+                                              ? "nominal"
+                                              : event.column.field;
                                           controller.update();
                                           controller.dataFuture =
                                               controller.cariDataHistoryHutangDagang(
@@ -574,7 +608,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                             controller.page = trimString(value);
                                             controller.update();
                                             controller.dataFuture =
-                                                controller.cariDataHistoryHutangDagang();
+                                                controller.cariDataHistoryHutangDagang(
+                                              isAsc: controller.isAsc,
+                                              field: (controller.field == "cash_in" ||
+                                                      controller.field == "cash_out")
+                                                  ? "nominal"
+                                                  : controller.field,
+                                            );
                                             controller.update();
                                           },
                                           onChangePerPage: (value) {
@@ -582,7 +622,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                             controller.size = trimString(value);
                                             controller.update();
                                             controller.dataFuture =
-                                                controller.cariDataHistoryHutangDagang();
+                                                controller.cariDataHistoryHutangDagang(
+                                              isAsc: controller.isAsc,
+                                              field: (controller.field == "cash_in" ||
+                                                      controller.field == "cash_out")
+                                                  ? "nominal"
+                                                  : controller.field,
+                                            );
                                             controller.update();
                                           },
                                           totalRow: controller
@@ -594,7 +640,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                                   (int.parse(controller.page) - 1).toString();
                                               controller.update();
                                               controller.dataFuture =
-                                                  controller.cariDataHistoryHutangDagang();
+                                                  controller.cariDataHistoryHutangDagang(
+                                                isAsc: controller.isAsc,
+                                                field: (controller.field == "cash_in" ||
+                                                        controller.field == "cash_out")
+                                                    ? "nominal"
+                                                    : controller.field,
+                                              );
                                               controller.update();
                                             }
                                           },
@@ -605,7 +657,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                                   (int.parse(controller.page) + 1).toString();
                                               controller.update();
                                               controller.dataFuture =
-                                                  controller.cariDataHistoryHutangDagang();
+                                                  controller.cariDataHistoryHutangDagang(
+                                                isAsc: controller.isAsc,
+                                                field: (controller.field == "cash_in" ||
+                                                        controller.field == "cash_out")
+                                                    ? "nominal"
+                                                    : controller.field,
+                                              );
                                               controller.update();
                                             }
                                           },

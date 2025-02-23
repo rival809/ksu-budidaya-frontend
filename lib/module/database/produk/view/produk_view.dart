@@ -51,6 +51,7 @@ class ProdukView extends StatefulWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
+                                        controller.field = null;
                                         controller.dataFuture = controller.cariDataProduct();
                                         controller.update();
                                       },
@@ -66,6 +67,8 @@ class ProdukView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
+                                  controller.field = null;
+
                                   controller.dataFuture = controller.cariDataProduct();
                                   controller.update();
                                 },
@@ -698,6 +701,7 @@ class ProdukView extends StatefulWidget {
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
+                                    controller.field = event.column.field;
                                     controller.update();
                                     controller.dataFuture = controller.cariDataProduct(
                                       isAsc: controller.isAsc,
@@ -734,6 +738,7 @@ class ProdukView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataProduct(
                                         isAsc: controller.isAsc,
+                                        field: controller.field,
                                       );
                                       controller.update();
                                     },
@@ -743,6 +748,7 @@ class ProdukView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataProduct(
                                         isAsc: controller.isAsc,
+                                        field: controller.field,
                                       );
                                       controller.update();
                                     },
@@ -754,6 +760,7 @@ class ProdukView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataProduct(
                                           isAsc: controller.isAsc,
+                                          field: controller.field,
                                         );
                                         controller.update();
                                       }
@@ -766,6 +773,7 @@ class ProdukView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataProduct(
                                           isAsc: controller.isAsc,
+                                          field: controller.field,
                                         );
                                         controller.update();
                                       }

@@ -51,6 +51,7 @@ class AnggotaView extends StatefulWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
+                                        controller.field = null;
                                         controller.dataFuture = controller.cariDataAnggota();
                                         controller.update();
                                       },
@@ -66,6 +67,7 @@ class AnggotaView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
+                                  controller.field = null;
                                   controller.dataFuture = controller.cariDataAnggota();
                                   controller.update();
                                 },
@@ -265,6 +267,7 @@ class AnggotaView extends StatefulWidget {
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
+                                    controller.field = event.column.field;
                                     controller.update();
                                     controller.dataFuture = controller.cariDataAnggota(
                                       isAsc: controller.isAsc,
@@ -298,6 +301,7 @@ class AnggotaView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataAnggota(
                                         isAsc: controller.isAsc,
+                                        field: controller.field,
                                       );
                                       controller.update();
                                     },
@@ -307,6 +311,7 @@ class AnggotaView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataAnggota(
                                         isAsc: controller.isAsc,
+                                        field: controller.field,
                                       );
                                       controller.update();
                                     },
@@ -318,6 +323,7 @@ class AnggotaView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataAnggota(
                                           isAsc: controller.isAsc,
+                                          field: controller.field,
                                         );
                                         controller.update();
                                       }
@@ -330,6 +336,7 @@ class AnggotaView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataAnggota(
                                           isAsc: controller.isAsc,
+                                          field: controller.field,
                                         );
                                         controller.update();
                                       }

@@ -22,6 +22,7 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
       case "1":
         step1 = true;
         step2 = false;
+        field = null;
         update();
         dataFuture = cariDataHutangDagang();
 
@@ -29,6 +30,7 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
       case "2":
         step1 = false;
         step2 = true;
+        field = null;
         update();
         dataFutureHistory = cariDataHistoryHutangDagang();
         break;
@@ -36,6 +38,7 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
       default:
         step1 = true;
         step2 = false;
+        field = null;
         update();
         dataFuture = cariDataHutangDagang();
     }
@@ -60,6 +63,7 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
     "nominal",
     "keterangan",
   ];
+  String? field;
 
   cariDataHutangDagang({
     bool? isAsc,
@@ -76,10 +80,21 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
         dataCari.addAll({"id_anggota": trimString(supplierNameController.text)});
       }
 
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
+      }
+
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });
@@ -110,10 +125,21 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
         "size": size,
       };
 
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
+      }
+
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });

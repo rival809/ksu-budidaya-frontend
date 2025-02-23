@@ -54,6 +54,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                           padding: const EdgeInsets.all(8.0),
                           child: BasePrimaryButton(
                             onPressed: () {
+                              controller.field = null;
                               controller.dataFuture = controller.cariDataPenjualan();
                               controller.update();
                             },
@@ -69,6 +70,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                     ),
                     BaseSecondaryButton(
                       onPressed: () {
+                        controller.field = null;
                         controller.dataFuture = controller.cariDataPenjualan();
                         controller.update();
                       },
@@ -337,6 +339,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                       onSorted: (event) {
                         if (event.column.field != "Aksi") {
                           controller.isAsc = !controller.isAsc;
+                          controller.field = event.column.field;
                           controller.update();
                           controller.dataFuture = controller.cariDataPenjualan(
                             isAsc: controller.isAsc,
@@ -367,14 +370,20 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                           onChangePage: (value) {
                             controller.page = trimString(value);
                             controller.update();
-                            controller.dataFuture = controller.cariDataPenjualan();
+                            controller.dataFuture = controller.cariDataPenjualan(
+                              isAsc: controller.isAsc,
+                              field: controller.field,
+                            );
                             controller.update();
                           },
                           onChangePerPage: (value) {
                             controller.page = "1";
                             controller.size = trimString(value);
                             controller.update();
-                            controller.dataFuture = controller.cariDataPenjualan();
+                            controller.dataFuture = controller.cariDataPenjualan(
+                              isAsc: controller.isAsc,
+                              field: controller.field,
+                            );
                             controller.update();
                           },
                           totalRow: controller.dataListPenjualan.paging?.totalItem ?? 0,
@@ -382,7 +391,10 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                             if (int.parse(controller.page) > 1) {
                               controller.page = (int.parse(controller.page) - 1).toString();
                               controller.update();
-                              controller.dataFuture = controller.cariDataPenjualan();
+                              controller.dataFuture = controller.cariDataPenjualan(
+                                isAsc: controller.isAsc,
+                                field: controller.field,
+                              );
                               controller.update();
                             }
                           },
@@ -391,7 +403,10 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                                 (result.data?.paging?.totalPage ?? 0)) {
                               controller.page = (int.parse(controller.page) + 1).toString();
                               controller.update();
-                              controller.dataFuture = controller.cariDataPenjualan();
+                              controller.dataFuture = controller.cariDataPenjualan(
+                                isAsc: controller.isAsc,
+                                field: controller.field,
+                              );
                               controller.update();
                             }
                           },

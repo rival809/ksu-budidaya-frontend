@@ -53,6 +53,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           padding: const EdgeInsets.all(8.0),
                           child: BasePrimaryButton(
                             onPressed: () {
+                              controller.field = null;
                               controller.dataFuture = controller.cariDataPembelian();
                               controller.update();
                             },
@@ -68,6 +69,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     ),
                     BaseSecondaryButton(
                       onPressed: () {
+                        controller.field = null;
                         controller.dataFuture = controller.cariDataPembelian();
                         controller.update();
                       },
@@ -327,6 +329,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                       onSorted: (event) {
                         if (event.column.field != "Aksi") {
                           controller.isAsc = !controller.isAsc;
+                          controller.field = event.column.field;
                           controller.update();
                           controller.dataFuture = controller.cariDataPembelian(
                             isAsc: controller.isAsc,
@@ -357,14 +360,20 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           onChangePage: (value) {
                             controller.page = trimString(value);
                             controller.update();
-                            controller.dataFuture = controller.cariDataPembelian();
+                            controller.dataFuture = controller.cariDataPembelian(
+                              isAsc: controller.isAsc,
+                              field: controller.field,
+                            );
                             controller.update();
                           },
                           onChangePerPage: (value) {
                             controller.page = "1";
                             controller.size = trimString(value);
                             controller.update();
-                            controller.dataFuture = controller.cariDataPembelian();
+                            controller.dataFuture = controller.cariDataPembelian(
+                              isAsc: controller.isAsc,
+                              field: controller.field,
+                            );
                             controller.update();
                           },
                           totalRow: controller.dataCashInOut.paging?.totalItem ?? 0,
@@ -372,7 +381,10 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                             if (int.parse(controller.page) > 1) {
                               controller.page = (int.parse(controller.page) - 1).toString();
                               controller.update();
-                              controller.dataFuture = controller.cariDataPembelian();
+                              controller.dataFuture = controller.cariDataPembelian(
+                                isAsc: controller.isAsc,
+                                field: controller.field,
+                              );
                               controller.update();
                             }
                           },
@@ -381,7 +393,10 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                                 (result.data?.paging?.totalPage ?? 0)) {
                               controller.page = (int.parse(controller.page) + 1).toString();
                               controller.update();
-                              controller.dataFuture = controller.cariDataPembelian();
+                              controller.dataFuture = controller.cariDataPembelian(
+                                isAsc: controller.isAsc,
+                                field: controller.field,
+                              );
                               controller.update();
                             }
                           },

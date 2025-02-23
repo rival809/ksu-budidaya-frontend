@@ -15,6 +15,8 @@ class AnggotaController extends State<AnggotaView> {
   DataAnggota dataListAnggota = DataAnggota();
   AnggotaResult result = AnggotaResult();
 
+  String? field;
+
   List<String> listRoleView = [
     "id_anggota",
     "nm_anggota",

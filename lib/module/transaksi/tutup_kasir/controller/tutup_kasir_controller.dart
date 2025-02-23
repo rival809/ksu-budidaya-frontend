@@ -27,6 +27,8 @@ class TutupKasirController extends State<TutupKasirView> {
     "uang_tunai",
   ];
 
+  String? field;
+
   cariDataTutupKasir({
     bool? isAsc,
     String? field,
@@ -41,11 +43,21 @@ class TutupKasirController extends State<TutupKasirView> {
       if (trimString(penjualanNameController.text).toString().isNotEmpty) {
         dataCari.addAll({"username": trimString(penjualanNameController.text)});
       }
-
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
+      }
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });

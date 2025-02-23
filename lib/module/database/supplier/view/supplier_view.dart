@@ -51,6 +51,7 @@ class SupplierView extends StatefulWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
+                                        controller.field = null;
                                         controller.dataFuture = controller.cariDataSupplier();
                                         controller.update();
                                       },
@@ -66,6 +67,7 @@ class SupplierView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
+                                  controller.field = null;
                                   controller.dataFuture = controller.cariDataSupplier();
                                   controller.update();
                                 },
@@ -278,6 +280,7 @@ class SupplierView extends StatefulWidget {
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
+                                    controller.field = event.column.field;
                                     controller.update();
                                     controller.dataFuture = controller.cariDataSupplier(
                                       isAsc: controller.isAsc,
@@ -311,6 +314,7 @@ class SupplierView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataSupplier(
                                         isAsc: controller.isAsc,
+                                        field: controller.field,
                                       );
                                       controller.update();
                                     },
@@ -320,6 +324,7 @@ class SupplierView extends StatefulWidget {
                                       controller.update();
                                       controller.dataFuture = controller.cariDataSupplier(
                                         isAsc: controller.isAsc,
+                                        field: controller.field,
                                       );
                                       controller.update();
                                     },
@@ -331,6 +336,7 @@ class SupplierView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataSupplier(
                                           isAsc: controller.isAsc,
+                                          field: controller.field,
                                         );
                                         controller.update();
                                       }
@@ -343,6 +349,7 @@ class SupplierView extends StatefulWidget {
                                         controller.update();
                                         controller.dataFuture = controller.cariDataSupplier(
                                           isAsc: controller.isAsc,
+                                          field: controller.field,
                                         );
                                         controller.update();
                                       }

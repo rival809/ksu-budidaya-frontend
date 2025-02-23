@@ -10,6 +10,7 @@ class ProdukController extends State<ProdukView> {
   String size = "10";
   bool isAsc = true;
   TextEditingController productNameController = TextEditingController();
+  String? field;
 
   Future<dynamic>? dataFuture;
 
