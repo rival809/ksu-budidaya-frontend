@@ -78,7 +78,7 @@ class _DialogPelunasanAnggotaState extends State<DialogPelunasanAnggota> {
     super.initState();
 
     dataEdit = BayarHutangAnggotaPayload(
-      idHutangAnggota: widget.dataHutang?.idHutangAnggota,
+      idAnggota: widget.dataHutang?.idAnggota,
       nominalBayar: widget.dataHutang?.nominal,
       tgBayar: formatDate(DateTime.now().toString()),
     );

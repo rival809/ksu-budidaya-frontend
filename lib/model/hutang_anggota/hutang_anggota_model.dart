@@ -9,8 +9,7 @@ class HutangAnggotaResult {
 
   HutangAnggotaResult.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data =
-        json['data'] != null ? DataHutangAnggota.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataHutangAnggota.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -44,8 +43,7 @@ class DataHutangAnggota {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (dataHutangAnggota != null) {
-      data['data_hutang_anggota'] =
-          dataHutangAnggota!.map((v) => v.toJson()).toList();
+      data['data_hutang_anggota'] = dataHutangAnggota!.map((v) => v.toJson()).toList();
     }
     if (paging != null) {
       data['paging'] = paging!.toJson();
@@ -75,7 +73,7 @@ class DetailDataHutangAnggota {
       this.updatedAt});
 
   String hutangAnggotaAsString() {
-    return "$nmAnggota";
+    return "${trimString(nmAnggota)}";
   }
 
   DetailDataHutangAnggota copyWith({

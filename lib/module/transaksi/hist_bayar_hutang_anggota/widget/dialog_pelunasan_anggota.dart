@@ -79,7 +79,7 @@ class _DialogPelunasanAnggotaNewState extends State<DialogPelunasanAnggotaNew> {
     super.initState();
 
     dataEdit = BayarHutangAnggotaPayload(
-      idHutangAnggota: widget.dataHutang?.idHutangAnggota,
+      idAnggota: widget.dataHutang?.idAnggota,
       nominalBayar: widget.dataHutang?.nominal,
       tgBayar: formatDate(DateTime.now().toString()),
     );
@@ -162,7 +162,8 @@ class _DialogPelunasanAnggotaNewState extends State<DialogPelunasanAnggotaNew> {
                     sortItem: false,
                     itemAsString: (item) => item.hutangAnggotaAsString(),
                     items: widget.listHutang ?? [],
-                    value: valueHutang,
+                    value:
+                        trimString(valueHutang.nmAnggota).toString().isEmpty ? null : valueHutang,
                     enabled: true,
                     onChanged: (value) {
                       dataEdit = BayarHutangAnggotaPayload.fromJson(value?.toJson() ?? {});
