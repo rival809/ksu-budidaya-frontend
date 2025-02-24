@@ -202,6 +202,24 @@ class TutupKasirView extends StatefulWidget {
                                         ),
                                       ),
                                       PopupMenuItem(
+                                        value: 4,
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.refresh,
+                                              size: 24,
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                'Refresh Data',
+                                                style: myTextTheme.bodyMedium,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      PopupMenuItem(
                                         value: 2,
                                         child: Row(
                                           children: [
@@ -260,6 +278,19 @@ class TutupKasirView extends StatefulWidget {
                                                 "Apakah Anda yakin ingin menghapus data ini?",
                                             onConfirm: () {
                                               controller.postRemoveTutupKasir(
+                                                trimString(data?.idTutupKasir.toString()),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      } else if (value == 4) {
+                                        showDialogBase(
+                                          width: 400,
+                                          content: DialogKonfirmasi(
+                                            textKonfirmasi:
+                                                "Apakah Anda yakin ingin merefresh data ini?",
+                                            onConfirm: () {
+                                              controller.postRefreshTutupKasir(
                                                 trimString(data?.idTutupKasir.toString()),
                                               );
                                             },

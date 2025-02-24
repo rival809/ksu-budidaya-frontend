@@ -67,6 +67,8 @@ class _DialogPelunasanAnggotaNewState extends State<DialogPelunasanAnggotaNew> {
 
     if (states != null) {
       matches.addAll(states);
+      //remove the duplicates id_anggota
+      matches = matches.toSet().toList();
       matches
           .retainWhere((s) => trimString(s.nmAnggota).toLowerCase().contains(query.toLowerCase()));
     }
