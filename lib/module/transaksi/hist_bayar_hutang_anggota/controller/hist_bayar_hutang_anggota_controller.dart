@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
 import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/view/hist_bayar_hutang_angoota_view.dart';
+import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/widget/detail_penjualan.dart';
 
 class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView> {
   static late HistBayarHutangAnggotaController instance;
@@ -16,6 +17,7 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
   bool step2 = false;
   Future<dynamic>? dataFuture;
   Future<dynamic>? dataFutureHistory;
+  CreatePenjualanModel dataPenjualan = CreatePenjualanModel();
 
   onSwitchStep(String valueStep) {
     switch (valueStep) {
@@ -43,6 +45,83 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
         dataFuture = cariDataHutangDagang();
     }
     update();
+  }
+
+  List<TextEditingController> textControllerDialog = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
+
+  sumTotalIndex() {
+    double total = 0;
+    for (int i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      var diskon = double.parse(
+        removeComma(dataPenjualan.details?[i].diskon ?? "0"),
+      );
+
+      var hargaJual = double.parse(
+        removeComma(dataPenjualan.details?[i].harga ?? "0"),
+      );
+
+      var jumlah = double.parse(
+        removeComma(dataPenjualan.details?[i].jumlah ?? "0"),
+      );
+
+      var totalHarga = ((hargaJual - diskon) * jumlah).toString();
+      dataPenjualan.details?[i].total = totalHarga;
+    }
+  }
+
+  sumTotal() {
+    double totalNilaiJual = 0;
+    double totalNilaiBeli = 0;
+    double jumlah = 0;
+    for (int i = 0; i < (dataPenjualan.details?.length ?? 0); i++) {
+      totalNilaiJual += ((double.parse(dataPenjualan.details?[i].harga ?? "0") -
+              double.parse(dataPenjualan.details?[i].diskon ?? "0")) *
+          double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
+      totalNilaiBeli += (double.parse(dataPenjualan.details?[i].hargaBeli ?? "0") *
+          double.parse(dataPenjualan.details?[i].jumlah ?? "0"));
+      jumlah += double.parse(dataPenjualan.details?[i].jumlah ?? "0");
+    }
+
+    dataPenjualan.totalNilaiJual = totalNilaiJual.toString();
+    dataPenjualan.totalNilaiBeli = totalNilaiBeli.toString();
+    dataPenjualan.jumlah = jumlah.toString();
+  }
+
+  postDetailPenjualan(String idPenjualan) async {
+    showCircleDialogLoading();
+    try {
+      DetailPenjualanResult result = await ApiService.detailPenjualan(
+        data: {"id_penjualan": idPenjualan},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        dataPenjualan = dataPenjualan.copyWith(
+          details: result.details,
+        );
+
+        Get.to(DetailPenjualan(
+          controller: instance,
+        ));
+
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
   }
 
   DataHutangAnggota dataHutangDagang = DataHutangAnggota();
@@ -268,6 +347,8 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
   void initState() {
     instance = this;
     super.initState();
+    textControllerDialog[2].text = "0";
+    textControllerDialog[3].text = "0";
     dataFuture = cariDataHutangDagang();
   }
 

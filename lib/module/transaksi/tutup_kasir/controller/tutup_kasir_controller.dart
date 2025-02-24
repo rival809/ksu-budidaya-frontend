@@ -156,6 +156,35 @@ class TutupKasirController extends State<TutupKasirView> {
     }
   }
 
+  postRefreshTutupKasir(String idTutupKasir) async {
+    try {
+      Get.back();
+      showCircleDialogLoading();
+      TutupKasirResult result = await ApiService.refreshTutupKasir(
+        data: {"id_tutup_kasir": idTutupKasir},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        await showDialogBase(
+          content: const DialogBerhasil(),
+        );
+
+        dataFuture = cariDataTutupKasir();
+        update();
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
   @override
   void initState() {
     instance = this;

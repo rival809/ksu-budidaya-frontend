@@ -87,15 +87,38 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                           ),
                           BasePrimaryButton(
                             onPressed: () {
+                              List<DetailDataHutangAnggota>? temp;
+
+                              for (int i = 0;
+                                  i < (controller.result.data?.dataHutangAnggota?.length ?? 0);
+                                  i++) {
+                                if (temp != null) {
+                                  if (temp
+                                      .where((element) =>
+                                          trimString(element.idAnggota) ==
+                                          trimString(controller
+                                              .result.data?.dataHutangAnggota?[i].idAnggota))
+                                      .isEmpty) {
+                                    temp.add(controller.result.data?.dataHutangAnggota?[i] ??
+                                        DetailDataHutangAnggota());
+                                  }
+                                } else {
+                                  temp = [
+                                    controller.result.data?.dataHutangAnggota?[i] ??
+                                        DetailDataHutangAnggota()
+                                  ];
+                                }
+                              }
+
                               showDialogBase(
                                 width: 700,
                                 content: DialogPelunasanAnggotaNew(
                                   dataHutang: DetailDataHutangAnggota(),
-                                  listHutang: controller.result.data?.dataHutangAnggota ?? [],
+                                  listHutang: temp ?? [],
                                 ),
                               );
                             },
-                            text: "Tambah Data",
+                            text: "Bayar Hutang",
                             suffixIcon: iconAdd,
                             isDense: true,
                           ),
@@ -205,13 +228,13 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                               child: Row(
                                                 children: [
                                                   SvgPicture.asset(
-                                                    iconAccountBalanceWallet,
+                                                    iconMiscInfo,
                                                     colorFilter: colorFilterGray600,
                                                   ),
                                                   const SizedBox(width: 8),
                                                   Expanded(
                                                     child: Text(
-                                                      'Bayar Hutang',
+                                                      'Detail Data',
                                                       style: myTextTheme.bodyMedium,
                                                     ),
                                                   ),
@@ -221,14 +244,10 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                           ],
                                           onChange: (value) {
                                             if (value == 1) {
-                                              showDialogBase(
-                                                width: 700,
-                                                content: DialogPelunasanAnggotaNew(
-                                                  dataHutang: controller
-                                                      .result.data?.dataHutangAnggota?[rowIndex],
-                                                  listHutang:
-                                                      controller.result.data?.dataHutangAnggota ??
-                                                          [],
+                                              controller.postDetailPenjualan(
+                                                trimString(
+                                                  controller.result.data
+                                                      ?.dataHutangAnggota?[rowIndex].idPenjualan,
                                                 ),
                                               );
                                             }
