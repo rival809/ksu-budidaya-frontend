@@ -101,6 +101,22 @@ String formatDateTimeNow(String originalDateString) {
   }
 }
 
+String dateTimeNowToPayload(String originalDateString) {
+  try {
+    DateFormat originalFormat = DateFormat("yyyy-MM-dd");
+    DateFormat desiredFormat = DateFormat("dd-MM-yyyy, HH:mm");
+
+    DateTime dateTime = originalFormat.parse(originalDateString);
+
+    String formattedDateString = desiredFormat.format(dateTime);
+
+    return formattedDateString;
+  } catch (e) {
+    print("Error parsing date: $e");
+    return "";
+  }
+}
+
 String formatDateTimeNormal(String originalDateString) {
   try {
     DateFormat originalFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
