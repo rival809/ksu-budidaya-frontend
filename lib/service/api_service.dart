@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
+import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
+import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
+import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
 
 class ApiService {
   //CONFIG API
@@ -1400,6 +1403,69 @@ class ApiService {
       }
     } else {
       throw Exception('Failed to bayarHutangDagang');
+    }
+  }
+
+  static Future<StockOpnameModel> createStockOpname({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stock/create-stock-opname",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return StockOpnameModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createStockOpname');
+    }
+  }
+
+  static Future<HistoryStockOpnameModel> listHistoryStockOpname({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stock/history-stock-opname",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return HistoryStockOpnameModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listHistoryStockOpname');
+    }
+  }
+
+  static Future<StockTakeResult> listStockTake({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stock/list-stock-take",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return StockTakeResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listStockTake');
     }
   }
 }

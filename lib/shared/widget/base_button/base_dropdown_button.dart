@@ -53,8 +53,7 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
     super.initState();
     sortedItems = widget.items;
     if (widget.sortItem != false) {
-      sortedItems.sort(
-          (a, b) => widget.itemAsString(a).compareTo(widget.itemAsString(b)));
+      sortedItems.sort((a, b) => widget.itemAsString(a).compareTo(widget.itemAsString(b)));
     }
 
     textController.text = widget.value.toString();
@@ -106,10 +105,7 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
                           if (widget.require ?? false)
                             TextSpan(
                               text: ' *',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
+                              style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                     color: error,
                                   ),
                             ),
@@ -166,8 +162,10 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
             onPressed: widget.onClear,
           ),
           dropdownDecoratorProps: DropDownDecoratorProps(
-            baseStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: widget.enabled ?? true ? gray900 : gray600, height: 1.6),
+            baseStyle: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: widget.enabled ?? true ? gray900 : gray600, height: 1.6),
             dropdownSearchDecoration: InputDecoration(
               hintMaxLines: 1,
               helperMaxLines: 1,
@@ -257,9 +255,7 @@ class _BaseDropdownButtonState<T> extends State<BaseDropdownButton<T>> {
             tooltip: "Pilih ${widget.label}",
             icon: SvgPicture.asset(
               iconChevronDown,
-              colorFilter: widget.enabled ?? true
-                  ? colorFilterPrimary
-                  : colorFilterGray600,
+              colorFilter: widget.enabled ?? true ? colorFilterPrimary : colorFilterGray600,
             ),
           ),
           popupProps: PopupProps.menu(

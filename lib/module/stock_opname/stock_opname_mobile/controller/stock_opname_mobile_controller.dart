@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
 
 class StockOpnameMobileController extends State<StockOpnameMobileView> {
   static late StockOpnameMobileController instance;
@@ -50,15 +52,13 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       if (result.success == true) {
         dataResult = result;
         textNamaProdukController.text = trimString(result.data?.nmProduct);
-        textCurrentStockController.text =
-            trimString(result.data?.jumlah.toString());
+        textCurrentStockController.text = trimString(result.data?.jumlah.toString());
       }
     } catch (e) {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -68,10 +68,16 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
   postUpdateProduct(String idProduct, String jumlah) async {
     showCircleDialogLoading();
     try {
-      ProductResult result = await ApiService.updateProduct(
+      StockOpnameModel result = await ApiService.createStockOpname(
         data: {
+          "tg_stocktake":
+              "${formatDate(DateTime.now().toString())}, ${formatSelectedTime(DateTime.now())}",
           "id_product": idProduct,
-          "jumlah": jumlah,
+          "nm_product": dataResult.data?.nmProduct,
+          "stok_awal": dataResult.data?.jumlah,
+          "stok_akhir": jumlah,
+          "username": UserDatabase.userDatabase.data?.userData?.username,
+          "name": UserDatabase.userDatabase.data?.userData?.name,
         },
       ).timeout(const Duration(seconds: 30));
 
@@ -79,7 +85,81 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
 
       if (result.success == true) {
         await showDialogBase(
-          content: const DialogBerhasil(),
+          content: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  iconStatusCheck,
+                  height: 80,
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  "Berhasil",
+                  style: myTextTheme.displaySmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: gray50,
+                    border: Border.all(
+                      width: 1.0,
+                      color: blueGray50,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(12.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: OneData(
+                          title: "Stock Awal",
+                          subtitle: trimString(result.data?.stokAwal),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Expanded(
+                        child: OneData(
+                          title: "Stock Akhir",
+                          subtitle: trimString(result.data?.stokAkhir),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Expanded(
+                        child: OneData(
+                          title: "Selisih",
+                          subtitle: trimString(result.data?.selisih),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 24.0,
+                ),
+                BasePrimaryButton(
+                  text: "Oke, saya mengerti",
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ),
+          ),
         );
 
         resetData();
@@ -89,8 +169,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
