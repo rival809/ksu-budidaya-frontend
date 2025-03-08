@@ -70,7 +70,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
     try {
       StockOpnameModel result = await ApiService.createStockOpname(
         data: {
-          "tg_stocktake": dateTimeNowToPayload(DateTime.now().toString()),
+          "tg_stocktake":
+              "${formatDate(DateTime.now().toString())}, ${formatSelectedTime(DateTime.now())}",
           "id_product": idProduct,
           "nm_product": dataResult.data?.nmProduct,
           "stok_awal": dataResult.data?.jumlah,

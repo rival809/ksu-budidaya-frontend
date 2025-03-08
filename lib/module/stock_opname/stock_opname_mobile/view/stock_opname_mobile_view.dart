@@ -4,7 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class StockOpnameMobileView extends StatefulWidget {
-  const StockOpnameMobileView({Key? key}) : super(key: key);
+  final bool? isFromHistory;
+  const StockOpnameMobileView({
+    Key? key,
+    this.isFromHistory,
+  }) : super(key: key);
 
   Widget build(context, StockOpnameMobileController controller) {
     controller.view = this;
@@ -34,17 +38,12 @@ class StockOpnameMobileView extends StatefulWidget {
                           Expanded(
                             child: BasePrimaryButton(
                               text: "Simpan",
-                              onPressed: (controller.dataResult.data?.idProduct
-                                          ?.isEmpty ??
-                                      true)
+                              onPressed: (controller.dataResult.data?.idProduct?.isEmpty ?? true)
                                   ? null
                                   : () {
-                                      if (controller
-                                          .stockOpnameKey.currentState!
-                                          .validate()) {
+                                      if (controller.stockOpnameKey.currentState!.validate()) {
                                         controller.postUpdateProduct(
-                                          trimString(controller
-                                              .dataResult.data?.idProduct),
+                                          trimString(controller.dataResult.data?.idProduct),
                                           controller.textStockController.text,
                                         );
                                       }
@@ -74,11 +73,9 @@ class StockOpnameMobileView extends StatefulWidget {
                             child: BasePrimaryButton(
                               text: "Simpan",
                               onPressed: () {
-                                if (controller.stockOpnameKey.currentState!
-                                    .validate()) {
+                                if (controller.stockOpnameKey.currentState!.validate()) {
                                   controller.postUpdateProduct(
-                                    trimString(
-                                        controller.dataResult.data?.idProduct),
+                                    trimString(controller.dataResult.data?.idProduct),
                                     controller.textStockController.text,
                                   );
                                 }
@@ -109,16 +106,12 @@ class StockOpnameMobileView extends StatefulWidget {
                       Expanded(
                         child: BasePrimaryButton(
                           text: "Simpan",
-                          onPressed: (controller
-                                      .dataResult.data?.idProduct?.isEmpty ??
-                                  true)
+                          onPressed: (controller.dataResult.data?.idProduct?.isEmpty ?? true)
                               ? null
                               : () {
-                                  if (controller.stockOpnameKey.currentState!
-                                      .validate()) {
+                                  if (controller.stockOpnameKey.currentState!.validate()) {
                                     controller.postUpdateProduct(
-                                      trimString(controller
-                                          .dataResult.data?.idProduct),
+                                      trimString(controller.dataResult.data?.idProduct),
                                       controller.textStockController.text,
                                     );
                                   }
@@ -148,11 +141,9 @@ class StockOpnameMobileView extends StatefulWidget {
                         child: BasePrimaryButton(
                           text: "Simpan",
                           onPressed: () {
-                            if (controller.stockOpnameKey.currentState!
-                                .validate()) {
+                            if (controller.stockOpnameKey.currentState!.validate()) {
                               controller.postUpdateProduct(
-                                trimString(
-                                    controller.dataResult.data?.idProduct),
+                                trimString(controller.dataResult.data?.idProduct),
                                 controller.textStockController.text,
                               );
                             }
@@ -172,9 +163,23 @@ class StockOpnameMobileView extends StatefulWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Stock Opname",
-                    style: myTextTheme.headlineLarge,
+                  Row(
+                    children: [
+                      if (isFromHistory == true)
+                        BackButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      if (isFromHistory == true)
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                      Text(
+                        "Stock Opname",
+                        style: myTextTheme.headlineLarge,
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 24.0,
@@ -220,8 +225,7 @@ class StockOpnameMobileView extends StatefulWidget {
                   ),
                   BaseForm(
                     label: "Stok",
-                    textEditingController:
-                        controller.textCurrentStockController,
+                    textEditingController: controller.textCurrentStockController,
                     enabled: false,
                   ),
                   const SizedBox(
@@ -250,9 +254,23 @@ class StockOpnameMobileView extends StatefulWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Stock Opname",
-                    style: myTextTheme.headlineLarge,
+                  Row(
+                    children: [
+                      if (isFromHistory == true)
+                        BackButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      if (isFromHistory == true)
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                      Text(
+                        "Stock Opname",
+                        style: myTextTheme.headlineLarge,
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 24.0,
@@ -298,8 +316,7 @@ class StockOpnameMobileView extends StatefulWidget {
                   ),
                   BaseForm(
                     label: "Stok",
-                    textEditingController:
-                        controller.textCurrentStockController,
+                    textEditingController: controller.textCurrentStockController,
                     enabled: false,
                   ),
                   const SizedBox(
