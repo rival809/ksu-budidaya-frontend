@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/view/riwayat_stock_opname_view.dart';
+import 'package:ksu_budidaya/module/stock_opname/stock_take/view/stock_take_view.dart';
 import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/view/hist_bayar_hutang_angoota_view.dart';
 
 final GoRouter router = GoRouter(
@@ -102,6 +103,14 @@ final GoRouter router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(
               child: RiwayatStockOpnameView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'stock-opname/stocktake',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: StockTakeView(),
             );
           },
         ),

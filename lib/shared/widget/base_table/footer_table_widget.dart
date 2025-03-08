@@ -13,6 +13,7 @@ class FooterTableWidget extends StatefulWidget {
   final int? maxPage;
   final Function()? onPressLeft;
   final Function()? onPressRight;
+  final bool? hasDropdown;
   const FooterTableWidget({
     Key? key,
     this.widthDialog,
@@ -24,6 +25,7 @@ class FooterTableWidget extends StatefulWidget {
     required this.maxPage,
     required this.onPressLeft,
     required this.onPressRight,
+    this.hasDropdown,
   }) : super(key: key);
 
   @override
@@ -80,23 +82,19 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton2<String>(
                               isExpanded: false,
-                              items: ["10", "25", "50", "75", "100"]
-                                  .map(
-                                      (String item) => DropdownMenuItem<String>(
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: myTextTheme.bodyMedium
-                                                  ?.copyWith(
-                                                color: gray900,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ))
+                              items: ["10", "25", "50", "75", "100", "1000"]
+                                  .map((String item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: myTextTheme.bodyMedium?.copyWith(
+                                            color: gray900,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ))
                                   .toList(),
-                              value: trimString(widget.itemPerpage)
-                                      .toString()
-                                      .isEmpty
+                              value: trimString(widget.itemPerpage).toString().isEmpty
                                   ? "10"
                                   : trimString(widget.itemPerpage),
                               onChanged: widget.onChangePerPage,
@@ -157,43 +155,47 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                       IntrinsicHeight(
                         child: SizedBox(
                           width: 100,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton2<String>(
-                              isExpanded: false,
-                              items: getPageList(trimString(
-                                      (widget.maxPage ?? 0).toString()))
-                                  .map(
-                                      (String item) => DropdownMenuItem<String>(
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: myTextTheme.bodyMedium
-                                                  ?.copyWith(
-                                                color: gray900,
-                                                fontWeight: FontWeight.w700,
+                          child: (widget.hasDropdown == true)
+                              ? DropdownButtonHideUnderline(
+                                  child: DropdownButton2<String>(
+                                    isExpanded: false,
+                                    items: getPageList(trimString((widget.maxPage ?? 0).toString()))
+                                        .map((String item) => DropdownMenuItem<String>(
+                                              value: item,
+                                              child: Text(
+                                                item,
+                                                style: myTextTheme.bodyMedium?.copyWith(
+                                                  color: gray900,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
-                                            ),
-                                          ))
-                                  .toList(),
-                              value: widget.page,
-                              onChanged: widget.onChangePage,
-                              iconStyleData: IconStyleData(
-                                iconEnabledColor: yellow600,
-                                icon: SvgPicture.asset(
-                                  iconChevronDown,
-                                  colorFilter: colorFilter(color: primaryColor),
+                                            ))
+                                        .toList(),
+                                    value: widget.page,
+                                    onChanged: widget.onChangePage,
+                                    iconStyleData: IconStyleData(
+                                      iconEnabledColor: yellow600,
+                                      icon: SvgPicture.asset(
+                                        iconChevronDown,
+                                        colorFilter: colorFilter(color: primaryColor),
+                                      ),
+                                    ),
+                                    buttonStyleData: const ButtonStyleData(
+                                      padding: EdgeInsets.symmetric(horizontal: 16),
+                                      height: 40,
+                                      width: 140,
+                                    ),
+                                    menuItemStyleData: const MenuItemStyleData(
+                                      height: 40,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  widget.page.toString(),
+                                  style: myTextTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              buttonStyleData: const ButtonStyleData(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                height: 40,
-                                width: 140,
-                              ),
-                              menuItemStyleData: const MenuItemStyleData(
-                                height: 40,
-                              ),
-                            ),
-                          ),
                         ),
                       ),
                       const SizedBox(
@@ -205,8 +207,7 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                           style: myTextTheme.bodyMedium,
                           children: [
                             TextSpan(
-                              text: trimStringStrip(
-                                  (widget.maxPage ?? 0).toString()),
+                              text: trimStringStrip((widget.maxPage ?? 0).toString()),
                               style: myTextTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -218,19 +219,18 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                         onPressed: widget.onPressLeft,
                         icon: SvgPicture.asset(
                           iconChevronLeft,
-                          colorFilter: ((widget.maxPage ?? 0) >=
-                                      (int.tryParse(widget.page ?? "0") ?? 0) &&
-                                  (int.tryParse(widget.page ?? "0") != 1))
-                              ? colorFilter(color: primaryColor)
-                              : colorFilter(color: gray300),
+                          colorFilter:
+                              ((widget.maxPage ?? 0) >= (int.tryParse(widget.page ?? "0") ?? 0) &&
+                                      (int.tryParse(widget.page ?? "0") != 1))
+                                  ? colorFilter(color: primaryColor)
+                                  : colorFilter(color: gray300),
                         ),
                       ),
                       IconButton(
                         onPressed: widget.onPressRight,
                         icon: SvgPicture.asset(
                           iconChevronKanan,
-                          colorFilter: (widget.maxPage ?? 0) <=
-                                  int.parse(widget.page ?? "0")
+                          colorFilter: (widget.maxPage ?? 0) <= int.parse(widget.page ?? "0")
                               ? colorFilter(color: gray300)
                               : colorFilter(color: primaryColor),
                         ),

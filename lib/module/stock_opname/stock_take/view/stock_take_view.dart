@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/controller/riwayat_stock_opname_controller.dart';
-import 'package:ksu_budidaya/shared/widget/base_button/base_primary_button.dart';
+import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
+import 'package:ksu_budidaya/module/stock_opname/stock_take/controller/stock_take_controller.dart';
+import 'package:ksu_budidaya/module/stock_opname/stock_take/widget/generate_stocktake.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
-class RiwayatStockOpnameView extends StatefulWidget {
-  const RiwayatStockOpnameView({Key? key}) : super(key: key);
+class StockTakeView extends StatefulWidget {
+  const StockTakeView({Key? key}) : super(key: key);
 
-  Widget build(context, RiwayatStockOpnameController controller) {
+  Widget build(context, StockTakeController controller) {
     controller.view = this;
 
     return BodyContainer(
@@ -24,7 +24,7 @@ class RiwayatStockOpnameView extends StatefulWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Riwayat Stock Opname",
+                    "Stocktake",
                     style: myTextTheme.headlineLarge,
                   ),
                   const SizedBox(
@@ -44,17 +44,6 @@ class RiwayatStockOpnameView extends StatefulWidget {
                         children: [
                           Row(
                             children: [
-                              SizedBox(
-                                width: 250,
-                                child: BaseForm(
-                                  textEditingController: controller.supplierNameController,
-                                  onChanged: (value) {},
-                                  hintText: "Pencarian",
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
                               SizedBox(
                                 width: 250,
                                 child: BaseDropdownButton(
@@ -80,12 +69,11 @@ class RiwayatStockOpnameView extends StatefulWidget {
                                 width: 16.0,
                               ),
                               BasePrimaryButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   controller.dataFuture = controller.cariDataStockOpname();
-
                                   controller.update();
                                 },
-                                text: "Cari Data",
+                                text: "Lihat Data",
                                 isDense: true,
                               ),
                               const SizedBox(
@@ -93,12 +81,12 @@ class RiwayatStockOpnameView extends StatefulWidget {
                               ),
                             ],
                           ),
-                          BasePrimaryButton(
+                          BaseSecondaryButton(
                             onPressed: () {
-                              router.push("/stock-opname/mobile", extra: {"isFromHistory": true});
+                              generatePdfStockTake(controller: controller);
                             },
-                            text: "Tambah Stock Opname",
-                            suffixIcon: iconAdd,
+                            text: "Cetak",
+                            suffixIcon: iconPrint,
                             isDense: true,
                           ),
                         ],
@@ -117,8 +105,8 @@ class RiwayatStockOpnameView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          HistoryStockOpnameModel result = snapshot.data;
-                          controller.dataStockOpname = result.data ?? DataHistoryStockOpname();
+                          StockTakeResult result = snapshot.data;
+                          controller.dataStockOpname = result.data ?? DataStockTake();
                           List<dynamic> listData =
                               controller.dataStockOpname.toJson()["data_stock"] ?? [];
 
@@ -130,21 +118,51 @@ class RiwayatStockOpnameView extends StatefulWidget {
                               List.generate(
                                 controller.listRoleView.length,
                                 (index) {
-                                  return PlutoColumn(
-                                    backgroundColor: primaryColor,
-                                    filterHintText: "Cari ${controller.listRoleView[index]}",
-                                    title: convertTitle(
-                                      controller.listRoleView[index],
-                                    ),
-                                    field: controller.listRoleView[index],
-                                    type: (controller.listRoleView[index] == "stok_awal" ||
-                                            controller.listRoleView[index] == "selisih" ||
-                                            controller.listRoleView[index] == "stok_akhir")
-                                        ? PlutoColumnType.number(
-                                            locale: "id",
-                                          )
-                                        : PlutoColumnType.text(),
-                                  );
+                                  if (controller.listRoleView[index] == "is_selisih") {
+                                    return PlutoColumn(
+                                      width: 75,
+                                      backgroundColor: primaryColor,
+                                      filterHintText: "Cari Keterangan",
+                                      title: "Keterangan",
+                                      field: controller.listRoleView[index],
+                                      type: PlutoColumnType.text(),
+                                      renderer: (rendererContext) {
+                                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
+
+                                        if (dataRow["is_selisih"] == true) {
+                                          return const CardLabel(
+                                            cardColor: red50,
+                                            cardTitle: "Selisih",
+                                            cardTitleColor: red900,
+                                            cardBorderColor: red50,
+                                          );
+                                        } else {
+                                          return const CardLabel(
+                                            cardColor: green50,
+                                            cardTitle: "Seimbang",
+                                            cardTitleColor: green900,
+                                            cardBorderColor: green50,
+                                          );
+                                        }
+                                      },
+                                    );
+                                  } else {
+                                    return PlutoColumn(
+                                      backgroundColor: primaryColor,
+                                      filterHintText: "Cari ${controller.listRoleView[index]}",
+                                      title: convertTitle(
+                                        controller.listRoleView[index],
+                                      ),
+                                      field: controller.listRoleView[index],
+                                      type: (controller.listRoleView[index] == "stock" ||
+                                              controller.listRoleView[index] == "selisih" ||
+                                              controller.listRoleView[index] == "sisa")
+                                          ? PlutoColumnType.number(
+                                              locale: "id",
+                                            )
+                                          : PlutoColumnType.text(),
+                                    );
+                                  }
                                 },
                               ),
                             );
@@ -161,9 +179,15 @@ class RiwayatStockOpnameView extends StatefulWidget {
 
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
-                                  cells[column] = PlutoCell(
-                                    value: trimStringStrip(item[column]),
-                                  );
+                                  if (column == "is_selisih") {
+                                    cells[column] = PlutoCell(
+                                      value: item[column],
+                                    );
+                                  } else {
+                                    cells[column] = PlutoCell(
+                                      value: trimStringStrip(item[column]),
+                                    );
+                                  }
                                 }
                               }
 
@@ -177,7 +201,7 @@ class RiwayatStockOpnameView extends StatefulWidget {
                                   16,
                               child: PlutoGrid(
                                 noRowsWidget: const ContainerTidakAda(
-                                  entity: 'History Stock Opname',
+                                  entity: 'Stocktake',
                                 ),
                                 mode: PlutoGridMode.select,
                                 onLoaded: (event) {
@@ -188,10 +212,10 @@ class RiwayatStockOpnameView extends StatefulWidget {
                                     controller.isAsc = !controller.isAsc;
                                     controller.field = event.column.field;
                                     controller.update();
-                                    controller.dataFuture = controller.cariDataStockOpname(
-                                      isAsc: controller.isAsc,
-                                      field: event.column.field,
-                                    );
+                                    // controller.dataFuture = controller.cariDataStockOpname(
+                                    //   isAsc: controller.isAsc,
+                                    //   field: event.column.field,
+                                    // );
                                     controller.update();
                                   }
                                 },
@@ -213,6 +237,7 @@ class RiwayatStockOpnameView extends StatefulWidget {
                                 createFooter: (stateManager) {
                                   return FooterTableWidget(
                                     page: controller.page,
+                                    hasDropdown: false,
                                     itemPerpage: controller.size,
                                     maxPage: controller.dataStockOpname.paging?.totalPage ?? 0,
                                     onChangePage: (value) {
@@ -266,7 +291,7 @@ class RiwayatStockOpnameView extends StatefulWidget {
                             );
                           } else {
                             return const ContainerTidakAda(
-                              entity: 'History Stock Opname',
+                              entity: 'Stocktake',
                             );
                           }
                         } else {
@@ -274,7 +299,7 @@ class RiwayatStockOpnameView extends StatefulWidget {
                         }
                       } else {
                         return const ContainerTidakAda(
-                          entity: "History Stock Opname",
+                          entity: "Stocktake",
                         );
                       }
                     },
@@ -289,5 +314,5 @@ class RiwayatStockOpnameView extends StatefulWidget {
   }
 
   @override
-  State<RiwayatStockOpnameView> createState() => RiwayatStockOpnameController();
+  State<StockTakeView> createState() => StockTakeController();
 }

@@ -11,6 +11,7 @@ class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
   String size = "10";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
+  String dropdown = "SEMUA";
 
   bool? isSelisih;
 
