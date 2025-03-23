@@ -6,8 +6,7 @@ class ThousandsFormatter extends TextInputFormatter {
   static const separator = '.'; // Change this to '.' for other locales
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     // Short-circuit if the new value is null or empty
     if (newValue.text.isEmpty) {
       return const TextEditingValue(
@@ -20,8 +19,7 @@ class ThousandsFormatter extends TextInputFormatter {
     String oldValueText = oldValue.text.replaceAll(separator, '');
     String newValueText = newValue.text.replaceAll(separator, '');
 
-    if (oldValue.text.endsWith(separator) &&
-        oldValue.text.length == newValue.text.length + 1) {
+    if (oldValue.text.endsWith(separator) && oldValue.text.length == newValue.text.length + 1) {
       newValueText = newValueText.substring(0, newValueText.length - 1);
     }
 
@@ -31,8 +29,7 @@ class ThousandsFormatter extends TextInputFormatter {
 
     // Only process if the old value and new value are different
     if (oldValueText != newValueText) {
-      int selectionIndex =
-          newValue.text.length - newValue.selection.extentOffset;
+      int selectionIndex = newValue.text.length - newValue.selection.extentOffset;
       final chars = newValueText.split('');
 
       String newString = '';
@@ -76,6 +73,26 @@ String formatMoney(dynamic number) {
   }
 }
 
+String formatMoneyDouble(dynamic number) {
+  try {
+    if (number is num) {
+      final formatter = NumberFormat("#,##0.00", "id-ID");
+      return trimString(formatter.format(number));
+    } else if (number is String) {
+      try {
+        final numericValue = double.parse(number);
+        final formatter = NumberFormat("#,##0.00", "id-ID");
+        return trimString(formatter.format(numericValue));
+      } catch (e) {
+        return "";
+      }
+    }
+    return "";
+  } catch (e) {
+    return "";
+  }
+}
+
 bool isPositive(double number) {
   return number >= 0;
 }
@@ -101,8 +118,7 @@ String kdPlatFormater(String? kdPlat) {
 
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,
@@ -112,8 +128,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 
 class AlphabeticInputFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     final newText = newValue.text.replaceAll(RegExp(r'[^a-zA-Z *]'), '');
 
     final int selectionIndex = newText.length;
@@ -127,8 +142,7 @@ class AlphabeticInputFormatter extends TextInputFormatter {
 
 class SelangHariFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     String newText = newValue.text;
     String oldText = oldValue.text;
 
