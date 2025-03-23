@@ -1246,6 +1246,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
+        // final mockResponse = await rootBundle.loadString('assets/res_neraca_lajur.json');
+        // return LaporanNeracaLajurModel.fromJson(json.decode(mockResponse));
         return LaporanNeracaLajurModel.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);

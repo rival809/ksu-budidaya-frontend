@@ -1,0 +1,1190 @@
+{
+  "success": true,
+  "data": {
+    "data_neraca": {
+      "kas": {
+        "neraca_awal": {
+          "debit": 69343225,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 1000000
+        },
+        "neraca_percobaan": {
+          "debit": 69343225,
+          "kredit": 1000000
+        },
+        "neraca_saldo": {
+          "debit": 68343225,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "bank_bri": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "bank_bni": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "piutang_dagang": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "persediaan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "penghapusan_persediaan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "inventaris": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "akumulasi_penyusutan_inventaris": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "gedung": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "akumulasi_penyusutan_gedung": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "utang_dagang": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "utang_dari_pihak_ketiga": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "utang_dari_sp": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "modal_tidak_tetap": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "modal_disetor": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "usaha_lain_toko": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "modal_unit_toko": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "shu_th_2023": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "shu_th_2024": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "shu_th_2025": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "penjualan_tunai": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "penjualan_kredit": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "penjualan_qris": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "harga_pokok_penjualan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "retur_penjualan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pendapatan_sewa": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pendapatan_lain": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pembelian_tunai": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pembelian_kredit": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "harga_pokok_pembelian": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "retur_pembelian": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "beban_gaji": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "uang_makan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "thr_karyawan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "beban_adm_umum": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "beban_perlengkapan_toko": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 1000000
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 1000000
+        },
+        "neraca_saldo": {
+          "debit": -1000000,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "beban_penyusutan_inventaris": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 193756.51,
+          "kredit": 141242206
+        },
+        "neraca_percobaan": {
+          "debit": 193756.51,
+          "kredit": 141242206
+        },
+        "neraca_saldo": {
+          "debit": -141048449.49,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "beban_penyusutan_gedung": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 436100.92,
+          "kredit": 98898847
+        },
+        "neraca_percobaan": {
+          "debit": 436100.92,
+          "kredit": 98898847
+        },
+        "neraca_saldo": {
+          "debit": -98462746.08,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pemeliharaan_inventaris": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pemeliharaan_gedung": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "beban_pensiun_karyawan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pengeluaran_lain": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "beban_kerugian_persediaan": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "honor_pengurus": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "honor_pengawas": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      },
+      "pengeluaran_pusat_lain": {
+        "neraca_awal": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_mutasi": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_percobaan": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_saldo": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "hasil_usaha": {
+          "debit": 0,
+          "kredit": 0
+        },
+        "neraca_akhir": {
+          "debit": 0,
+          "kredit": 0
+        }
+      }
+    },
+    "total_neraca": {
+      "total_neraca_awal": {
+        "debit": 0,
+        "kredit": 0
+      },
+      "total_neraca_mutasi": {
+        "debit": 0,
+        "kredit": 0
+      },
+      "total_neraca_percobaan": {
+        "debit": 0,
+        "kredit": 0
+      },
+      "total_neraca_saldo": {
+        "debit": 0,
+        "kredit": 0
+      },
+      "total_hasil_usaha": {
+        "debit": 0,
+        "kredit": 0
+      },
+      "total_neraca_akhir": {
+        "debit": 0,
+        "kredit": 0
+      }
+    }
+  },
+  "message": "Laporan neraca lajur successfully registered"
+}

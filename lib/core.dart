@@ -223,5 +223,3 @@ export 'package:ksu_budidaya/shared/widget/loading/circle_dialog_loading.dart';
 export 'package:ksu_budidaya/shared/widget/step/proses_step.dart';
 export 'package:ksu_budidaya/state_util.dart';
 export 'package:ksu_budidaya/utils_intl.dart';
-export 'core_package.dart';
-export 'setup.dart';
