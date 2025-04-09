@@ -317,29 +317,44 @@ class PenjualanController extends State<PenjualanView> {
       Navigator.pop(context);
 
       if (result.success == true) {
-        if (dataPenjualan.details != null &&
-            dataPenjualan.details!.any((element) => element.idProduct == result.data?.idProduct)) {
-          dataPenjualan.details!
-              .firstWhere((element) => element.idProduct == result.data?.idProduct)
-              .jumlah = (int.parse(dataPenjualan.details
-                          ?.firstWhere((element) => element.idProduct == result.data?.idProduct)
-                          .jumlah ??
-                      "0") +
-                  1)
-              .toString();
+        if (result.data?.jumlah == 0) {
+          showInfoDialog("Stok Produk ${trimString(result.data?.nmProduct)} Kosong", context);
         } else {
-          dataPenjualan.details?.add(
-            DetailsCreatePenjualan(
-              idProduct: trimString(result.data?.idProduct),
-              harga: trimString(result.data?.hargaJual),
-              jumlah: "1",
-              nmProduk: trimString(result.data?.nmProduct),
-              hargaBeli: trimString(result.data?.hargaBeli),
-              nmDivisi: getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
-              diskon: "0",
-              total: (double.parse(result.data?.hargaJual ?? "0") * double.parse("1")).toString(),
-            ),
-          );
+          if (dataPenjualan.details != null &&
+              dataPenjualan.details!
+                  .any((element) => element.idProduct == result.data?.idProduct)) {
+            var existingDetail = dataPenjualan.details!
+                .firstWhere((element) => element.idProduct == result.data?.idProduct);
+            int currentJumlah = int.parse(existingDetail.jumlah ?? "0");
+            int maxJumlah = result.data?.jumlah ?? 0;
+
+            if (currentJumlah < maxJumlah) {
+              existingDetail.jumlah = (currentJumlah + 1).toString();
+            } else {
+              showInfoDialog(
+                  "Jumlah produk ${trimString(result.data?.nmProduct)} sudah mencapai batas maksimum. (Stock: ${trimString(result.data?.jumlah.toString())})",
+                  context);
+            }
+          } else {
+            if ((result.data?.jumlah ?? 0) > 0) {
+              dataPenjualan.details?.add(
+                DetailsCreatePenjualan(
+                  idProduct: trimString(result.data?.idProduct),
+                  harga: trimString(result.data?.hargaJual),
+                  jumlah: "1",
+                  nmProduk: trimString(result.data?.nmProduct),
+                  hargaBeli: trimString(result.data?.hargaBeli),
+                  nmDivisi: getNamaDivisi(idDivisi: trimString(result.data?.idDivisi)),
+                  diskon: "0",
+                  total:
+                      (double.parse(result.data?.hargaJual ?? "0") * double.parse("1")).toString(),
+                  stockAwal: result.data?.jumlah,
+                ),
+              );
+            } else {
+              showInfoDialog("Stok produk tidak mencukupi.", context);
+            }
+          }
         }
 
         cariProdukController.clear();

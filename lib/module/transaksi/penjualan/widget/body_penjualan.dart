@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 
 class BodyPenjualan extends StatefulWidget {
   final int index;
@@ -152,21 +151,37 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                         },
                         readOnly: controller.isDetail ? true : false,
                         onChanged: (value) {
-                          String trimmedValue = removeComma(trimString(value));
+                          if ((controller.dataPenjualan.details?[widget.index].stockAwal ?? 0) >=
+                              (int.tryParse(value) ?? 0)) {
+                            String trimmedValue = removeComma(trimString(value));
 
-                          double? inputValue = double.tryParse(trimmedValue);
+                            double? inputValue = double.tryParse(trimmedValue);
 
-                          if (inputValue != null) {
-                            if (inputValue < 1) {
-                              inputValue = 1;
+                            if (inputValue != null) {
+                              if (inputValue < 1) {
+                                inputValue = 1;
+                                qntController.text = "1";
+                              }
+
+                              widget.controller.dataPenjualan.details?[widget.index].jumlah =
+                                  inputValue.toString();
+                            } else {
+                              widget.controller.dataPenjualan.details?[widget.index].jumlah = "1";
                               qntController.text = "1";
                             }
-
-                            widget.controller.dataPenjualan.details?[widget.index].jumlah =
-                                inputValue.toString();
+                            controller.update();
                           } else {
-                            widget.controller.dataPenjualan.details?[widget.index].jumlah = "1";
-                            qntController.text = "1";
+                            widget.controller.dataPenjualan.details?[widget.index].jumlah = widget
+                                .controller.dataPenjualan.details?[widget.index].stockAwal
+                                .toString();
+                            qntController.text = widget
+                                    .controller.dataPenjualan.details?[widget.index].stockAwal
+                                    .toString() ??
+                                "0";
+                            showInfoDialog(
+                              "Jumlah produk ${trimString(controller.dataPenjualan.details?[widget.index].nmProduk)} sudah mencapai batas maksimum. (Stock: ${trimString(controller.dataPenjualan.details?[widget.index].jumlah.toString())})",
+                              context,
+                            );
                           }
 
                           controller.update();
@@ -187,12 +202,24 @@ class _BodyPenjualanState extends State<BodyPenjualan> {
                           onTap: controller.isDetail
                               ? null
                               : () {
-                                  controller.dataPenjualan.details?[widget.index].jumlah =
-                                      (jumlah + 1).toString();
-                                  qntController.text = (jumlah + 1).toString();
-                                  controller.focusNodeInputPenjualan.requestFocus();
+                                  if ((controller.dataPenjualan.details?[widget.index].stockAwal ??
+                                          0) >
+                                      (int.tryParse(controller
+                                                  .dataPenjualan.details?[widget.index].jumlah ??
+                                              "0") ??
+                                          0)) {
+                                    controller.dataPenjualan.details?[widget.index].jumlah =
+                                        (jumlah + 1).toString();
+                                    qntController.text = (jumlah + 1).toString();
+                                    controller.focusNodeInputPenjualan.requestFocus();
 
-                                  controller.update();
+                                    controller.update();
+                                  } else {
+                                    showInfoDialog(
+                                      "Jumlah produk ${trimString(controller.dataPenjualan.details?[widget.index].nmProduk)} sudah mencapai batas maksimum. (Stock: ${trimString(controller.dataPenjualan.details?[widget.index].jumlah.toString())})",
+                                      context,
+                                    );
+                                  }
                                 },
                           child: SvgPicture.asset(
                             iconArrowDropUp,

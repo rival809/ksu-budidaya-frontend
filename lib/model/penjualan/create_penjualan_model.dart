@@ -96,6 +96,7 @@ class DetailsCreatePenjualan {
   String? jumlah;
   String? diskon;
   String? total;
+  int? stockAwal;
 
   DetailsCreatePenjualan(
       {this.idProduct,
@@ -107,7 +108,8 @@ class DetailsCreatePenjualan {
       this.hargaBeli,
       this.jumlah,
       this.diskon,
-      this.total});
+      this.total,
+      this.stockAwal});
 
   DetailsCreatePenjualan.fromJson(Map<String, dynamic> json) {
     idPenjualan = json['id_penjualan'];
