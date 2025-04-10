@@ -1,5 +1,5 @@
 # Stage 1: Environment to install Flutter and build web
-FROM debian:bullseye AS build-env
+FROM debian:latest AS build-env
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
