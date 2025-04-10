@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:camera/camera.dart';
 
 class CameraService {
@@ -17,7 +19,7 @@ class CameraService {
       await controller?.initialize();
       return true;
     } catch (e) {
-      print(e);
+      log(e.toString());
       return false;
     }
   }
@@ -32,7 +34,7 @@ class CameraService {
     try {
       return await controller!.takePicture();
     } catch (e) {
-      print(e);
+      log(e.toString());
       return null;
     }
   }

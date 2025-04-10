@@ -8,8 +8,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
   try {
     final pdf = pw.Document();
 
-    DataLaporanHasilUsaha data =
-        controller.resultNeraca.data ?? DataLaporanHasilUsaha();
+    DataLaporanHasilUsaha data = controller.resultNeraca.data ?? DataLaporanHasilUsaha();
 
     List<RowLaporanNeraca> rowsActive = [
       RowLaporanNeraca(
@@ -267,8 +266,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
     List<List<dynamic>> paginateRows(List<dynamic> rows, int rowsPerPage) {
       final chunked = <List<dynamic>>[];
       for (int i = 0; i < rows.length; i += rowsPerPage) {
-        chunked.add(rows.sublist(
-            i, i + rowsPerPage > rows.length ? rows.length : i + rowsPerPage));
+        chunked.add(rows.sublist(i, i + rowsPerPage > rows.length ? rows.length : i + rowsPerPage));
       }
       return chunked;
     }
@@ -344,14 +342,12 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
           ),
         ),
         build: (pw.Context context) {
-          final activeChunks =
-              paginateRows(rowsActive, 15); // Split rows into chunks
+          final activeChunks = paginateRows(rowsActive, 15); // Split rows into chunks
           final passiveChunks = paginateRows(rowsPassive, 15);
 
           final pages = <pw.Widget>[];
 
           for (int i = 0; i < activeChunks.length; i++) {
-            print(i >= passiveChunks.length);
             pages.add(
               pw.Row(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -362,8 +358,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
                     pw.Expanded(
                       child: pw.Container(),
                     ),
-                  if (i < passiveChunks.length)
-                    createTable(passiveChunks[i], "Passive"),
+                  if (i < passiveChunks.length) createTable(passiveChunks[i], "Passive"),
                 ],
               ),
             );
@@ -376,8 +371,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
 
     Uint8List pdfData = await pdf.save();
 
-    String fileName =
-        'Laporan_Neraca_${controller.monthNow}_${controller.yearNow}.pdf';
+    String fileName = 'Laporan_Neraca_${controller.monthNow}_${controller.yearNow}.pdf';
 
     // await Printing.sharePdf(
     //   bytes: pdfData,

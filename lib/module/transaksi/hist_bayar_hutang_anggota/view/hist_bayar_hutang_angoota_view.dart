@@ -489,8 +489,6 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                         .toJson()["data_bayar_hutang"] ??
                                     [];
 
-                                print(listData);
-
                                 if (listData.isNotEmpty) {
                                   List<PlutoRow> rows = [];
                                   List<PlutoColumn> columns = [];

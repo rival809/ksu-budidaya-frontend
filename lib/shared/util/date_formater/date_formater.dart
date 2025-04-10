@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -36,7 +38,7 @@ String convertDateString(String originalDateString) {
 
     return formattedDateString;
   } catch (e) {
-    print("Error parsing date: $e");
+    log("Error parsing date: $e");
     return "";
   }
 }
@@ -52,7 +54,7 @@ String formatDateToYearMonthDay(String originalDateString) {
 
     return formattedDateString;
   } catch (e) {
-    print("Error parsing date: $e");
+    log("Error parsing date: $e");
     return "";
   }
 }
@@ -64,7 +66,7 @@ String formatDateOnlyDate(String originalDateString) {
 
     return formattedDate;
   } catch (e) {
-    print("Error parsing date: $e");
+    log("Error parsing date: $e");
     return "";
   }
 }
@@ -80,7 +82,7 @@ String formatDateForView(String originalDateString) {
 
     return formattedDateString;
   } catch (e) {
-    print("Error parsing date: $e");
+    log("Error parsing date: $e");
     return "";
   }
 }
@@ -96,7 +98,7 @@ String formatDateTimeNow(String originalDateString) {
 
     return formattedDateString;
   } catch (e) {
-    print("Error parsing date: $e");
+    log("Error parsing date: $e");
     return "";
   }
 }
@@ -112,7 +114,7 @@ String dateTimeNowToPayload(String originalDateString) {
 
     return formattedDateString;
   } catch (e) {
-    print("Error parsing date: $e");
+    log("Error parsing date: $e");
     return "";
   }
 }
@@ -128,7 +130,7 @@ String formatDateTimeNormal(String originalDateString) {
 
     return formattedDateString;
   } catch (e) {
-    print("Error parsing date: $e");
+    log("Error parsing date: $e");
     return "";
   }
 }
