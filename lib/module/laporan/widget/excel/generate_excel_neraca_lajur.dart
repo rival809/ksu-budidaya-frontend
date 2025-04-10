@@ -18,18 +18,18 @@ doGenerateExcelNeracaLajur({required LaporanController controller}) async {
       index: index,
       no: index - 3,
       uraian: key,
-      neracaAwalD: value?.neracaAwal?.debit ?? 0,
-      neracaAwalK: value?.neracaAwal?.kredit ?? 0,
-      neracaMutasiD: value?.neracaMutasi?.debit ?? 0,
-      neracaMutasiK: value?.neracaMutasi?.kredit ?? 0,
-      neracaPercobaanD: value?.neracaPercobaan?.debit ?? 0,
-      neracaPercobaanK: value?.neracaPercobaan?.kredit ?? 0,
-      neracaSaldoD: value?.neracaSaldo?.debit ?? 0,
-      neracaSaldoK: value?.neracaSaldo?.kredit ?? 0,
-      neracaHasilUsahaD: value?.hasilUsaha?.debit ?? 0,
-      neracaHasilUsahaK: value?.hasilUsaha?.kredit ?? 0,
-      neracaAkhirD: value?.neracaAkhir?.debit ?? 0,
-      neracaAkhirK: value?.neracaAkhir?.kredit ?? 0,
+      neracaAwalD: value?.neracaAwal?.debit?.toInt() ?? 0,
+      neracaAwalK: value?.neracaAwal?.kredit?.toInt() ?? 0,
+      neracaMutasiD: value?.neracaMutasi?.debit?.toInt() ?? 0,
+      neracaMutasiK: value?.neracaMutasi?.kredit?.toInt() ?? 0,
+      neracaPercobaanD: value?.neracaPercobaan?.debit?.toInt() ?? 0,
+      neracaPercobaanK: value?.neracaPercobaan?.kredit?.toInt() ?? 0,
+      neracaSaldoD: value?.neracaSaldo?.debit?.toInt() ?? 0,
+      neracaSaldoK: value?.neracaSaldo?.kredit?.toInt() ?? 0,
+      neracaHasilUsahaD: value?.hasilUsaha?.debit?.toInt() ?? 0,
+      neracaHasilUsahaK: value?.hasilUsaha?.kredit?.toInt() ?? 0,
+      neracaAkhirD: value?.neracaAkhir?.debit?.toInt() ?? 0,
+      neracaAkhirK: value?.neracaAkhir?.kredit?.toInt() ?? 0,
     );
     index++;
   });
@@ -39,20 +39,30 @@ doGenerateExcelNeracaLajur({required LaporanController controller}) async {
     index: index,
     no: index - 3,
     uraian: "TOTAL",
-    neracaAwalD: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAwal?.debit ?? 0,
-    neracaAwalK: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAwal?.kredit ?? 0,
-    neracaMutasiD: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaMutasi?.debit ?? 0,
-    neracaMutasiK: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaMutasi?.kredit ?? 0,
+    neracaAwalD:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAwal?.debit?.toInt() ?? 0,
+    neracaAwalK:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAwal?.kredit?.toInt() ?? 0,
+    neracaMutasiD:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaMutasi?.debit?.toInt() ?? 0,
+    neracaMutasiK:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaMutasi?.kredit?.toInt() ?? 0,
     neracaPercobaanD:
-        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaPercobaan?.debit ?? 0,
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaPercobaan?.debit?.toInt() ?? 0,
     neracaPercobaanK:
-        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaPercobaan?.kredit ?? 0,
-    neracaSaldoD: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaSaldo?.debit ?? 0,
-    neracaSaldoK: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaSaldo?.kredit ?? 0,
-    neracaHasilUsahaD: controller.resultNeracaLajur.data?.totalNeraca?.totalHasilUsaha?.debit ?? 0,
-    neracaHasilUsahaK: controller.resultNeracaLajur.data?.totalNeraca?.totalHasilUsaha?.kredit ?? 0,
-    neracaAkhirD: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAkhir?.debit ?? 0,
-    neracaAkhirK: controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAkhir?.kredit ?? 0,
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaPercobaan?.kredit?.toInt() ?? 0,
+    neracaSaldoD:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaSaldo?.debit?.toInt() ?? 0,
+    neracaSaldoK:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaSaldo?.kredit?.toInt() ?? 0,
+    neracaHasilUsahaD:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalHasilUsaha?.debit?.toInt() ?? 0,
+    neracaHasilUsahaK:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalHasilUsaha?.kredit?.toInt() ?? 0,
+    neracaAkhirD:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAkhir?.debit?.toInt() ?? 0,
+    neracaAkhirK:
+        controller.resultNeracaLajur.data?.totalNeraca?.totalNeracaAkhir?.kredit?.toInt() ?? 0,
   );
 
   excel.save(fileName: 'Neraca Lajur.xlsx');
@@ -197,18 +207,18 @@ build1Row({
   required int index,
   required int no,
   required String uraian,
-  required double neracaAwalD,
-  required double neracaAwalK,
-  required double neracaMutasiD,
-  required double neracaMutasiK,
-  required double neracaPercobaanD,
-  required double neracaPercobaanK,
-  required double neracaSaldoD,
-  required double neracaSaldoK,
-  required double neracaHasilUsahaD,
-  required double neracaHasilUsahaK,
-  required double neracaAkhirD,
-  required double neracaAkhirK,
+  required int neracaAwalD,
+  required int neracaAwalK,
+  required int neracaMutasiD,
+  required int neracaMutasiK,
+  required int neracaPercobaanD,
+  required int neracaPercobaanK,
+  required int neracaSaldoD,
+  required int neracaSaldoK,
+  required int neracaHasilUsahaD,
+  required int neracaHasilUsahaK,
+  required int neracaAkhirD,
+  required int neracaAkhirK,
 }) {
   var textStyle = xls.CellStyle(
     textWrapping: xls.TextWrapping.WrapText,
@@ -239,7 +249,7 @@ build1Row({
     ..cellStyle = textStyle;
 
   var numberFormat = xls.CellStyle(
-    numberFormat: xls.NumFormat.standard_4,
+    numberFormat: xls.NumFormat.standard_3,
     textWrapping: xls.TextWrapping.WrapText,
     horizontalAlign: xls.HorizontalAlign.Right,
     verticalAlign: xls.VerticalAlign.Center,
@@ -262,39 +272,39 @@ build1Row({
   );
 
   sheetObject.cell(xls.CellIndex.indexByString("C$index"))
-    ..value = xls.DoubleCellValue(neracaAwalD)
+    ..value = xls.IntCellValue(neracaAwalD)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("D$index"))
-    ..value = xls.DoubleCellValue(neracaAwalK)
+    ..value = xls.IntCellValue(neracaAwalK)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("E$index"))
-    ..value = xls.DoubleCellValue(neracaMutasiD)
+    ..value = xls.IntCellValue(neracaMutasiD)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("F$index"))
-    ..value = xls.DoubleCellValue(neracaMutasiK)
+    ..value = xls.IntCellValue(neracaMutasiK)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("G$index"))
-    ..value = xls.DoubleCellValue(neracaPercobaanD)
+    ..value = xls.IntCellValue(neracaPercobaanD)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("H$index"))
-    ..value = xls.DoubleCellValue(neracaPercobaanK)
+    ..value = xls.IntCellValue(neracaPercobaanK)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("I$index"))
-    ..value = xls.DoubleCellValue(neracaSaldoD)
+    ..value = xls.IntCellValue(neracaSaldoD)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("J$index"))
-    ..value = xls.DoubleCellValue(neracaSaldoK)
+    ..value = xls.IntCellValue(neracaSaldoK)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("K$index"))
-    ..value = xls.DoubleCellValue(neracaHasilUsahaD)
+    ..value = xls.IntCellValue(neracaHasilUsahaD)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("L$index"))
-    ..value = xls.DoubleCellValue(neracaHasilUsahaK)
+    ..value = xls.IntCellValue(neracaHasilUsahaK)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("M$index"))
-    ..value = xls.DoubleCellValue(neracaAkhirD)
+    ..value = xls.IntCellValue(neracaAkhirD)
     ..cellStyle = numberFormat;
   sheetObject.cell(xls.CellIndex.indexByString("N$index"))
-    ..value = xls.DoubleCellValue(neracaAkhirK)
+    ..value = xls.IntCellValue(neracaAkhirK)
     ..cellStyle = numberFormat;
 }

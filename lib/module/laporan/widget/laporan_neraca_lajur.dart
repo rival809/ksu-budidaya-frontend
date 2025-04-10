@@ -154,7 +154,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_awal_d',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -165,7 +165,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_awal_k',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -176,7 +176,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_mutasi_d',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -187,7 +187,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_mutasi_k',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -198,7 +198,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_percobaan_d',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -209,7 +209,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_percobaan_k',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -220,7 +220,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_saldo_d',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -231,7 +231,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_saldo_k',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -242,7 +242,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_hasil_usaha_d',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -253,7 +253,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_hasil_usaha_k',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -264,7 +264,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_akhir_d',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                     PlutoColumn(
@@ -275,7 +275,7 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       field: 'neraca_akhir_k',
                       type: PlutoColumnType.number(
                         locale: "id",
-                        format: "#,##0.00",
+                        format: "#,###",
                       ),
                     ),
                   ];
@@ -290,23 +290,31 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                             value: key.replaceAll('_', ' ').toUpperCase()), // Nama kategori
 
                         // Ambil data debit dan kredit dari setiap jenis neraca
-                        'neraca_awal_d': PlutoCell(value: value?.neracaAwal?.debit ?? 0),
-                        'neraca_awal_k': PlutoCell(value: value?.neracaAwal?.kredit ?? 0),
+                        'neraca_awal_d': PlutoCell(value: value?.neracaAwal?.debit?.toInt() ?? 0),
+                        'neraca_awal_k': PlutoCell(value: value?.neracaAwal?.kredit?.toInt() ?? 0),
 
-                        'neraca_mutasi_d': PlutoCell(value: value?.neracaMutasi?.debit ?? 0),
-                        'neraca_mutasi_k': PlutoCell(value: value?.neracaMutasi?.kredit ?? 0),
+                        'neraca_mutasi_d':
+                            PlutoCell(value: value?.neracaMutasi?.debit?.toInt() ?? 0),
+                        'neraca_mutasi_k':
+                            PlutoCell(value: value?.neracaMutasi?.kredit?.toInt() ?? 0),
 
-                        'neraca_percobaan_d': PlutoCell(value: value?.neracaPercobaan?.debit ?? 0),
-                        'neraca_percobaan_k': PlutoCell(value: value?.neracaPercobaan?.kredit ?? 0),
+                        'neraca_percobaan_d':
+                            PlutoCell(value: value?.neracaPercobaan?.debit?.toInt() ?? 0),
+                        'neraca_percobaan_k':
+                            PlutoCell(value: value?.neracaPercobaan?.kredit?.toInt() ?? 0),
 
-                        'neraca_saldo_d': PlutoCell(value: value?.neracaSaldo?.debit ?? 0),
-                        'neraca_saldo_k': PlutoCell(value: value?.neracaSaldo?.kredit ?? 0),
+                        'neraca_saldo_d': PlutoCell(value: value?.neracaSaldo?.debit?.toInt() ?? 0),
+                        'neraca_saldo_k':
+                            PlutoCell(value: value?.neracaSaldo?.kredit?.toInt() ?? 0),
 
-                        'neraca_hasil_usaha_d': PlutoCell(value: value?.hasilUsaha?.debit ?? 0),
-                        'neraca_hasil_usaha_k': PlutoCell(value: value?.hasilUsaha?.kredit ?? 0),
+                        'neraca_hasil_usaha_d':
+                            PlutoCell(value: value?.hasilUsaha?.debit?.toInt() ?? 0),
+                        'neraca_hasil_usaha_k':
+                            PlutoCell(value: value?.hasilUsaha?.kredit?.toInt() ?? 0),
 
-                        'neraca_akhir_d': PlutoCell(value: value?.neracaAkhir?.debit ?? 0),
-                        'neraca_akhir_k': PlutoCell(value: value?.neracaAkhir?.kredit ?? 0),
+                        'neraca_akhir_d': PlutoCell(value: value?.neracaAkhir?.debit?.toInt() ?? 0),
+                        'neraca_akhir_k':
+                            PlutoCell(value: value?.neracaAkhir?.kredit?.toInt() ?? 0),
                       }),
                     );
                   });
@@ -316,28 +324,36 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                       // Replace underscores in the key with spaces
                       'uraian': PlutoCell(value: "TOTAL"), // Nama kategori
 
-                      // Ambil data debit dan kredit dari setiap jenis neraca
-                      'neraca_awal_d': PlutoCell(value: dataTotal.totalNeracaAwal?.debit ?? 0),
-                      'neraca_awal_k': PlutoCell(value: dataTotal.totalNeracaAwal?.kredit ?? 0),
+                      // Ambil data debit?.toInt() dan kredit?.toInt() dari setiap jenis neraca
+                      'neraca_awal_d':
+                          PlutoCell(value: dataTotal.totalNeracaAwal?.debit?.toInt() ?? 0),
+                      'neraca_awal_k':
+                          PlutoCell(value: dataTotal.totalNeracaAwal?.kredit?.toInt() ?? 0),
 
-                      'neraca_mutasi_d': PlutoCell(value: dataTotal.totalNeracaMutasi?.debit ?? 0),
-                      'neraca_mutasi_k': PlutoCell(value: dataTotal.totalNeracaMutasi?.kredit ?? 0),
+                      'neraca_mutasi_d':
+                          PlutoCell(value: dataTotal.totalNeracaMutasi?.debit?.toInt() ?? 0),
+                      'neraca_mutasi_k':
+                          PlutoCell(value: dataTotal.totalNeracaMutasi?.kredit?.toInt() ?? 0),
 
                       'neraca_percobaan_d':
-                          PlutoCell(value: dataTotal.totalNeracaPercobaan?.debit ?? 0),
+                          PlutoCell(value: dataTotal.totalNeracaPercobaan?.debit?.toInt() ?? 0),
                       'neraca_percobaan_k':
-                          PlutoCell(value: dataTotal.totalNeracaPercobaan?.kredit ?? 0),
+                          PlutoCell(value: dataTotal.totalNeracaPercobaan?.kredit?.toInt() ?? 0),
 
-                      'neraca_saldo_d': PlutoCell(value: dataTotal.totalNeracaSaldo?.debit ?? 0),
-                      'neraca_saldo_k': PlutoCell(value: dataTotal.totalNeracaSaldo?.kredit ?? 0),
+                      'neraca_saldo_d':
+                          PlutoCell(value: dataTotal.totalNeracaSaldo?.debit?.toInt() ?? 0),
+                      'neraca_saldo_k':
+                          PlutoCell(value: dataTotal.totalNeracaSaldo?.kredit?.toInt() ?? 0),
 
                       'neraca_hasil_usaha_d':
-                          PlutoCell(value: dataTotal.totalHasilUsaha?.debit ?? 0),
+                          PlutoCell(value: dataTotal.totalHasilUsaha?.debit?.toInt() ?? 0),
                       'neraca_hasil_usaha_k':
-                          PlutoCell(value: dataTotal.totalHasilUsaha?.kredit ?? 0),
+                          PlutoCell(value: dataTotal.totalHasilUsaha?.kredit?.toInt() ?? 0),
 
-                      'neraca_akhir_d': PlutoCell(value: dataTotal.totalNeracaAkhir?.debit ?? 0),
-                      'neraca_akhir_k': PlutoCell(value: dataTotal.totalNeracaAkhir?.kredit ?? 0),
+                      'neraca_akhir_d':
+                          PlutoCell(value: dataTotal.totalNeracaAkhir?.debit?.toInt() ?? 0),
+                      'neraca_akhir_k':
+                          PlutoCell(value: dataTotal.totalNeracaAkhir?.kredit?.toInt() ?? 0),
                     }),
                   );
 
