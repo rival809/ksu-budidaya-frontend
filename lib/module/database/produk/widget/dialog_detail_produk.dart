@@ -39,7 +39,6 @@ class _DialogDetailProdukState extends State<DialogDetailProduk> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.data?.statusProduct);
     return Container(
       padding: const EdgeInsets.all(16),
       width: MediaQuery.of(context).size.width,

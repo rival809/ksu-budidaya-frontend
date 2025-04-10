@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 void removeImageLocal(String filePath) async {
@@ -9,6 +10,6 @@ void removeImageLocal(String filePath) async {
       file.deleteSync();
     }
   } catch (e) {
-    print('Error while deleting file: $e');
+    log('Error while deleting file: $e');
   }
 }
