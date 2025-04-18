@@ -63,8 +63,7 @@ class _ContainerNotaState extends State<ContainerNota> {
                   Expanded(
                     child: Text(
                       trimString(
-                        getNamaAnggota(
-                            idAnggota: controller.dataPenjualan.idAnggota),
+                        getNamaAnggota(idAnggota: controller.dataPenjualan.idAnggota),
                       ),
                       style: myTextTheme.bodySmall,
                       textAlign: TextAlign.end,
@@ -87,8 +86,7 @@ class _ContainerNotaState extends State<ContainerNota> {
                   ),
                   Expanded(
                     child: Text(
-                      trimString(controller.dataPenjualan.jenisPembayaran)
-                          .toUpperCase(),
+                      trimString(controller.dataPenjualan.jenisPembayaran).toUpperCase(),
                       style: myTextTheme.bodySmall,
                       textAlign: TextAlign.end,
                     ),
@@ -116,7 +114,8 @@ class _ContainerNotaState extends State<ContainerNota> {
                 ),
                 Expanded(
                   child: Text(
-                    formatDateTime(DateTime.now().toString()),
+                    controller.dataPenjualan.tgPenjualan ??
+                        formatDateTime(DateTime.now().toString()),
                     textAlign: TextAlign.end,
                     style: myTextTheme.bodySmall,
                   ),
@@ -188,8 +187,7 @@ class _ContainerNotaState extends State<ContainerNota> {
                 ),
                 Expanded(
                   child: Text(
-                    formatMoney(
-                        trimString(controller.dataPenjualan.totalNilaiJual)),
+                    formatMoney(trimString(controller.dataPenjualan.totalNilaiJual)),
                     style: myTextTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -214,8 +212,7 @@ class _ContainerNotaState extends State<ContainerNota> {
                 ),
                 Expanded(
                   child: Text(
-                    formatMoney(trimString(
-                        removeComma(controller.textControllerDialog[2].text))),
+                    formatMoney(trimString(removeComma(controller.textControllerDialog[2].text))),
                     style: myTextTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -240,8 +237,7 @@ class _ContainerNotaState extends State<ContainerNota> {
                 ),
                 Expanded(
                   child: Text(
-                    formatMoney(trimString(
-                        removeComma(controller.textControllerDialog[3].text))),
+                    formatMoney(trimString(removeComma(controller.textControllerDialog[3].text))),
                     style: myTextTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),

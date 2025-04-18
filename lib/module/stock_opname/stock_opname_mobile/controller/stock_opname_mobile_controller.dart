@@ -14,6 +14,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
   TextEditingController textNamaProdukController = TextEditingController();
   TextEditingController textCurrentStockController = TextEditingController();
   TextEditingController textStockController = TextEditingController();
+  TextEditingController textHargaJualController = TextEditingController();
+  TextEditingController textHargaBeliController = TextEditingController();
   String stockEdit = "";
   Timer? _debounce;
 
@@ -42,6 +44,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       textStockController.clear();
       textNamaProdukController.clear();
       textCurrentStockController.clear();
+      textHargaJualController.clear();
+      textHargaBeliController.clear();
       stockEdit = "";
 
       DetailProductResult result = await ApiService.detailProduct(
@@ -53,6 +57,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
         dataResult = result;
         textNamaProdukController.text = trimString(result.data?.nmProduct);
         textCurrentStockController.text = trimString(result.data?.jumlah.toString());
+        textHargaJualController.text = formatMoney(result.data?.hargaJual);
+        textHargaBeliController.text = formatMoney(result.data?.hargaBeli);
       }
     } catch (e) {
       Navigator.pop(context);
@@ -181,6 +187,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
     textNamaProdukController.clear();
     textCurrentStockController.clear();
     textStockController.clear();
+    textHargaJualController.clear();
+    textHargaBeliController.clear();
     stockEdit = "";
     dataResult = DetailProductResult();
     update();
