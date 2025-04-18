@@ -222,7 +222,6 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                       type: PlutoColumnType.text(),
                       enableEditingMode: false,
                       renderer: (rendererContext) {
-                        final rowIndex = rendererContext.rowIdx;
                         Map<String, dynamic> dataRow = rendererContext.row.toJson();
                         return DropdownAksi(
                           text: "Aksi",
@@ -261,14 +260,16 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                           ],
                           onChange: (value) {
                             if (value == 1) {
-                              DetailDataPenjualan dataDetail =
-                                  result.data?.dataPenjualan?[rowIndex] ?? DetailDataPenjualan();
+                              DetailDataPenjualan dataDetail = result.data?.dataPenjualan
+                                      ?.firstWhere((element) =>
+                                          trimString(element.idPenjualan) ==
+                                          trimString(dataRow["id_penjualan"])) ??
+                                  DetailDataPenjualan();
                               controller.dataPenjualan.jenisPembayaran = dataDetail.jenisPembayaran;
+                              controller.dataPenjualan.tgPenjualan = dataDetail.tgPenjualan;
 
                               controller.postDetailPenjualan(
-                                trimString(
-                                  result.data?.dataPenjualan?[rowIndex].idPenjualan,
-                                ),
+                                trimString(dataRow["id_penjualan"]),
                               );
                               update();
                             } else if (value == 2) {
@@ -278,9 +279,7 @@ class _ContainerListPenjualanState extends State<ContainerListPenjualan> {
                                       "Apakah Anda yakin ingin Menghapus Data Penjualan",
                                   onConfirm: () async {
                                     controller.postRemoveSale(
-                                      trimString(
-                                        result.data?.dataPenjualan?[rowIndex].idPenjualan,
-                                      ),
+                                      trimString(trimString(dataRow["id_penjualan"])),
                                     );
                                   },
                                 ),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/transaksi/penjualan/widget/detail_view.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/widgets.dart';
 
@@ -142,14 +143,16 @@ class PenjualanController extends State<PenjualanView> {
       Navigator.pop(context);
 
       if (result.success == true) {
-        isList = false;
-        isDetail = true;
-        viewOnly = true;
+        // isList = false;
+        // isDetail = true;
+        // viewOnly = true;
         dataPenjualan = dataPenjualan.copyWith(
           details: result.details,
         );
 
         update();
+
+        Get.to(DetailView(controller: instance));
       }
     } catch (e) {
       Navigator.pop(context);

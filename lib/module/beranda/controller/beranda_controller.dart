@@ -7,14 +7,14 @@ class BerandaController extends State<BerandaView> {
 
   Future<dynamic>? dataFuture;
 
-  getReferences() async {
-    await GlobalReference().roleReference();
-    await GlobalReference().supplierReference();
-    await GlobalReference().divisiReference();
-    await GlobalReference().anggotaReference();
-    await GlobalReference().cashReference();
-    await GlobalReference().productReference();
-    await GlobalReference().userReference();
+  getReferences() {
+    GlobalReference().roleReference();
+    GlobalReference().supplierReference();
+    GlobalReference().divisiReference();
+    GlobalReference().anggotaReference();
+    GlobalReference().cashReference();
+    GlobalReference().productReference();
+    GlobalReference().userReference();
   }
 
   IncomeDashboardResult resultDashboard = IncomeDashboardResult();
@@ -27,8 +27,7 @@ class BerandaController extends State<BerandaView> {
     loading = true;
     update();
     try {
-      resultDashboard = await ApiService.incomeDashboard()
-          .timeout(const Duration(seconds: 30));
+      resultDashboard = await ApiService.incomeDashboard().timeout(const Duration(seconds: 30));
 
       loading = false;
       update();
@@ -36,8 +35,7 @@ class BerandaController extends State<BerandaView> {
       loading = false;
       update();
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -59,8 +57,7 @@ class BerandaController extends State<BerandaView> {
       loading = false;
       update();
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -94,8 +91,7 @@ class BerandaController extends State<BerandaView> {
     } catch (e) {
       update();
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }

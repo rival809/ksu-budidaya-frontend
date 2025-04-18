@@ -224,6 +224,22 @@ class StockOpnameMobileView extends StatefulWidget {
                     height: 24.0,
                   ),
                   BaseForm(
+                    label: "Harga Jual",
+                    textEditingController: controller.textHargaJualController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Harga Beli",
+                    textEditingController: controller.textHargaBeliController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
                     label: "Stok",
                     textEditingController: controller.textCurrentStockController,
                     enabled: false,
@@ -309,6 +325,22 @@ class StockOpnameMobileView extends StatefulWidget {
                   BaseForm(
                     label: "Nama Produk",
                     textEditingController: controller.textNamaProdukController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Harga Jual",
+                    textEditingController: controller.textHargaJualController,
+                    enabled: false,
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  BaseForm(
+                    label: "Harga Beli",
+                    textEditingController: controller.textHargaBeliController,
                     enabled: false,
                   ),
                   const SizedBox(
