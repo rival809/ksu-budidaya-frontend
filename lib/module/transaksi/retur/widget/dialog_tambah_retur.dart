@@ -31,28 +31,25 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
   ];
   final tambahReturKey = GlobalKey<FormState>();
 
-  List<DetailDataPembelian> getSuggestions(
-      String query, List<DetailDataPembelian>? states) {
+  List<DetailDataPembelian> getSuggestions(String query, List<DetailDataPembelian>? states) {
     List<DetailDataPembelian> matches = [];
 
     if (states != null) {
       matches.addAll(states);
-      matches.retainWhere((s) => trimString(s.idPembelian)
-          .toLowerCase()
-          .contains(query.toLowerCase()));
+      matches.retainWhere(
+          (s) => trimString(s.idPembelian).toLowerCase().contains(query.toLowerCase()));
     }
 
     return matches;
   }
 
-  List<DataDetailPembelian> getDetailSuggestions(
-      String query, List<DataDetailPembelian>? states) {
+  List<DataDetailPembelian> getDetailSuggestions(String query, List<DataDetailPembelian>? states) {
     List<DataDetailPembelian> matches = [];
 
     if (states != null) {
       matches.addAll(states);
-      matches.retainWhere((s) =>
-          trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()));
+      matches
+          .retainWhere((s) => trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()));
     }
 
     return matches;
@@ -62,14 +59,20 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
     try {
       resultPembelian = PembelianResult();
 
-      resultPembelian = await ApiService.listPembelian(
+      PembelianResult result = await ApiService.listPembelian(
         data: {},
+      ).timeout(const Duration(seconds: 30));
+
+      resultPembelian = await ApiService.listPembelian(
+        data: {
+          "page": "1",
+          "size": result.data?.paging?.totalItem,
+        },
       ).timeout(const Duration(seconds: 30));
       update();
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -87,8 +90,7 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
       update();
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -102,15 +104,13 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
   onInitState() async {
     await cariDataPembelian();
     if (widget.controller.dataPayloadRetur.idPembelian?.isNotEmpty ?? false) {
-      await cariDetailPembelian(
-          trimString(widget.controller.dataPayloadRetur.idPembelian));
+      await cariDetailPembelian(trimString(widget.controller.dataPayloadRetur.idPembelian));
     }
     if (widget.index != null) {
-      selectedDetailPembelian = detailPembelian.data!.firstWhere((element) =>
-          trimString(element.idProduct) == trimString(widget.data?.idProduct));
+      selectedDetailPembelian = detailPembelian.data!.firstWhere(
+          (element) => trimString(element.idProduct) == trimString(widget.data?.idProduct));
     }
-    textController[0].text =
-        trimString(widget.controller.dataPayloadRetur.idPembelian);
+    textController[0].text = trimString(widget.controller.dataPayloadRetur.idPembelian);
     textController[1].text = trimString(widget.data?.idProduct);
     textController[2].text = trimString(widget.data?.nmProduk);
     textController[3].text = formatMoney(widget.data?.hargaBeli);
@@ -162,20 +162,15 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
                     ),
                     itemBuilder: (context, dataPembelian) {
                       return ListTile(
-                        title:
-                            Text(trimString(dataPembelian.idPembelian ?? "")),
+                        title: Text(trimString(dataPembelian.idPembelian ?? "")),
                       );
                     },
                     onChanged: (value) {
-                      controller.dataPayloadRetur.idPembelian =
-                          trimString(value);
+                      controller.dataPayloadRetur.idPembelian = trimString(value);
                       var data = resultPembelian.data?.dataPembelian
-                          ?.firstWhere((element) =>
-                              element.idPembelian == trimString(value));
-                      controller.dataPayloadRetur.idSupplier =
-                          trimString(data?.idSupplier);
-                      controller.dataPayloadRetur.nmSupplier =
-                          trimString(data?.nmSupplier);
+                          ?.firstWhere((element) => element.idPembelian == trimString(value));
+                      controller.dataPayloadRetur.idSupplier = trimString(data?.idSupplier);
+                      controller.dataPayloadRetur.nmSupplier = trimString(data?.nmSupplier);
                       controller.dataDetailSup = DataDetailSupplier(
                         idSupplier: trimString(data?.idSupplier),
                         nmSupplier: trimString(data?.nmSupplier),
@@ -183,12 +178,9 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
                       controller.update();
                     },
                     onSelected: (data) {
-                      controller.dataPayloadRetur.idPembelian =
-                          trimString(data.idPembelian);
-                      controller.dataPayloadRetur.idSupplier =
-                          trimString(data.idSupplier);
-                      controller.dataPayloadRetur.nmSupplier =
-                          trimString(data.nmSupplier);
+                      controller.dataPayloadRetur.idPembelian = trimString(data.idPembelian);
+                      controller.dataPayloadRetur.idSupplier = trimString(data.idSupplier);
+                      controller.dataPayloadRetur.nmSupplier = trimString(data.nmSupplier);
                       controller.dataDetailSup = DataDetailSupplier(
                         idSupplier: trimString(data.idSupplier),
                         nmSupplier: trimString(data.nmSupplier),
@@ -320,10 +312,8 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
                     onPressed: () async {
                       if (tambahReturKey.currentState!.validate()) {
                         if (widget.index != null) {
-                          var totalNilaiBeli = (double.parse(
-                                      removeComma(textController[3].text)) *
-                                  double.parse(
-                                      removeComma(textController[4].text)))
+                          var totalNilaiBeli = (double.parse(removeComma(textController[3].text)) *
+                                  double.parse(removeComma(textController[4].text)))
                               .round();
                           DetailsReturPayload data = DetailsReturPayload(
                             idProduct: textController[1].text,
@@ -333,14 +323,12 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
                             jumlah: removeComma(textController[4].text),
                             totalNilaiBeli: totalNilaiBeli.toString(),
                           );
-                          controller.dataPayloadRetur.details?[widget.index!] =
-                              data;
+                          controller.dataPayloadRetur.details?[widget.index!] = data;
                         } else {
-                          var totalNilaiBeli = (double.parse(
-                                      selectedDetailPembelian.hargaBeli ??
-                                          "0") *
-                                  double.parse(textController[4].text))
-                              .round();
+                          var totalNilaiBeli =
+                              (double.parse(selectedDetailPembelian.hargaBeli ?? "0") *
+                                      double.parse(textController[4].text))
+                                  .round();
                           controller.dataPayloadRetur.details ??= [];
 
                           DetailsReturPayload data = DetailsReturPayload(
