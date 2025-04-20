@@ -16,6 +16,7 @@ doLogout() async {
   //MAKE ERROR IF ERASER DEVICE DATABASE
   // DeviceDatabase.save("", "");
   AppSession.save("");
+  await Future.delayed(const Duration(seconds: 2));
   if (kIsWeb) {
     html.window.location.replace("/");
   } else {
