@@ -60,6 +60,8 @@ class PembelianController extends State<PembelianView> {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });
