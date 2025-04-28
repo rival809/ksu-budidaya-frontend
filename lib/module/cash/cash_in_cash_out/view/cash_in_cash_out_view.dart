@@ -179,6 +179,19 @@ class CashInCashOutView extends StatefulWidget {
                               List.generate(
                                 controller.listRoleView.length,
                                 (index) {
+                                  if (controller.listRoleView[index] == "tg_transaksi") {
+                                    return PlutoColumn(
+                                      backgroundColor: primaryColor,
+                                      filterHintText: "Cari ${controller.listRoleView[index]}",
+                                      title: convertTitle(
+                                        controller.listRoleView[index],
+                                      ),
+                                      field: controller.listRoleView[index],
+                                      type: PlutoColumnType.date(
+                                        format: "yyyy-MM-dd HH:mm:ss",
+                                      ),
+                                    );
+                                  }
                                   return PlutoColumn(
                                     backgroundColor: primaryColor,
                                     filterHintText: "Cari ${controller.listRoleView[index]}",
