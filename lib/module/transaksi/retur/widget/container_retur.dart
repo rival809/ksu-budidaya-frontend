@@ -21,10 +21,8 @@ class _ContainerReturState extends State<ContainerRetur> {
       idSupplier: widget.controller.dataPayloadRetur.idSupplier,
       nmSupplier: widget.controller.dataPayloadRetur.nmSupplier,
     );
-    widget.controller.dataPayloadRetur.tgRetur =
-        formatDate(DateTime.now().toString());
-    widget.controller.textControllerRetur[0].text =
-        formatDate(DateTime.now().toString());
+    widget.controller.dataPayloadRetur.tgRetur = formatDate(DateTime.now().toString());
+    widget.controller.textControllerRetur[0].text = formatDate(DateTime.now().toString());
   }
 
   final inputRetursKey = GlobalKey<FormState>();
@@ -85,13 +83,12 @@ class _ContainerReturState extends State<ContainerRetur> {
                     onTap: () async {
                       DateTime? selectedDate = await initSelectedDate(
                         initValue: formatDateTimeNow(
-                            controller.dataPayloadRetur.tgRetur ??
-                                DateTime.now().toString()),
+                            controller.dataPayloadRetur.tgRetur ?? DateTime.now().toString()),
                       );
 
                       if (selectedDate != null) {
                         controller.dataPayloadRetur.tgRetur =
-                            selectedDate.toString();
+                            formatDateTimeNormal(selectedDate.toString());
                         controller.textControllerRetur[0].text =
                             formatDate(selectedDate.toString());
                         update();
@@ -119,19 +116,14 @@ class _ContainerReturState extends State<ContainerRetur> {
                     enabled: controller.isDetail ? false : true,
                     itemAsString: (item) => item.supplierAsString(),
                     items: SupplierDatabase.dataSupplier.dataSupplier ?? [],
-                    value:
-                        controller.dataPayloadRetur.idSupplier?.isEmpty ?? true
-                            ? null
-                            : controller.dataDetailSup,
+                    value: controller.dataPayloadRetur.idSupplier?.isEmpty ?? true
+                        ? null
+                        : controller.dataDetailSup,
                     onChanged: (value) {
-                      controller.dataDetailSup.idSupplier =
-                          trimString(value?.idSupplier);
-                      controller.dataDetailSup.nmSupplier =
-                          trimString(value?.nmSupplier);
-                      controller.dataPayloadRetur.idSupplier =
-                          trimString(value?.idSupplier);
-                      controller.dataPayloadRetur.nmSupplier =
-                          trimString(value?.nmSupplier);
+                      controller.dataDetailSup.idSupplier = trimString(value?.idSupplier);
+                      controller.dataDetailSup.nmSupplier = trimString(value?.nmSupplier);
+                      controller.dataPayloadRetur.idSupplier = trimString(value?.idSupplier);
+                      controller.dataPayloadRetur.nmSupplier = trimString(value?.nmSupplier);
                       update();
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
@@ -152,8 +144,7 @@ class _ContainerReturState extends State<ContainerRetur> {
                     ],
                     textEditingController: controller.textControllerRetur[1],
                     onChanged: (value) {
-                      controller.dataPayloadRetur.keterangan =
-                          trimString(value);
+                      controller.dataPayloadRetur.keterangan = trimString(value);
                       update();
                     },
                   ),
@@ -196,8 +187,7 @@ class _ContainerReturState extends State<ContainerRetur> {
                       if (inputRetursKey.currentState!.validate()) {
                         showDialogBase(
                           content: DialogKonfirmasi(
-                            textKonfirmasi:
-                                "Apakah Anda yakin ingin menyimpan data ini?",
+                            textKonfirmasi: "Apakah Anda yakin ingin menyimpan data ini?",
                             onConfirm: () {
                               controller.postCreateRetur();
                             },
@@ -241,8 +231,7 @@ class _ContainerReturState extends State<ContainerRetur> {
                               width: 700,
                               content: DialogTambahRetur(
                                 index: index,
-                                data:
-                                    controller.dataPayloadRetur.details?[index],
+                                data: controller.dataPayloadRetur.details?[index],
                                 controller: controller,
                               ),
                             );
