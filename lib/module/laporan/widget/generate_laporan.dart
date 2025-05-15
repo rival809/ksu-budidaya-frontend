@@ -8,8 +8,7 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
   try {
     final pdf = pw.Document();
 
-    DataLaporanHasilUsaha data =
-        controller.resultHasilUsaha.data ?? DataLaporanHasilUsaha();
+    DataLaporanHasilUsaha data = controller.resultHasilUsaha.data ?? DataLaporanHasilUsaha();
 
     List<RowLaporanHasilUsaha> rows = [
       RowLaporanHasilUsaha(
@@ -169,6 +168,12 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
       ),
       RowLaporanHasilUsaha(
         no: "",
+        uraian: "BEBAN KERUGIAN OPERASIONAL",
+        currentMonth: data.bebanOperasional?.bebanKerugianPersediaan,
+        lastMonth: data.bebanOperasional?.bebanKerugianPersediaanLastMonth,
+      ),
+      RowLaporanHasilUsaha(
+        no: "",
         uraian: "PENGELUARAN LAIN-LAIN",
         currentMonth: data.bebanOperasional?.pengeluaranLain,
         lastMonth: data.bebanOperasional?.pengeluaranLainLastMonth,
@@ -281,8 +286,7 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                     'No.',
                     'URAIAN',
                     '${getNamaMonth(controller.monthNow)}\n${controller.yearNow}',
-                    subtractTitleOneMonth(
-                        controller.monthNow, controller.yearNow)
+                    subtractTitleOneMonth(controller.monthNow, controller.yearNow)
                   ],
                   data: rows
                       .map((row) => [
@@ -317,8 +321,7 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
     );
     Uint8List pdfData = await pdf.save();
 
-    String fileName =
-        'Laporan_Hasil_Usaha_${controller.monthNow}_${controller.yearNow}.pdf';
+    String fileName = 'Laporan_Hasil_Usaha_${controller.monthNow}_${controller.yearNow}.pdf';
 
     // await Printing.sharePdf(
     //   bytes: pdfData,

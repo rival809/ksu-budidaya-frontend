@@ -7,9 +7,7 @@ class LaporanHasilUsahaResult {
 
   LaporanHasilUsahaResult.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null
-        ? DataLaporanHasilUsaha.fromJson(json['data'])
-        : null;
+    data = json['data'] != null ? DataLaporanHasilUsaha.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -39,12 +37,10 @@ class DataLaporanHasilUsaha {
       this.sisaHasilUsaha});
 
   DataLaporanHasilUsaha.fromJson(Map<String, dynamic> json) {
-    penjualan = json['penjualan'] != null
-        ? PenjualanLaporanHasilUsaha.fromJson(json['penjualan'])
-        : null;
+    penjualan =
+        json['penjualan'] != null ? PenjualanLaporanHasilUsaha.fromJson(json['penjualan']) : null;
     hargaPokokPenjualan = json['harga_pokok_penjualan'] != null
-        ? HargaPokokPenjualanLaporanHasilUsaha.fromJson(
-            json['harga_pokok_penjualan'])
+        ? HargaPokokPenjualanLaporanHasilUsaha.fromJson(json['harga_pokok_penjualan'])
         : null;
     bebanOperasional = json['beban_operasional'] != null
         ? BebanOperasionalLaporanHasilUsaha.fromJson(json['beban_operasional'])
@@ -217,6 +213,8 @@ class BebanOperasionalLaporanHasilUsaha {
   double? bebanPenyInventarisLastMonth;
   double? bebanPenyGedung;
   double? bebanPenyGedungLastMonth;
+  double? bebanKerugianPersediaan;
+  double? bebanKerugianPersediaanLastMonth;
   double? pemeliharaanInventaris;
   double? pemeliharaanInventarisLastMonth;
   double? pemeliharaanGedung;
@@ -243,6 +241,8 @@ class BebanOperasionalLaporanHasilUsaha {
       this.bebanPenyInventarisLastMonth,
       this.bebanPenyGedung,
       this.bebanPenyGedungLastMonth,
+      this.bebanKerugianPersediaan,
+      this.bebanKerugianPersediaanLastMonth,
       this.pemeliharaanInventaris,
       this.pemeliharaanInventarisLastMonth,
       this.pemeliharaanGedung,
@@ -269,9 +269,10 @@ class BebanOperasionalLaporanHasilUsaha {
     bebanPenyInventarisLastMonth = json['beban_peny_inventaris_last_month'];
     bebanPenyGedung = json['beban_peny_gedung'];
     bebanPenyGedungLastMonth = json['beban_peny_gedung_last_month'];
+    bebanKerugianPersediaan = json['beban_kerugian_persediaan'];
+    bebanKerugianPersediaanLastMonth = json['beban_kerugian_persediaan_last_month'];
     pemeliharaanInventaris = json['pemeliharaan_inventaris'];
-    pemeliharaanInventarisLastMonth =
-        json['pemeliharaan_inventaris_last_month'];
+    pemeliharaanInventarisLastMonth = json['pemeliharaan_inventaris_last_month'];
     pemeliharaanGedung = json['pemeliharaan_gedung'];
     pemeliharaanGedungLastMonth = json['pemeliharaan_gedung_last_month'];
     pengeluaranLain = json['pengeluaran_lain'];
@@ -298,9 +299,10 @@ class BebanOperasionalLaporanHasilUsaha {
     data['beban_peny_inventaris_last_month'] = bebanPenyInventarisLastMonth;
     data['beban_peny_gedung'] = bebanPenyGedung;
     data['beban_peny_gedung_last_month'] = bebanPenyGedungLastMonth;
+    data['beban_kerugian_persediaan'] = bebanKerugianPersediaan;
+    data['beban_kerugian_persediaan_last_month'] = bebanKerugianPersediaanLastMonth;
     data['pemeliharaan_inventaris'] = pemeliharaanInventaris;
-    data['pemeliharaan_inventaris_last_month'] =
-        pemeliharaanInventarisLastMonth;
+    data['pemeliharaan_inventaris_last_month'] = pemeliharaanInventarisLastMonth;
     data['pemeliharaan_gedung'] = pemeliharaanGedung;
     data['pemeliharaan_gedung_last_month'] = pemeliharaanGedungLastMonth;
     data['pengeluaran_lain'] = pengeluaranLain;
@@ -354,8 +356,7 @@ class SisaHasilUsahaLaporanHasilUsaha {
   double? sisaHasilUsaha;
   double? sisaHasilUsahaLastMonth;
 
-  SisaHasilUsahaLaporanHasilUsaha(
-      {this.sisaHasilUsaha, this.sisaHasilUsahaLastMonth});
+  SisaHasilUsahaLaporanHasilUsaha({this.sisaHasilUsaha, this.sisaHasilUsahaLastMonth});
 
   SisaHasilUsahaLaporanHasilUsaha.fromJson(Map<String, dynamic> json) {
     sisaHasilUsaha = json['sisa_hasil_usaha'];
