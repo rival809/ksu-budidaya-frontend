@@ -7,8 +7,7 @@ class IncomeMonthlyResult {
 
   IncomeMonthlyResult.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data =
-        json['data'] != null ? DataIncomeMonthly.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataIncomeMonthly.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -24,11 +23,11 @@ class IncomeMonthlyResult {
 }
 
 class DataIncomeMonthly {
-  int? totalIncome;
+  double? totalIncome;
   double? percentageIncome;
-  int? totalExpense;
+  double? totalExpense;
   double? percentageExpense;
-  int? totalProfit;
+  double? totalProfit;
   double? percentageProfit;
 
   DataIncomeMonthly(

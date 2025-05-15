@@ -406,6 +406,14 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                     }),
                     PlutoRow(cells: {
                       'no': PlutoCell(value: ''),
+                      'uraian': PlutoCell(value: 'BEBAN KERUGIAN PERSEDIAAN'),
+                      'current_month':
+                          PlutoCell(value: result.data?.bebanOperasional?.bebanKerugianPersediaan),
+                      'last_month': PlutoCell(
+                          value: result.data?.bebanOperasional?.bebanKerugianPersediaanLastMonth),
+                    }),
+                    PlutoRow(cells: {
+                      'no': PlutoCell(value: ''),
                       'uraian': PlutoCell(value: 'PENGELUARAN LAIN-LAIN'),
                       'current_month':
                           PlutoCell(value: result.data?.bebanOperasional?.pengeluaranLain),
