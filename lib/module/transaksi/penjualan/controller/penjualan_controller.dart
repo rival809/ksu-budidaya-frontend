@@ -215,7 +215,7 @@ class PenjualanController extends State<PenjualanView> {
 
         await doGeneratePdfAndPrint();
 
-        router.push("/transaksi/penjualan");
+        Get.to(const PenjualanView());
         update();
       }
     } catch (e) {

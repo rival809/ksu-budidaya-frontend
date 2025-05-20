@@ -41,9 +41,7 @@ class ProductResultAdapter extends TypeAdapter<ProductResult> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ProductResultAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is ProductResultAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class DataProductAdapter extends TypeAdapter<DataProduct> {
@@ -81,9 +79,7 @@ class DataProductAdapter extends TypeAdapter<DataProduct> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DataProductAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DataProductAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class DataDetailProductAdapter extends TypeAdapter<DataDetailProduct> {
@@ -108,8 +104,8 @@ class DataDetailProductAdapter extends TypeAdapter<DataDetailProduct> {
       keterangan: fields[8] as String?,
       createdAt: fields[9] as String?,
       updatedAt: fields[10] as String?,
-      totalJual: fields[11] as int?,
-      totalBeli: fields[12] as int?,
+      totalJual: fields[11] as double?,
+      totalBeli: fields[12] as double?,
     );
   }
 
@@ -167,9 +163,9 @@ class TotalKeseluruhanAdapter extends TypeAdapter<TotalKeseluruhan> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TotalKeseluruhan(
-      totalJumlah: fields[0] as int?,
-      totalJual: fields[1] as int?,
-      totalBeli: fields[2] as int?,
+      totalJumlah: fields[0] as double?,
+      totalJual: fields[1] as double?,
+      totalBeli: fields[2] as double?,
     );
   }
 

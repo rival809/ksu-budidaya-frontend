@@ -148,6 +148,11 @@ class SupplierView extends StatefulWidget {
                                 renderer: (rendererContext) {
                                   final rowIndex = rendererContext.rowIdx;
                                   Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                                  DataDetailSupplier detailData =
+                                      controller.result.data?.dataSupplier?.firstWhere((element) =>
+                                              trimString(element.idSupplier) ==
+                                              trimString(dataRow["Aksi"])) ??
+                                          DataDetailSupplier();
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -203,7 +208,7 @@ class SupplierView extends StatefulWidget {
                                         showDialogBase(
                                           width: 1200,
                                           content: DialogDetailSupplier(
-                                            data: result.data?.dataSupplier?[rowIndex],
+                                            data: detailData,
                                           ),
                                         );
                                       } else if (value == 2) {
@@ -211,7 +216,7 @@ class SupplierView extends StatefulWidget {
                                           width: 700,
                                           content: DialogSupplier(
                                             isDetail: true,
-                                            data: result.data?.dataSupplier?[rowIndex],
+                                            data: detailData,
                                           ),
                                         );
                                       } else if (value == 4) {
@@ -222,7 +227,7 @@ class SupplierView extends StatefulWidget {
                                             onConfirm: () async {
                                               controller.postRemoveSupplier(
                                                 trimString(
-                                                  dataRow["id_supplier"],
+                                                  detailData.idSupplier,
                                                 ),
                                               );
                                             },
@@ -250,7 +255,7 @@ class SupplierView extends StatefulWidget {
                               // );
 
                               cells['Aksi'] = PlutoCell(
-                                value: null,
+                                value: trimStringStrip(item["id_supplier"]),
                               );
 
                               for (String column in controller.listRoleView) {

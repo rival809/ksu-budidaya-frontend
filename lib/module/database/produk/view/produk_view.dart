@@ -371,6 +371,7 @@ class ProdukView extends StatefulWidget {
                                                     formatCurrency(
                                                       trimString(result
                                                           .data?.totalKeseluruhan?.totalJual
+                                                          ?.toInt()
                                                           .toString()),
                                                     ),
                                                     style: myTextTheme.bodyMedium,
@@ -430,6 +431,7 @@ class ProdukView extends StatefulWidget {
                                                     formatCurrency(
                                                       trimString(result
                                                           .data?.totalKeseluruhan?.totalBeli
+                                                          ?.toInt()
                                                           .toString()),
                                                     ),
                                                     style: myTextTheme.bodyMedium,
@@ -604,7 +606,7 @@ class ProdukView extends StatefulWidget {
                                             onConfirm: () async {
                                               controller.postRemoveProduct(
                                                 trimString(
-                                                  dataRow["id_product"],
+                                                  data.idProduct,
                                                 ),
                                               );
                                             },

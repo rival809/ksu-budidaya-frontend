@@ -53,8 +53,7 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                           padding: const EdgeInsets.all(8.0),
                           child: BasePrimaryButton(
                             onPressed: () {
-                              controller.dataFuture =
-                                  controller.cariDataRetur();
+                              controller.dataFuture = controller.cariDataRetur();
                               controller.update();
                             },
                             text: "Cari",
@@ -126,8 +125,7 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                 ReturResult result = snapshot.data;
                 controller.dataRetur = result.data ?? DataRetur();
 
-                List<dynamic> listData =
-                    controller.dataRetur.toJson()["data_retur"] ?? [];
+                List<dynamic> listData = controller.dataRetur.toJson()["data_retur"] ?? [];
 
                 if (listData.isNotEmpty) {
                   List<PlutoRow> rows = [];
@@ -139,14 +137,12 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                       (index) {
                         return PlutoColumn(
                           backgroundColor: primaryColor,
-                          filterHintText:
-                              "Cari ${controller.listReturView[index]}",
+                          filterHintText: "Cari ${controller.listReturView[index]}",
                           title: convertTitle(
                             controller.listReturView[index],
                           ),
                           field: controller.listReturView[index],
-                          type: (controller.listReturView[index] ==
-                                  "total_nilai_beli")
+                          type: (controller.listReturView[index] == "total_nilai_beli")
                               ? PlutoColumnType.number(
                                   locale: "id",
                                 )
@@ -168,8 +164,10 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                       enableEditingMode: false,
                       renderer: (rendererContext) {
                         final rowIndex = rendererContext.rowIdx;
-                        Map<String, dynamic> dataRow =
-                            rendererContext.row.toJson();
+                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                        DetailDataRetur dataDetail = result.data?.dataRetur?.firstWhere((element) =>
+                                trimString(element.idRetur) == trimString(dataRow["Aksi"])) ??
+                            DetailDataRetur();
                         return DropdownAksi(
                           text: "Aksi",
                           listItem: [
@@ -207,28 +205,18 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                           ],
                           onChange: (value) {
                             if (value == 1) {
-                              DetailDataRetur dataDetail =
-                                  result.data?.dataRetur?[rowIndex] ??
-                                      DetailDataRetur();
-
-                              controller.dataPayloadRetur.idPembelian =
-                                  dataDetail.idPembelian;
-                              controller.dataPayloadRetur.idSupplier =
-                                  dataDetail.idSupplier;
-                              controller.dataPayloadRetur.jumlah =
-                                  dataDetail.jumlah.toString();
-                              controller.dataPayloadRetur.keterangan =
-                                  dataDetail.keterangan;
-                              controller.dataPayloadRetur.nmSupplier =
-                                  dataDetail.nmSupplier;
-                              controller.dataPayloadRetur.tgRetur =
-                                  dataDetail.tgRetur;
+                              controller.dataPayloadRetur.idPembelian = dataDetail.idPembelian;
+                              controller.dataPayloadRetur.idSupplier = dataDetail.idSupplier;
+                              controller.dataPayloadRetur.jumlah = dataDetail.jumlah.toString();
+                              controller.dataPayloadRetur.keterangan = dataDetail.keterangan;
+                              controller.dataPayloadRetur.nmSupplier = dataDetail.nmSupplier;
+                              controller.dataPayloadRetur.tgRetur = dataDetail.tgRetur;
                               controller.dataPayloadRetur.totalNilaiBeli =
                                   dataDetail.totalNilaiBeli;
 
                               controller.postDetailPurchase(
                                 trimString(
-                                  result.data?.dataRetur?[rowIndex].idRetur,
+                                  dataDetail.idRetur,
                                 ),
                               );
                               update();
@@ -240,8 +228,7 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                                   onConfirm: () async {
                                     controller.postRemoveRetur(
                                       trimString(
-                                        result
-                                            .data?.dataRetur?[rowIndex].idRetur,
+                                        dataDetail.idRetur,
                                       ),
                                     );
                                   },
@@ -254,8 +241,7 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                     ),
                   );
 
-                  List<dynamic> listDataWithIndex =
-                      List.generate(listData.length, (index) {
+                  List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
                     return {
                       ...listData[index],
                       'persistentIndex': index + 1,
@@ -265,7 +251,9 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                     Map<String, PlutoCell> cells = {};
 
                     cells['Aksi'] = PlutoCell(
-                      value: null,
+                      value: trimStringStrip(
+                        item["id_retur"].toString(),
+                      ),
                     );
 
                     for (String column in controller.listReturView) {
@@ -315,8 +303,7 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                           autoSizeMode: PlutoAutoSizeMode.scale,
                         ),
                         style: PlutoGridStyleConfig(
-                          columnTextStyle: myTextTheme.titleSmall
-                                  ?.copyWith(color: neutralWhite) ??
+                          columnTextStyle: myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
                               const TextStyle(),
                           gridBorderColor: blueGray50,
                           gridBorderRadius: BorderRadius.circular(8),
@@ -346,22 +333,18 @@ class _ContainerListReturState extends State<ContainerListRetur> {
                           totalRow: controller.dataRetur.paging?.totalItem ?? 0,
                           onPressLeft: () {
                             if (int.parse(controller.page) > 1) {
-                              controller.page =
-                                  (int.parse(controller.page) - 1).toString();
+                              controller.page = (int.parse(controller.page) - 1).toString();
                               controller.update();
-                              controller.dataFuture =
-                                  controller.cariDataRetur();
+                              controller.dataFuture = controller.cariDataRetur();
                               controller.update();
                             }
                           },
                           onPressRight: () {
                             if (int.parse(controller.page) <
                                 (result.data?.paging?.totalPage ?? 0)) {
-                              controller.page =
-                                  (int.parse(controller.page) + 1).toString();
+                              controller.page = (int.parse(controller.page) + 1).toString();
                               controller.update();
-                              controller.dataFuture =
-                                  controller.cariDataRetur();
+                              controller.dataFuture = controller.cariDataRetur();
                               controller.update();
                             }
                           },
