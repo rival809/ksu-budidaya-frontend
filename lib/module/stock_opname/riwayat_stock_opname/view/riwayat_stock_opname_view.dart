@@ -138,7 +138,12 @@ class RiwayatStockOpnameView extends StatefulWidget {
                                     field: controller.listRoleView[index],
                                     type: (controller.listRoleView[index] == "stok_awal" ||
                                             controller.listRoleView[index] == "selisih" ||
-                                            controller.listRoleView[index] == "stok_akhir")
+                                            controller.listRoleView[index] == "stok_akhir" ||
+                                            controller.listRoleView[index] ==
+                                                "total_harga_jual_stock" ||
+                                            controller.listRoleView[index] ==
+                                                "total_harga_jual_stocktake" ||
+                                            controller.listRoleView[index] == "selisih_harga_jual")
                                         ? PlutoColumnType.number(
                                             locale: "id",
                                           )
@@ -168,6 +173,33 @@ class RiwayatStockOpnameView extends StatefulWidget {
 
                               return PlutoRow(cells: cells);
                             }).toList();
+
+                            List<PlutoColumnGroup> columnGroups = [
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "Stock",
+                                fields: [
+                                  "stok_awal",
+                                  "total_harga_jual_stock",
+                                ],
+                              ),
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "Stocktake",
+                                fields: [
+                                  "stok_akhir",
+                                  "total_harga_jual_stocktake",
+                                ],
+                              ),
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "Selisih",
+                                fields: [
+                                  "selisih",
+                                  "selisih_harga_jual",
+                                ],
+                              ),
+                            ];
 
                             return SizedBox(
                               height: MediaQuery.of(context).size.height -
@@ -209,6 +241,7 @@ class RiwayatStockOpnameView extends StatefulWidget {
                                 ),
                                 columns: columns,
                                 rows: rows,
+                                columnGroups: columnGroups,
                                 createFooter: (stateManager) {
                                   return FooterTableWidget(
                                     page: controller.page,

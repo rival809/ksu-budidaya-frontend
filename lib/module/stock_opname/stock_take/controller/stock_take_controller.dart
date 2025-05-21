@@ -24,10 +24,13 @@ class StockTakeController extends State<StockTakeView> {
     "id_product",
     "nm_product",
     "divisi",
-    "stock",
-    "sisa",
-    "selisih",
     "petugas",
+    "stock",
+    "total_harga_jual_stock",
+    "stock_take",
+    "total_harga_jual_stocktake",
+    "selisih",
+    "selisih_harga_jual",
     "is_selisih",
   ];
 

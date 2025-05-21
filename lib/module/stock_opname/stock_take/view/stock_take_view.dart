@@ -156,7 +156,13 @@ class StockTakeView extends StatefulWidget {
                                       field: controller.listRoleView[index],
                                       type: (controller.listRoleView[index] == "stock" ||
                                               controller.listRoleView[index] == "selisih" ||
-                                              controller.listRoleView[index] == "sisa")
+                                              controller.listRoleView[index] == "stock_take" ||
+                                              controller.listRoleView[index] ==
+                                                  "total_harga_jual_stock" ||
+                                              controller.listRoleView[index] ==
+                                                  "total_harga_jual_stocktake" ||
+                                              controller.listRoleView[index] ==
+                                                  "selisih_harga_jual")
                                           ? PlutoColumnType.number(
                                               locale: "id",
                                             )
@@ -193,6 +199,33 @@ class StockTakeView extends StatefulWidget {
 
                               return PlutoRow(cells: cells);
                             }).toList();
+
+                            List<PlutoColumnGroup>? columnGroups = [
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "Stock",
+                                fields: [
+                                  "stock",
+                                  "total_harga_jual_stock",
+                                ],
+                              ),
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "Stocktake",
+                                fields: [
+                                  "stock_take",
+                                  "total_harga_jual_stocktake",
+                                ],
+                              ),
+                              PlutoColumnGroup(
+                                backgroundColor: primaryColor,
+                                title: "Selisih",
+                                fields: [
+                                  "selisih",
+                                  "selisih_harga_jual",
+                                ],
+                              ),
+                            ];
 
                             return SizedBox(
                               height: MediaQuery.of(context).size.height -
@@ -233,6 +266,7 @@ class StockTakeView extends StatefulWidget {
                                   localeText: configLocale,
                                 ),
                                 columns: columns,
+                                columnGroups: columnGroups,
                                 rows: rows,
                                 createFooter: (stateManager) {
                                   return FooterTableWidget(

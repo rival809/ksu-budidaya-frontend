@@ -36,6 +36,9 @@ class DataStockOpname {
   String? name;
   String? createdAt;
   String? updatedAt;
+  String? totalHargaJualStock;
+  String? totalHargaJualStocktake;
+  String? selisihHargaJual;
 
   DataStockOpname(
       {this.idStocktake,
@@ -48,7 +51,10 @@ class DataStockOpname {
       this.username,
       this.name,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.totalHargaJualStock,
+      this.totalHargaJualStocktake,
+      this.selisihHargaJual});
 
   DataStockOpname.fromJson(Map<String, dynamic> json) {
     idStocktake = checkModel(json['id_stocktake']);
@@ -62,6 +68,9 @@ class DataStockOpname {
     name = checkModel(json['name']);
     createdAt = checkModel(json['created_at']);
     updatedAt = checkModel(json['updated_at']);
+    totalHargaJualStock = checkModel(json['total_harga_jual_stock']);
+    totalHargaJualStocktake = checkModel(json['total_harga_jual_stocktake']);
+    selisihHargaJual = checkModel(json['selisih_harga_jual']);
   }
 
   Map<String, dynamic> toJson() {
@@ -77,6 +86,9 @@ class DataStockOpname {
     data['name'] = name;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
+    data['total_harga_jual_stock'] = totalHargaJualStock;
+    data['total_harga_jual_stocktake'] = totalHargaJualStocktake;
+    data['selisih_harga_jual'] = selisihHargaJual;
     return data;
   }
 }
