@@ -221,8 +221,14 @@ class CashInCashOutView extends StatefulWidget {
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
-                                  final rowIndex = rendererContext.rowIdx;
                                   Map<String, dynamic> dataRow = rendererContext.row.toJson();
+
+                                  DataDetailCashInOut dataDetail = result.data?.dataCashInOut
+                                          ?.firstWhere((element) =>
+                                              trimString(element.idCashInOut) ==
+                                              trimString(dataRow["Aksi"])) ??
+                                      DataDetailCashInOut();
+
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -264,7 +270,7 @@ class CashInCashOutView extends StatefulWidget {
                                           width: 1000,
                                           content: DialogCashInOut(
                                             isDetail: true,
-                                            data: result.data?.dataCashInOut?[rowIndex],
+                                            data: dataDetail,
                                           ),
                                         );
                                       } else if (value == 2) {
@@ -275,7 +281,7 @@ class CashInCashOutView extends StatefulWidget {
                                             onConfirm: () async {
                                               controller.postRemoveCashInOut(
                                                 trimString(
-                                                  result.data?.dataCashInOut?[rowIndex].idCashInOut,
+                                                  dataDetail.idCashInOut,
                                                 ),
                                               );
                                             },
@@ -303,7 +309,9 @@ class CashInCashOutView extends StatefulWidget {
                               );
 
                               cells['Aksi'] = PlutoCell(
-                                value: null,
+                                value: trimStringStrip(
+                                  item["id_cash_in_out"].toString(),
+                                ),
                               );
 
                               for (String column in controller.listRoleView) {

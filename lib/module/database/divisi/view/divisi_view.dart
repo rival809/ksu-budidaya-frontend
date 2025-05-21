@@ -142,8 +142,13 @@ class DivisiView extends StatefulWidget {
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
-                                  final rowIndex = rendererContext.rowIdx;
-
+                                  // final rowIndex = rendererContext.rowIdx;
+                                  Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                                  DataDetailDivisi dataDetail = result.data?.dataDivisi?.firstWhere(
+                                          (element) =>
+                                              trimString(element.idDivisi) ==
+                                              trimString(dataRow["Aksi"])) ??
+                                      DataDetailDivisi();
                                   return DropdownAksi(
                                     text: "Aksi",
                                     onChange: (value) {
@@ -151,7 +156,7 @@ class DivisiView extends StatefulWidget {
                                         showDialogBase(
                                           width: 700,
                                           content: DialogDivisi(
-                                            data: result.data?.dataDivisi?[rowIndex],
+                                            data: dataDetail,
                                             isDetail: true,
                                           ),
                                         );
@@ -163,7 +168,7 @@ class DivisiView extends StatefulWidget {
                                             onConfirm: () async {
                                               controller.postRemoveDivisi(
                                                 trimString(
-                                                  result.data?.dataDivisi?[rowIndex].idDivisi,
+                                                  dataDetail.idDivisi,
                                                 ),
                                               );
                                             },
@@ -191,7 +196,7 @@ class DivisiView extends StatefulWidget {
                               // );
 
                               cells['Aksi'] = PlutoCell(
-                                value: null,
+                                value: trimStringStrip(item["id_divisi"]),
                               );
 
                               for (String column in controller.listRoleView) {

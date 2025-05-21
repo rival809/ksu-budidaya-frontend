@@ -173,7 +173,7 @@ class TutupKasirView extends StatefulWidget {
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
-                                  final rowIndex = rendererContext.rowIdx;
+                                  // final rowIndex = rendererContext.rowIdx;
                                   Map<String, dynamic> dataRow = rendererContext.row.toJson();
 
                                   DetailDataTutupKasir? data = controller

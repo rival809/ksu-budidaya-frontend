@@ -215,7 +215,7 @@ class PenjualanController extends State<PenjualanView> {
 
         await doGeneratePdfAndPrint();
 
-        router.push("/transaksi/penjualan");
+        Get.to(const PenjualanView());
         update();
       }
     } catch (e) {
@@ -463,6 +463,8 @@ class PenjualanController extends State<PenjualanView> {
         statusKredit = true;
         metodeBayar = "kredit";
         dataPenjualan.jenisPembayaran = "kredit";
+        totalBayar = "0";
+        textControllerDialog[2].text = "0";
 
         break;
       default:

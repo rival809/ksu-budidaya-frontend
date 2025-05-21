@@ -32,10 +32,9 @@ class ManajemenRoleView extends StatefulWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth:
-                            Provider.of<DrawerProvider>(context).isDrawerOpen
-                                ? MediaQuery.of(context).size.width - 32 - 265
-                                : MediaQuery.of(context).size.width - 32,
+                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
+                            ? MediaQuery.of(context).size.width - 32 - 265
+                            : MediaQuery.of(context).size.width - 32,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,16 +44,14 @@ class ManajemenRoleView extends StatefulWidget {
                               SizedBox(
                                 width: 250,
                                 child: BaseForm(
-                                  textEditingController:
-                                      controller.roleNameController,
+                                  textEditingController: controller.roleNameController,
                                   onChanged: (value) {},
                                   hintText: "Pencarian",
                                   suffix: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: BasePrimaryButton(
                                       onPressed: () {
-                                        controller.dataFuture =
-                                            controller.cariDataRole();
+                                        controller.dataFuture = controller.cariDataRole();
                                         controller.update();
                                       },
                                       text: "Cari",
@@ -69,8 +66,7 @@ class ManajemenRoleView extends StatefulWidget {
                               ),
                               BaseSecondaryButton(
                                 onPressed: () {
-                                  controller.dataFuture =
-                                      controller.cariDataRole();
+                                  controller.dataFuture = controller.cariDataRole();
                                   controller.update();
                                 },
                                 text: "Refresh",
@@ -106,17 +102,14 @@ class ManajemenRoleView extends StatefulWidget {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ContainerLoadingRole();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
+                      } else if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           ListRoleResult result = snapshot.data;
-                          controller.dataListRole =
-                              result.data ?? DataListRole();
+                          controller.dataListRole = result.data ?? DataListRole();
                           List<dynamic> listData =
-                              controller.dataListRole.toJson()["data_roles"] ??
-                                  [];
+                              controller.dataListRole.toJson()["data_roles"] ?? [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
@@ -142,12 +135,10 @@ class ManajemenRoleView extends StatefulWidget {
                               ),
                             );
 
-                            columns.addAll(List.generate(
-                                controller.listRoleView.length, (index) {
+                            columns.addAll(List.generate(controller.listRoleView.length, (index) {
                               return PlutoColumn(
                                 backgroundColor: primaryColor,
-                                filterHintText:
-                                    "Cari ${controller.listRoleView[index]}",
+                                filterHintText: "Cari ${controller.listRoleView[index]}",
                                 title: convertTitle(
                                   controller.listRoleView[index],
                                 ),
@@ -167,8 +158,13 @@ class ManajemenRoleView extends StatefulWidget {
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
-                                  final rowIndex = rendererContext.rowIdx;
-
+                                  // final rowIndex = rendererContext.rowIdx;
+                                  Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                                  DataRoles dataDetail = result.data?.dataRoles?.firstWhere(
+                                          (element) =>
+                                              trimString(element.idRole) ==
+                                              trimString(dataRow["Aksi"])) ??
+                                      DataRoles();
                                   return DropdownAksi(
                                     text: "Aksi",
                                     onChange: (value) {
@@ -176,8 +172,7 @@ class ManajemenRoleView extends StatefulWidget {
                                         showDialogBase(
                                           content: DialogTambahRole(
                                             isDetail: true,
-                                            dataRole: result
-                                                .data?.dataRoles?[rowIndex],
+                                            dataRole: dataDetail,
                                           ),
                                         );
                                       } else if (value == 2) {
@@ -187,10 +182,7 @@ class ManajemenRoleView extends StatefulWidget {
                                                 "Apakah Anda yakin ingin Menghapus Role",
                                             onConfirm: () {
                                               controller.postRemoveRole(
-                                                trimString(result
-                                                    .data
-                                                    ?.dataRoles?[rowIndex]
-                                                    .idRole),
+                                                trimString(dataDetail.idRole),
                                               );
                                             },
                                           ),
@@ -217,7 +209,7 @@ class ManajemenRoleView extends StatefulWidget {
                               );
 
                               cells['Aksi'] = PlutoCell(
-                                value: null,
+                                value: trimStringStrip(item["id_role"]),
                               );
 
                               for (String column in controller.listRoleView) {
@@ -248,8 +240,7 @@ class ManajemenRoleView extends StatefulWidget {
                                   if (event.column.field != "Aksi") {
                                     controller.isAsc = !controller.isAsc;
                                     controller.update();
-                                    controller.dataFuture =
-                                        controller.cariDataRole(
+                                    controller.dataFuture = controller.cariDataRole(
                                       isAsc: controller.isAsc,
                                       field: event.column.field,
                                     );
@@ -261,9 +252,9 @@ class ManajemenRoleView extends StatefulWidget {
                                     autoSizeMode: PlutoAutoSizeMode.scale,
                                   ),
                                   style: PlutoGridStyleConfig(
-                                    columnTextStyle: myTextTheme.titleSmall
-                                            ?.copyWith(color: neutralWhite) ??
-                                        const TextStyle(),
+                                    columnTextStyle:
+                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                            const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -275,48 +266,37 @@ class ManajemenRoleView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller
-                                            .dataListRole.paging?.totalPage ??
-                                        0,
+                                    maxPage: controller.dataListRole.paging?.totalPage ?? 0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataRole();
+                                      controller.dataFuture = controller.cariDataRole();
                                       controller.update();
                                     },
                                     onChangePerPage: (value) {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture =
-                                          controller.cariDataRole();
+                                      controller.dataFuture = controller.cariDataRole();
                                       controller.update();
                                     },
-                                    totalRow: controller
-                                            .dataListRole.paging?.totalItem ??
-                                        0,
+                                    totalRow: controller.dataListRole.paging?.totalItem ?? 0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {
                                         controller.page =
-                                            (int.parse(controller.page) - 1)
-                                                .toString();
+                                            (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataRole();
+                                        controller.dataFuture = controller.cariDataRole();
                                         controller.update();
                                       }
                                     },
                                     onPressRight: () {
                                       if (int.parse(controller.page) <
-                                          (result.data?.paging?.totalPage ??
-                                              0)) {
+                                          (result.data?.paging?.totalPage ?? 0)) {
                                         controller.page =
-                                            (int.parse(controller.page) + 1)
-                                                .toString();
+                                            (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataRole();
+                                        controller.dataFuture = controller.cariDataRole();
                                         controller.update();
                                       }
                                     },

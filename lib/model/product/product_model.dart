@@ -93,9 +93,9 @@ class DataDetailProduct {
   @HiveField(10)
   String? updatedAt;
   @HiveField(11)
-  int? totalJual;
+  double? totalJual;
   @HiveField(12)
-  int? totalBeli;
+  double? totalBeli;
 
   DataDetailProduct(
       {this.idProduct,
@@ -124,8 +124,8 @@ class DataDetailProduct {
     String? keterangan,
     String? createdAt,
     String? updatedAt,
-    int? totalJual,
-    int? totalBeli,
+    double? totalJual,
+    double? totalBeli,
   }) =>
       DataDetailProduct(
         idProduct: idProduct ?? this.idProduct,
@@ -181,11 +181,11 @@ class DataDetailProduct {
 @HiveType(typeId: 19)
 class TotalKeseluruhan {
   @HiveField(0)
-  int? totalJumlah;
+  double? totalJumlah;
   @HiveField(1)
-  int? totalJual;
+  double? totalJual;
   @HiveField(2)
-  int? totalBeli;
+  double? totalBeli;
 
   TotalKeseluruhan({this.totalJumlah, this.totalJual, this.totalBeli});
 

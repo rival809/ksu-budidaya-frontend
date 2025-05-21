@@ -203,8 +203,13 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                       type: PlutoColumnType.text(),
                       enableEditingMode: false,
                       renderer: (rendererContext) {
-                        final rowIndex = rendererContext.rowIdx;
+                        // final rowIndex = rendererContext.rowIdx;
                         Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                        DetailDataPembelian dataDetail = result.data?.dataPembelian?.firstWhere(
+                                (element) =>
+                                    trimString(element.idPembelian) ==
+                                    trimString(dataRow["Aksi"])) ??
+                            DetailDataPembelian();
                         return DropdownAksi(
                           text: "Aksi",
                           listItem: [
@@ -242,22 +247,23 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           ],
                           onChange: (value) {
                             if (value == 1) {
-                              DetailDataPembelian dataDetail =
-                                  result.data?.dataPembelian?[rowIndex].copyWith() ??
-                                      DetailDataPembelian();
-                              controller.dataPembelian.jenisPembayaran = dataDetail.jenisPembayaran;
-                              controller.dataPembelian.idSupplier = dataDetail.idSupplier;
+                              DetailDataPembelian dataPembelian = dataDetail.copyWith();
+                              controller.dataPembelian.jenisPembayaran =
+                                  dataPembelian.jenisPembayaran;
+                              controller.dataPembelian.idSupplier = dataPembelian.idSupplier;
                               controller.dataPembelian.jumlah =
-                                  trimString(dataDetail.jumlah.toString());
-                              controller.dataPembelian.keterangan = dataDetail.keterangan;
-                              controller.dataPembelian.nmSupplier = dataDetail.nmSupplier;
-                              controller.dataPembelian.tgPembelian = dataDetail.tgPembelian;
-                              controller.dataPembelian.totalHargaBeli = dataDetail.totalHargaBeli;
-                              controller.dataPembelian.totalHargaJual = dataDetail.totalHargaJual;
+                                  trimString(dataPembelian.jumlah.toString());
+                              controller.dataPembelian.keterangan = dataPembelian.keterangan;
+                              controller.dataPembelian.nmSupplier = dataPembelian.nmSupplier;
+                              controller.dataPembelian.tgPembelian = dataPembelian.tgPembelian;
+                              controller.dataPembelian.totalHargaBeli =
+                                  dataPembelian.totalHargaBeli;
+                              controller.dataPembelian.totalHargaJual =
+                                  dataPembelian.totalHargaJual;
 
                               controller.postDetailPurchase(
                                 trimString(
-                                  result.data?.dataPembelian?[rowIndex].idPembelian,
+                                  dataPembelian.idPembelian,
                                 ),
                               );
                               update();
@@ -269,7 +275,7 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                                   onConfirm: () async {
                                     controller.postRemovePurchase(
                                       trimString(
-                                        result.data?.dataPembelian?[rowIndex].idPembelian,
+                                        dataDetail.idPembelian,
                                       ),
                                     );
                                   },
@@ -292,7 +298,9 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     Map<String, PlutoCell> cells = {};
 
                     cells['Aksi'] = PlutoCell(
-                      value: null,
+                      value: trimStringStrip(
+                        item["id_pembelian"].toString(),
+                      ),
                     );
 
                     for (String column in controller.listRoleView) {

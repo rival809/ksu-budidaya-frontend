@@ -146,6 +146,8 @@ class HargaPokokPenjualanLaporanHasilUsaha {
       this.pembelianTunaiLastMonth,
       this.pembelianKredit,
       this.pembelianKreditLastMonth,
+      this.retur,
+      this.returLastMonth,
       this.pembelianBersih,
       this.pembelianBersihLastMonth,
       this.barangSiapJual,
@@ -164,6 +166,8 @@ class HargaPokokPenjualanLaporanHasilUsaha {
     pembelianTunaiLastMonth = json['pembelian_tunai_last_month'];
     pembelianKredit = json['pembelian_kredit'];
     pembelianKreditLastMonth = json['pembelian_kredit_last_month'];
+    retur = json['retur'];
+    returLastMonth = json['retur_last_month'];
     pembelianBersih = json['pembelian_bersih'];
     pembelianBersihLastMonth = json['pembelian_bersih_last_month'];
     barangSiapJual = json['barang_siap_jual'];
@@ -184,6 +188,8 @@ class HargaPokokPenjualanLaporanHasilUsaha {
     data['pembelian_tunai_last_month'] = pembelianTunaiLastMonth;
     data['pembelian_kredit'] = pembelianKredit;
     data['pembelian_kredit_last_month'] = pembelianKreditLastMonth;
+    data['retur'] = retur;
+    data['retur_last_month'] = returLastMonth;
     data['pembelian_bersih'] = pembelianBersih;
     data['pembelian_bersih_last_month'] = pembelianBersihLastMonth;
     data['barang_siap_jual'] = barangSiapJual;

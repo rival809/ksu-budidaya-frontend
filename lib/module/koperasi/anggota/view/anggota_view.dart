@@ -153,8 +153,12 @@ class AnggotaView extends StatefulWidget {
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
                                   Map<String, dynamic> dataRow = rendererContext.row.toJson();
-                                  final rowIndex = rendererContext.rowIdx;
-
+                                  // final rowIndex = rendererContext.rowIdx;
+                                  DataDetailAnggota dataDetail = result.data?.dataAnggota
+                                          ?.firstWhere((element) =>
+                                              trimString(element.idAnggota) ==
+                                              trimString(dataRow["id_anggota"])) ??
+                                      DataDetailAnggota();
                                   return DropdownAksi(
                                     text: "Aksi",
                                     listItem: [
@@ -196,8 +200,7 @@ class AnggotaView extends StatefulWidget {
                                           Uri(
                                             path: "/koperasi/anggota/pembayaran-hutang",
                                             queryParameters: {
-                                              'id': trimString(
-                                                  result.data?.dataAnggota?[rowIndex].idAnggota)
+                                              'id': trimString(dataDetail.idAnggota)
                                             },
                                           ).toString(),
                                         );
@@ -209,7 +212,7 @@ class AnggotaView extends StatefulWidget {
                                             onConfirm: () async {
                                               controller.postRemoveAnggota(
                                                 trimString(
-                                                  dataRow["id_anggota"],
+                                                  dataDetail.idAnggota,
                                                 ),
                                               );
                                             },
@@ -237,7 +240,7 @@ class AnggotaView extends StatefulWidget {
                               // );
 
                               cells['Aksi'] = PlutoCell(
-                                value: null,
+                                value: trimStringStrip(item["id_anggota"]),
                               );
 
                               for (String column in controller.listRoleView) {

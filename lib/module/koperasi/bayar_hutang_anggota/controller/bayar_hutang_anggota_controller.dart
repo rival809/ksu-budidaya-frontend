@@ -95,8 +95,7 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
       return detailAnggota;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -114,7 +113,7 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
         "size": size,
       };
 
-      // dataCari.addAll({"id_anggota": trimString(widget.idAnggota)});
+      dataCari.addAll({"id_anggota": trimString(widget.idAnggota)});
 
       if (isAsc != null) {
         dataCari.addAll({
@@ -132,8 +131,7 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
       return transaksiAnggota;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -169,8 +167,7 @@ class BayarHutangAnggotaController extends State<BayarHutangAnggotaView> {
       return result;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }

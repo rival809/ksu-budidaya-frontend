@@ -246,8 +246,7 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                             if (value == 1) {
                                               controller.postDetailPenjualan(
                                                 trimString(
-                                                  controller.result.data
-                                                      ?.dataHutangAnggota?[rowIndex].idPenjualan,
+                                                  dataRow["id_penjualan"],
                                                 ),
                                               );
                                             }

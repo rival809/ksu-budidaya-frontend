@@ -221,18 +221,26 @@ class BayarHutangDagangView extends StatefulWidget {
                                           ],
                                           onChange: (value) {
                                             if (value == 1) {
+                                              DataDetailHutangDagang dataDetailHutangDagang =
+                                                  controller
+                                                          .result.data?.dataHutangDagang
+                                                          ?.firstWhere((element) =>
+                                                              trimString(element.idHutangDagang) ==
+                                                              trimString(dataRow["Aksi"])) ??
+                                                      DataDetailHutangDagang();
+
                                               showDialogBase(
                                                 width: 700,
                                                 content: DialogTambahPelunasan(
                                                   isPageBayarHutang: true,
-                                                  nominal: trimString(controller.result.data
-                                                      ?.dataHutangDagang?[rowIndex].nominal),
-                                                  idHutangDagang: trimString(result.data
-                                                      ?.dataHutangDagang?[rowIndex].idHutangDagang),
-                                                  idTransaksi: trimString(result.data
-                                                      ?.dataHutangDagang?[rowIndex].idPembelian),
-                                                  idSupplier: trimString(result.data
-                                                      ?.dataHutangDagang?[rowIndex].idSupplier),
+                                                  nominal:
+                                                      trimString(dataDetailHutangDagang.nominal),
+                                                  idHutangDagang: trimString(
+                                                      dataDetailHutangDagang.idHutangDagang),
+                                                  idTransaksi: trimString(
+                                                      dataDetailHutangDagang.idPembelian),
+                                                  idSupplier:
+                                                      trimString(dataDetailHutangDagang.idSupplier),
                                                 ),
                                               );
                                             }
@@ -257,7 +265,7 @@ class BayarHutangDagangView extends StatefulWidget {
                                     );
 
                                     cells['Aksi'] = PlutoCell(
-                                      value: null,
+                                      value: item["id_hutang_dagang"].toString(),
                                     );
 
                                     for (String column in controller.listHutangDagangView) {
