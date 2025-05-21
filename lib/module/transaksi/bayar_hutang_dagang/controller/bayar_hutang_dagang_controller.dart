@@ -6,7 +6,7 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
   late BayarHutangDagangView view;
 
   String page = "1";
-  String size = "10";
+  String size = "100";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 
@@ -123,10 +123,21 @@ class BayarHutangDagangController extends State<BayarHutangDagangView> {
         "size": size,
       };
 
+      if (isAsc == null && field == null) {
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
+      }
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
         });

@@ -6,7 +6,7 @@ class AnggotaController extends State<AnggotaView> {
   late AnggotaView view;
 
   String page = "1";
-  String size = "10";
+  String size = "100";
   bool isAsc = true;
   TextEditingController anggotaNameController = TextEditingController();
 
