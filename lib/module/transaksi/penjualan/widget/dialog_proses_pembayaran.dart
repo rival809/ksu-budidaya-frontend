@@ -65,10 +65,8 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                   ? null
                   : "${trimString(widget.controller.dataPenjualan.idAnggota)} - ${getNamaAnggota(idAnggota: trimString(widget.controller.dataPenjualan.idAnggota))}",
               onChanged: (value) {
-                controller.dataPenjualan.idAnggota =
-                    splitString(trimString(value), true);
-                controller.dataPenjualan.nmAnggota =
-                    splitString(trimString(value), false);
+                controller.dataPenjualan.idAnggota = splitString(trimString(value), true);
+                controller.dataPenjualan.nmAnggota = splitString(trimString(value), false);
                 bayarFocus.requestFocus();
                 controller.update();
                 update();
@@ -155,13 +153,12 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
               ],
               onChanged: (value) {
-                controller.totalBayar =
-                    removeComma(trimString(value.toString()));
+                controller.totalBayar = removeComma(trimString(value.toString()));
                 controller.update();
                 update();
               },
               textEditingController: controller.textControllerDialog[2],
-              enabled: true,
+              enabled: controller.statusKredit ? false : true,
               validator: controller.dataPenjualan.jenisPembayaran == "kredit"
                   ? null
                   : Validatorless.required("Data Wajib Diisi"),
@@ -221,8 +218,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 Expanded(
                   child: BasePrimaryButton(
                     text: "Simpan",
-                    onPressed: controller.dataPenjualan.jenisPembayaran ==
-                            "kredit"
+                    onPressed: controller.dataPenjualan.jenisPembayaran == "kredit"
                         ? () {
                             if (inputPenjualanKey.currentState!.validate()) {
                               controller.postCreatePenjualan();
@@ -231,8 +227,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                         : controller.totalKembali < 0
                             ? null
                             : () {
-                                if (inputPenjualanKey.currentState!
-                                    .validate()) {
+                                if (inputPenjualanKey.currentState!.validate()) {
                                   controller.postCreatePenjualan();
                                 }
                               },
