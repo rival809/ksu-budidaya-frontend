@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
@@ -221,7 +222,7 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
       //E
       RowLaporanHasilUsaha(
         no: "E",
-        uraian: "Sisa Hasil Usaha",
+        uraian: "SISA HASIL USAHA",
         currentMonth: data.sisaHasilUsaha?.sisaHasilUsaha,
         lastMonth: data.sisaHasilUsaha?.sisaHasilUsahaLastMonth,
       ),
@@ -237,7 +238,7 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
       pw.MultiPage(
           pageTheme: const pw.PageTheme(
             pageFormat: PdfPageFormat.a4,
-            margin: pw.EdgeInsets.all(16),
+            margin: pw.EdgeInsets.all(8),
           ),
           header: (pw.Context context) => pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.center,
@@ -249,11 +250,10 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                       style: pw.TextStyle(
                         font: boldFont,
                         fontWeight: pw.FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 14,
                       ),
                     ),
                   ),
-                  pw.SizedBox(height: 16),
                   pw.Center(
                     child: pw.Text(
                       '${getNamaMonth(controller.monthNow)} - ${controller.yearNow}',
@@ -261,11 +261,11 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                       style: pw.TextStyle(
                         font: boldFont,
                         fontWeight: pw.FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 12,
                       ),
                     ),
                   ),
-                  pw.SizedBox(height: 16),
+                  pw.SizedBox(height: 8),
                 ],
               ),
           build: (pw.Context context) => [
@@ -288,33 +288,127 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                     '${getNamaMonth(controller.monthNow)}\n${controller.yearNow}',
                     subtractTitleOneMonth(controller.monthNow, controller.yearNow)
                   ],
-                  data: rows
-                      .map((row) => [
-                            row.no ?? '',
-                            row.uraian ?? '',
-                            formatMoney(row.currentMonth?.toString() ?? ''),
-                            formatMoney(row.lastMonth?.toString() ?? '')
-                          ])
-                      .toList(),
+                  // data: rows
+                  //     .map((row) => [
+                  //           row.no ?? '',
+                  //           row.uraian ?? '',
+                  //           formatMoney(row.currentMonth?.toString() ?? ''),
+                  //           formatMoney(row.lastMonth?.toString() ?? '')
+                  //         ])
+                  //     .toList(),
+                  data: List<List<dynamic>>.generate(rows.length, (row) {
+                    return List<dynamic>.generate(4, (col) {
+                      if (col == 0) {
+                        return Text(
+                          rows[row].no ?? '',
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            font: [
+                              "PENJUALAN",
+                              "TOTAL",
+                              "HARGA POKOK PENJUALAN",
+                              "HARGA POKOK PENJUALAN",
+                              "HASIL USAHA KOTOR",
+                              "BEBAN OPERASIONAL",
+                              "TOTAL BEBAN OPERASIONAL",
+                              "HASIL USAHA BERSIH",
+                              "PENDAPATAN LAIN-LAIN",
+                              "TOTAL PENDAPATAN LAIN-LAIN",
+                              "SISA HASIL USAHA",
+                            ].any((element) => element == rows[row].uraian)
+                                ? boldFont
+                                : regularFont,
+                          ),
+                        );
+                      } else if (col == 1) {
+                        return Text(
+                          rows[row].uraian ?? '',
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            font: [
+                              "PENJUALAN",
+                              "TOTAL",
+                              "HARGA POKOK PENJUALAN",
+                              "HARGA POKOK PENJUALAN",
+                              "HASIL USAHA KOTOR",
+                              "BEBAN OPERASIONAL",
+                              "TOTAL BEBAN OPERASIONAL",
+                              "HASIL USAHA BERSIH",
+                              "PENDAPATAN LAIN-LAIN",
+                              "TOTAL PENDAPATAN LAIN-LAIN",
+                              "SISA HASIL USAHA",
+                            ].any((element) => element == rows[row].uraian)
+                                ? boldFont
+                                : regularFont,
+                          ),
+                        );
+                      } else if (col == 2) {
+                        return Text(
+                          formatMoney(trimString(rows[row].currentMonth.toString())),
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            font: [
+                              "PENJUALAN",
+                              "TOTAL",
+                              "HARGA POKOK PENJUALAN",
+                              "HARGA POKOK PENJUALAN",
+                              "HASIL USAHA KOTOR",
+                              "BEBAN OPERASIONAL",
+                              "TOTAL BEBAN OPERASIONAL",
+                              "HASIL USAHA BERSIH",
+                              "PENDAPATAN LAIN-LAIN",
+                              "TOTAL PENDAPATAN LAIN-LAIN",
+                              "SISA HASIL USAHA",
+                            ].any((element) => element == rows[row].uraian)
+                                ? boldFont
+                                : regularFont,
+                          ),
+                        );
+                      } else if (col == 3) {
+                        return Text(
+                          formatMoney(trimString(rows[row].lastMonth.toString())),
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            font: [
+                              "PENJUALAN",
+                              "TOTAL",
+                              "HARGA POKOK PENJUALAN",
+                              "HARGA POKOK PENJUALAN",
+                              "HASIL USAHA KOTOR",
+                              "BEBAN OPERASIONAL",
+                              "TOTAL BEBAN OPERASIONAL",
+                              "HASIL USAHA BERSIH",
+                              "PENDAPATAN LAIN-LAIN",
+                              "TOTAL PENDAPATAN LAIN-LAIN",
+                              "SISA HASIL USAHA",
+                            ].any((element) => element == rows[row].uraian)
+                                ? boldFont
+                                : regularFont,
+                          ),
+                        );
+                      }
+                      return '';
+                    });
+                  }),
                   border: pw.TableBorder.all(),
                   headerStyle: pw.TextStyle(
                     font: boldFont,
                     color: PdfColors.white,
-                    fontSize: 14,
+                    fontSize: 10,
                   ),
                   headerDecoration: const pw.BoxDecoration(
                     color: PdfColor.fromInt(0xFF017260),
                   ),
                   cellStyle: pw.TextStyle(
                     font: regularFont,
-                    fontSize: 12,
+                    fontSize: 8,
                   ),
-                  cellHeight: 30,
+                  cellHeight: 12,
                   columnWidths: {
                     0: const pw.FlexColumnWidth(1),
-                    1: const pw.FlexColumnWidth(2),
-                    2: const pw.FlexColumnWidth(1),
-                    3: const pw.FlexColumnWidth(1),
+                    1: const pw.FlexColumnWidth(3),
+                    2: const pw.FlexColumnWidth(2),
+                    3: const pw.FlexColumnWidth(2),
                   },
                 ),
               ]),

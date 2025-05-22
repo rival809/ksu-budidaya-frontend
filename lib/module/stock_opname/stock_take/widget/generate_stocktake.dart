@@ -28,9 +28,12 @@ generatePdfStockTake({
           trimString(dataRekap.idProduct),
           trimString(dataRekap.nmProduct),
           trimString(dataRekap.divisi),
-          formatMoney(double.tryParse(dataRekap.stocktake ?? "0")?.toInt() ?? 0),
           formatMoney(double.tryParse(dataRekap.stock ?? "0")?.toInt() ?? 0),
+          formatMoney(double.tryParse(dataRekap.totalHargaJualStock ?? "0")?.toInt() ?? 0),
+          formatMoney(double.tryParse(dataRekap.stocktake ?? "0")?.toInt() ?? 0),
+          formatMoney(double.tryParse(dataRekap.totalHargaJualStocktake ?? "0")?.toInt() ?? 0),
           formatMoney(double.tryParse(dataRekap.selisih ?? "0")?.toInt() ?? 0),
+          formatMoney(double.tryParse(dataRekap.selisihHargaJual ?? "0")?.toInt() ?? 0),
           trimString(dataRekap.petugas),
           trimString(dataRekap.isSelisih.toString()),
         ),
@@ -45,8 +48,11 @@ generatePdfStockTake({
         "NAMA PRODUK",
         "DIVISI",
         "STOCK",
-        "SISA",
+        "HARGA JUAL",
+        "STOCKETAKE",
+        "HARGA JUAL",
         "SELISIH",
+        "HARGA JUAL",
         "PETUGAS",
         "KETERANGAN",
       ];
@@ -70,12 +76,18 @@ generatePdfStockTake({
           6: pw.Alignment.center,
           7: pw.Alignment.center,
           8: pw.Alignment.center,
+          9: pw.Alignment.center,
+          10: pw.Alignment.center,
+          11: pw.Alignment.center,
         },
         columnWidths: {
           0: const pw.FixedColumnWidth(26),
           4: const pw.FixedColumnWidth(50),
           5: const pw.FixedColumnWidth(50),
           6: const pw.FixedColumnWidth(50),
+          7: const pw.FixedColumnWidth(50),
+          8: const pw.FixedColumnWidth(50),
+          9: const pw.FixedColumnWidth(50),
         },
         cellAlignments: {
           0: pw.Alignment.center,
@@ -85,8 +97,11 @@ generatePdfStockTake({
           4: pw.Alignment.centerRight,
           5: pw.Alignment.centerRight,
           6: pw.Alignment.centerRight,
-          7: pw.Alignment.centerLeft,
-          8: pw.Alignment.center,
+          7: pw.Alignment.centerRight,
+          8: pw.Alignment.centerRight,
+          9: pw.Alignment.centerRight,
+          10: pw.Alignment.centerLeft,
+          11: pw.Alignment.center,
         },
         headerStyle: pw.TextStyle(
           color: PdfColor.fromHex("#212121"),
@@ -108,7 +123,7 @@ generatePdfStockTake({
         ),
         data: List<List<dynamic>>.generate(listDataPenerimaan.length, (row) {
           return List<dynamic>.generate(itemTitle.length, (col) {
-            if (col == 8) {
+            if (col == 11) {
               return pw.Container(
                 decoration: pw.BoxDecoration(
                   borderRadius: const pw.BorderRadius.all(
@@ -193,8 +208,11 @@ class PdfStockTake {
     this.divisi,
     this.namaProduk,
     this.stock,
-    this.sisa,
+    this.hargaJualStock,
+    this.stocktake,
+    this.hargaJualStocktake,
     this.selisih,
+    this.selisihHargaJual,
     this.petugas,
     this.isSelisih,
   );
@@ -204,8 +222,11 @@ class PdfStockTake {
   final String divisi;
   final String namaProduk;
   final String stock;
-  final String sisa;
+  final String hargaJualStock;
+  final String stocktake;
+  final String hargaJualStocktake;
   final String selisih;
+  final String selisihHargaJual;
   final String petugas;
   final String isSelisih;
 
@@ -222,12 +243,18 @@ class PdfStockTake {
       case 4:
         return stock;
       case 5:
-        return sisa;
+        return hargaJualStock;
       case 6:
-        return selisih;
+        return stocktake;
       case 7:
-        return petugas;
+        return hargaJualStocktake;
       case 8:
+        return selisih;
+      case 9:
+        return selisihHargaJual;
+      case 10:
+        return petugas;
+      case 11:
         return isSelisih;
     }
     return '';
