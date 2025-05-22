@@ -159,15 +159,6 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
         dataCari.addAll({"id_anggota": trimString(supplierNameController.text)});
       }
 
-      if (isAsc == null && field == null) {
-        dataCari.addAll({
-          "sort_order": ["desc"]
-        });
-        dataCari.addAll({
-          "sort_by": ["created_at"]
-        });
-      }
-
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
@@ -176,6 +167,18 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
       if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
+        });
+      }
+
+      if (field == null) {
+        dataCari.removeWhere((key, value) => key == "sort_order");
+        dataCari.removeWhere((key, value) => key == "sort_by");
+
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
         });
       }
 
