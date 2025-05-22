@@ -46,8 +46,22 @@ class ReturController extends State<ReturView> {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
+      }
+      if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
+        });
+      }
+
+      if (field == null) {
+        dataCari.removeWhere((key, value) => key == "sort_order");
+        dataCari.removeWhere((key, value) => key == "sort_by");
+
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
         });
       }
 
@@ -58,8 +72,7 @@ class ReturController extends State<ReturView> {
       return result;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -80,8 +93,7 @@ class ReturController extends State<ReturView> {
   sumTotalHargaBeli() {
     totalHargaBeli = 0;
     for (var i = 0; i < (dataPayloadRetur.details?.length ?? 0); i++) {
-      totalHargaBeli +=
-          double.parse(dataPayloadRetur.details?[i].totalNilaiBeli ?? "0");
+      totalHargaBeli += double.parse(dataPayloadRetur.details?[i].totalNilaiBeli ?? "0");
     }
     dataPayloadRetur.totalNilaiBeli = totalHargaBeli.toString();
   }
@@ -125,8 +137,7 @@ class ReturController extends State<ReturView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -155,8 +166,7 @@ class ReturController extends State<ReturView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -185,8 +195,7 @@ class ReturController extends State<ReturView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }

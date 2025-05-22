@@ -47,15 +47,6 @@ class PembelianController extends State<PembelianView> {
         dataCari.addAll({"keterangan": trimString(pembelianNameController.text)});
       }
 
-      if (isAsc == null && field == null) {
-        dataCari.addAll({
-          "sort_order": ["desc"]
-        });
-        dataCari.addAll({
-          "sort_by": ["created_at"]
-        });
-      }
-
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
@@ -67,6 +58,17 @@ class PembelianController extends State<PembelianView> {
         });
       }
 
+      if (field == null) {
+        dataCari.removeWhere((key, value) => key == "sort_order");
+        dataCari.removeWhere((key, value) => key == "sort_by");
+
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
+        });
+      }
       result = await ApiService.listPembelian(
         data: dataCari,
       ).timeout(const Duration(seconds: 30));

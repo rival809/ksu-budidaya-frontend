@@ -43,8 +43,7 @@ class DataTutupKasir {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (dataTutupKasir != null) {
-      data['data_tutup_kasir'] =
-          dataTutupKasir!.map((v) => v.toJson()).toList();
+      data['data_tutup_kasir'] = dataTutupKasir!.map((v) => v.toJson()).toList();
     }
     if (paging != null) {
       data['paging'] = paging!.toJson();
@@ -122,6 +121,64 @@ class DetailDataTutupKasir {
     data['total_keuntungan'] = totalKeuntungan;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
+    return data;
+  }
+}
+
+class RowDataTutupKasir {
+  String? tgTutupKasir;
+  String? shift;
+  String? namaKasir;
+  String? tunai;
+  String? qris;
+  String? kredit;
+  String? total;
+  String? uangTunai;
+  String? totalNilaiJual;
+  String? totalNilaiBeli;
+  String? totalKeuntungan;
+
+  RowDataTutupKasir({
+    this.tgTutupKasir,
+    this.shift,
+    this.namaKasir,
+    this.tunai,
+    this.qris,
+    this.kredit,
+    this.total,
+    this.uangTunai,
+    this.totalNilaiJual,
+    this.totalNilaiBeli,
+    this.totalKeuntungan,
+  });
+
+  RowDataTutupKasir.fromJson(Map<String, dynamic> json) {
+    tgTutupKasir = json['tg_tutup_kasir'];
+    shift = json['shift'];
+    namaKasir = json['nama_kasir'];
+    tunai = json['tunai'];
+    qris = json['qris'];
+    kredit = json['kredit'];
+    total = json['total'];
+    uangTunai = json['uang_tunai'];
+    totalNilaiJual = json['total_nilai_jual'];
+    totalNilaiBeli = json['total_nilai_beli'];
+    totalKeuntungan = json['total_keuntungan'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['tg_tutup_kasir'] = tgTutupKasir;
+    data['shift'] = shift;
+    data['nama_kasir'] = namaKasir;
+    data['tunai'] = tunai;
+    data['qris'] = qris;
+    data['kredit'] = kredit;
+    data['total'] = total;
+    data['uang_tunai'] = uangTunai;
+    data['total_nilai_jual'] = totalNilaiJual;
+    data['total_nilai_beli'] = totalNilaiBeli;
+    data['total_keuntungan'] = totalKeuntungan;
     return data;
   }
 }

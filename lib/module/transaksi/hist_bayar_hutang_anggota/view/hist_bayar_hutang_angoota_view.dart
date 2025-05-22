@@ -623,7 +623,7 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                           onChangePage: (value) {
                                             controller.page = trimString(value);
                                             controller.update();
-                                            controller.dataFuture =
+                                            controller.dataFutureHistory =
                                                 controller.cariDataHistoryHutangDagang(
                                               isAsc: controller.isAsc,
                                               field: (controller.field == "cash_in" ||
@@ -637,7 +637,7 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                             controller.page = "1";
                                             controller.size = trimString(value);
                                             controller.update();
-                                            controller.dataFuture =
+                                            controller.dataFutureHistory =
                                                 controller.cariDataHistoryHutangDagang(
                                               isAsc: controller.isAsc,
                                               field: (controller.field == "cash_in" ||
@@ -655,7 +655,7 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                               controller.page =
                                                   (int.parse(controller.page) - 1).toString();
                                               controller.update();
-                                              controller.dataFuture =
+                                              controller.dataFutureHistory =
                                                   controller.cariDataHistoryHutangDagang(
                                                 isAsc: controller.isAsc,
                                                 field: (controller.field == "cash_in" ||
@@ -672,7 +672,7 @@ class HistBayarHutangAnggotaView extends StatefulWidget {
                                               controller.page =
                                                   (int.parse(controller.page) + 1).toString();
                                               controller.update();
-                                              controller.dataFuture =
+                                              controller.dataFutureHistory =
                                                   controller.cariDataHistoryHutangDagang(
                                                 isAsc: controller.isAsc,
                                                 field: (controller.field == "cash_in" ||

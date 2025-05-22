@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/beranda/widget/card_dashboard.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -88,14 +89,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     height: 8.0,
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
                                         child: Text(
                                           "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeToday.toString())}",
-                                          style: myTextTheme.displayLarge
-                                              ?.copyWith(
+                                          style: myTextTheme.displayLarge?.copyWith(
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -103,24 +102,18 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                       const SizedBox(
                                         width: 8.0,
                                       ),
-                                      if (controller.resultDashboard.data
-                                              ?.percentage !=
-                                          null)
+                                      if (controller.resultDashboard.data?.percentage != null)
                                         Row(
                                           children: [
                                             SvgPicture.asset(
-                                              isPositive(controller
-                                                          .resultDashboard
-                                                          .data
-                                                          ?.percentage ??
-                                                      0)
+                                              isPositive(
+                                                      controller.resultDashboard.data?.percentage ??
+                                                          0)
                                                   ? iconArrowDropUp
                                                   : iconArrowDropDown,
-                                              colorFilter: isPositive(controller
-                                                          .resultDashboard
-                                                          .data
-                                                          ?.percentage ??
-                                                      0)
+                                              colorFilter: isPositive(
+                                                      controller.resultDashboard.data?.percentage ??
+                                                          0)
                                                   ? colorFilterPrimary
                                                   : colorFilterRed800,
                                               width: 24,
@@ -130,12 +123,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                             ),
                                             Text(
                                               "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
-                                              style: myTextTheme.titleMedium
-                                                  ?.copyWith(
+                                              style: myTextTheme.titleMedium?.copyWith(
                                                 color: isPositive(controller
-                                                            .resultDashboard
-                                                            .data
-                                                            ?.percentage ??
+                                                            .resultDashboard.data?.percentage ??
                                                         0)
                                                     ? primaryColor
                                                     : red800,
@@ -198,14 +188,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     height: 8.0,
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
                                         child: Text(
                                           "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeYesterday.toString())}",
-                                          style: myTextTheme.displayLarge
-                                              ?.copyWith(
+                                          style: myTextTheme.displayLarge?.copyWith(
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -267,14 +255,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                       height: 8.0,
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
                                           child: Text(
                                             "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeToday.toString())}",
-                                            style: myTextTheme.displayLarge
-                                                ?.copyWith(
+                                            style: myTextTheme.displayLarge?.copyWith(
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -282,25 +268,18 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                         const SizedBox(
                                           width: 8.0,
                                         ),
-                                        if (controller.resultDashboard.data
-                                                ?.percentage !=
-                                            null)
+                                        if (controller.resultDashboard.data?.percentage != null)
                                           Row(
                                             children: [
                                               SvgPicture.asset(
                                                 isPositive(controller
-                                                            .resultDashboard
-                                                            .data
-                                                            ?.percentage ??
+                                                            .resultDashboard.data?.percentage ??
                                                         0)
                                                     ? iconArrowDropUp
                                                     : iconArrowDropDown,
-                                                colorFilter: isPositive(
-                                                        controller
-                                                                .resultDashboard
-                                                                .data
-                                                                ?.percentage ??
-                                                            0)
+                                                colorFilter: isPositive(controller
+                                                            .resultDashboard.data?.percentage ??
+                                                        0)
                                                     ? colorFilterPrimary
                                                     : colorFilterRed800,
                                                 width: 24,
@@ -310,12 +289,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                               ),
                                               Text(
                                                 "${formatMoney(controller.resultDashboard.data?.percentage.toString())} %",
-                                                style: myTextTheme.titleMedium
-                                                    ?.copyWith(
+                                                style: myTextTheme.titleMedium?.copyWith(
                                                   color: isPositive(controller
-                                                              .resultDashboard
-                                                              .data
-                                                              ?.percentage ??
+                                                              .resultDashboard.data?.percentage ??
                                                           0)
                                                       ? primaryColor
                                                       : red800,
@@ -380,14 +356,12 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                       height: 8.0,
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
                                           child: Text(
                                             "Rp. ${formatMoney(controller.resultDashboard.data?.totalIncomeYesterday.toString())}",
-                                            style: myTextTheme.displayLarge
-                                                ?.copyWith(
+                                            style: myTextTheme.displayLarge?.copyWith(
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -457,8 +431,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                               items: Year.fromJson(monthData).months,
                               value: Month(
                                 id: controller.monthNow,
-                                month: trimString(
-                                    getNamaMonth(controller.monthNow)),
+                                month: trimString(getNamaMonth(controller.monthNow)),
                               ),
                               onChanged: (value) {
                                 controller.monthNow = value?.id ?? 1;
@@ -476,531 +449,215 @@ class _ContentBerandaState extends State<ContentBeranda> {
                       ScreenTypeLayout.builder(
                         mobile: (p0) => Column(
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: neutralWhite,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: blueGray50,
+                            Row(
+                              children: [
+                                Text(
+                                  "Pendapatan Toko",
+                                  style: myTextTheme.headlineSmall,
                                 ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total Pendapatan",
-                                    style: myTextTheme.bodyLarge?.copyWith(
-                                      color: gray700,
-                                    ),
+                                const SizedBox(
+                                  width: 10.0,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: gray400,
+                                    height: 1,
                                   ),
-                                  const SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                                          style: myTextTheme.displayLarge
-                                              ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      if (controller.resultMonthly.data
-                                              ?.percentageIncome !=
-                                          null)
-                                        Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              isPositive(controller
-                                                          .resultMonthly
-                                                          .data
-                                                          ?.percentageIncome ??
-                                                      0)
-                                                  ? iconArrowDropUp
-                                                  : iconArrowDropDown,
-                                              colorFilter: isPositive(controller
-                                                          .resultMonthly
-                                                          .data
-                                                          ?.percentageIncome ??
-                                                      0)
-                                                  ? colorFilterPrimary
-                                                  : colorFilterRed800,
-                                              width: 24,
-                                            ),
-                                            const SizedBox(
-                                              width: 8.0,
-                                            ),
-                                            Text(
-                                              "${formatMoney(controller.resultMonthly.data?.percentageIncome.toString())} %",
-                                              style: myTextTheme.titleMedium
-                                                  ?.copyWith(
-                                                color: isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageIncome ??
-                                                        0)
-                                                    ? primaryColor
-                                                    : red800,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                             const SizedBox(
                               height: 16.0,
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: neutralWhite,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: blueGray50,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total Pengeluaran",
-                                    style: myTextTheme.bodyLarge?.copyWith(
-                                      color: gray700,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          "Rp. ${formatMoney(controller.resultMonthly.data?.totalExpense.toString())}",
-                                          style: myTextTheme.displayLarge
-                                              ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      if (controller.resultMonthly.data
-                                              ?.percentageExpense !=
-                                          null)
-                                        Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              isPositive(controller
-                                                          .resultMonthly
-                                                          .data
-                                                          ?.percentageExpense ??
-                                                      0)
-                                                  ? iconArrowDropUp
-                                                  : iconArrowDropDown,
-                                              colorFilter: isPositive(controller
-                                                          .resultMonthly
-                                                          .data
-                                                          ?.percentageExpense ??
-                                                      0)
-                                                  ? colorFilterPrimary
-                                                  : colorFilterRed800,
-                                              width: 24,
-                                            ),
-                                            const SizedBox(
-                                              width: 8.0,
-                                            ),
-                                            Text(
-                                              "${formatMoney(controller.resultMonthly.data?.percentageExpense.toString())} %",
-                                              style: myTextTheme.titleMedium
-                                                  ?.copyWith(
-                                                color: isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageExpense ??
-                                                        0)
-                                                    ? primaryColor
-                                                    : red800,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ],
-                              ),
+                            CardDashboard(
+                              label: "Total Penjualan Toko",
+                              tooltip: "Total Penjualan (Harga Jual)",
+                              nominal:
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.penjualan.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanToko?.presentasePenjualan,
                             ),
                             const SizedBox(
                               height: 16.0,
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: neutralWhite,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: blueGray50,
+                            CardDashboard(
+                              label: "Total Keuntungan Toko",
+                              tooltip:
+                                  "Total Penjualan (Harga Jual) - Total Penjualan (Harga Beli)",
+                              nominal:
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.keuntungan.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanToko?.presentaseKeuntungan,
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Pendapatan Koperasi",
+                                  style: myTextTheme.headlineSmall,
                                 ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total Keuntungan",
-                                    style: myTextTheme.bodyLarge?.copyWith(
-                                      color: gray700,
-                                    ),
+                                const SizedBox(
+                                  width: 10.0,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: gray400,
+                                    height: 1,
                                   ),
-                                  const SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          "Rp. ${formatMoney(controller.resultMonthly.data?.totalProfit.toString())}",
-                                          style: myTextTheme.displayLarge
-                                              ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      if (controller.resultMonthly.data
-                                              ?.percentageProfit !=
-                                          null)
-                                        Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              isPositive(controller
-                                                          .resultMonthly
-                                                          .data
-                                                          ?.percentageProfit ??
-                                                      0)
-                                                  ? iconArrowDropUp
-                                                  : iconArrowDropDown,
-                                              colorFilter: isPositive(controller
-                                                          .resultMonthly
-                                                          .data
-                                                          ?.percentageProfit ??
-                                                      0)
-                                                  ? colorFilterPrimary
-                                                  : colorFilterRed800,
-                                              width: 24,
-                                            ),
-                                            const SizedBox(
-                                              width: 8.0,
-                                            ),
-                                            Text(
-                                              "${formatMoney(controller.resultMonthly.data?.percentageProfit.toString())} %",
-                                              style: myTextTheme.titleMedium
-                                                  ?.copyWith(
-                                                color: isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageProfit ??
-                                                        0)
-                                                    ? primaryColor
-                                                    : red700,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            CardDashboard(
+                              label: "Total Pendapatan",
+                              tooltip: "Total Penjualan + Total Pendapatan Lain-lain",
+                              nominal:
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pendapatanKoperasi.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanKoperasi?.presentasePendapatan,
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            CardDashboard(
+                              label: "Total Pengeluaran",
+                              tooltip: "Pembelian Bersih + Total Beban Operasional",
+                              nominal:
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pengeluaranKoperasi.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanKoperasi?.presentasePengeluaran,
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            CardDashboard(
+                              label: "Total Keuntungan",
+                              tooltip: "Pendapatan - Pengeluaran",
+                              nominal:
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.keuntunganKoperasi.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanKoperasi?.presentaseKeuntungan,
                             ),
                           ],
                         ),
-                        desktop: (p0) => Row(
+                        desktop: (p0) => Column(
                           children: [
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: neutralWhite,
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: blueGray50,
+                            Row(
+                              children: [
+                                Text(
+                                  "Pendapatan Toko",
+                                  style: myTextTheme.headlineSmall,
+                                ),
+                                const SizedBox(
+                                  width: 10.0,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: gray400,
+                                    height: 1,
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Total Pendapatan",
-                                      style: myTextTheme.bodyLarge?.copyWith(
-                                        color: gray700,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                                            style: myTextTheme.displayLarge
-                                                ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        if (controller.resultMonthly.data
-                                                ?.percentageIncome !=
-                                            null)
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageIncome ??
-                                                        0)
-                                                    ? iconArrowDropUp
-                                                    : iconArrowDropDown,
-                                                colorFilter: isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageIncome ??
-                                                        0)
-                                                    ? colorFilterPrimary
-                                                    : colorFilterRed800,
-                                                width: 24,
-                                              ),
-                                              const SizedBox(
-                                                width: 8.0,
-                                              ),
-                                              Text(
-                                                "${formatMoney(controller.resultMonthly.data?.percentageIncome.toString())} %",
-                                                style: myTextTheme.titleMedium
-                                                    ?.copyWith(
-                                                  color: isPositive(controller
-                                                              .resultMonthly
-                                                              .data
-                                                              ?.percentageIncome ??
-                                                          0)
-                                                      ? primaryColor
-                                                      : red800,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                )
+                              ],
                             ),
                             const SizedBox(
-                              width: 16.0,
+                              height: 16.0,
                             ),
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: neutralWhite,
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: blueGray50,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CardDashboard(
+                                    label: "Total Penjualan Toko",
+                                    tooltip: "Total Penjualan (Harga Jual)",
+                                    nominal:
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.penjualan.toString())}",
+                                    percentage: controller
+                                        .resultMonthly.data?.pendapatanToko?.presentasePenjualan,
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Total Pengeluaran",
-                                      style: myTextTheme.bodyLarge?.copyWith(
-                                        color: gray700,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            "Rp. ${formatMoney(controller.resultMonthly.data?.totalExpense.toString())}",
-                                            style: myTextTheme.displayLarge
-                                                ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        if (controller.resultMonthly.data
-                                                ?.percentageExpense !=
-                                            null)
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageExpense ??
-                                                        0)
-                                                    ? iconArrowDropUp
-                                                    : iconArrowDropDown,
-                                                colorFilter: isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageExpense ??
-                                                        0)
-                                                    ? colorFilterPrimary
-                                                    : colorFilterRed800,
-                                                width: 24,
-                                              ),
-                                              const SizedBox(
-                                                width: 8.0,
-                                              ),
-                                              Text(
-                                                "${formatMoney(controller.resultMonthly.data?.percentageExpense.toString())} %",
-                                                style: myTextTheme.titleMedium
-                                                    ?.copyWith(
-                                                  color: isPositive(controller
-                                                              .resultMonthly
-                                                              .data
-                                                              ?.percentageExpense ??
-                                                          0)
-                                                      ? primaryColor
-                                                      : red800,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                      ],
-                                    ),
-                                  ],
+                                const SizedBox(
+                                  width: 16.0,
                                 ),
-                              ),
+                                Expanded(
+                                  child: CardDashboard(
+                                    label: "Total Keuntungan Toko",
+                                    tooltip:
+                                        "Total Penjualan (Harga Jual) - Total Penjualan (Harga Beli)",
+                                    nominal:
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.keuntungan.toString())}",
+                                    percentage: controller
+                                        .resultMonthly.data?.pendapatanToko?.presentaseKeuntungan,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            /////Pendapatan Koperasi
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            /////Pendapatan Koperasi
+                            Row(
+                              children: [
+                                Text(
+                                  "Pendapatan Koperasi",
+                                  style: myTextTheme.headlineSmall,
+                                ),
+                                const SizedBox(
+                                  width: 10.0,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: gray400,
+                                    height: 1,
+                                  ),
+                                )
+                              ],
                             ),
                             const SizedBox(
-                              width: 16.0,
+                              height: 16.0,
                             ),
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: neutralWhite,
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: blueGray50,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CardDashboard(
+                                    label: "Total Pendapatan",
+                                    tooltip: "Total Penjualan + Total Pendapatan Lain-lain",
+                                    nominal:
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pendapatanKoperasi.toString())}",
+                                    percentage: controller.resultMonthly.data?.pendapatanKoperasi
+                                        ?.presentasePendapatan,
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Total Keuntungan",
-                                      style: myTextTheme.bodyLarge?.copyWith(
-                                        color: gray700,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            "Rp. ${formatMoney(controller.resultMonthly.data?.totalProfit.toString())}",
-                                            style: myTextTheme.displayLarge
-                                                ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        if (controller.resultMonthly.data
-                                                ?.percentageProfit !=
-                                            null)
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageProfit ??
-                                                        0)
-                                                    ? iconArrowDropUp
-                                                    : iconArrowDropDown,
-                                                colorFilter: isPositive(controller
-                                                            .resultMonthly
-                                                            .data
-                                                            ?.percentageProfit ??
-                                                        0)
-                                                    ? colorFilterPrimary
-                                                    : colorFilterRed800,
-                                                width: 24,
-                                              ),
-                                              const SizedBox(
-                                                width: 8.0,
-                                              ),
-                                              Text(
-                                                "${formatMoney(controller.resultMonthly.data?.percentageProfit.toString())} %",
-                                                style: myTextTheme.titleMedium
-                                                    ?.copyWith(
-                                                  color: isPositive(controller
-                                                              .resultMonthly
-                                                              .data
-                                                              ?.percentageProfit ??
-                                                          0)
-                                                      ? primaryColor
-                                                      : red700,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                      ],
-                                    ),
-                                  ],
+                                const SizedBox(
+                                  width: 16.0,
                                 ),
-                              ),
+                                Expanded(
+                                  child: CardDashboard(
+                                    label: "Total Pengeluaran",
+                                    tooltip: "Pembelian Bersih + Total Beban Operasional",
+                                    nominal:
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pengeluaranKoperasi.toString())}",
+                                    percentage: controller.resultMonthly.data?.pendapatanKoperasi
+                                        ?.presentasePengeluaran,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                                Expanded(
+                                  child: CardDashboard(
+                                    label: "Total Keuntungan",
+                                    tooltip: "Pendapatan - Pengeluaran",
+                                    nominal:
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.keuntunganKoperasi.toString())}",
+                                    percentage: controller.resultMonthly.data?.pendapatanKoperasi
+                                        ?.presentaseKeuntungan,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -1054,29 +711,24 @@ class _ContentBerandaState extends State<ContentBeranda> {
                   future: controller.dataFuture,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const SizedBox(
-                          height: 100, child: ContainerLoadingRole());
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.done) {
+                      return const SizedBox(height: 100, child: ContainerLoadingRole());
+                    } else if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasError) {
                         return const ContainerError();
                       } else if (snapshot.hasData) {
                         List<PlutoRow> rows = [];
                         List<PlutoColumn> columns = [];
                         PenjualanResult result = snapshot.data;
-                        controller.dataListPenjualan =
-                            result.data ?? DataPenjualan();
-                        List<dynamic> listData = controller.dataListPenjualan
-                                .toJson()["data_penjualan"] ??
-                            [];
+                        controller.dataListPenjualan = result.data ?? DataPenjualan();
+                        List<dynamic> listData =
+                            controller.dataListPenjualan.toJson()["data_penjualan"] ?? [];
 
                         if (listData.isNotEmpty) {
                           columns.addAll(
                             List.generate(
                               controller.listPenjualanView.length,
                               (index) {
-                                if (controller.listPenjualanView[index] ==
-                                    "jumlah") {
+                                if (controller.listPenjualanView[index] == "jumlah") {
                                   return PlutoColumn(
                                     width: 75,
                                     backgroundColor: primaryColor,
@@ -1089,8 +741,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     ),
                                   );
                                 }
-                                if (controller.listPenjualanView[index] ==
-                                    "total_nilai_jual") {
+                                if (controller.listPenjualanView[index] == "total_nilai_jual") {
                                   return PlutoColumn(
                                     width: 75,
                                     backgroundColor: primaryColor,
@@ -1103,8 +754,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     ),
                                   );
                                 }
-                                if (controller.listPenjualanView[index] ==
-                                    "total_nilai_beli") {
+                                if (controller.listPenjualanView[index] == "total_nilai_beli") {
                                   return PlutoColumn(
                                     width: 75,
                                     backgroundColor: primaryColor,
@@ -1121,25 +771,19 @@ class _ContentBerandaState extends State<ContentBeranda> {
 
                                       for (var i = 0;
                                           i <
-                                              (controller.dataListPenjualan
-                                                      .dataPenjualan?.length ??
+                                              (controller.dataListPenjualan.dataPenjualan?.length ??
                                                   0);
                                           i++) {
                                         if (trimString(idPenjualan) ==
                                             trimString(controller
-                                                .dataListPenjualan
-                                                .dataPenjualan?[i]
-                                                .idPenjualan)) {
-                                          var hitKeuntungan = double.parse(
-                                                  controller
-                                                          .dataListPenjualan
-                                                          .dataPenjualan?[i]
-                                                          .totalNilaiJual ??
-                                                      "0") -
-                                              double.parse(controller
+                                                .dataListPenjualan.dataPenjualan?[i].idPenjualan)) {
+                                          var hitKeuntungan = double.parse(controller
                                                       .dataListPenjualan
                                                       .dataPenjualan?[i]
-                                                      .totalNilaiBeli ??
+                                                      .totalNilaiJual ??
+                                                  "0") -
+                                              double.parse(controller.dataListPenjualan
+                                                      .dataPenjualan?[i].totalNilaiBeli ??
                                                   "0");
                                           keutungan = hitKeuntungan.toString();
                                         }
@@ -1153,31 +797,22 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                 }
                                 return PlutoColumn(
                                   backgroundColor: primaryColor,
-                                  filterHintText: controller
-                                              .listPenjualanView[index] ==
-                                          "id_penjualan"
-                                      ? "Cari ID Transaksi"
-                                      : controller.listPenjualanView[index] ==
-                                              "nm_anggota"
-                                          ? "Cari Pembeli"
-                                          : controller.listPenjualanView[
-                                                      index] ==
-                                                  "username"
-                                              ? "Cari Kasir"
-                                              : "Cari ${controller.listPenjualanView[index]}",
-                                  title: controller.listPenjualanView[index] ==
-                                          "id_penjualan"
+                                  filterHintText:
+                                      controller.listPenjualanView[index] == "id_penjualan"
+                                          ? "Cari ID Transaksi"
+                                          : controller.listPenjualanView[index] == "nm_anggota"
+                                              ? "Cari Pembeli"
+                                              : controller.listPenjualanView[index] == "username"
+                                                  ? "Cari Kasir"
+                                                  : "Cari ${controller.listPenjualanView[index]}",
+                                  title: controller.listPenjualanView[index] == "id_penjualan"
                                       ? "ID TRANSAKSI"
-                                      : controller.listPenjualanView[index] ==
-                                              "nm_anggota"
+                                      : controller.listPenjualanView[index] == "nm_anggota"
                                           ? "PEMBELI"
-                                          : controller.listPenjualanView[
-                                                      index] ==
-                                                  "username"
+                                          : controller.listPenjualanView[index] == "username"
                                               ? "KASIR"
                                               : convertTitle(
-                                                  controller
-                                                      .listPenjualanView[index],
+                                                  controller.listPenjualanView[index],
                                                 ),
                                   field: controller.listPenjualanView[index],
                                   type: PlutoColumnType.text(),
@@ -1186,8 +821,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                             ),
                           );
 
-                          List<dynamic> listDataWithIndex =
-                              List.generate(listData.length, (index) {
+                          List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
                             return {
                               ...listData[index],
                               'persistentIndex': index + 1,
@@ -1196,8 +830,7 @@ class _ContentBerandaState extends State<ContentBeranda> {
                           rows = listDataWithIndex.map((item) {
                             Map<String, PlutoCell> cells = {};
 
-                            for (String column
-                                in controller.listPenjualanView) {
+                            for (String column in controller.listPenjualanView) {
                               if (item.containsKey(column)) {
                                 cells[column] = PlutoCell(
                                   value: trimStringStrip(
@@ -1223,9 +856,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                   autoSizeMode: PlutoAutoSizeMode.scale,
                                 ),
                                 style: PlutoGridStyleConfig(
-                                  columnTextStyle: myTextTheme.titleSmall
-                                          ?.copyWith(color: neutralWhite) ??
-                                      const TextStyle(),
+                                  columnTextStyle:
+                                      myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                          const TextStyle(),
                                   gridBorderColor: blueGray50,
                                   gridBorderRadius: BorderRadius.circular(8),
                                 ),

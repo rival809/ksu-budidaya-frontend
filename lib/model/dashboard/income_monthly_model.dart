@@ -23,38 +23,90 @@ class IncomeMonthlyResult {
 }
 
 class DataIncomeMonthly {
-  double? totalIncome;
-  double? percentageIncome;
-  double? totalExpense;
-  double? percentageExpense;
-  double? totalProfit;
-  double? percentageProfit;
+  PendapatanToko? pendapatanToko;
+  PendapatanKoperasi? pendapatanKoperasi;
 
-  DataIncomeMonthly(
-      {this.totalIncome,
-      this.percentageIncome,
-      this.totalExpense,
-      this.percentageExpense,
-      this.totalProfit,
-      this.percentageProfit});
+  DataIncomeMonthly({this.pendapatanToko, this.pendapatanKoperasi});
 
   DataIncomeMonthly.fromJson(Map<String, dynamic> json) {
-    totalIncome = json['total_income'];
-    percentageIncome = json['percentage_income'];
-    totalExpense = json['total_expense'];
-    percentageExpense = json['percentage_expense'];
-    totalProfit = json['total_profit'];
-    percentageProfit = json['percentage_profit'];
+    pendapatanToko =
+        json['pendapatan_toko'] != null ? PendapatanToko.fromJson(json['pendapatan_toko']) : null;
+    pendapatanKoperasi = json['pendapatan_koperasi'] != null
+        ? PendapatanKoperasi.fromJson(json['pendapatan_koperasi'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['total_income'] = totalIncome;
-    data['percentage_income'] = percentageIncome;
-    data['total_expense'] = totalExpense;
-    data['percentage_expense'] = percentageExpense;
-    data['total_profit'] = totalProfit;
-    data['percentage_profit'] = percentageProfit;
+    if (pendapatanToko != null) {
+      data['pendapatan_toko'] = pendapatanToko!.toJson();
+    }
+    if (pendapatanKoperasi != null) {
+      data['pendapatan_koperasi'] = pendapatanKoperasi!.toJson();
+    }
+    return data;
+  }
+}
+
+class PendapatanToko {
+  double? penjualan;
+  double? presentasePenjualan;
+  double? keuntungan;
+  double? presentaseKeuntungan;
+
+  PendapatanToko(
+      {this.penjualan, this.presentasePenjualan, this.keuntungan, this.presentaseKeuntungan});
+
+  PendapatanToko.fromJson(Map<String, dynamic> json) {
+    penjualan = json['penjualan'];
+    presentasePenjualan = json['presentase_penjualan'];
+    keuntungan = json['keuntungan'];
+    presentaseKeuntungan = json['presentase_keuntungan'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['penjualan'] = penjualan;
+    data['presentase_penjualan'] = presentasePenjualan;
+    data['keuntungan'] = keuntungan;
+    data['presentase_keuntungan'] = presentaseKeuntungan;
+    return data;
+  }
+}
+
+class PendapatanKoperasi {
+  double? pendapatanKoperasi;
+  double? presentasePendapatan;
+  double? pengeluaranKoperasi;
+  double? presentasePengeluaran;
+  double? keuntunganKoperasi;
+  double? presentaseKeuntungan;
+
+  PendapatanKoperasi(
+      {this.pendapatanKoperasi,
+      this.presentasePendapatan,
+      this.pengeluaranKoperasi,
+      this.presentasePengeluaran,
+      this.keuntunganKoperasi,
+      this.presentaseKeuntungan});
+
+  PendapatanKoperasi.fromJson(Map<String, dynamic> json) {
+    pendapatanKoperasi = json['pendapatan_koperasi'];
+    presentasePendapatan = json['presentase_pendapatan'];
+    pengeluaranKoperasi = json['pengeluaran_koperasi'];
+    presentasePengeluaran = json['presentase_pengeluaran'];
+    keuntunganKoperasi = json['keuntungan_koperasi'];
+    presentaseKeuntungan = json['presentase_keuntungan'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['pendapatan_koperasi'] = pendapatanKoperasi;
+    data['presentase_pendapatan'] = presentasePendapatan;
+    data['pengeluaran_koperasi'] = pengeluaranKoperasi;
+    data['presentase_pengeluaran'] = presentasePengeluaran;
+    data['keuntungan_koperasi'] = keuntunganKoperasi;
+    data['presentase_keuntungan'] = presentaseKeuntungan;
     return data;
   }
 }

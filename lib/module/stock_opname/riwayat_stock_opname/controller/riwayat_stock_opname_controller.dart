@@ -48,24 +48,26 @@ class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
         dataCari.addAll({"nm_product": trimString(supplierNameController.text)});
       }
 
-      if (isAsc == null && field == null) {
-        dataCari.addAll({
-          "sort_order": ["desc"]
-        });
-        dataCari.addAll({
-          "sort_by": ["created_at"]
-        });
-      }
-
       if (isAsc != null) {
         dataCari.addAll({
           "sort_order": [isAsc == true ? "asc" : "desc"]
         });
       }
-
       if (field != null) {
         dataCari.addAll({
           "sort_by": [field]
+        });
+      }
+
+      if (field == null) {
+        dataCari.removeWhere((key, value) => key == "sort_order");
+        dataCari.removeWhere((key, value) => key == "sort_by");
+
+        dataCari.addAll({
+          "sort_order": ["desc"]
+        });
+        dataCari.addAll({
+          "sort_by": ["created_at"]
         });
       }
 
