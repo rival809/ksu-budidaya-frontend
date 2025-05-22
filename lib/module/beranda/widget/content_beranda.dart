@@ -473,8 +473,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                               label: "Total Penjualan Toko",
                               tooltip: "Total Penjualan (Harga Jual)",
                               nominal:
-                                  "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                              percentage: controller.resultMonthly.data?.percentageIncome,
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.penjualan.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanToko?.presentasePenjualan,
                             ),
                             const SizedBox(
                               height: 16.0,
@@ -484,8 +485,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                               tooltip:
                                   "Total Penjualan (Harga Jual) - Total Penjualan (Harga Beli)",
                               nominal:
-                                  "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                              percentage: controller.resultMonthly.data?.percentageIncome,
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.keuntungan.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanToko?.presentaseKeuntungan,
                             ),
                             const SizedBox(
                               height: 16.0,
@@ -514,8 +516,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                               label: "Total Pendapatan",
                               tooltip: "Total Penjualan + Total Pendapatan Lain-lain",
                               nominal:
-                                  "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                              percentage: controller.resultMonthly.data?.percentageIncome,
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pendapatanKoperasi.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanKoperasi?.presentasePendapatan,
                             ),
                             const SizedBox(
                               height: 16.0,
@@ -524,8 +527,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                               label: "Total Pengeluaran",
                               tooltip: "Pembelian Bersih + Total Beban Operasional",
                               nominal:
-                                  "Rp. ${formatMoney(controller.resultMonthly.data?.totalExpense.toString())}",
-                              percentage: controller.resultMonthly.data?.percentageExpense,
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pengeluaranKoperasi.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanKoperasi?.presentasePengeluaran,
                             ),
                             const SizedBox(
                               height: 16.0,
@@ -534,8 +538,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                               label: "Total Keuntungan",
                               tooltip: "Pendapatan - Pengeluaran",
                               nominal:
-                                  "Rp. ${formatMoney(controller.resultMonthly.data?.totalProfit.toString())}",
-                              percentage: controller.resultMonthly.data?.percentageProfit,
+                                  "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.keuntunganKoperasi.toString())}",
+                              percentage: controller
+                                  .resultMonthly.data?.pendapatanKoperasi?.presentaseKeuntungan,
                             ),
                           ],
                         ),
@@ -568,8 +573,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     label: "Total Penjualan Toko",
                                     tooltip: "Total Penjualan (Harga Jual)",
                                     nominal:
-                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                                    percentage: controller.resultMonthly.data?.percentageIncome,
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.penjualan.toString())}",
+                                    percentage: controller
+                                        .resultMonthly.data?.pendapatanToko?.presentasePenjualan,
                                   ),
                                 ),
                                 const SizedBox(
@@ -581,8 +587,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     tooltip:
                                         "Total Penjualan (Harga Jual) - Total Penjualan (Harga Beli)",
                                     nominal:
-                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                                    percentage: controller.resultMonthly.data?.percentageIncome,
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanToko?.keuntungan.toString())}",
+                                    percentage: controller
+                                        .resultMonthly.data?.pendapatanToko?.presentaseKeuntungan,
                                   ),
                                 ),
                               ],
@@ -619,8 +626,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     label: "Total Pendapatan",
                                     tooltip: "Total Penjualan + Total Pendapatan Lain-lain",
                                     nominal:
-                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalIncome.toString())}",
-                                    percentage: controller.resultMonthly.data?.percentageIncome,
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pendapatanKoperasi.toString())}",
+                                    percentage: controller.resultMonthly.data?.pendapatanKoperasi
+                                        ?.presentasePendapatan,
                                   ),
                                 ),
                                 const SizedBox(
@@ -631,8 +639,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     label: "Total Pengeluaran",
                                     tooltip: "Pembelian Bersih + Total Beban Operasional",
                                     nominal:
-                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalExpense.toString())}",
-                                    percentage: controller.resultMonthly.data?.percentageExpense,
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.pengeluaranKoperasi.toString())}",
+                                    percentage: controller.resultMonthly.data?.pendapatanKoperasi
+                                        ?.presentasePengeluaran,
                                   ),
                                 ),
                                 const SizedBox(
@@ -643,8 +652,9 @@ class _ContentBerandaState extends State<ContentBeranda> {
                                     label: "Total Keuntungan",
                                     tooltip: "Pendapatan - Pengeluaran",
                                     nominal:
-                                        "Rp. ${formatMoney(controller.resultMonthly.data?.totalProfit.toString())}",
-                                    percentage: controller.resultMonthly.data?.percentageProfit,
+                                        "Rp. ${formatMoney(controller.resultMonthly.data?.pendapatanKoperasi?.keuntunganKoperasi.toString())}",
+                                    percentage: controller.resultMonthly.data?.pendapatanKoperasi
+                                        ?.presentaseKeuntungan,
                                   ),
                                 ),
                               ],

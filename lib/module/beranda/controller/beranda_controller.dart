@@ -8,13 +8,13 @@ class BerandaController extends State<BerandaView> {
   Future<dynamic>? dataFuture;
 
   getReferences() {
-    // GlobalReference().roleReference();
-    // GlobalReference().supplierReference();
-    // GlobalReference().divisiReference();
-    // GlobalReference().anggotaReference();
-    // GlobalReference().cashReference();
-    // GlobalReference().productReference();
-    // GlobalReference().userReference();
+    GlobalReference().roleReference();
+    GlobalReference().supplierReference();
+    GlobalReference().divisiReference();
+    GlobalReference().anggotaReference();
+    GlobalReference().cashReference();
+    GlobalReference().productReference();
+    GlobalReference().userReference();
   }
 
   IncomeDashboardResult resultDashboard = IncomeDashboardResult();
