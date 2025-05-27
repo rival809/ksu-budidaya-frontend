@@ -18,9 +18,7 @@ class DetailTransaksiView extends StatefulWidget {
           controller: ScrollController(),
           child: Container(
             color: neutralWhite,
-            height: MediaQuery.of(context).size.height -
-                AppBar().preferredSize.height -
-                16,
+            height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 16,
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
@@ -32,22 +30,22 @@ class DetailTransaksiView extends StatefulWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            DetailDataPenjualan? dataPenjualan = controller
-                                .result.data?.dataPenjualan
-                                ?.firstWhere(
-                              (element) =>
-                                  trimString(element.idPenjualan) ==
-                                  trimString(controller.widget.idPenjualan),
-                            );
-                            router.go(
-                              Uri(
-                                path: "/koperasi/anggota/pembayaran-hutang",
-                                queryParameters: {
-                                  'id': trimString(dataPenjualan?.idAnggota)
-                                },
-                              ).toString(),
-                            );
-                            // Get.back();
+                            // DetailDataPenjualan? dataPenjualan = controller
+                            //     .result.data?.dataPenjualan
+                            //     ?.firstWhere(
+                            //   (element) =>
+                            //       trimString(element.idPenjualan) ==
+                            //       trimString(controller.widget.idPenjualan),
+                            // );
+                            // router.go(
+                            //   Uri(
+                            //     path: "/koperasi/anggota/pembayaran-hutang",
+                            //     queryParameters: {
+                            //       'id': trimString(dataPenjualan?.idAnggota)
+                            //     },
+                            //   ).toString(),
+                            // );
+                            Get.back();
                           },
                           child: SvgPicture.asset(
                             iconChevronLeft,
@@ -79,20 +77,14 @@ class DetailTransaksiView extends StatefulWidget {
                                 Container(
                                   // height: 300,
                                   constraints: BoxConstraints(
-                                    maxHeight:
-                                        MediaQuery.of(context).size.height -
-                                            310,
+                                    maxHeight: MediaQuery.of(context).size.height - 310,
                                   ),
                                   child: ListView.builder(
-                                    itemCount: controller
-                                            .dataPenjualan.details?.length ??
-                                        0,
+                                    itemCount: controller.dataPenjualan.details?.length ?? 0,
                                     shrinkWrap: true,
                                     physics: const ScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      if (controller
-                                              .dataPenjualan.details?.isEmpty ??
-                                          true) {
+                                      if (controller.dataPenjualan.details?.isEmpty ?? true) {
                                         return Container();
                                       } else {
                                         return BodyPenjualanDetail(
@@ -131,24 +123,16 @@ class DetailTransaksiView extends StatefulWidget {
                                     Container(
                                       // height: 300,
                                       constraints: BoxConstraints(
-                                        maxHeight:
-                                            MediaQuery.of(context).size.height -
-                                                310,
+                                        maxHeight: MediaQuery.of(context).size.height - 310,
                                       ),
                                       child: ListView.builder(
-                                        itemCount: controller.dataPenjualan
-                                                .details?.length ??
-                                            0,
+                                        itemCount: controller.dataPenjualan.details?.length ?? 0,
                                         shrinkWrap: true,
                                         physics: const ScrollPhysics(),
                                         itemBuilder: (context, index) {
-                                          if (controller.dataPenjualan.details
-                                                  ?.isEmpty ??
-                                              true) {
+                                          if (controller.dataPenjualan.details?.isEmpty ?? true) {
                                             return Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
+                                              width: MediaQuery.of(context).size.width,
                                               decoration: const BoxDecoration(
                                                 border: Border(
                                                   left: BorderSide(
@@ -161,13 +145,11 @@ class DetailTransaksiView extends StatefulWidget {
                                                   ),
                                                 ),
                                               ),
-                                              padding:
-                                                  const EdgeInsets.all(24.0),
+                                              padding: const EdgeInsets.all(24.0),
                                               child: Center(
                                                 child: Text(
                                                   "Silakan Tambahkan Produk",
-                                                  style: myTextTheme.bodyMedium
-                                                      ?.copyWith(
+                                                  style: myTextTheme.bodyMedium?.copyWith(
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                                 ),

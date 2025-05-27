@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
+import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
@@ -1463,6 +1464,27 @@ class ApiService {
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
         return StockTakeResult.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listStockTake');
+    }
+  }
+
+  static Future<DetailStockTakeResult> detailStockTake({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stock/detail-stock-take",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailStockTakeResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }

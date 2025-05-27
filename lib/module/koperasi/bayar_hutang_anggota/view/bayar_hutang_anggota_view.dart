@@ -20,9 +20,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
           controller: ScrollController(),
           child: Container(
             color: neutralWhite,
-            height: MediaQuery.of(context).size.height -
-                AppBar().preferredSize.height -
-                16,
+            height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 16,
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
@@ -82,8 +80,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
                           ),
                           OneData(
                             title: "Nama Anggota",
-                            subtitle: getNamaAnggota(
-                                idAnggota: controller.widget.idAnggota),
+                            subtitle: getNamaAnggota(idAnggota: controller.widget.idAnggota),
                           ),
                         ],
                       ),
@@ -102,23 +99,19 @@ class BayarHutangAnggotaView extends StatefulWidget {
                         controller.onSwitchStep("2");
                       },
                       textStep2: "Transaksi",
-                      step3: (UserDatabase.userDatabase.data?.roleData
-                                  ?.stsPembayaranHutang ==
-                              true)
+                      step3: (UserDatabase.userDatabase.data?.roleData?.stsPembayaranHutang == true)
                           ? controller.step3
                           : null,
-                      onTapStep3: (UserDatabase.userDatabase.data?.roleData
-                                  ?.stsPembayaranHutang ==
-                              true)
-                          ? () {
-                              controller.onSwitchStep("3");
-                            }
-                          : null,
-                      textStep3: (UserDatabase.userDatabase.data?.roleData
-                                  ?.stsPembayaranHutang ==
-                              true)
-                          ? "Hutang"
-                          : null,
+                      onTapStep3:
+                          (UserDatabase.userDatabase.data?.roleData?.stsPembayaranHutang == true)
+                              ? () {
+                                  controller.onSwitchStep("3");
+                                }
+                              : null,
+                      textStep3:
+                          (UserDatabase.userDatabase.data?.roleData?.stsPembayaranHutang == true)
+                              ? "Hutang"
+                              : null,
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -126,13 +119,10 @@ class BayarHutangAnggotaView extends StatefulWidget {
                     if (controller.step1)
                       FutureBuilder(
                         future: controller.dataFuture,
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
                             return const ContainerLoadingRole();
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.done) {
+                          } else if (snapshot.connectionState == ConnectionState.done) {
                             if (snapshot.hasError) {
                               return const ContainerError();
                             } else if (snapshot.hasData) {
@@ -152,26 +142,20 @@ class BayarHutangAnggotaView extends StatefulWidget {
                               final anggotaKey = GlobalKey<FormState>();
 
                               if (result.success == true) {
-                                dataEdit = DataDetailAnggota.fromJson(
-                                    result.data?.toJson() ?? {});
-                                textController[0].text =
-                                    trimString(dataEdit.idAnggota);
-                                textController[1].text =
-                                    trimString(dataEdit.nmAnggota);
-                                textController[2].text =
-                                    trimString(dataEdit.noWa);
-                                textController[3].text = trimString(
-                                    formatMoney(dataEdit.limitPinjaman));
-                                textController[4].text =
-                                    trimString(dataEdit.alamat);
+                                dataEdit = DataDetailAnggota.fromJson(result.data?.toJson() ?? {});
+                                textController[0].text = trimString(dataEdit.idAnggota);
+                                textController[1].text = trimString(dataEdit.nmAnggota);
+                                textController[2].text = trimString(dataEdit.noWa);
+                                textController[3].text =
+                                    trimString(formatMoney(dataEdit.limitPinjaman));
+                                textController[4].text = trimString(dataEdit.alamat);
 
                                 return SingleChildScrollView(
                                   controller: ScrollController(),
                                   child: Form(
                                     key: anggotaKey,
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         StaggeredGrid.count(
                                           crossAxisSpacing: 16,
@@ -181,60 +165,47 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                             BaseForm(
                                               label: "Nama",
                                               hintText: "Masukkan Nama",
-                                              textEditingController:
-                                                  textController[1],
+                                              textEditingController: textController[1],
                                               onChanged: (value) {
-                                                dataEdit.nmAnggota =
-                                                    trimString(value);
+                                                dataEdit.nmAnggota = trimString(value);
                                               },
-                                              validator: Validatorless.required(
-                                                  "Data Wajib Diisi"),
+                                              validator: Validatorless.required("Data Wajib Diisi"),
                                             ),
                                             BaseForm(
                                               label: "No. Whatsapp",
                                               hintText: "Masukkan No. Whatsapp",
-                                              textEditingController:
-                                                  textController[2],
-                                              validator: Validatorless.required(
-                                                  "Data Wajib Diisi"),
+                                              textEditingController: textController[2],
+                                              validator: Validatorless.required("Data Wajib Diisi"),
                                               textInputFormater: [
-                                                FilteringTextInputFormatter
-                                                    .digitsOnly,
+                                                FilteringTextInputFormatter.digitsOnly,
                                               ],
                                               onChanged: (value) {
-                                                dataEdit.noWa =
-                                                    trimString(value);
+                                                dataEdit.noWa = trimString(value);
                                               },
                                             ),
                                             BaseForm(
                                               prefix: const BasePrefixRupiah(),
                                               label: "Limit ",
                                               hintText: "Masukkan Limit ",
-                                              textEditingController:
-                                                  textController[3],
-                                              validator: Validatorless.required(
-                                                  "Data Wajib Diisi"),
+                                              textEditingController: textController[3],
+                                              validator: Validatorless.required("Data Wajib Diisi"),
                                               textInputFormater: [
                                                 ThousandsFormatter(),
-                                                FilteringTextInputFormatter
-                                                    .allow(RegExp(r'[0-9.]')),
+                                                FilteringTextInputFormatter.allow(
+                                                    RegExp(r'[0-9.]')),
                                               ],
                                               onChanged: (value) {
                                                 dataEdit.limitPinjaman =
-                                                    removeComma(
-                                                        trimString(value));
+                                                    removeComma(trimString(value));
                                               },
                                             ),
                                             BaseForm(
                                               label: "Alamat",
                                               hintText: "Masukkan Alamat",
-                                              validator: Validatorless.required(
-                                                  "Data Wajib Diisi"),
-                                              textEditingController:
-                                                  textController[4],
+                                              validator: Validatorless.required("Data Wajib Diisi"),
+                                              textEditingController: textController[4],
                                               onChanged: (value) {
-                                                dataEdit.alamat =
-                                                    trimString(value);
+                                                dataEdit.alamat = trimString(value);
                                               },
                                             ),
                                           ],
@@ -259,80 +230,52 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                               child: BasePrimaryButton(
                                                 text: "Simpan",
                                                 onPressed: (UserDatabase
-                                                            .userDatabase
-                                                            .data
-                                                            ?.roleData
-                                                            ?.idRole !=
+                                                            .userDatabase.data?.roleData?.idRole !=
                                                         "ROLE002")
                                                     ? () async {
-                                                        if (anggotaKey
-                                                            .currentState!
-                                                            .validate()) {
-                                                          DataMap payload =
-                                                              dataEdit.toJson();
+                                                        if (anggotaKey.currentState!.validate()) {
+                                                          DataMap payload = dataEdit.toJson();
                                                           payload.removeWhere(
-                                                            (key, value) =>
-                                                                key ==
-                                                                "created_at",
+                                                            (key, value) => key == "created_at",
                                                           );
                                                           payload.removeWhere(
-                                                            (key, value) =>
-                                                                key ==
-                                                                "updated_at",
+                                                            (key, value) => key == "updated_at",
                                                           );
                                                           payload.removeWhere(
-                                                            (key, value) =>
-                                                                key == "hutang",
+                                                            (key, value) => key == "hutang",
                                                           );
 
                                                           showCircleDialogLoading();
                                                           try {
-                                                            AnggotaResult
-                                                                result =
-                                                                await ApiService
-                                                                    .updateAnggota(
+                                                            AnggotaResult result =
+                                                                await ApiService.updateAnggota(
                                                               data: payload,
-                                                            ).timeout(
-                                                                    const Duration(
-                                                                        seconds:
-                                                                            30));
+                                                            ).timeout(const Duration(seconds: 30));
 
-                                                            Navigator.pop(
-                                                                context);
+                                                            Navigator.pop(context);
 
-                                                            if (result
-                                                                    .success ==
-                                                                true) {
+                                                            if (result.success == true) {
                                                               showDialogBase(
-                                                                content:
-                                                                    const DialogBerhasil(),
+                                                                content: const DialogBerhasil(),
                                                               );
 
-                                                              controller
-                                                                      .dataFuture =
-                                                                  controller
-                                                                      .cariDetailAnggota();
-                                                              controller
-                                                                  .update();
+                                                              controller.dataFuture =
+                                                                  controller.cariDetailAnggota();
+                                                              controller.update();
                                                             }
                                                           } catch (e) {
-                                                            Navigator.pop(
-                                                                context);
+                                                            Navigator.pop(context);
 
                                                             if (e
                                                                 .toString()
-                                                                .contains(
-                                                                    "TimeoutException")) {
+                                                                .contains("TimeoutException")) {
                                                               showInfoDialog(
                                                                   "Tidak Mendapat Respon Dari Server! Silakan coba lagi.",
                                                                   context);
                                                             } else {
                                                               showInfoDialog(
-                                                                  e
-                                                                      .toString()
-                                                                      .replaceAll(
-                                                                          "Exception: ",
-                                                                          ""),
+                                                                  e.toString().replaceAll(
+                                                                      "Exception: ", ""),
                                                                   context);
                                                             }
                                                           }
@@ -365,23 +308,17 @@ class BayarHutangAnggotaView extends StatefulWidget {
                     if (controller.step2)
                       FutureBuilder(
                         future: controller.dataFuture,
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
                             return const ContainerLoadingRole();
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.done) {
+                          } else if (snapshot.connectionState == ConnectionState.done) {
                             if (snapshot.hasError) {
                               return const ContainerError();
                             } else if (snapshot.hasData) {
                               PenjualanResult result = snapshot.data;
-                              controller.dataListPenjualan =
-                                  result.data ?? DataPenjualan();
-                              List<dynamic> listData = controller
-                                      .dataListPenjualan
-                                      .toJson()["data_penjualan"] ??
-                                  [];
+                              controller.dataListPenjualan = result.data ?? DataPenjualan();
+                              List<dynamic> listData =
+                                  controller.dataListPenjualan.toJson()["data_penjualan"] ?? [];
 
                               if (listData.isNotEmpty) {
                                 List<PlutoRow> rows = [];
@@ -401,34 +338,30 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                           title: convertTitle(
                                             controller.listPenjualanView[index],
                                           ),
-                                          field: controller
-                                              .listPenjualanView[index],
+                                          field: controller.listPenjualanView[index],
                                           type: PlutoColumnType.text(),
                                           renderer: (rendererContext) {
                                             Map<String, dynamic> dataRow =
                                                 rendererContext.row.toJson();
                                             return CardLabel(
                                               cardColor: yellow50,
-                                              cardTitle:
-                                                  dataRow["jenis_pembayaran"]
-                                                      .toString()
-                                                      .toUpperCase(),
+                                              cardTitle: dataRow["jenis_pembayaran"]
+                                                  .toString()
+                                                  .toUpperCase(),
                                               cardTitleColor: yellow900,
                                               cardBorderColor: yellow50,
                                             );
                                           },
                                         );
                                       }
-                                      if (controller.listPenjualanView[index] ==
-                                          "jumlah") {
+                                      if (controller.listPenjualanView[index] == "jumlah") {
                                         return PlutoColumn(
                                           width: 75,
                                           backgroundColor: primaryColor,
                                           filterHintText:
                                               "Cari ${controller.listPenjualanView[index]}",
                                           title: "Qnt",
-                                          field: controller
-                                              .listPenjualanView[index],
+                                          field: controller.listPenjualanView[index],
                                           type: PlutoColumnType.number(
                                             locale: "id",
                                           ),
@@ -441,26 +374,50 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                         title: convertTitle(
                                           controller.listPenjualanView[index],
                                         ),
-                                        field:
-                                            controller.listPenjualanView[index],
-                                        type: (controller.listPenjualanView[
-                                                        index] ==
+                                        field: controller.listPenjualanView[index],
+                                        type: (controller.listPenjualanView[index] ==
                                                     "total_nilai_beli" ||
-                                                controller.listPenjualanView[
-                                                        index] ==
+                                                controller.listPenjualanView[index] ==
                                                     "total_nilai_jual" ||
-                                                controller.listPenjualanView[
-                                                        index] ==
-                                                    "jumlah")
+                                                controller.listPenjualanView[index] == "jumlah")
                                             ? PlutoColumnType.number(
                                                 locale: "id",
                                               )
-                                            : (controller.listPenjualanView[
-                                                        index] ==
+                                            : (controller.listPenjualanView[index] ==
                                                     "tg_pembelian")
                                                 ? PlutoColumnType.date()
                                                 : PlutoColumnType.text(),
                                       );
+                                    },
+                                  ),
+                                );
+
+                                columns.add(
+                                  PlutoColumn(
+                                    width: 150,
+                                    backgroundColor: primaryColor,
+                                    frozen: PlutoColumnFrozen.end,
+                                    title: "AKSI",
+                                    field: "Aksi",
+                                    filterHintText: "",
+                                    type: PlutoColumnType.text(),
+                                    enableEditingMode: false,
+                                    renderer: (rendererContext) {
+                                      Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                                      return BaseSecondaryButton(
+                                          onPressed: () {
+                                            router.push(
+                                              Uri(
+                                                path: "/koperasi/anggota/pembayaran-hutang/detail",
+                                                queryParameters: {
+                                                  'id':
+                                                      trimString(dataRow["id_penjualan"].toString())
+                                                },
+                                              ).toString(),
+                                            );
+                                          },
+                                          text: "Detail",
+                                          suffixIcon: iconChevronDown);
                                     },
                                   ),
                                 );
@@ -479,8 +436,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                     value: null,
                                   );
 
-                                  for (String column
-                                      in controller.listPenjualanView) {
+                                  for (String column in controller.listPenjualanView) {
                                     if (item.containsKey(column)) {
                                       cells[column] = PlutoCell(
                                         value: column == "id_supplier"
@@ -510,15 +466,13 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                     ),
                                     mode: PlutoGridMode.select,
                                     onLoaded: (event) {
-                                      event.stateManager
-                                          .setShowColumnFilter(true);
+                                      event.stateManager.setShowColumnFilter(true);
                                     },
                                     onSorted: (event) {
                                       if (event.column.field != "Aksi") {
                                         controller.isAsc = !controller.isAsc;
                                         controller.update();
-                                        controller.dataFuture =
-                                            controller.cariDataPenjualan(
+                                        controller.dataFuture = controller.cariDataPenjualan(
                                           isAsc: controller.isAsc,
                                           field: event.column.field,
                                         );
@@ -526,18 +480,15 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                       }
                                     },
                                     configuration: PlutoGridConfiguration(
-                                      columnSize:
-                                          const PlutoGridColumnSizeConfig(
+                                      columnSize: const PlutoGridColumnSizeConfig(
                                         autoSizeMode: PlutoAutoSizeMode.scale,
                                       ),
                                       style: PlutoGridStyleConfig(
-                                        columnTextStyle: myTextTheme.titleSmall
-                                                ?.copyWith(
-                                                    color: neutralWhite) ??
-                                            const TextStyle(),
+                                        columnTextStyle:
+                                            myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                                const TextStyle(),
                                         gridBorderColor: blueGray50,
-                                        gridBorderRadius:
-                                            BorderRadius.circular(8),
+                                        gridBorderRadius: BorderRadius.circular(8),
                                       ),
                                       localeText: configLocale,
                                     ),
@@ -547,48 +498,39 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                       return FooterTableWidget(
                                         page: controller.page,
                                         itemPerpage: controller.size,
-                                        maxPage: controller.dataListPenjualan
-                                                .paging?.totalPage ??
-                                            0,
+                                        maxPage:
+                                            controller.dataListPenjualan.paging?.totalPage ?? 0,
                                         onChangePage: (value) {
                                           controller.page = trimString(value);
                                           controller.update();
-                                          controller.dataFuture =
-                                              controller.cariDataPenjualan();
+                                          controller.dataFuture = controller.cariDataPenjualan();
                                           controller.update();
                                         },
                                         onChangePerPage: (value) {
                                           controller.page = "1";
                                           controller.size = trimString(value);
                                           controller.update();
-                                          controller.dataFuture =
-                                              controller.cariDataPenjualan();
+                                          controller.dataFuture = controller.cariDataPenjualan();
                                           controller.update();
                                         },
-                                        totalRow: controller.dataListPenjualan
-                                                .paging?.totalItem ??
-                                            0,
+                                        totalRow:
+                                            controller.dataListPenjualan.paging?.totalItem ?? 0,
                                         onPressLeft: () {
                                           if (int.parse(controller.page) > 1) {
                                             controller.page =
-                                                (int.parse(controller.page) - 1)
-                                                    .toString();
+                                                (int.parse(controller.page) - 1).toString();
                                             controller.update();
-                                            controller.dataFuture =
-                                                controller.cariDataPenjualan();
+                                            controller.dataFuture = controller.cariDataPenjualan();
                                             controller.update();
                                           }
                                         },
                                         onPressRight: () {
                                           if (int.parse(controller.page) <
-                                              (result.data?.paging?.totalPage ??
-                                                  0)) {
+                                              (result.data?.paging?.totalPage ?? 0)) {
                                             controller.page =
-                                                (int.parse(controller.page) + 1)
-                                                    .toString();
+                                                (int.parse(controller.page) + 1).toString();
                                             controller.update();
-                                            controller.dataFuture =
-                                                controller.cariDataPenjualan();
+                                            controller.dataFuture = controller.cariDataPenjualan();
                                             controller.update();
                                           }
                                         },
@@ -611,29 +553,22 @@ class BayarHutangAnggotaView extends StatefulWidget {
                           }
                         },
                       ),
-                    if (UserDatabase
-                            .userDatabase.data?.roleData?.stsPembayaranHutang ==
-                        true)
+                    if (UserDatabase.userDatabase.data?.roleData?.stsPembayaranHutang == true)
                       if (controller.step3)
                         FutureBuilder(
                           future: controller.dataFuture,
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
                               return const ContainerLoadingRole();
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.done) {
+                            } else if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
                                 return const ContainerError();
                               } else if (snapshot.hasData) {
                                 HutangAnggotaResult result = snapshot.data;
-                                controller.dataHutangAnggota =
-                                    result.data ?? DataHutangAnggota();
-                                List<dynamic> listData = controller
-                                        .dataHutangAnggota
-                                        .toJson()["data_hutang_anggota"] ??
-                                    [];
+                                controller.dataHutangAnggota = result.data ?? DataHutangAnggota();
+                                List<dynamic> listData =
+                                    controller.dataHutangAnggota.toJson()["data_hutang_anggota"] ??
+                                        [];
                                 if (listData.isNotEmpty) {
                                   List<PlutoRow> rows = [];
                                   List<PlutoColumn> columns = [];
@@ -647,8 +582,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                       type: PlutoColumnType.text(),
                                       enableEditingMode: false,
                                       renderer: (rendererContext) {
-                                        final rowIndex =
-                                            rendererContext.rowIdx + 1;
+                                        final rowIndex = rendererContext.rowIdx + 1;
                                         return Text(
                                           rendererContext.cell.value.toString(),
                                           style: myTextTheme.bodyMedium,
@@ -665,15 +599,11 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                           filterHintText:
                                               "Cari ${controller.listHutangAnggotaView[index]}",
                                           title: convertTitle(
-                                            controller
-                                                .listHutangAnggotaView[index],
+                                            controller.listHutangAnggotaView[index],
                                           ),
-                                          field: controller
-                                              .listHutangAnggotaView[index],
+                                          field: controller.listHutangAnggotaView[index],
                                           type:
-                                              (controller.listHutangAnggotaView[
-                                                          index] ==
-                                                      "nominal")
+                                              (controller.listHutangAnggotaView[index] == "nominal")
                                                   ? PlutoColumnType.number(
                                                       locale: "id",
                                                     )
@@ -694,8 +624,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                       enableEditingMode: false,
                                       renderer: (rendererContext) {
                                         final rowIndex = rendererContext.rowIdx;
-                                        Map<String, dynamic> dataRow =
-                                            rendererContext.row.toJson();
+                                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
                                         return DropdownAksi(
                                           text: "Aksi",
                                           listItem: [
@@ -705,15 +634,13 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                                 children: [
                                                   SvgPicture.asset(
                                                     iconMiscInfo,
-                                                    colorFilter:
-                                                        colorFilterGray600,
+                                                    colorFilter: colorFilterGray600,
                                                   ),
                                                   const SizedBox(width: 8),
                                                   Expanded(
                                                     child: Text(
                                                       'Detail Data',
-                                                      style: myTextTheme
-                                                          .bodyMedium,
+                                                      style: myTextTheme.bodyMedium,
                                                     ),
                                                   ),
                                                 ],
@@ -725,15 +652,13 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                                 children: [
                                                   SvgPicture.asset(
                                                     iconAccountBalanceWallet,
-                                                    colorFilter:
-                                                        colorFilterGray600,
+                                                    colorFilter: colorFilterGray600,
                                                   ),
                                                   const SizedBox(width: 8),
                                                   Expanded(
                                                     child: Text(
                                                       'Bayar Hutang',
-                                                      style: myTextTheme
-                                                          .bodyMedium,
+                                                      style: myTextTheme.bodyMedium,
                                                     ),
                                                   ),
                                                 ],
@@ -742,17 +667,13 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                           ],
                                           onChange: (value) {
                                             if (value == 1) {
-                                              router.go(
+                                              router.push(
                                                 Uri(
                                                   path:
                                                       "/koperasi/anggota/pembayaran-hutang/detail",
                                                   queryParameters: {
-                                                    'id': trimString(controller
-                                                        .result
-                                                        .data
-                                                        ?.dataHutangAnggota?[
-                                                            rowIndex]
-                                                        .idPenjualan)
+                                                    'id': trimString(
+                                                        dataRow["id_penjualan"].toString())
                                                   },
                                                 ).toString(),
                                               );
@@ -760,13 +681,14 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                               showDialogBase(
                                                 width: 700,
                                                 content: DialogPelunasanAnggota(
-                                                  listHutang: result
-                                                      .data?.dataHutangAnggota,
+                                                  listHutang: result.data?.dataHutangAnggota,
                                                   dataHutang: controller
-                                                          .result
-                                                          .data
-                                                          ?.dataHutangAnggota?[
-                                                      rowIndex],
+                                                      .result.data?.dataHutangAnggota
+                                                      ?.firstWhere(
+                                                    (element) =>
+                                                        trimString(element.idPenjualan) ==
+                                                        trimString(dataRow["id_penjualan"]),
+                                                  ),
                                                 ),
                                               );
                                             }
@@ -790,8 +712,7 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                     cells['Aksi'] = PlutoCell(
                                       value: null,
                                     );
-                                    for (String column
-                                        in controller.listHutangAnggotaView) {
+                                    for (String column in controller.listHutangAnggotaView) {
                                       if (item.containsKey(column)) {
                                         cells[column] = PlutoCell(
                                           value: trimStringStrip(
@@ -814,20 +735,16 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                       ),
                                       mode: PlutoGridMode.select,
                                       onLoaded: (event) {
-                                        event.stateManager
-                                            .setShowColumnFilter(true);
+                                        event.stateManager.setShowColumnFilter(true);
                                       },
                                       onSorted: (event) {
                                         if (event.column.field != "Aksi") {
                                           controller.isAsc = !controller.isAsc;
                                           controller.update();
-                                          controller.dataFuture =
-                                              controller.cariDataHutangAnggota(
+                                          controller.dataFuture = controller.cariDataHutangAnggota(
                                             isAsc: controller.isAsc,
-                                            field: (event.column.field ==
-                                                        "cash_in" ||
-                                                    event.column.field ==
-                                                        "cash_out")
+                                            field: (event.column.field == "cash_in" ||
+                                                    event.column.field == "cash_out")
                                                 ? "nominal"
                                                 : event.column.field,
                                           );
@@ -835,18 +752,15 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                         }
                                       },
                                       configuration: PlutoGridConfiguration(
-                                        columnSize:
-                                            const PlutoGridColumnSizeConfig(
+                                        columnSize: const PlutoGridColumnSizeConfig(
                                           autoSizeMode: PlutoAutoSizeMode.scale,
                                         ),
                                         style: PlutoGridStyleConfig(
-                                          columnTextStyle:
-                                              myTextTheme.titleSmall?.copyWith(
-                                                      color: neutralWhite) ??
-                                                  const TextStyle(),
+                                          columnTextStyle: myTextTheme.titleSmall
+                                                  ?.copyWith(color: neutralWhite) ??
+                                              const TextStyle(),
                                           gridBorderColor: blueGray50,
-                                          gridBorderRadius:
-                                              BorderRadius.circular(8),
+                                          gridBorderRadius: BorderRadius.circular(8),
                                         ),
                                         localeText: configLocale,
                                       ),
@@ -856,52 +770,43 @@ class BayarHutangAnggotaView extends StatefulWidget {
                                         return FooterTableWidget(
                                           page: controller.page,
                                           itemPerpage: controller.size,
-                                          maxPage: controller.dataHutangAnggota
-                                                  .paging?.totalPage ??
-                                              0,
+                                          maxPage:
+                                              controller.dataHutangAnggota.paging?.totalPage ?? 0,
                                           onChangePage: (value) {
                                             controller.page = trimString(value);
                                             controller.update();
-                                            controller.dataFuture = controller
-                                                .cariDataHutangAnggota();
+                                            controller.dataFuture =
+                                                controller.cariDataHutangAnggota();
                                             controller.update();
                                           },
                                           onChangePerPage: (value) {
                                             controller.page = "1";
                                             controller.size = trimString(value);
                                             controller.update();
-                                            controller.dataFuture = controller
-                                                .cariDataHutangAnggota();
+                                            controller.dataFuture =
+                                                controller.cariDataHutangAnggota();
                                             controller.update();
                                           },
-                                          totalRow: controller.dataHutangAnggota
-                                                  .paging?.totalItem ??
-                                              0,
+                                          totalRow:
+                                              controller.dataHutangAnggota.paging?.totalItem ?? 0,
                                           onPressLeft: () {
-                                            if (int.parse(controller.page) >
-                                                1) {
+                                            if (int.parse(controller.page) > 1) {
                                               controller.page =
-                                                  (int.parse(controller.page) -
-                                                          1)
-                                                      .toString();
+                                                  (int.parse(controller.page) - 1).toString();
                                               controller.update();
-                                              controller.dataFuture = controller
-                                                  .cariDataHutangAnggota();
+                                              controller.dataFuture =
+                                                  controller.cariDataHutangAnggota();
                                               controller.update();
                                             }
                                           },
                                           onPressRight: () {
                                             if (int.parse(controller.page) <
-                                                (result.data?.paging
-                                                        ?.totalPage ??
-                                                    0)) {
+                                                (result.data?.paging?.totalPage ?? 0)) {
                                               controller.page =
-                                                  (int.parse(controller.page) +
-                                                          1)
-                                                      .toString();
+                                                  (int.parse(controller.page) + 1).toString();
                                               controller.update();
-                                              controller.dataFuture = controller
-                                                  .cariDataHutangAnggota();
+                                              controller.dataFuture =
+                                                  controller.cariDataHutangAnggota();
                                               controller.update();
                                             }
                                           },

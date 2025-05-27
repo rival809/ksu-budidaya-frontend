@@ -27,8 +27,13 @@ class StockTakeResult {
 class DataStockTake {
   List<DetailDataStockTake>? dataStock;
   Paging? paging;
+  TotalData? totalData;
 
-  DataStockTake({this.dataStock, this.paging});
+  DataStockTake({
+    this.dataStock,
+    this.totalData,
+    this.paging,
+  });
 
   DataStockTake.fromJson(Map<String, dynamic> json) {
     if (json['data_stock'] != null) {
@@ -37,6 +42,7 @@ class DataStockTake {
         dataStock!.add(DetailDataStockTake.fromJson(v));
       });
     }
+    totalData = json['total_data'] != null ? TotalData.fromJson(json['total_data']) : null;
     paging = json['paging'] != null ? Paging.fromJson(json['paging']) : null;
   }
 
@@ -44,6 +50,9 @@ class DataStockTake {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (dataStock != null) {
       data['data_stock'] = dataStock!.map((v) => v.toJson()).toList();
+    }
+    if (totalData != null) {
+      data['total_data'] = totalData!.toJson();
     }
     if (paging != null) {
       data['paging'] = paging!.toJson();
@@ -53,40 +62,32 @@ class DataStockTake {
 }
 
 class DetailDataStockTake {
-  String? idProduct;
-  String? nmProduct;
-  String? divisi;
+  String? idDivisi;
+  String? nmDivisi;
   String? stock;
-  String? stocktake;
+  String? stockTake;
   String? selisih;
-  String? petugas;
-  bool? isSelisih;
   String? totalHargaJualStock;
   String? totalHargaJualStocktake;
   String? selisihHargaJual;
 
-  DetailDataStockTake(
-      {this.idProduct,
-      this.nmProduct,
-      this.divisi,
-      this.stocktake,
-      this.stock,
-      this.selisih,
-      this.petugas,
-      this.isSelisih,
-      this.totalHargaJualStock,
-      this.totalHargaJualStocktake,
-      this.selisihHargaJual});
+  DetailDataStockTake({
+    this.idDivisi,
+    this.nmDivisi,
+    this.stock,
+    this.stockTake,
+    this.totalHargaJualStock,
+    this.totalHargaJualStocktake,
+    this.selisihHargaJual,
+    this.selisih,
+  });
 
   DetailDataStockTake.fromJson(Map<String, dynamic> json) {
-    idProduct = checkModel(json['id_product']);
-    nmProduct = checkModel(json['nm_product']);
-    divisi = checkModel(json['divisi']);
-    stocktake = checkModel(json['stock_take']);
+    idDivisi = checkModel(json['id_divisi']);
+    nmDivisi = checkModel(json['nm_divisi']);
+    stockTake = checkModel(json['stock_take']);
     stock = checkModel(json['stock']);
     selisih = checkModel(json['selisih']);
-    petugas = checkModel(json['petugas']);
-    isSelisih = checkModel(json['is_selisih']);
     totalHargaJualStock = checkModel(json['total_harga_jual_stock']);
     totalHargaJualStocktake = checkModel(json['total_harga_jual_stocktake']);
     selisihHargaJual = checkModel(json['selisih_harga_jual']);
@@ -94,17 +95,51 @@ class DetailDataStockTake {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id_product'] = idProduct;
-    data['nm_product'] = nmProduct;
-    data['divisi'] = divisi;
-    data['stock_take'] = stocktake;
+    data['id_divisi'] = idDivisi;
+    data['nm_divisi'] = nmDivisi;
     data['stock'] = stock;
-    data['selisih'] = selisih;
-    data['petugas'] = petugas;
-    data['is_selisih'] = isSelisih;
+    data['stock_take'] = stockTake;
     data['total_harga_jual_stock'] = totalHargaJualStock;
     data['total_harga_jual_stocktake'] = totalHargaJualStocktake;
     data['selisih_harga_jual'] = selisihHargaJual;
+    data['selisih'] = selisih;
+    return data;
+  }
+}
+
+class TotalData {
+  double? totalStock;
+  double? totalHargaJualStock;
+  double? totalStockTake;
+  double? totalHargaJualStocktake;
+  double? totalSelisih;
+  double? totalSelisihHargaJual;
+
+  TotalData(
+      {this.totalStock,
+      this.totalHargaJualStock,
+      this.totalStockTake,
+      this.totalHargaJualStocktake,
+      this.totalSelisih,
+      this.totalSelisihHargaJual});
+
+  TotalData.fromJson(Map<String, dynamic> json) {
+    totalStock = json['total_stock'];
+    totalHargaJualStock = json['total_harga_jual_stock'];
+    totalStockTake = json['total_stock_take'];
+    totalHargaJualStocktake = json['total_harga_jual_stocktake'];
+    totalSelisih = json['total_selisih'];
+    totalSelisihHargaJual = json['total_selisih_harga_jual'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['total_stock'] = totalStock;
+    data['total_harga_jual_stock'] = totalHargaJualStock;
+    data['total_stock_take'] = totalStockTake;
+    data['total_harga_jual_stocktake'] = totalHargaJualStocktake;
+    data['total_selisih'] = totalSelisih;
+    data['total_selisih_harga_jual'] = totalSelisihHargaJual;
     return data;
   }
 }

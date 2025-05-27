@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take/view/stock_take_view.dart';
+import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
+import 'package:ksu_budidaya/module/stock_opname/stock_take_divisi/view/stock_take_divisi_view.dart';
 
-class StockTakeController extends State<StockTakeView> {
-  static late StockTakeController instance;
-  late StockTakeView view;
+class StockTakeDivisiController extends State<StockTakeDivisiView> {
+  static late StockTakeDivisiController instance;
+  late StockTakeDivisiView view;
 
   String page = "1";
   String size = "100";
@@ -18,20 +18,17 @@ class StockTakeController extends State<StockTakeView> {
 
   String dropdown = "SEMUA";
 
-  DataDetailStockTake dataStockOpname = DataDetailStockTake();
-  DetailStockTakeResult result = DetailStockTakeResult();
+  DataStockTake dataStockOpname = DataStockTake();
+  StockTakeResult result = StockTakeResult();
   List<String> listRoleView = [
-    "id_product",
-    "nm_product",
-    "divisi",
-    "petugas",
+    "id_divisi",
+    "nm_divisi",
     "stock",
     "total_harga_jual_stock",
     "stock_take",
     "total_harga_jual_stocktake",
     "selisih",
     "selisih_harga_jual",
-    "is_selisih",
   ];
 
   String? field;
@@ -41,11 +38,10 @@ class StockTakeController extends State<StockTakeView> {
     String? field,
   }) async {
     try {
-      result = DetailStockTakeResult();
+      result = StockTakeResult();
       DataMap dataCari = {
         "page": page,
         "size": size,
-        "id_divisi": trimString(widget.idDivisi),
       };
 
       // if (trimString(supplierNameController.text).toString().isNotEmpty) {
@@ -79,7 +75,7 @@ class StockTakeController extends State<StockTakeView> {
         dataCari.addAll({"is_selisih": isSelisih});
       }
 
-      result = await ApiService.detailStockTake(
+      result = await ApiService.listStockTake(
         data: dataCari,
       ).timeout(const Duration(seconds: 30));
 
