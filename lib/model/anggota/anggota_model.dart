@@ -77,6 +77,8 @@ class DataDetailAnggota {
   String? createdAt;
   @HiveField(7)
   String? updatedAt;
+  @HiveField(8)
+  String? totalNominalTransaksi;
 
   DataDetailAnggota(
       {this.idAnggota,
@@ -86,7 +88,8 @@ class DataDetailAnggota {
       this.limitPinjaman,
       this.hutang,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.totalNominalTransaksi});
 
   DataDetailAnggota.fromJson(Map<String, dynamic> json) {
     idAnggota = json['id_anggota'];
@@ -97,6 +100,7 @@ class DataDetailAnggota {
     hutang = json['hutang'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    totalNominalTransaksi = checkModel(json['total_nominal_transaksi']);
   }
 
   Map<String, dynamic> toJson() {
@@ -109,6 +113,7 @@ class DataDetailAnggota {
     data['hutang'] = hutang;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
+    data['total_nominal_transaksi'] = totalNominalTransaksi;
     return data;
   }
 
@@ -125,6 +130,7 @@ class DataDetailAnggota {
     String? hutang,
     String? createdAt,
     String? updatedAt,
+    String? totalNominalTransaksi,
   }) =>
       DataDetailAnggota(
         idAnggota: idAnggota ?? this.idAnggota,
@@ -135,6 +141,7 @@ class DataDetailAnggota {
         hutang: hutang ?? this.hutang,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        totalNominalTransaksi: totalNominalTransaksi ?? this.totalNominalTransaksi,
       );
 }
 
@@ -147,8 +154,7 @@ class DetailAnggotaResult {
 
   DetailAnggotaResult.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data =
-        json['data'] != null ? DataDetailAnggota.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataDetailAnggota.fromJson(json['data']) : null;
     message = json['message'];
   }
 
