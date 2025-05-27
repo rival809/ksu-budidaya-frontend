@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take/controller/stock_take_controller.dart';
+import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
+import 'package:ksu_budidaya/module/stock_opname/stock_take_divisi/controller/stock_take_divisi_controller.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-generatePdfDetailStockTake({
-  required StockTakeController controller,
+generatePdfStockTake({
+  required StockTakeDivisiController controller,
 }) async {
   showCircleDialogLoading();
   await Future.delayed(const Duration(seconds: 1));
@@ -18,41 +18,48 @@ generatePdfDetailStockTake({
     List<PdfStockTake> listDataPenerimaan = [];
 
     for (var i = 0; i < (controller.dataStockOpname.dataStock?.length ?? 0); i++) {
-      DetailDataDetailStockTake dataRekap =
-          controller.dataStockOpname.dataStock?[i] ?? DetailDataDetailStockTake();
-      int noUrut = i + 1;
+      DetailDataStockTake dataRekap =
+          controller.dataStockOpname.dataStock?[i] ?? DetailDataStockTake();
+      // int noUrut = i + 1;
 
       listDataPenerimaan.add(
         PdfStockTake(
-          noUrut.toString(),
-          trimString(dataRekap.idProduct),
-          trimString(dataRekap.nmProduct),
+          trimString(dataRekap.idDivisi),
+          trimString(dataRekap.nmDivisi),
           formatMoney(double.tryParse(dataRekap.stock ?? "0")?.toInt() ?? 0),
           formatMoney(double.tryParse(dataRekap.totalHargaJualStock ?? "0")?.toInt() ?? 0),
-          formatMoney(double.tryParse(dataRekap.stocktake ?? "0")?.toInt() ?? 0),
+          formatMoney(double.tryParse(dataRekap.stockTake ?? "0")?.toInt() ?? 0),
           formatMoney(double.tryParse(dataRekap.totalHargaJualStocktake ?? "0")?.toInt() ?? 0),
           formatMoney(double.tryParse(dataRekap.selisih ?? "0")?.toInt() ?? 0),
           formatMoney(double.tryParse(dataRekap.selisihHargaJual ?? "0")?.toInt() ?? 0),
-          trimString(dataRekap.petugas),
-          trimString(dataRekap.isSelisih.toString()),
         ),
       );
     }
 
+    listDataPenerimaan.add(
+      PdfStockTake(
+        "",
+        trimString("TOTAL"),
+        formatMoney(controller.dataStockOpname.totalData?.totalStock ?? 0),
+        formatMoney(controller.dataStockOpname.totalData?.totalHargaJualStock ?? 0),
+        formatMoney(controller.dataStockOpname.totalData?.totalStockTake ?? 0),
+        formatMoney(controller.dataStockOpname.totalData?.totalHargaJualStocktake ?? 0),
+        formatMoney(controller.dataStockOpname.totalData?.totalSelisih ?? 0),
+        formatMoney(controller.dataStockOpname.totalData?.totalSelisihHargaJual ?? 0),
+      ),
+    );
+
     pw.Widget contentTable(pw.Context context) {
       //INITITALIZE TITLE
       List<String> itemTitle = [
-        "NO",
-        "ID PRODUK",
-        "NAMA PRODUK",
+        "ID DIVISI",
+        "NAMA DIVISI",
         "STOCK",
         "HARGA JUAL",
         "STOCK TAKE",
         "HARGA JUAL",
         "SELISIH",
         "HARGA JUAL",
-        "PETUGAS",
-        "KETERANGAN",
       ];
 //END INITIALIZE TITLE
 
@@ -73,35 +80,26 @@ generatePdfDetailStockTake({
           5: pw.Alignment.center,
           6: pw.Alignment.center,
           7: pw.Alignment.center,
-          8: pw.Alignment.center,
-          9: pw.Alignment.center,
-          10: pw.Alignment.center,
         },
         columnWidths: {
-          0: const pw.FixedColumnWidth(26),
-          1: const pw.FlexColumnWidth(2),
-          2: const pw.FlexColumnWidth(3),
-          3: const pw.FlexColumnWidth(1),
-          4: const pw.FlexColumnWidth(2),
-          5: const pw.FlexColumnWidth(1),
-          6: const pw.FlexColumnWidth(2),
-          7: const pw.FlexColumnWidth(1),
-          8: const pw.FlexColumnWidth(2),
-          9: const pw.FlexColumnWidth(2),
-          10: const pw.FlexColumnWidth(2),
+          0: const pw.FlexColumnWidth(1),
+          1: const pw.FlexColumnWidth(3),
+          2: const pw.FlexColumnWidth(1),
+          3: const pw.FlexColumnWidth(2),
+          4: const pw.FlexColumnWidth(1),
+          5: const pw.FlexColumnWidth(2),
+          6: const pw.FlexColumnWidth(1),
+          7: const pw.FlexColumnWidth(2),
         },
         cellAlignments: {
           0: pw.Alignment.center,
           1: pw.Alignment.centerLeft,
-          2: pw.Alignment.centerLeft,
+          2: pw.Alignment.centerRight,
           3: pw.Alignment.centerRight,
           4: pw.Alignment.centerRight,
           5: pw.Alignment.centerRight,
           6: pw.Alignment.centerRight,
           7: pw.Alignment.centerRight,
-          8: pw.Alignment.centerRight,
-          9: pw.Alignment.centerLeft,
-          10: pw.Alignment.center,
         },
         headerStyle: pw.TextStyle(
           color: PdfColor.fromHex("#212121"),
@@ -123,32 +121,6 @@ generatePdfDetailStockTake({
         ),
         data: List<List<dynamic>>.generate(listDataPenerimaan.length, (row) {
           return List<dynamic>.generate(itemTitle.length, (col) {
-            if (col == 10) {
-              return pw.Container(
-                decoration: pw.BoxDecoration(
-                  borderRadius: const pw.BorderRadius.all(
-                    pw.Radius.circular(8.0),
-                  ),
-                  color: (listDataPenerimaan[row].getIndex(col) == "true")
-                      ? PdfColors.red50
-                      : PdfColors.green50,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 4,
-                ),
-                child: Text(
-                  (listDataPenerimaan[row].getIndex(col) == "true") ? "SELISIH" : "SEIMBANG",
-                  style: pw.TextStyle(
-                    font: regularFont,
-                    color: (listDataPenerimaan[row].getIndex(col) == "true")
-                        ? PdfColors.red900
-                        : PdfColors.green900,
-                    fontSize: 7,
-                  ),
-                ),
-              );
-            }
             return listDataPenerimaan[row].getIndex(col);
           });
         }),
@@ -161,13 +133,12 @@ generatePdfDetailStockTake({
       pw.MultiPage(
         maxPages: 1000,
         pageTheme: const pw.PageTheme(
-          pageFormat: PdfPageFormat(29.7 * PdfPageFormat.cm, 21.0 * PdfPageFormat.cm),
-          orientation: pw.PageOrientation.landscape,
-          margin: pw.EdgeInsets.all(16),
+          pageFormat: PdfPageFormat(21.0 * PdfPageFormat.cm, 29.7 * PdfPageFormat.cm),
+          margin: pw.EdgeInsets.all(8),
         ),
         header: (context) => pw.Center(
           child: pw.Text(
-            "STOCKTAKE DIVISI ${trimString(controller.widget.nmDivisi)} \nDICETAK TANGGAL: ${formatDateFull(DateTime.now().toString())}\nHalaman Ke - ${context.pageNumber}",
+            "STOCKTAKE\nDICETAK TANGGAL: ${formatDateFull(DateTime.now().toString())}\nHalaman Ke - ${context.pageNumber}",
             textAlign: pw.TextAlign.center,
             style: pw.TextStyle(
               fontSize: 10,
@@ -177,7 +148,7 @@ generatePdfDetailStockTake({
         ),
         build: (context) => [
           pw.SizedBox(
-            height: 16.0,
+            height: 4.0,
           ),
           contentTable(context),
         ],
@@ -203,55 +174,43 @@ generatePdfDetailStockTake({
 
 class PdfStockTake {
   const PdfStockTake(
-    this.no,
-    this.idProduk,
-    this.namaProduk,
+    this.idDivisi,
+    this.nmDivisi,
     this.stock,
     this.hargaJualStock,
     this.stocktake,
     this.hargaJualStocktake,
     this.selisih,
     this.selisihHargaJual,
-    this.petugas,
-    this.isSelisih,
   );
 
-  final String no;
-  final String idProduk;
-  final String namaProduk;
+  final String idDivisi;
+  final String nmDivisi;
   final String stock;
   final String hargaJualStock;
   final String stocktake;
   final String hargaJualStocktake;
   final String selisih;
   final String selisihHargaJual;
-  final String petugas;
-  final String isSelisih;
 
   String getIndex(int index) {
     switch (index) {
       case 0:
-        return no;
+        return idDivisi;
       case 1:
-        return idProduk;
+        return nmDivisi;
       case 2:
-        return namaProduk;
-      case 3:
         return stock;
-      case 4:
+      case 3:
         return hargaJualStock;
-      case 5:
+      case 4:
         return stocktake;
-      case 6:
+      case 5:
         return hargaJualStocktake;
-      case 7:
+      case 6:
         return selisih;
-      case 8:
+      case 7:
         return selisihHargaJual;
-      case 9:
-        return petugas;
-      case 10:
-        return isSelisih;
     }
     return '';
   }

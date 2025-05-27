@@ -22,6 +22,7 @@ class AnggotaController extends State<AnggotaView> {
     "nm_anggota",
     "alamat",
     "no_wa",
+    "total_nominal_transaksi",
     "limit_pinjaman",
     "hutang",
   ];

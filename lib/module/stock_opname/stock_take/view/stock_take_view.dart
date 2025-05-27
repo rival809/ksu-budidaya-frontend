@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
+import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
 import 'package:ksu_budidaya/module/stock_opname/stock_take/controller/stock_take_controller.dart';
 import 'package:ksu_budidaya/module/stock_opname/stock_take/widget/generate_stocktake.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockTakeView extends StatefulWidget {
-  const StockTakeView({Key? key}) : super(key: key);
+  final String? idDivisi;
+  final String? nmDivisi;
+  const StockTakeView({
+    Key? key,
+    required this.idDivisi,
+    required this.nmDivisi,
+  }) : super(key: key);
 
   Widget build(context, StockTakeController controller) {
     controller.view = this;
@@ -23,9 +29,21 @@ class StockTakeView extends StatefulWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Stocktake",
-                    style: myTextTheme.headlineLarge,
+                  Row(
+                    children: [
+                      BackButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Text(
+                        "Detail Stocktake",
+                        style: myTextTheme.headlineLarge,
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 16.0,
@@ -83,7 +101,7 @@ class StockTakeView extends StatefulWidget {
                           ),
                           BaseSecondaryButton(
                             onPressed: () {
-                              generatePdfStockTake(controller: controller);
+                              generatePdfDetailStockTake(controller: controller);
                             },
                             text: "Cetak",
                             suffixIcon: iconPrint,
@@ -105,8 +123,8 @@ class StockTakeView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          StockTakeResult result = snapshot.data;
-                          controller.dataStockOpname = result.data ?? DataStockTake();
+                          DetailStockTakeResult result = snapshot.data;
+                          controller.dataStockOpname = result.data ?? DataDetailStockTake();
                           List<dynamic> listData =
                               controller.dataStockOpname.toJson()["data_stock"] ?? [];
 

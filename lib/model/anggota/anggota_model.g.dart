@@ -41,9 +41,7 @@ class AnggotaResultAdapter extends TypeAdapter<AnggotaResult> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AnggotaResultAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is AnggotaResultAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class DataAnggotaAdapter extends TypeAdapter<DataAnggota> {
@@ -75,9 +73,7 @@ class DataAnggotaAdapter extends TypeAdapter<DataAnggota> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DataAnggotaAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DataAnggotaAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class DataDetailAnggotaAdapter extends TypeAdapter<DataDetailAnggota> {
@@ -99,13 +95,14 @@ class DataDetailAnggotaAdapter extends TypeAdapter<DataDetailAnggota> {
       hutang: fields[5] as String?,
       createdAt: fields[6] as String?,
       updatedAt: fields[7] as String?,
+      totalNominalTransaksi: fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, DataDetailAnggota obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.idAnggota)
       ..writeByte(1)
@@ -121,7 +118,9 @@ class DataDetailAnggotaAdapter extends TypeAdapter<DataDetailAnggota> {
       ..writeByte(6)
       ..write(obj.createdAt)
       ..writeByte(7)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(8)
+      ..write(obj.totalNominalTransaksi);
   }
 
   @override
