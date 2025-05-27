@@ -351,6 +351,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                   "/stock-opname/mobile",
                                   "/stock-opname/riwayat",
                                   "/stock-opname/stocktake",
+                                  "/stock-opname/aktivitas-stock",
                                 ],
                               ),
                               onTap: () {},
@@ -389,6 +390,17 @@ class _BodyContainerState extends State<BodyContainer> {
                                     isSelected: currentRoute == "/stock-opname/stocktake",
                                     onTap: () {
                                       router.go("/stock-opname/stocktake");
+                                    },
+                                  ),
+                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                  DrawerMenu(
+                                    title: "Aktivitas Stock",
+                                    isSubMenu: true,
+                                    isSelected: currentRoute == "/stock-opname/aktivitas-stock",
+                                    onTap: () {
+                                      router.go(
+                                        "/stock-opname/aktivitas-stock",
+                                      );
                                     },
                                   ),
                               ],

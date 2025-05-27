@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
 import 'package:ksu_budidaya/model/laporan/laporan_neraca_model.dart';
+import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
@@ -1474,6 +1475,27 @@ class ApiService {
       }
     } else {
       throw Exception('Failed to listHistoryStockOpname');
+    }
+  }
+
+  static Future<AktivitasStockModel> listAktivitasStock({
+    required DataMap data,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/products/aktivitas-stock",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return AktivitasStockModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listAktivitasStock');
     }
   }
 
