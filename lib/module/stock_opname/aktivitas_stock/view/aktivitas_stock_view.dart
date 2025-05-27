@@ -138,20 +138,85 @@ class AktivitasStockView extends StatefulWidget {
                               List.generate(
                                 controller.listRoleView.length,
                                 (index) {
-                                  return PlutoColumn(
-                                    backgroundColor: primaryColor,
-                                    filterHintText: "Cari ${controller.listRoleView[index]}",
-                                    title: convertTitle(
-                                      controller.listRoleView[index],
-                                    ),
-                                    field: controller.listRoleView[index],
-                                    type: (controller.listRoleView[index] == "tg_aktivitas" ||
-                                            controller.listRoleView[index] == "tg_update_aktivitas")
-                                        ? PlutoColumnType.date(
-                                            format: 'dd/MM/yyyy HH:mm:ss',
-                                          )
-                                        : PlutoColumnType.text(),
-                                  );
+                                  if (controller.listRoleView[index] == "aktivitas") {
+                                    return PlutoColumn(
+                                        backgroundColor: primaryColor,
+                                        filterHintText: "Cari ${controller.listRoleView[index]}",
+                                        title: convertTitle(
+                                          controller.listRoleView[index],
+                                        ),
+                                        field: controller.listRoleView[index],
+                                        type: (controller.listRoleView[index] == "tg_aktivitas" ||
+                                                controller.listRoleView[index] ==
+                                                    "tg_update_aktivitas")
+                                            ? PlutoColumnType.date(
+                                                format: 'dd/MM/yyyy HH:mm:ss',
+                                              )
+                                            : PlutoColumnType.text(),
+                                        renderer: (rendererContext) {
+                                          return CardLabel(
+                                            cardColor: rendererContext
+                                                        .row
+                                                        .cells[controller.listRoleView[index]]
+                                                        ?.value ==
+                                                    "Penjualan"
+                                                ? red50
+                                                : rendererContext
+                                                            .row
+                                                            .cells[controller.listRoleView[index]]
+                                                            ?.value ==
+                                                        "Pembelian"
+                                                    ? green50
+                                                    : blue50,
+                                            cardTitle: convertTitle(
+                                              rendererContext
+                                                  .row.cells[controller.listRoleView[index]]?.value,
+                                            ),
+                                            cardTitleColor: rendererContext
+                                                        .row
+                                                        .cells[controller.listRoleView[index]]
+                                                        ?.value ==
+                                                    "Penjualan"
+                                                ? red900
+                                                : rendererContext
+                                                            .row
+                                                            .cells[controller.listRoleView[index]]
+                                                            ?.value ==
+                                                        "Pembelian"
+                                                    ? green900
+                                                    : blue900,
+                                            cardBorderColor: rendererContext
+                                                        .row
+                                                        .cells[controller.listRoleView[index]]
+                                                        ?.value ==
+                                                    "Penjualan"
+                                                ? red900
+                                                : rendererContext
+                                                            .row
+                                                            .cells[controller.listRoleView[index]]
+                                                            ?.value ==
+                                                        "Pembelian"
+                                                    ? green900
+                                                    : blue900,
+                                          );
+                                        });
+                                  } else {
+                                    return PlutoColumn(
+                                      backgroundColor: primaryColor,
+                                      filterHintText: "Cari ${controller.listRoleView[index]}",
+                                      title: convertTitle(
+                                        controller.listRoleView[index],
+                                      ),
+                                      field: controller.listRoleView[index],
+                                      type: (controller.listRoleView[index] == "tg_aktivitas" ||
+                                              controller.listRoleView[index] ==
+                                                  "tg_update_aktivitas")
+                                          ? PlutoColumnType.date(
+                                              format: 'dd/MM/yyyy HH:mm:ss',
+                                            )
+                                          : PlutoColumnType.text(),
+                                    );
+                                  }
                                 },
                               ),
                             );
