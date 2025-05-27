@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/laporan/laporan_neraca_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 doGenerateLaporanNeraca({required LaporanController controller}) async {
@@ -8,253 +9,9 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
   try {
     final pdf = pw.Document();
 
-    DataLaporanHasilUsaha data = controller.resultNeraca.data ?? DataLaporanHasilUsaha();
-
-    List<RowLaporanNeraca> rowsActive = [
-      RowLaporanNeraca(
-        uraian: "ACTIVA LANCAR",
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: "KAS",
-        currentMonth: 1000000,
-        lastMonth: 1000000,
-      ),
-      RowLaporanNeraca(
-        uraian: "BRI 1",
-        currentMonth: 1000000,
-        lastMonth: 1000000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'PIUTANG ANGGOTA',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'PERSEDIAAN BARANG',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'PENGHAPUSAN PERSEDIAAN',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'JUMLAH',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: "",
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'ACTIVA TETAP',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'INVENTARIS',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'GEDUNG',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'JUMLAH',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'AKUMULASI PENYUSUTAN',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'INVENTARIS',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'GEDUNG',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'JUMLAH',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'NILAI BUKU ACTIVA TETAP',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'ACTIVA LAIN',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'JUMLAH',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'TOTAL ACTIVA',
-        currentMonth: 100000,
-        lastMonth: 10000,
-      ),
-    ];
-
-    List<RowLaporanNeraca> rowsPassive = [
-      RowLaporanNeraca(
-        uraian: 'HUTANG LANCAR',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: 'HUTANG DAGANG',
-        currentMonth: 12000,
-        lastMonth: 12000,
-      ),
-      RowLaporanNeraca(
-        uraian: 'MODAL TIDAK TETAP',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'JUMLAH',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'UTANG TOKO KE SP',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'JUMLAH',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'DANA, MODAL, & SHU',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'DANA USAHA LAIN-LAIN',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'MODAL DISETOR',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'MODAL UNIT TOKO',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'SHU TH. 2023',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'SHU TH. 2024',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'HUTANG DAGANG',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: 'JUMLAH',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: '',
-        currentMonth: null,
-        lastMonth: null,
-      ),
-      RowLaporanNeraca(
-        uraian: 'TOTAL PASSIVA',
-        currentMonth: 0,
-        lastMonth: 0,
-      ),
-    ];
+    DataLaporanNeraca data = controller.resultNeraca.data ?? DataLaporanNeraca();
+    List<RowLaporanNeraca> rowsActive = buildRowsActivaPdf(data.current, data.previous);
+    List<RowLaporanNeraca> rowsPassive = buildRowsPassivaPdf(data.current, data.previous);
 
     final ttfBold = await rootBundle.load("assets/fonts/Roboto-Bold.ttf");
     final ttfRegular = await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
@@ -280,13 +37,79 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
             '${getNamaMonth(controller.monthNow)} - ${controller.yearNow}',
             subtractOneMonth(controller.monthNow, controller.yearNow),
           ],
-          data: rows
-              .map((row) => [
-                    row.uraian ?? '',
-                    formatMoney(row.currentMonth?.toString() ?? ''),
-                    formatMoney(row.lastMonth?.toString() ?? ''),
-                  ])
-              .toList(),
+          // data: rows
+          //     .map((row) => [
+          //           row.uraian ?? '',
+          //           formatMoney(row.currentMonth?.toString() ?? ''),
+          //           formatMoney(row.lastMonth?.toString() ?? ''),
+          //         ])
+          //     .toList(),
+          data: List<List<dynamic>>.generate(rows.length, (row) {
+            return List<dynamic>.generate(3, (col) {
+              if (col == 0) {
+                return Text(
+                  rows[row].uraian ?? '',
+                  style: pw.TextStyle(
+                    fontSize: 8,
+                    font: [
+                      "ACTIVA LANCAR",
+                      "JUMLAH",
+                      "HAACTIVA TETAP",
+                      "AKUMULASI PENYUSUTAN",
+                      "ACTIVA LAIN",
+                      "TOTAL ACTIVA",
+                      "HUTANG LANCAR",
+                      "DANA, MODAL, & SHU",
+                      "TOTAL PASSIVA",
+                    ].any((element) => element == rows[row].uraian)
+                        ? boldFont
+                        : regularFont,
+                  ),
+                );
+              } else if (col == 1) {
+                return Text(
+                  formatMoney(trimString(rows[row].currentMonth.toString())),
+                  style: pw.TextStyle(
+                    fontSize: 8,
+                    font: [
+                      "ACTIVA LANCAR",
+                      "JUMLAH",
+                      "HAACTIVA TETAP",
+                      "AKUMULASI PENYUSUTAN",
+                      "ACTIVA LAIN",
+                      "TOTAL ACTIVA",
+                      "HUTANG LANCAR",
+                      "DANA, MODAL, & SHU",
+                      "TOTAL PASSIVA",
+                    ].any((element) => element == rows[row].uraian)
+                        ? boldFont
+                        : regularFont,
+                  ),
+                );
+              } else if (col == 2) {
+                return Text(
+                  formatMoney(trimString(rows[row].lastMonth.toString())),
+                  style: pw.TextStyle(
+                    fontSize: 8,
+                    font: [
+                      "ACTIVA LANCAR",
+                      "JUMLAH",
+                      "HAACTIVA TETAP",
+                      "AKUMULASI PENYUSUTAN",
+                      "ACTIVA LAIN",
+                      "TOTAL ACTIVA",
+                      "HUTANG LANCAR",
+                      "DANA, MODAL, & SHU",
+                      "TOTAL PASSIVA",
+                    ].any((element) => element == rows[row].uraian)
+                        ? boldFont
+                        : regularFont,
+                  ),
+                );
+              }
+              return '';
+            });
+          }),
           border: pw.TableBorder.all(),
           headerStyle: pw.TextStyle(
             font: boldFont,
@@ -300,7 +123,12 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
             font: regularFont,
             fontSize: 8,
           ),
-          cellHeight: 30,
+          cellHeight: 16,
+          cellAlignments: {
+            0: pw.Alignment.centerLeft,
+            1: pw.Alignment.centerRight,
+            2: pw.Alignment.centerRight,
+          },
           columnWidths: {
             0: const pw.FlexColumnWidth(4),
             1: const pw.FlexColumnWidth(1),
@@ -314,8 +142,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
       pw.MultiPage(
         pageTheme: const pw.PageTheme(
           orientation: pw.PageOrientation.landscape,
-          pageFormat: PdfPageFormat.a4,
-          margin: pw.EdgeInsets.all(16),
+          pageFormat: PdfPageFormat(29.7 * PdfPageFormat.cm, 21 * PdfPageFormat.cm, marginAll: 8),
         ),
         header: (pw.Context context) => Center(
           child: pw.Column(
@@ -326,7 +153,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
                 style: pw.TextStyle(
                   font: boldFont,
                   fontWeight: pw.FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 16,
                 ),
               ),
               pw.Text(
@@ -334,16 +161,16 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
                 style: pw.TextStyle(
                   font: boldFont,
                   fontWeight: pw.FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 12,
                 ),
               ),
-              pw.SizedBox(height: 16),
+              pw.SizedBox(height: 8),
             ],
           ),
         ),
         build: (pw.Context context) {
-          final activeChunks = paginateRows(rowsActive, 15); // Split rows into chunks
-          final passiveChunks = paginateRows(rowsPassive, 15);
+          final activeChunks = paginateRows(rowsActive, 25); // Split rows into chunks
+          final passiveChunks = paginateRows(rowsPassive, 25);
 
           final pages = <pw.Widget>[];
 
@@ -388,4 +215,141 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
   }
 
   Get.back();
+}
+
+// Helper class untuk row PDF
+// class RowLaporanNeraca {
+//   final String uraian;
+//   final dynamic currentMonth;
+//   final dynamic lastMonth;
+//   RowLaporanNeraca({required this.uraian, this.currentMonth, this.lastMonth});
+// }
+
+List<RowLaporanNeraca> buildRowsActivaPdf(
+    DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
+  final List<RowLaporanNeraca> rows = [];
+  rows.add(RowLaporanNeraca(uraian: 'ACTIVA LANCAR'));
+  if (current?.aktivaLancar != null) {
+    current!.aktivaLancar!.forEach((key, value) {
+      rows.add(RowLaporanNeraca(
+        uraian: key.toString().toUpperCase().replaceAll("_", " "),
+        currentMonth: value,
+        lastMonth: previous?.aktivaLancar?[key],
+      ));
+    });
+  }
+  rows.add(RowLaporanNeraca(uraian: ''));
+  rows.add(RowLaporanNeraca(uraian: 'ACTIVA TETAP'));
+  if (current?.aktivaTetap != null) {
+    rows.add(RowLaporanNeraca(
+      uraian: 'INVENTARIS',
+      currentMonth: current?.aktivaTetap?.inventaris,
+      lastMonth: previous?.aktivaTetap?.inventaris,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'GEDUNG',
+      currentMonth: current?.aktivaTetap?.gedung,
+      lastMonth: previous?.aktivaTetap?.gedung,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'JUMLAH',
+      currentMonth: current?.aktivaTetap?.jumlah,
+      lastMonth: previous?.aktivaTetap?.jumlah,
+    ));
+  }
+  rows.add(RowLaporanNeraca(uraian: ''));
+  rows.add(RowLaporanNeraca(uraian: 'AKUMULASI PENYUSUTAN'));
+  if (current?.akumPenyusutan != null) {
+    rows.add(RowLaporanNeraca(
+      uraian: 'INVENTARIS',
+      currentMonth: current?.akumPenyusutan?.inventaris,
+      lastMonth: previous?.akumPenyusutan?.inventaris,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'GEDUNG',
+      currentMonth: current?.akumPenyusutan?.gedung,
+      lastMonth: previous?.akumPenyusutan?.gedung,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'JUMLAH',
+      currentMonth: current?.akumPenyusutan?.jumlah,
+      lastMonth: previous?.akumPenyusutan?.jumlah,
+    ));
+  }
+  rows.add(RowLaporanNeraca(uraian: ''));
+  rows.add(RowLaporanNeraca(
+    uraian: 'NILAI BUKU ACTIVA TETAP',
+    currentMonth: current?.nilaiBukuAktiva,
+    lastMonth: previous?.nilaiBukuAktiva,
+  ));
+  rows.add(RowLaporanNeraca(uraian: ''));
+  rows.add(RowLaporanNeraca(uraian: 'ACTIVA LAIN'));
+  if (current?.aktivaLain != null) {
+    rows.add(RowLaporanNeraca(
+      uraian: 'JUMLAH',
+      currentMonth: current?.aktivaLain?.jumlah,
+      lastMonth: previous?.aktivaLain?.jumlah,
+    ));
+  }
+  rows.add(RowLaporanNeraca(uraian: ''));
+  rows.add(RowLaporanNeraca(
+    uraian: 'TOTAL ACTIVA',
+    currentMonth: current?.totalAktiva,
+    lastMonth: previous?.totalAktiva,
+  ));
+  return rows;
+}
+
+List<RowLaporanNeraca> buildRowsPassivaPdf(
+    DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
+  final List<RowLaporanNeraca> rows = [];
+  rows.add(RowLaporanNeraca(uraian: 'HUTANG LANCAR'));
+  if (current?.hutangLancar != null) {
+    rows.add(RowLaporanNeraca(
+      uraian: 'HUTANG DAGANG',
+      currentMonth: current?.hutangLancar?.hutangDagang,
+      lastMonth: previous?.hutangLancar?.hutangDagang,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'MODAL TIDAK TETAP',
+      currentMonth: current?.hutangLancar?.modalTidakTetap,
+      lastMonth: previous?.hutangLancar?.modalTidakTetap,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'JUMLAH',
+      currentMonth: current?.hutangLancar?.jumlah,
+      lastMonth: previous?.hutangLancar?.jumlah,
+    ));
+  }
+  rows.add(RowLaporanNeraca(uraian: ''));
+  if (current?.utangDariSp != null) {
+    rows.add(RowLaporanNeraca(
+      uraian: 'UTANG TOKO KE SP',
+      currentMonth: current?.utangDariSp?.utangDariSp,
+      lastMonth: previous?.utangDariSp?.utangDariSp,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'JUMLAH',
+      currentMonth: current?.utangDariSp?.jumlah,
+      lastMonth: previous?.utangDariSp?.jumlah,
+    ));
+  }
+  rows.add(RowLaporanNeraca(uraian: ''));
+  rows.add(RowLaporanNeraca(uraian: 'DANA, MODAL, & SHU'));
+  if (current?.danaModalShu != null) {
+    current!.danaModalShu!.forEach((key, value) {
+      rows.add(RowLaporanNeraca(
+        uraian: key.toString().toUpperCase().replaceAll("_", " "),
+        currentMonth: value,
+        lastMonth: previous?.danaModalShu?[key],
+      ));
+    });
+  }
+  rows.add(RowLaporanNeraca(uraian: ''));
+  rows.add(RowLaporanNeraca(
+    uraian: 'TOTAL PASSIVA',
+    currentMonth: current?.totalPasiva,
+    lastMonth: previous?.totalPasiva,
+  ));
+  return rows;
 }

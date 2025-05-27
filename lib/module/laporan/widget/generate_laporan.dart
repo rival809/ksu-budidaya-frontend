@@ -288,14 +288,6 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                     '${getNamaMonth(controller.monthNow)}\n${controller.yearNow}',
                     subtractTitleOneMonth(controller.monthNow, controller.yearNow)
                   ],
-                  // data: rows
-                  //     .map((row) => [
-                  //           row.no ?? '',
-                  //           row.uraian ?? '',
-                  //           formatMoney(row.currentMonth?.toString() ?? ''),
-                  //           formatMoney(row.lastMonth?.toString() ?? '')
-                  //         ])
-                  //     .toList(),
                   data: List<List<dynamic>>.generate(rows.length, (row) {
                     return List<dynamic>.generate(4, (col) {
                       if (col == 0) {

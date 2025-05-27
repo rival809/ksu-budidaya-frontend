@@ -51,6 +51,8 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                           ),
                           onChanged: (value) {
                             controller.monthNow = value?.id ?? 1;
+                            controller.dataFutureHasilUsaha = null;
+                            controller.hasData = false;
                             controller.update();
                           },
                         ),
@@ -67,6 +69,8 @@ class _LaporanHasilUsahaState extends State<LaporanHasilUsaha> {
                           itemAsString: (item) => item.toString(),
                           onChanged: (value) {
                             controller.yearNow = value ?? 2025;
+                            controller.dataFutureHasilUsaha = null;
+                            controller.hasData = false;
                             controller.update();
                           },
                         ),
