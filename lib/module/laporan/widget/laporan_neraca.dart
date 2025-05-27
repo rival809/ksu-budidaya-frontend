@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/laporan/laporan_neraca_model.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class LaporanNeraca extends StatefulWidget {
@@ -16,6 +17,204 @@ class LaporanNeraca extends StatefulWidget {
 }
 
 class _LaporanNeracaState extends State<LaporanNeraca> {
+  List<PlutoRow> buildRowsActiva(DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
+    final List<PlutoRow> rows = [];
+    // ACTIVA LANCAR
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'ACTIVA LANCAR'),
+      'current_month': PlutoCell(value: null),
+      'last_month': PlutoCell(value: null),
+    }));
+    if (current?.aktivaLancar != null) {
+      current!.aktivaLancar!.forEach((key, value) {
+        rows.add(PlutoRow(cells: {
+          'uraian': PlutoCell(value: key.toString().toUpperCase().replaceAll("_", " ")),
+          'current_month': PlutoCell(value: value),
+          'last_month': PlutoCell(value: previous?.aktivaLancar?[key]),
+        }));
+      });
+      // rows.add(PlutoRow(cells: {
+      //   'uraian': PlutoCell(value: 'JUMLAH'),
+      //   'current_month': PlutoCell(value: current.aktivaLancar?['jumlah']),
+      //   'last_month': PlutoCell(value: previous?.aktivaLancar?['jumlah']),
+      // }));
+    }
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // ACTIVA TETAP
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'ACTIVA TETAP'),
+      'current_month': PlutoCell(value: null),
+      'last_month': PlutoCell(value: null),
+    }));
+    if (current?.aktivaTetap != null) {
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'INVENTARIS'),
+        'current_month': PlutoCell(value: current?.aktivaTetap?.inventaris),
+        'last_month': PlutoCell(value: previous?.aktivaTetap?.inventaris),
+      }));
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'GEDUNG'),
+        'current_month': PlutoCell(value: current?.aktivaTetap?.gedung),
+        'last_month': PlutoCell(value: previous?.aktivaTetap?.gedung),
+      }));
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'JUMLAH'),
+        'current_month': PlutoCell(value: current?.aktivaTetap?.jumlah),
+        'last_month': PlutoCell(value: previous?.aktivaTetap?.jumlah),
+      }));
+    }
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // AKUMULASI PENYUSUTAN
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'AKUMULASI PENYUSUTAN'),
+      'current_month': PlutoCell(value: null),
+      'last_month': PlutoCell(value: null),
+    }));
+    if (current?.akumPenyusutan != null) {
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'INVENTARIS'),
+        'current_month': PlutoCell(value: current?.akumPenyusutan?.inventaris),
+        'last_month': PlutoCell(value: previous?.akumPenyusutan?.inventaris),
+      }));
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'GEDUNG'),
+        'current_month': PlutoCell(value: current?.akumPenyusutan?.gedung),
+        'last_month': PlutoCell(value: previous?.akumPenyusutan?.gedung),
+      }));
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'JUMLAH'),
+        'current_month': PlutoCell(value: current?.akumPenyusutan?.jumlah),
+        'last_month': PlutoCell(value: previous?.akumPenyusutan?.jumlah),
+      }));
+    }
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // NILAI BUKU ACTIVA TETAP
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'NILAI BUKU ACTIVA TETAP'),
+      'current_month': PlutoCell(value: current?.nilaiBukuAktiva),
+      'last_month': PlutoCell(value: previous?.nilaiBukuAktiva),
+    }));
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // ACTIVA LAIN
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'ACTIVA LAIN'),
+      'current_month': PlutoCell(value: null),
+      'last_month': PlutoCell(value: null),
+    }));
+    if (current?.aktivaLain != null) {
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'JUMLAH'),
+        'current_month': PlutoCell(value: current?.aktivaLain?.jumlah),
+        'last_month': PlutoCell(value: previous?.aktivaLain?.jumlah),
+      }));
+    }
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // TOTAL ACTIVA
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'TOTAL ACTIVA'),
+      'current_month': PlutoCell(value: current?.totalAktiva),
+      'last_month': PlutoCell(value: previous?.totalAktiva),
+    }));
+    return rows;
+  }
+
+  List<PlutoRow> buildRowsPassiva(DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
+    final List<PlutoRow> rows = [];
+    // HUTANG LANCAR
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'HUTANG LANCAR'),
+      'current_month': PlutoCell(value: null),
+      'last_month': PlutoCell(value: null),
+    }));
+    if (current?.hutangLancar != null) {
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'HUTANG DAGANG'),
+        'current_month': PlutoCell(value: current?.hutangLancar?.hutangDagang),
+        'last_month': PlutoCell(value: previous?.hutangLancar?.hutangDagang),
+      }));
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'MODAL TIDAK TETAP'),
+        'current_month': PlutoCell(value: current?.hutangLancar?.modalTidakTetap),
+        'last_month': PlutoCell(value: previous?.hutangLancar?.modalTidakTetap),
+      }));
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'JUMLAH'),
+        'current_month': PlutoCell(value: current?.hutangLancar?.jumlah),
+        'last_month': PlutoCell(value: previous?.hutangLancar?.jumlah),
+      }));
+    }
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // UTANG TOKO KE SP
+    if (current?.utangDariSp != null) {
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'UTANG TOKO KE SP'),
+        'current_month': PlutoCell(value: current?.utangDariSp?.utangDariSp),
+        'last_month': PlutoCell(value: previous?.utangDariSp?.utangDariSp),
+      }));
+      rows.add(PlutoRow(cells: {
+        'uraian': PlutoCell(value: 'JUMLAH'),
+        'current_month': PlutoCell(value: current?.utangDariSp?.jumlah),
+        'last_month': PlutoCell(value: previous?.utangDariSp?.jumlah),
+      }));
+    }
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // DANA, MODAL, & SHU
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'DANA, MODAL, & SHU'),
+      'current_month': PlutoCell(value: null),
+      'last_month': PlutoCell(value: null),
+    }));
+    if (current?.danaModalShu != null) {
+      current!.danaModalShu!.forEach((key, value) {
+        rows.add(PlutoRow(cells: {
+          'uraian': PlutoCell(value: key.toString().toUpperCase().replaceAll("_", " ")),
+          'current_month': PlutoCell(value: value),
+          'last_month': PlutoCell(value: previous?.danaModalShu?[key]),
+        }));
+      });
+    }
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: ''),
+      'current_month': PlutoCell(value: ''),
+      'last_month': PlutoCell(value: ''),
+    }));
+    // TOTAL PASSIVA
+    rows.add(PlutoRow(cells: {
+      'uraian': PlutoCell(value: 'TOTAL PASSIVA'),
+      'current_month': PlutoCell(value: current?.totalPasiva),
+      'last_month': PlutoCell(value: previous?.totalPasiva),
+    }));
+    return rows;
+  }
+
   @override
   Widget build(BuildContext context) {
     LaporanController controller = widget.controller;
@@ -51,6 +250,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                           ),
                           onChanged: (value) {
                             controller.monthNow = value?.id ?? 1;
+                            controller.dataFutureNeraca = null;
+                            controller.hasData = false;
                             controller.update();
                           },
                         ),
@@ -67,6 +268,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                           itemAsString: (item) => item.toString(),
                           onChanged: (value) {
                             controller.yearNow = value ?? 2025;
+                            controller.dataFutureNeraca = null;
+                            controller.hasData = false;
                             controller.update();
                           },
                         ),
@@ -111,7 +314,7 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
               if (snapshot.hasError) {
                 return const ContainerError();
               } else if (snapshot.hasData) {
-                LaporanHasilUsahaResult result = snapshot.data;
+                LaporanNeracaModel result = snapshot.data;
 
                 if (result.data != null) {
                   double rowHeight = 47.5;
@@ -179,252 +382,11 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                     ),
                   ];
 
-                  List<PlutoRow> rowsActiva = [
-                    //A
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'ACTIVA LANCAR'),
-                      'current_month': PlutoCell(value: null),
-                      'last_month': PlutoCell(value: null),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'KAS'),
-                      'current_month': PlutoCell(value: 12000),
-                      'last_month': PlutoCell(value: 12000),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'BRI 1'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'PIUTANG ANGGOTA'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'PERSEDIAAN BARANG'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'PENGHAPUSAN PERSEDIAAN'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'JUMLAH'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'ACTIVA TETAP'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'INVENTARIS'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'GEDUNG'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'JUMLAH'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'AKUMULASI PENYUSUTAN'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'INVENTARIS'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'GEDUNG'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'JUMLAH'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'NILAI BUKU ACTIVA TETAP'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'ACTIVA LAIN'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'JUMLAH'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'TOTAL ACTIVA'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                  ];
-                  List<PlutoRow> rowsPassiva = [
-                    //A
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'HUTANG LANCAR'),
-                      'current_month': PlutoCell(value: null),
-                      'last_month': PlutoCell(value: null),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'HUTANG DAGANG'),
-                      'current_month': PlutoCell(value: 12000),
-                      'last_month': PlutoCell(value: 12000),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'MODAL TIDAK TETAP'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'JUMLAH'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'UTANG TOKO KE SP'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'JUMLAH'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'DANA, MODAL, & SHU'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'DANA USAHA LAIN-LAIN'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'MODAL DISETOR'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'MODAL UNIT TOKO'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'SHU TH. 2023'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'SHU TH. 2024'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'HUTANG DAGANG'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'JUMLAH'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: ''),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                    PlutoRow(cells: {
-                      'uraian': PlutoCell(value: 'TOTAL PASSIVA'),
-                      'current_month': PlutoCell(value: ''),
-                      'last_month': PlutoCell(value: ''),
-                    }),
-                  ];
+                  // Build rows dynamically from API
+                  List<PlutoRow> rowsActiva =
+                      buildRowsActiva(result.data?.current, result.data?.previous);
+                  List<PlutoRow> rowsPassiva =
+                      buildRowsPassiva(result.data?.current, result.data?.previous);
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

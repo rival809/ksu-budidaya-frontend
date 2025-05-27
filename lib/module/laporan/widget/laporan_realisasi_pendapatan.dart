@@ -50,6 +50,8 @@ class _LaporanRealisasiPendapatanState extends State<LaporanRealisasiPendapatan>
                               itemAsString: (item) => item.toString(),
                               onChanged: (value) {
                                 controller.yearNow = value ?? 2025;
+                                controller.dataFutureRealisasiPendapatan = null;
+                                controller.hasData = false;
                                 controller.update();
                               },
                             ),

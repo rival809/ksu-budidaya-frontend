@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/laporan/laporan_neraca_model.dart';
 
 class LaporanController extends State<LaporanView> {
   static late LaporanController instance;
@@ -19,7 +20,7 @@ class LaporanController extends State<LaporanView> {
   LaporanHasilUsahaResult resultHasilUsaha = LaporanHasilUsahaResult();
   LaporanRealisasiPendapatanResult resultRealisasiPendapatan = LaporanRealisasiPendapatanResult();
   LaporanNeracaLajurModel resultNeracaLajur = LaporanNeracaLajurModel();
-  LaporanHasilUsahaResult resultNeraca = LaporanHasilUsahaResult();
+  LaporanNeracaModel resultNeraca = LaporanNeracaModel();
 
   cariDataLaporanHasilUsaha() async {
     try {
@@ -71,9 +72,9 @@ class LaporanController extends State<LaporanView> {
 
   cariDataLaporanNeraca() async {
     try {
-      resultNeraca = LaporanHasilUsahaResult();
+      resultNeraca = LaporanNeracaModel();
 
-      resultNeraca = await ApiService.laporanHasilUsaha(
+      resultNeraca = await ApiService.laporanNeraca(
         month: monthNow.toString(),
         year: yearNow.toString(),
       ).timeout(const Duration(seconds: 30));

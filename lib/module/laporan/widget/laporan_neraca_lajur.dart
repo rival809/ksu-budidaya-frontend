@@ -52,6 +52,8 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                           ),
                           onChanged: (value) {
                             controller.monthNow = value?.id ?? 1;
+                            controller.dataFutureNeracaLajur = null;
+                            controller.hasData = false;
                             controller.update();
                           },
                         ),
@@ -68,6 +70,8 @@ class _LaporanNeracaLajurState extends State<LaporanNeracaLajur> {
                           itemAsString: (item) => item.toString(),
                           onChanged: (value) {
                             controller.yearNow = value ?? 2025;
+                            controller.dataFutureNeracaLajur = null;
+                            controller.hasData = false;
                             controller.update();
                           },
                         ),

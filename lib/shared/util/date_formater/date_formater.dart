@@ -175,8 +175,12 @@ formatSelectedTime(DateTime selectedDate) {
 }
 
 String formatSelectedDateFull(DateTime selectedDate) {
-  String selectedDateString = DateFormat('yyyy-MM-dd HH:mm:ss').format(selectedDate);
-  return selectedDateString;
+  try {
+    String selectedDateString = DateFormat('yyyy-MM-dd HH:mm:ss').format(selectedDate);
+    return selectedDateString;
+  } catch (e) {
+    return selectedDate.toString();
+  }
 }
 
 formatDateFull(String? date) {
@@ -191,6 +195,24 @@ formatDateFull(String? date) {
   String formattedDate = DateFormat.yMMMMd('id').format(dateConverted);
 
   return formattedDate.toUpperCase();
+}
+
+String formatDateFullTime(String? date) {
+  try {
+    if (date.toString().isEmpty) {
+      return "-";
+    } else if (date.toString().contains("null")) {
+      return "-";
+    }
+    initializeDateFormatting('id');
+
+    DateTime dateConverted = DateTime.parse(date.toString());
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(dateConverted);
+
+    return formattedDate.toUpperCase();
+  } catch (e) {
+    return trimString(date);
+  }
 }
 
 formatDateWithTime(String? date) {
