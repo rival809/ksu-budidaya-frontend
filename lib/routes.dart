@@ -116,13 +116,25 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          path: 'stock-opname/aktivitas-stock',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SelectionArea(
-              child: AktivitasStockView(),
-            );
-          },
-        ),
+            path: 'stock-opname/aktivitas-stock',
+            builder: (BuildContext context, GoRouterState state) {
+              return const SelectionArea(
+                child: AktivitasStockView(),
+              );
+            },
+            routes: [
+              GoRoute(
+                path: 'detail',
+                builder: (BuildContext context, GoRouterState state) {
+                  final idPenjualan = trimString(state.uri.queryParameters['id']);
+                  return SelectionArea(
+                    child: DetailTransaksiView(
+                      idPenjualan: idPenjualan,
+                    ),
+                  );
+                },
+              ),
+            ]),
         GoRoute(
           path: 'user-management/role',
           builder: (BuildContext context, GoRouterState state) {

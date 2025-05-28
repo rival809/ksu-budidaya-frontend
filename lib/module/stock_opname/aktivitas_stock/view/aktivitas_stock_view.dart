@@ -221,6 +221,43 @@ class AktivitasStockView extends StatefulWidget {
                               ),
                             );
 
+                            columns.add(
+                              PlutoColumn(
+                                width: 150,
+                                backgroundColor: primaryColor,
+                                frozen: PlutoColumnFrozen.end,
+                                title: "AKSI",
+                                field: "Aksi",
+                                filterHintText: "",
+                                type: PlutoColumnType.text(),
+                                enableEditingMode: false,
+                                renderer: (rendererContext) {
+                                  Map<String, dynamic> dataRow = rendererContext.row.cells
+                                      .map((key, value) => MapEntry(key, value.value));
+                                  return BaseSecondaryButton(
+                                    onPressed: () {
+                                      Map<String, dynamic> dataRow = rendererContext.row.toJson();
+
+                                      if (rendererContext.row.cells['aktivitas']?.value ==
+                                          "Penjualan") {
+                                        router.push(
+                                          Uri(
+                                            path: "/stock-opname/aktivitas-stock/detail",
+                                            queryParameters: {
+                                              'id': trimString(dataRow["id_aktivitas"].toString())
+                                            },
+                                          ).toString(),
+                                        );
+                                      }
+                                    },
+                                    text: "Detail",
+                                    isDense: true,
+                                    suffixIcon: iconChevronDown,
+                                  );
+                                },
+                              ),
+                            );
+
                             List<dynamic> listDataWithIndex =
                                 List.generate(listData.length, (index) {
                               return {
@@ -230,6 +267,9 @@ class AktivitasStockView extends StatefulWidget {
                             });
                             rows = listDataWithIndex.map((item) {
                               Map<String, PlutoCell> cells = {};
+                              cells['Aksi'] = PlutoCell(
+                                value: null,
+                              );
 
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
