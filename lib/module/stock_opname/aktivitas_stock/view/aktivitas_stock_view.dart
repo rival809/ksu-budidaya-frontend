@@ -248,6 +248,10 @@ class AktivitasStockView extends StatefulWidget {
                                             },
                                           ).toString(),
                                         );
+                                      } else {
+                                        controller.postDetailPurchase(
+                                          trimString(dataRow["id_aktivitas"].toString()),
+                                        );
                                       }
                                     },
                                     text: "Detail",

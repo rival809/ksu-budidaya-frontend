@@ -14,7 +14,7 @@ generatePdfEstimasi({
     List<PdfLaporanRekapKasirModel> listDataPenerimaan = [];
 
     for (var i = 0; i < (controller.dataPembelian.details?.length ?? 0); i++) {
-      DataDetailPembelian dataRekap = controller.dataPembelian.details?[i] ?? DataDetailPembelian();
+      DetailPurchase dataRekap = controller.dataPembelian.details?[i] ?? DetailPurchase();
       int noUrut = i + 1;
 
       listDataPenerimaan.add(
@@ -46,7 +46,7 @@ generatePdfEstimasi({
     int totalKeuntungan = 0;
 
     for (var i = 0; i < (controller.dataPembelian.details?.length ?? 0); i++) {
-      DataDetailPembelian dataRekap = controller.dataPembelian.details?[i] ?? DataDetailPembelian();
+      DetailPurchase dataRekap = controller.dataPembelian.details?[i] ?? DetailPurchase();
       totalHargaBeli += double.parse(dataRekap.hargaBeli ?? "0").toInt();
       totalHargaJual += double.parse(dataRekap.hargaJual ?? "0").toInt();
       totalJumlah += dataRekap.jumlah ?? 0;

@@ -48,8 +48,7 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
     isPpn = true;
 
     if (dataPembelian.details?.isNotEmpty ?? false) {
-      isPpn = dataPembelian.details!
-          .every((element) => trimString(element.ppn ?? "0") == "0");
+      isPpn = dataPembelian.details!.every((element) => trimString(element.ppn ?? "0") == "0");
     }
   }
 
@@ -70,8 +69,7 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
   sumTotalNilaiBeli() {
     totalHargaBeli = 0;
     for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalHargaBeli +=
-          double.parse(dataPembelian.details?[i].totalNilaiBeli ?? "0");
+      totalHargaBeli += double.parse(dataPembelian.details?[i].totalNilaiBeli ?? "0");
     }
     totalHargaBeli = totalHargaBeli + totalPpn;
     dataPembelian.totalHargaBeli = totalHargaBeli.toString();
@@ -80,8 +78,7 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
   sumTotalNilaiJual() {
     totalHargaJual = 0;
     for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalHargaJual +=
-          double.parse(dataPembelian.details?[i].totalNilaiJual ?? "0");
+      totalHargaJual += double.parse(dataPembelian.details?[i].totalNilaiJual ?? "0");
     }
     dataPembelian.totalHargaJual = totalHargaJual.toString();
   }
@@ -106,19 +103,18 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
 
       if (result.success == true) {
         dataPembelian = dataPembelian.copyWith(
-          details: result.data,
+          details: result.data?.detailPurchase,
         );
 
-        if (result.data?.isNotEmpty ?? false) {
-          isPpn = result.data!.any((element) => element.ppn != "0");
+        if (result.data?.detailPurchase?.isNotEmpty ?? false) {
+          isPpn = result.data!.detailPurchase!.any((element) => element.ppn != "0");
         }
 
         update();
       }
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -129,11 +125,11 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
   void initState() {
     super.initState();
     dataPembelian = dataPembelian.copyWith(
-      details: widget.dataPembelian.data,
+      details: widget.dataPembelian.data!.detailPurchase,
     );
 
-    if (widget.dataPembelian.data?.isNotEmpty ?? false) {
-      isPpn = widget.dataPembelian.data!.any((element) => element.ppn != "0");
+    if (widget.dataPembelian.data?.detailPurchase?.isNotEmpty ?? false) {
+      isPpn = widget.dataPembelian.data!.detailPurchase!.any((element) => element.ppn != "0");
     }
 
     textControllerDetail[0].text = widget.tgTransaksi;
@@ -414,12 +410,9 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      formatMoney(
-                          (double.parse(dataPembelian.totalHargaBeli ?? "0") -
-                                  totalDiskon)
-                              .toString()),
-                      style: myTextTheme.displayLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
+                      formatMoney((double.parse(dataPembelian.totalHargaBeli ?? "0") - totalDiskon)
+                          .toString()),
+                      style: myTextTheme.displayLarge?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -453,8 +446,7 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       formatMoney(dataPembelian.totalHargaJual.toString()),
-                      style: myTextTheme.displayLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
+                      style: myTextTheme.displayLarge?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -621,10 +613,7 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
                 width: MediaQuery.of(context).size.width,
                 constraints: BoxConstraints.loose(
                   Size.fromHeight(
-                    MediaQuery.of(context).size.height -
-                        144 -
-                        AppBar().preferredSize.height -
-                        73,
+                    MediaQuery.of(context).size.height - 144 - AppBar().preferredSize.height - 73,
                   ),
                 ),
                 decoration: BoxDecoration(
@@ -672,8 +661,7 @@ class _DialogDetailPembelianState extends State<DialogDetailPembelian> {
                 ),
                 style: PlutoGridStyleConfig(
                   columnTextStyle:
-                      myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
-                          const TextStyle(),
+                      myTextTheme.titleSmall?.copyWith(color: neutralWhite) ?? const TextStyle(),
                   gridBorderColor: blueGray50,
                   gridBorderRadius: BorderRadius.circular(8),
                 ),

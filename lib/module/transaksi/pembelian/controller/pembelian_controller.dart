@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/pembelian/detail_pembelian_model.dart';
 import 'package:ksu_budidaya/module/transaksi/pembelian/widget/dialog_input_ppn.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
@@ -96,11 +97,11 @@ class PembelianController extends State<PembelianView> {
         isList = false;
         isDetail = true;
         dataPembelian = dataPembelian.copyWith(
-          details: result.data,
+          details: result.data?.detailPurchase,
         );
 
-        if (result.data?.isNotEmpty ?? false) {
-          isPpn = result.data!.any((element) => element.ppn != "0");
+        if (result.data?.detailPurchase?.isNotEmpty ?? false) {
+          isPpn = result.data!.detailPurchase!.any((element) => element.ppn != "0");
         }
 
         update();
@@ -284,7 +285,7 @@ class PembelianController extends State<PembelianView> {
   checklistPpn(bool value, int ppn) {
     isPpn = value;
 
-    for (var detail in dataPembelian.details ?? [DataDetailPembelian()]) {
+    for (var detail in dataPembelian.details ?? [DetailPurchase()]) {
       if (!value) {
         detail.ppn = roundDouble((ppn / 100) *
                 double.parse(detail.hargaBeli ?? "0") *
