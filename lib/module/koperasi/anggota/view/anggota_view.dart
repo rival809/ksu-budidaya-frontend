@@ -131,7 +131,9 @@ class AnggotaView extends StatefulWidget {
                                     ),
                                     field: controller.listRoleView[index],
                                     type: (controller.listRoleView[index] == "limit_pinjaman" ||
-                                            controller.listRoleView[index] == "hutang")
+                                            controller.listRoleView[index] == "hutang" ||
+                                            controller.listRoleView[index] ==
+                                                "total_nominal_transaksi")
                                         ? PlutoColumnType.number(
                                             locale: "id",
                                           )
