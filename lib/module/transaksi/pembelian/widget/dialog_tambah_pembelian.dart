@@ -7,7 +7,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ksu_budidaya/core.dart';
 
 class DialogTambahPembelian extends StatefulWidget {
-  final DataDetailPembelian? data;
+  final DetailPurchase? data;
   final PembelianController controller;
   final bool? isDetail;
   const DialogTambahPembelian({
@@ -33,7 +33,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
 
   @override
   void initState() {
-    dataEdit = widget.data?.copyWith() ?? DataDetailPembelian();
+    dataEdit = widget.data?.copyWith() ?? DetailPurchase();
     textController[0].text = trimString(widget.data?.idProduct);
     textController[1].text = trimString(widget.data?.nmProduk);
     textController[2].text = trimString(widget.data?.jumlah.toString());
@@ -69,7 +69,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
     super.dispose();
   }
 
-  DataDetailPembelian dataEdit = DataDetailPembelian();
+  DetailPurchase dataEdit = DetailPurchase();
 
   final tambahPembelianKey = GlobalKey<FormState>();
 
@@ -393,8 +393,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                                       trimString(widget.data?.idDetailPembelian.toString()));
                                   controller.update();
 
-                                  DataDetailPembelian dataPayload =
-                                      DataDetailPembelian.fromJson(payload);
+                                  DetailPurchase dataPayload = DetailPurchase.fromJson(payload);
                                   controller.dataPembelian.details?.add(dataPayload);
                                   controller.update();
                                 } else {
@@ -403,8 +402,7 @@ class _DialogTambahPembelianState extends State<DialogTambahPembelian> {
                                     (value) => controller.dataPembelian.details?.length ?? 0,
                                   );
 
-                                  DataDetailPembelian dataPayload =
-                                      DataDetailPembelian.fromJson(payload);
+                                  DetailPurchase dataPayload = DetailPurchase.fromJson(payload);
 
                                   controller.dataPembelian.details?.add(dataPayload);
                                   controller.update();

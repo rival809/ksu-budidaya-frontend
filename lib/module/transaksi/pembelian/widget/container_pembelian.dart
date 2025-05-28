@@ -212,7 +212,7 @@ class _ContainerPembelianState extends State<ContainerPembelian> {
                         await showDialogBase(
                           width: 700,
                           content: DialogTambahPembelian(
-                            data: DataDetailPembelian(),
+                            data: DetailPurchase(),
                             controller: controller,
                           ),
                         );
@@ -350,7 +350,7 @@ class _ContainerPembelianState extends State<ContainerPembelian> {
                         onSelected: (event) async {
                           var dataRow = event.row?.toJson();
 
-                          DataDetailPembelian? data = controller.dataPembelian.details?.firstWhere(
+                          DetailPurchase? data = controller.dataPembelian.details?.firstWhere(
                             (element) =>
                                 trimString(element.idDetailPembelian.toString()) ==
                                 trimString(dataRow?["id_detail_pembelian"].toString()),

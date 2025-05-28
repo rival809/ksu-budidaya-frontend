@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
 import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/view/aktivitas_stock_view.dart';
+import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/widget/detail_pembelian.dart';
 
 class AktivitasStockController extends State<AktivitasStockView> {
   static late AktivitasStockController instance;
@@ -91,6 +92,31 @@ class AktivitasStockController extends State<AktivitasStockView> {
 
       return result;
     } catch (e) {
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  postDetailPurchase(String id_pembelian) async {
+    showCircleDialogLoading();
+    try {
+      DetailPembelianResult result = await ApiService.detailPembelian(
+        data: {"id_pembelian": id_pembelian},
+      ).timeout(const Duration(seconds: 30));
+
+      Navigator.pop(context);
+
+      if (result.success == true) {
+        Get.to(DetailPembelian(
+          result: result,
+        ));
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {

@@ -9,7 +9,7 @@ class CreatePembelianModel {
   String? totalHargaJual;
   String? jenisPembayaran;
   String? keterangan;
-  List<DataDetailPembelian>? details;
+  List<DetailPurchase>? details;
 
   CreatePembelianModel(
       {this.tgPembelian,
@@ -32,9 +32,9 @@ class CreatePembelianModel {
     jenisPembayaran = json['jenis_pembayaran'];
     keterangan = json['keterangan'];
     if (json['details'] != null) {
-      details = <DataDetailPembelian>[];
+      details = <DetailPurchase>[];
       json['details'].forEach((v) {
-        details!.add(DataDetailPembelian.fromJson(v));
+        details!.add(DetailPurchase.fromJson(v));
       });
     }
   }
@@ -64,7 +64,7 @@ class CreatePembelianModel {
     String? totalHargaJual,
     String? jenisPembayaran,
     String? keterangan,
-    List<DataDetailPembelian>? details,
+    List<DetailPurchase>? details,
   }) =>
       CreatePembelianModel(
         tgPembelian: tgPembelian ?? this.tgPembelian,

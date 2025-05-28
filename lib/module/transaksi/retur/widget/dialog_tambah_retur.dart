@@ -43,8 +43,8 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
     return matches;
   }
 
-  List<DataDetailPembelian> getDetailSuggestions(String query, List<DataDetailPembelian>? states) {
-    List<DataDetailPembelian> matches = [];
+  List<DetailPurchase> getDetailSuggestions(String query, List<DetailPurchase>? states) {
+    List<DetailPurchase> matches = [];
 
     if (states != null) {
       matches.addAll(states);
@@ -99,7 +99,7 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
 
   PembelianResult resultPembelian = PembelianResult();
   DetailPembelianResult detailPembelian = DetailPembelianResult();
-  DataDetailPembelian selectedDetailPembelian = DataDetailPembelian();
+  DetailPurchase selectedDetailPembelian = DetailPurchase();
 
   onInitState() async {
     await cariDataPembelian();
@@ -107,7 +107,7 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
       await cariDetailPembelian(trimString(widget.controller.dataPayloadRetur.idPembelian));
     }
     if (widget.index != null) {
-      selectedDetailPembelian = detailPembelian.data!.firstWhere(
+      selectedDetailPembelian = detailPembelian.data!.detailPurchase!.firstWhere(
           (element) => trimString(element.idProduct) == trimString(widget.data?.idProduct));
     }
     textController[0].text = trimString(widget.controller.dataPayloadRetur.idPembelian);
@@ -204,13 +204,13 @@ class _DialogTambahReturState extends State<DialogTambahRetur> {
                     label: "ID Product",
                     enabled: widget.isDetail == true
                         ? false
-                        : detailPembelian.data?.isEmpty ?? true
+                        : detailPembelian.data?.detailPurchase!.isEmpty ?? true
                             ? false
                             : true,
                     textEditingController: textController[1],
                     items: (search) => getDetailSuggestions(
                       search,
-                      detailPembelian.data,
+                      detailPembelian.data?.detailPurchase,
                     ),
                     itemBuilder: (context, dataPembelian) {
                       return ListTile(
