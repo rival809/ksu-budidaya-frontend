@@ -169,6 +169,22 @@ formatSelectedDate(DateTime selectedDate) {
   }
 }
 
+formatDateSlash(String? date) {
+  try {
+    if (date!.isEmpty) {
+      return "";
+    } else if (date.contains("null")) {
+      return "";
+    }
+    initializeDateFormatting('id');
+
+    DateTime dateConverted = DateTime.parse(trimString(date));
+    return "${dateConverted.day.toString().padLeft(2, '0')}/${dateConverted.month.toString().padLeft(2, '0')}/${dateConverted.year.toString().padLeft(2, '0')}";
+  } catch (e) {
+    return "";
+  }
+}
+
 formatSelectedTime(DateTime selectedDate) {
   String selectedDateString = DateFormat('HH:mm:ss').format(selectedDate);
   return selectedDateString;

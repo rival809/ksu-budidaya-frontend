@@ -34,6 +34,8 @@ export 'package:ksu_budidaya/model/hutang_dagang/hutang_dagang_model.dart';
 export 'package:ksu_budidaya/model/jenis_laporan_model.dart';
 export 'package:ksu_budidaya/model/laporan/laporan_hasil_usaha_model.dart';
 export 'package:ksu_budidaya/model/laporan/laporan_neraca_lajur_model.dart';
+export 'package:ksu_budidaya/model/laporan/laporan_neraca_model.dart';
+export 'package:ksu_budidaya/model/laporan/laporan_penjualan_model.dart';
 export 'package:ksu_budidaya/model/laporan/laporan_realisasi_pendapatan_model.dart';
 export 'package:ksu_budidaya/model/pembelian/create_pembelian_model.dart';
 export 'package:ksu_budidaya/model/pembelian/detail_pembelian_model.dart';
@@ -101,7 +103,9 @@ export 'package:ksu_budidaya/module/laporan/widget/container_tidak_ada_laporan.d
 export 'package:ksu_budidaya/module/laporan/widget/generate_laporan.dart';
 export 'package:ksu_budidaya/module/laporan/widget/generate_laporan_neraca.dart';
 export 'package:ksu_budidaya/module/laporan/widget/generate_laporan_neraca_lajur.dart';
+export 'package:ksu_budidaya/module/laporan/widget/generate_laporan_penjualan.dart';
 export 'package:ksu_budidaya/module/laporan/widget/generate_laporan_realisasi_pendapatan.dart';
+export 'package:ksu_budidaya/module/laporan/widget/excel/generate_excel_penjualan.dart';
 export 'package:ksu_budidaya/module/laporan/widget/laporan_hasil_usaha.dart';
 export 'package:ksu_budidaya/module/laporan/widget/laporan_neraca.dart';
 export 'package:ksu_budidaya/module/laporan/widget/laporan_neraca_lajur.dart';

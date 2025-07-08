@@ -44,4 +44,5 @@ List<Map<String, dynamic>> dataItemLaporan = [
   {"id": 2, "nm_laporan": "REALISASI ANGGARAN PENDAPATAN DAN BIAYA"},
   {"id": 3, "nm_laporan": "LAPORAN NERACA LAJUR"},
   {"id": 4, "nm_laporan": "LAPORAN NERACA"},
+  {"id": 5, "nm_laporan": "LAPORAN PENJUALAN"},
 ];
