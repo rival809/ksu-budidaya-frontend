@@ -3,6 +3,7 @@ import 'package:ksu_budidaya/core.dart';
 import 'package:universal_html/html.dart' as html;
 
 doLogout() async {
+  showCircleDialogLoading();
   // UserDatabase.save(LoginResult());
   // ReferencesDatabase.saveBbm(BbmResult());
   // ReferencesDatabase.saveJenisKb(JenisKbResult());
@@ -17,6 +18,7 @@ doLogout() async {
   // DeviceDatabase.save("", "");
   AppSession.save("");
   await Future.delayed(const Duration(seconds: 2));
+  Get.back();
   if (kIsWeb) {
     html.window.location.replace("/");
   } else {

@@ -179,6 +179,9 @@ class _DialogAnggotaState extends State<DialogAnggota> {
                           payload.removeWhere(
                             (key, value) => key == "hutang",
                           );
+                          payload.removeWhere(
+                            (key, value) => key == "total_nominal_transaksi",
+                          );
                           AnggotaController.instance.postCreateAnggota(payload);
                         }
                       }

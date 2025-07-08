@@ -81,6 +81,8 @@ class BerandaController extends State<BerandaView> {
       DataMap dataCari = {
         "page": "1",
         "size": "10",
+        "sort_order": ["desc"],
+        "sort_by": ["created_at"]
       };
 
       result = await ApiService.listPenjualan(
