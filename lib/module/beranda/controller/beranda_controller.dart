@@ -101,10 +101,10 @@ class BerandaController extends State<BerandaView> {
   }
 
   initValue() async {
-    // await getReferences();
-    // await postIncomeDashboard();
-    // await postIncomeMonthly();
-    // dataFuture = cariDataPenjualan();
+    await getReferences();
+    await postIncomeDashboard();
+    await postIncomeMonthly();
+    dataFuture = cariDataPenjualan();
     update();
   }
 
