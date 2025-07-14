@@ -220,6 +220,7 @@ export 'package:ksu_budidaya/shared/widget/base_form/search_form.dart';
 export 'package:ksu_budidaya/shared/widget/base_table/footer_table_widget.dart';
 export 'package:ksu_budidaya/shared/widget/body_container/body_container.dart';
 export 'package:ksu_budidaya/shared/widget/checkbox/row_checkbox.dart';
+export 'package:ksu_budidaya/shared/widget/column_selector/column_selector_dropdown.dart';
 export 'package:ksu_budidaya/shared/widget/data/one_data.dart';
 export 'package:ksu_budidaya/shared/widget/drawer/drawer_menu.dart';
 export 'package:ksu_budidaya/shared/widget/line_dash/line_dash.dart';

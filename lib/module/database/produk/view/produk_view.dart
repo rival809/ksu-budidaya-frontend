@@ -79,6 +79,14 @@ class ProdukView extends StatefulWidget {
                               const SizedBox(
                                 width: 16.0,
                               ),
+                              ColumnSelectorDropdown(
+                                availableColumns: controller.availableColumns,
+                                selectedColumnsNotifier: controller.selectedOptionalColumnsNotifier,
+                                onSelectionChanged: controller.updateSelectedColumns,
+                              ),
+                              const SizedBox(
+                                width: 16.0,
+                              ),
                               // BaseSecondaryButton(
                               //   onPressed: () {
                               //     // controller.dataFuture =
@@ -136,6 +144,7 @@ class ProdukView extends StatefulWidget {
                     height: 8.0,
                   ),
                   FutureBuilder(
+                    key: ValueKey(controller.selectedOptionalColumns.join(',')),
                     future: controller.dataFuture,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -208,11 +217,12 @@ class ProdukView extends StatefulWidget {
 
                             columns.addAll(
                               List.generate(
-                                controller.listProdukView.length,
+                                controller.selectedColumns.length,
                                 (index) {
+                                  final columnField = controller.selectedColumns[index];
                                   return PlutoColumn(
                                     footerRenderer: (context) {
-                                      if (controller.listProdukView[index] == "id_divisi") {
+                                      if (columnField == "id_divisi") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
@@ -262,7 +272,7 @@ class ProdukView extends StatefulWidget {
                                             ),
                                           ),
                                         );
-                                      } else if (controller.listProdukView[index] == "jumlah") {
+                                      } else if (columnField == "jumlah") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
@@ -321,7 +331,7 @@ class ProdukView extends StatefulWidget {
                                             ),
                                           ),
                                         );
-                                      } else if (controller.listProdukView[index] == "total_jual") {
+                                      } else if (columnField == "total_jual") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
@@ -381,7 +391,7 @@ class ProdukView extends StatefulWidget {
                                             ),
                                           ),
                                         );
-                                      } else if (controller.listProdukView[index] == "total_beli") {
+                                      } else if (columnField == "total_beli") {
                                         return SingleChildScrollView(
                                           controller: ScrollController(),
                                           child: SizedBox(
@@ -475,19 +485,19 @@ class ProdukView extends StatefulWidget {
                                     },
                                     backgroundColor: primaryColor,
                                     filterHintText:
-                                        "Cari ${controller.listProdukView[index] == "id_divisi" ? "divisi" : controller.listProdukView[index] == "id_supplier" ? "supplier" : controller.listProdukView[index] == "jumlah" ? "stock" : controller.listProdukView[index]}",
-                                    title: controller.listProdukView[index] == "id_divisi"
+                                        "Cari ${columnField == "id_divisi" ? "divisi" : columnField == "id_supplier" ? "supplier" : columnField == "jumlah" ? "stock" : columnField}",
+                                    title: columnField == "id_divisi"
                                         ? "DIVISI"
-                                        : controller.listProdukView[index] == "id_supplier"
+                                        : columnField == "id_supplier"
                                             ? "SUPPLIER"
-                                            : controller.listProdukView[index] == "jumlah"
+                                            : columnField == "jumlah"
                                                 ? "STOCK"
                                                 : convertTitle(
-                                                    controller.listProdukView[index],
+                                                    columnField,
                                                   ),
-                                    field: controller.listProdukView[index],
+                                    field: columnField,
                                     type: controller.typeField(
-                                      controller.listProdukView[index],
+                                      columnField,
                                     ),
                                   );
                                 },
@@ -522,10 +532,13 @@ class ProdukView extends StatefulWidget {
 
                                   dataRow["status_product"] = dataRow["aksi"];
 
-                                  DataDetailProduct data = controller.dataProduct.dataProduct
-                                          ?.firstWhere((element) =>
-                                              trimString(element.idProduct) ==
-                                              trimString(dataRow["id_product"])) ??
+                                  // Coba ambil data terbaru dari grid terlebih dahulu
+                                  DataDetailProduct data = controller
+                                          .getProductFromGrid(trimString(dataRow["id_product"])) ??
+                                      // Fallback ke data source jika grid tidak available
+                                      controller.dataProduct.dataProduct?.firstWhere((element) =>
+                                          trimString(element.idProduct) ==
+                                          trimString(dataRow["id_product"])) ??
                                       DataDetailProduct();
 
                                   return DropdownAksi(
@@ -637,7 +650,7 @@ class ProdukView extends StatefulWidget {
                                 value: item["status_product"],
                               );
 
-                              for (String column in controller.listProdukView) {
+                              for (String column in controller.selectedColumns) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
                                     value: column == "id_divisi"
@@ -667,38 +680,52 @@ class ProdukView extends StatefulWidget {
                                   36 -
                                   16,
                               child: PlutoGrid(
+                                key: ValueKey(
+                                    'pluto-grid-${controller.selectedOptionalColumns.join('-')}'),
                                 noRowsWidget: const ContainerTidakAda(
                                   entity: 'Product',
                                 ),
                                 mode: PlutoGridMode.select,
                                 onLoaded: (event) {
+                                  // Simpan reference PlutoGridStateManager ke controller
+                                  controller.plutoGridStateManager = event.stateManager;
+
                                   event.stateManager.setShowColumnFilter(true);
                                   event.stateManager.columnFooterHeight = 68;
 
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "nm_product")
-                                      .suppressedAutoSize = true;
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "nm_product")
-                                      .width = 400;
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "jumlah")
-                                      .suppressedAutoSize = true;
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "jumlah")
-                                      .width = 75;
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "harga_jual")
-                                      .suppressedAutoSize = true;
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "harga_jual")
-                                      .width = 150;
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "harga_beli")
-                                      .suppressedAutoSize = true;
-                                  event.stateManager.columns
-                                      .firstWhere((element) => element.field == "harga_beli")
-                                      .width = 150;
+                                  // Set column widths for selected columns only
+                                  if (controller.selectedColumns.contains("nm_product")) {
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "nm_product")
+                                        .suppressedAutoSize = true;
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "nm_product")
+                                        .width = 400;
+                                  }
+                                  if (controller.selectedColumns.contains("jumlah")) {
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "jumlah")
+                                        .suppressedAutoSize = true;
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "jumlah")
+                                        .width = 75;
+                                  }
+                                  if (controller.selectedColumns.contains("harga_jual")) {
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "harga_jual")
+                                        .suppressedAutoSize = true;
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "harga_jual")
+                                        .width = 150;
+                                  }
+                                  if (controller.selectedColumns.contains("harga_beli")) {
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "harga_beli")
+                                        .suppressedAutoSize = true;
+                                    event.stateManager.columns
+                                        .firstWhere((element) => element.field == "harga_beli")
+                                        .width = 150;
+                                  }
                                 },
                                 onSorted: (event) {
                                   if (event.column.field != "Aksi") {
