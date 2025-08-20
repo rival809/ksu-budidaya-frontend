@@ -127,6 +127,7 @@ export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_footer_
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_list_pembelian.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/container_pembelian.dart';
 export 'package:ksu_budidaya/module/transaksi/pembelian/widget/dialog_tambah_pembelian.dart';
+export 'package:ksu_budidaya/module/transaksi/pembelian/widget/generate_laporan_pembelian.dart';
 export 'package:ksu_budidaya/module/transaksi/penjualan/controller/penjualan_controller.dart';
 export 'package:ksu_budidaya/module/transaksi/penjualan/view/penjualan_view.dart';
 export 'package:ksu_budidaya/module/transaksi/penjualan/widget/body_nota.dart';

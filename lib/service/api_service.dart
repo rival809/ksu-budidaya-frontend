@@ -21,18 +21,12 @@ class ApiService {
     },
   );
 
-  static final Interceptor interceptor = InterceptorsWrapper(
-    onError: (DioException error, ErrorInterceptorHandler handler) {
-      throw Exception(error.response?.statusMessage);
-    },
-  );
-
   static Dio dio = Dio(
     BaseOptions(
       // baseUrl: Endpoints.baseURL,
       baseUrl: _baseUrl,
       connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 30),
       responseType: ResponseType.json,
     ),
   )..interceptors.addAll([
@@ -1225,7 +1219,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return LaporanHasilUsahaResult.fromJson(json.decode(response.toString()));
+        return LaporanHasilUsahaResult.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1277,7 +1272,8 @@ class ApiService {
       if (response.data["success"] == true) {
         // final mockResponse = await rootBundle.loadString('assets/res_neraca_lajur.json');
         // return LaporanNeracaLajurModel.fromJson(json.decode(mockResponse));
-        return LaporanNeracaLajurModel.fromJson(json.decode(response.toString()));
+        return LaporanNeracaLajurModel.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1300,7 +1296,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return LaporanRealisasiPendapatanResult.fromJson(json.decode(response.toString()));
+        return LaporanRealisasiPendapatanResult.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1375,7 +1372,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return HistoryHutangDagangResult.fromJson(json.decode(response.toString()));
+        return HistoryHutangDagangResult.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1396,7 +1394,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return BayarHutangDagangResult.fromJson(json.decode(response.toString()));
+        return BayarHutangDagangResult.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1439,7 +1438,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return HistoryHutangAnggotaResult.fromJson(json.decode(response.toString()));
+        return HistoryHutangAnggotaResult.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1460,7 +1460,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return BayarHutangAnggotaResult.fromJson(json.decode(response.toString()));
+        return BayarHutangAnggotaResult.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1502,7 +1503,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return HistoryStockOpnameModel.fromJson(json.decode(response.toString()));
+        return HistoryStockOpnameModel.fromJson(
+            json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
