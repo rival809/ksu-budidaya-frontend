@@ -28,7 +28,7 @@ doGenerateLaporanPembelian({required PembelianController controller}) async {
           keterangan: dataDetail?.keterangan,
         ),
       );
-      
+
       // Hitung total
       totalHargaBeli += double.parse(dataDetail?.totalHargaBeli ?? "0");
       totalHargaJual += double.parse(dataDetail?.totalHargaJual ?? "0");
@@ -45,7 +45,8 @@ doGenerateLaporanPembelian({required PembelianController controller}) async {
     pdf.addPage(
       pw.MultiPage(
           pageTheme: const pw.PageTheme(
-            pageFormat: PdfPageFormat(29.7 * cm, 21.0 * cm, marginAll: 1.0 * cm),
+            pageFormat:
+                PdfPageFormat(29.7 * cm, 21.0 * cm, marginAll: 1.0 * cm),
             margin: pw.EdgeInsets.all(8),
           ),
           header: (pw.Context context) => pw.Column(
@@ -136,7 +137,7 @@ doGenerateLaporanPembelian({required PembelianController controller}) async {
                     font: regularFont,
                     fontSize: 8,
                   ),
-                  oddRowDecoration: pw.BoxDecoration(
+                  oddRowDecoration: const pw.BoxDecoration(
                     color: PdfColor.fromInt(0xFFF5F5F5),
                   ),
                   cellHeight: 12,

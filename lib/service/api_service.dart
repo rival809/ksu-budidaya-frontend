@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
-import 'package:ksu_budidaya/model/laporan/laporan_neraca_model.dart';
-import 'package:ksu_budidaya/model/laporan/laporan_penjualan_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
 import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
