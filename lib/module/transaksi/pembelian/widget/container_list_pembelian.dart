@@ -46,7 +46,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     SizedBox(
                       width: 250,
                       child: BaseForm(
-                        textEditingController: controller.pembelianNameController,
+                        textEditingController:
+                            controller.pembelianNameController,
                         onChanged: (value) {},
                         hintText: "Pencarian",
                         suffix: Padding(
@@ -54,7 +55,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           child: BasePrimaryButton(
                             onPressed: () {
                               controller.field = null;
-                              controller.dataFuture = controller.cariDataPembelian();
+                              controller.dataFuture =
+                                  controller.cariDataPembelian();
                               controller.update();
                             },
                             text: "Cari",
@@ -95,20 +97,35 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     // ),
                   ],
                 ),
-                BasePrimaryButton(
-                  onPressed: () {
-                    controller.dataPembelian.details = [];
-                    controller.update();
-                    controller.isList = false;
-                    controller.isDetail = false;
-                    controller.isPpn = false;
-                    controller.isDiskon = false;
-                    controller.update();
-                    update();
-                  },
-                  text: "Tambah Data",
-                  suffixIcon: iconAdd,
-                  isDense: true,
+                Row(
+                  children: [
+                    BaseSecondaryButton(
+                      onPressed: () {
+                        doGenerateLaporanPembelian(controller: controller);
+                      },
+                      text: "Cetak Laporan Pembelian",
+                      suffixIcon: iconPrint,
+                      isDense: true,
+                    ),
+                    const SizedBox(
+                      width: 16.0,
+                    ),
+                    BasePrimaryButton(
+                      onPressed: () {
+                        controller.dataPembelian.details = [];
+                        controller.update();
+                        controller.isList = false;
+                        controller.isDetail = false;
+                        controller.isPpn = false;
+                        controller.isDiskon = false;
+                        controller.update();
+                        update();
+                      },
+                      text: "Tambah Data",
+                      suffixIcon: iconAdd,
+                      isDense: true,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -129,7 +146,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                 PembelianResult result = snapshot.data;
                 controller.dataCashInOut = result.data ?? DataPembelian();
 
-                List<dynamic> listData = controller.dataCashInOut.toJson()["data_pembelian"] ?? [];
+                List<dynamic> listData =
+                    controller.dataCashInOut.toJson()["data_pembelian"] ?? [];
 
                 if (listData.isNotEmpty) {
                   List<PlutoRow> rows = [];
@@ -139,23 +157,33 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     List.generate(
                       controller.listRoleView.length,
                       (index) {
-                        if (controller.listRoleView[index] == "jenis_pembayaran") {
+                        if (controller.listRoleView[index] ==
+                            "jenis_pembayaran") {
                           return PlutoColumn(
                             width: 75,
                             backgroundColor: primaryColor,
-                            filterHintText: "Cari ${controller.listRoleView[index]}",
+                            filterHintText:
+                                "Cari ${controller.listRoleView[index]}",
                             title: convertTitle(
                               controller.listRoleView[index],
                             ),
                             field: controller.listRoleView[index],
                             type: PlutoColumnType.text(),
                             renderer: (rendererContext) {
-                              Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                              Map<String, dynamic> dataRow =
+                                  rendererContext.row.toJson();
+                              String jenisBayar = dataRow["jenis_pembayaran"]
+                                  .toString()
+                                  .toUpperCase();
                               return CardLabel(
-                                cardColor: yellow50,
-                                cardTitle: dataRow["jenis_pembayaran"].toString().toUpperCase(),
-                                cardTitleColor: yellow900,
-                                cardBorderColor: yellow50,
+                                cardColor:
+                                    jenisBayar == "TUNAI" ? green50 : yellow50,
+                                cardTitle: jenisBayar,
+                                cardTitleColor: jenisBayar == "TUNAI"
+                                    ? green900
+                                    : yellow900,
+                                cardBorderColor:
+                                    jenisBayar == "TUNAI" ? green50 : yellow50,
                               );
                             },
                           );
@@ -164,7 +192,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           return PlutoColumn(
                             width: 75,
                             backgroundColor: primaryColor,
-                            filterHintText: "Cari ${controller.listRoleView[index]}",
+                            filterHintText:
+                                "Cari ${controller.listRoleView[index]}",
                             title: "Qnt",
                             field: controller.listRoleView[index],
                             type: PlutoColumnType.number(
@@ -175,13 +204,16 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
 
                         return PlutoColumn(
                           backgroundColor: primaryColor,
-                          filterHintText: "Cari ${controller.listRoleView[index]}",
+                          filterHintText:
+                              "Cari ${controller.listRoleView[index]}",
                           title: convertTitle(
                             controller.listRoleView[index],
                           ),
                           field: controller.listRoleView[index],
-                          type: (controller.listRoleView[index] == "total_harga_beli" ||
-                                  controller.listRoleView[index] == "total_harga_jual" ||
+                          type: (controller.listRoleView[index] ==
+                                      "total_harga_beli" ||
+                                  controller.listRoleView[index] ==
+                                      "total_harga_jual" ||
                                   controller.listRoleView[index] == "jumlah")
                               ? PlutoColumnType.number(
                                   locale: "id",
@@ -204,12 +236,13 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                       enableEditingMode: false,
                       renderer: (rendererContext) {
                         // final rowIndex = rendererContext.rowIdx;
-                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
-                        DetailDataPembelian dataDetail = result.data?.dataPembelian?.firstWhere(
-                                (element) =>
+                        Map<String, dynamic> dataRow =
+                            rendererContext.row.toJson();
+                        DetailDataPembelian dataDetail =
+                            result.data?.dataPembelian?.firstWhere((element) =>
                                     trimString(element.idPembelian) ==
                                     trimString(dataRow["Aksi"])) ??
-                            DetailDataPembelian();
+                                DetailDataPembelian();
                         return DropdownAksi(
                           text: "Aksi",
                           listItem: [
@@ -247,15 +280,20 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           ],
                           onChange: (value) {
                             if (value == 1) {
-                              DetailDataPembelian dataPembelian = dataDetail.copyWith();
+                              DetailDataPembelian dataPembelian =
+                                  dataDetail.copyWith();
                               controller.dataPembelian.jenisPembayaran =
                                   dataPembelian.jenisPembayaran;
-                              controller.dataPembelian.idSupplier = dataPembelian.idSupplier;
+                              controller.dataPembelian.idSupplier =
+                                  dataPembelian.idSupplier;
                               controller.dataPembelian.jumlah =
                                   trimString(dataPembelian.jumlah.toString());
-                              controller.dataPembelian.keterangan = dataPembelian.keterangan;
-                              controller.dataPembelian.nmSupplier = dataPembelian.nmSupplier;
-                              controller.dataPembelian.tgPembelian = dataPembelian.tgPembelian;
+                              controller.dataPembelian.keterangan =
+                                  dataPembelian.keterangan;
+                              controller.dataPembelian.nmSupplier =
+                                  dataPembelian.nmSupplier;
+                              controller.dataPembelian.tgPembelian =
+                                  dataPembelian.tgPembelian;
                               controller.dataPembelian.totalHargaBeli =
                                   dataPembelian.totalHargaBeli;
                               controller.dataPembelian.totalHargaJual =
@@ -288,7 +326,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                     ),
                   );
 
-                  List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
+                  List<dynamic> listDataWithIndex =
+                      List.generate(listData.length, (index) {
                     return {
                       ...listData[index],
                       'persistentIndex': index + 1,
@@ -351,7 +390,8 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           autoSizeMode: PlutoAutoSizeMode.scale,
                         ),
                         style: PlutoGridStyleConfig(
-                          columnTextStyle: myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                          columnTextStyle: myTextTheme.titleSmall
+                                  ?.copyWith(color: neutralWhite) ??
                               const TextStyle(),
                           gridBorderColor: blueGray50,
                           gridBorderRadius: BorderRadius.circular(8),
@@ -364,11 +404,13 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                         return FooterTableWidget(
                           page: controller.page,
                           itemPerpage: controller.size,
-                          maxPage: controller.dataCashInOut.paging?.totalPage ?? 0,
+                          maxPage:
+                              controller.dataCashInOut.paging?.totalPage ?? 0,
                           onChangePage: (value) {
                             controller.page = trimString(value);
                             controller.update();
-                            controller.dataFuture = controller.cariDataPembelian(
+                            controller.dataFuture =
+                                controller.cariDataPembelian(
                               isAsc: controller.isAsc,
                               field: controller.field,
                             );
@@ -378,18 +420,22 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                             controller.page = "1";
                             controller.size = trimString(value);
                             controller.update();
-                            controller.dataFuture = controller.cariDataPembelian(
+                            controller.dataFuture =
+                                controller.cariDataPembelian(
                               isAsc: controller.isAsc,
                               field: controller.field,
                             );
                             controller.update();
                           },
-                          totalRow: controller.dataCashInOut.paging?.totalItem ?? 0,
+                          totalRow:
+                              controller.dataCashInOut.paging?.totalItem ?? 0,
                           onPressLeft: () {
                             if (int.parse(controller.page) > 1) {
-                              controller.page = (int.parse(controller.page) - 1).toString();
+                              controller.page =
+                                  (int.parse(controller.page) - 1).toString();
                               controller.update();
-                              controller.dataFuture = controller.cariDataPembelian(
+                              controller.dataFuture =
+                                  controller.cariDataPembelian(
                                 isAsc: controller.isAsc,
                                 field: controller.field,
                               );
@@ -399,9 +445,11 @@ class _ContainerListPembelianState extends State<ContainerListPembelian> {
                           onPressRight: () {
                             if (int.parse(controller.page) <
                                 (result.data?.paging?.totalPage ?? 0)) {
-                              controller.page = (int.parse(controller.page) + 1).toString();
+                              controller.page =
+                                  (int.parse(controller.page) + 1).toString();
                               controller.update();
-                              controller.dataFuture = controller.cariDataPembelian(
+                              controller.dataFuture =
+                                  controller.cariDataPembelian(
                                 isAsc: controller.isAsc,
                                 field: controller.field,
                               );
