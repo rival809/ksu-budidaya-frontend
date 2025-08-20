@@ -10,7 +10,10 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
   static late StockOpnameMobileController instance;
   late StockOpnameMobileView view;
 
+  bool useId = true;
+
   TextEditingController textBarcodeController = TextEditingController();
+  TextEditingController textnamaSearchController = TextEditingController();
   TextEditingController textNamaProdukController = TextEditingController();
   TextEditingController textCurrentStockController = TextEditingController();
   TextEditingController textStockController = TextEditingController();
@@ -22,6 +25,25 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
   final stockOpnameKey = GlobalKey<FormState>();
 
   DetailProductResult dataResult = DetailProductResult();
+
+  List<DataDetailProduct> getDetailSuggestions(
+      String query, List<DataDetailProduct>? states) {
+    List<DataDetailProduct> matches = [];
+
+    if (states != null) {
+      matches.addAll(states);
+      matches.retainWhere((s) =>
+          (trimString(s.idProduct)
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) ||
+              trimString(s.nmProduct)
+                  .toLowerCase()
+                  .contains(query.toLowerCase())) &&
+          s.statusProduct == true);
+    }
+
+    return matches;
+  }
 
   void onBarcodeChanged(String value) {
     if (_debounce?.isActive ?? false) {
@@ -56,7 +78,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       if (result.success == true) {
         dataResult = result;
         textNamaProdukController.text = trimString(result.data?.nmProduct);
-        textCurrentStockController.text = trimString(result.data?.jumlah.toString());
+        textCurrentStockController.text =
+            trimString(result.data?.jumlah.toString());
         textHargaJualController.text = formatMoney(result.data?.hargaJual);
         textHargaBeliController.text = formatMoney(result.data?.hargaBeli);
       }
@@ -64,7 +87,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -175,7 +199,8 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -184,6 +209,22 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
 
   resetData() {
     textBarcodeController.clear();
+    textnamaSearchController.clear();
+    textNamaProdukController.clear();
+    textCurrentStockController.clear();
+    textStockController.clear();
+    textHargaJualController.clear();
+    textHargaBeliController.clear();
+    stockEdit = "";
+    dataResult = DetailProductResult();
+    update();
+  }
+
+  void onSwitchChanged(bool value) {
+    useId = value;
+    // Reset all data when switching between search modes
+    textBarcodeController.clear();
+    textnamaSearchController.clear();
     textNamaProdukController.clear();
     textCurrentStockController.clear();
     textStockController.clear();

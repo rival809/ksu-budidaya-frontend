@@ -20,5 +20,6 @@
     "activityBar.foreground": "#FFFFFF",
     "titleBar.activeBackground": "#017260",
     "titleBar.activeForeground": "#FFFFFF"
-  }
+  },
+  "dart.flutterSdkPath": ".fvm/versions/3.19.1"
 }

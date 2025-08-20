@@ -38,12 +38,17 @@ class StockOpnameMobileView extends StatefulWidget {
                           Expanded(
                             child: BasePrimaryButton(
                               text: "Simpan",
-                              onPressed: (controller.dataResult.data?.idProduct?.isEmpty ?? true)
+                              onPressed: (controller.dataResult.data?.idProduct
+                                          ?.isEmpty ??
+                                      true)
                                   ? null
                                   : () {
-                                      if (controller.stockOpnameKey.currentState!.validate()) {
+                                      if (controller
+                                          .stockOpnameKey.currentState!
+                                          .validate()) {
                                         controller.postUpdateProduct(
-                                          trimString(controller.dataResult.data?.idProduct),
+                                          trimString(controller
+                                              .dataResult.data?.idProduct),
                                           controller.textStockController.text,
                                         );
                                       }
@@ -73,9 +78,11 @@ class StockOpnameMobileView extends StatefulWidget {
                             child: BasePrimaryButton(
                               text: "Simpan",
                               onPressed: () {
-                                if (controller.stockOpnameKey.currentState!.validate()) {
+                                if (controller.stockOpnameKey.currentState!
+                                    .validate()) {
                                   controller.postUpdateProduct(
-                                    trimString(controller.dataResult.data?.idProduct),
+                                    trimString(
+                                        controller.dataResult.data?.idProduct),
                                     controller.textStockController.text,
                                   );
                                 }
@@ -106,12 +113,16 @@ class StockOpnameMobileView extends StatefulWidget {
                       Expanded(
                         child: BasePrimaryButton(
                           text: "Simpan",
-                          onPressed: (controller.dataResult.data?.idProduct?.isEmpty ?? true)
+                          onPressed: (controller
+                                      .dataResult.data?.idProduct?.isEmpty ??
+                                  true)
                               ? null
                               : () {
-                                  if (controller.stockOpnameKey.currentState!.validate()) {
+                                  if (controller.stockOpnameKey.currentState!
+                                      .validate()) {
                                     controller.postUpdateProduct(
-                                      trimString(controller.dataResult.data?.idProduct),
+                                      trimString(controller
+                                          .dataResult.data?.idProduct),
                                       controller.textStockController.text,
                                     );
                                   }
@@ -141,9 +152,11 @@ class StockOpnameMobileView extends StatefulWidget {
                         child: BasePrimaryButton(
                           text: "Simpan",
                           onPressed: () {
-                            if (controller.stockOpnameKey.currentState!.validate()) {
+                            if (controller.stockOpnameKey.currentState!
+                                .validate()) {
                               controller.postUpdateProduct(
-                                trimString(controller.dataResult.data?.idProduct),
+                                trimString(
+                                    controller.dataResult.data?.idProduct),
                                 controller.textStockController.text,
                               );
                             }
@@ -184,34 +197,111 @@ class StockOpnameMobileView extends StatefulWidget {
                   const SizedBox(
                     height: 24.0,
                   ),
-                  BaseForm(
-                    label: "Kode Produk",
-                    textEditingController: controller.textBarcodeController,
-                    suffixIcon: iconBarcodeScanner,
-                    onTapSuffix: () async {
-                      final result = await showDialog<String>(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const BarcodeScannerDialog();
+                  Row(
+                    children: [
+                      Text(
+                        "Mode Pencarian:",
+                        style: myTextTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 12.0),
+                      Text(
+                        controller.useId ? "Kode Produk" : "Nama Produk",
+                        style: myTextTheme.bodyMedium?.copyWith(
+                          color: controller.useId
+                              ? primaryColor
+                              : Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Switch(
+                        activeColor: primaryColor,
+                        value: controller.useId,
+                        onChanged: (value) {
+                          controller.onSwitchChanged(value);
                         },
-                      );
-
-                      if (result != null) {
-                        controller.textBarcodeController.text = result;
-                        controller.postDetailProduct(
-                          controller.textBarcodeController.text,
+                      ),
+                    ],
+                  ),
+                  if (controller.useId)
+                    BaseForm(
+                      label: "Kode Produk",
+                      textEditingController: controller.textBarcodeController,
+                      suffixIcon: iconBarcodeScanner,
+                      onTapSuffix: () async {
+                        final result = await showDialog<String>(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const BarcodeScannerDialog();
+                          },
                         );
 
+                        if (result != null) {
+                          controller.textBarcodeController.text = result;
+                          controller.postDetailProduct(
+                            controller.textBarcodeController.text,
+                          );
+
+                          controller.update();
+                        }
+                      },
+                      onChanged: (value) {
+                        controller.dataResult = DetailProductResult();
+                        controller.onBarcodeChanged(value);
                         controller.update();
-                      }
-                    },
-                    onChanged: (value) {
-                      controller.dataResult = DetailProductResult();
-                      controller.onBarcodeChanged(value);
-                      controller.update();
-                    },
-                  ),
+                      },
+                    ),
+                  if (!controller.useId)
+                    SearchForm(
+                      label: "Nama Produk",
+                      enabled: true,
+                      suffixIcon: iconSearch,
+                      textEditingController:
+                          controller.textnamaSearchController,
+                      items: (search) => controller.getDetailSuggestions(
+                        search,
+                        ProductDatabase.productResult.data?.dataProduct,
+                      ),
+                      itemBuilder: (context, dataPembelian) {
+                        return ListTile(
+                          title: Text(
+                              "${trimString(dataPembelian.idProduct)} - ${trimString(dataPembelian.nmProduct)}"),
+                        );
+                      },
+                      onChanged: (value) {
+                        controller.dataResult = DetailProductResult();
+                        controller.update();
+                      },
+                      onEditComplete: () async {
+                        var data =
+                            ProductDatabase.productResult.data?.dataProduct;
+                        for (var i = 0; i < (data?.length ?? 0); i++) {
+                          if (trimString(data?[i].idProduct) ==
+                                  trimString(controller
+                                      .textnamaSearchController.text) ||
+                              trimString(data?[i].nmProduct) ==
+                                  trimString(controller
+                                      .textnamaSearchController.text)) {
+                            controller.postDetailProduct(
+                              trimString(data?[i].idProduct),
+                            );
+                            controller.update();
+                            break;
+                          }
+                        }
+                      },
+                      onSelected: (data) async {
+                        controller.textnamaSearchController.text =
+                            trimString(data.nmProduct);
+                        controller.postDetailProduct(
+                          trimString(data.idProduct),
+                        );
+                        controller.update();
+                      },
+                    ),
                   const SizedBox(
                     height: 24.0,
                   ),
@@ -241,7 +331,8 @@ class StockOpnameMobileView extends StatefulWidget {
                   ),
                   BaseForm(
                     label: "Stok",
-                    textEditingController: controller.textCurrentStockController,
+                    textEditingController:
+                        controller.textCurrentStockController,
                     enabled: false,
                   ),
                   const SizedBox(
@@ -291,34 +382,114 @@ class StockOpnameMobileView extends StatefulWidget {
                   const SizedBox(
                     height: 24.0,
                   ),
-                  BaseForm(
-                    label: "Kode Produk",
-                    textEditingController: controller.textBarcodeController,
-                    suffixIcon: iconBarcodeScanner,
-                    onTapSuffix: () async {
-                      final result = await showDialog<String>(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const BarcodeScannerDialog();
+                  Row(
+                    children: [
+                      Text(
+                        "Mode Pencarian:",
+                        style: myTextTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 12.0),
+                      Text(
+                        controller.useId ? "Kode Produk" : "Nama Produk",
+                        style: myTextTheme.bodyMedium?.copyWith(
+                          color: controller.useId
+                              ? primaryColor
+                              : Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Switch(
+                        activeColor: primaryColor,
+                        value: controller.useId,
+                        onChanged: (value) {
+                          controller.onSwitchChanged(value);
                         },
-                      );
-
-                      if (result != null) {
-                        controller.textBarcodeController.text = result;
-                        controller.postDetailProduct(
-                          controller.textBarcodeController.text,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  if (controller.useId)
+                    BaseForm(
+                      label: "Kode Produk",
+                      textEditingController: controller.textBarcodeController,
+                      suffixIcon: iconBarcodeScanner,
+                      onTapSuffix: () async {
+                        final result = await showDialog<String>(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const BarcodeScannerDialog();
+                          },
                         );
 
+                        if (result != null) {
+                          controller.textBarcodeController.text = result;
+                          controller.postDetailProduct(
+                            controller.textBarcodeController.text,
+                          );
+
+                          controller.update();
+                        }
+                      },
+                      onChanged: (value) {
+                        controller.dataResult = DetailProductResult();
+                        controller.onBarcodeChanged(value);
                         controller.update();
-                      }
-                    },
-                    onChanged: (value) {
-                      controller.dataResult = DetailProductResult();
-                      controller.onBarcodeChanged(value);
-                      controller.update();
-                    },
-                  ),
+                      },
+                    ),
+                  if (!controller.useId)
+                    SearchForm(
+                      label: "Nama Produk",
+                      enabled: true,
+                      suffixIcon: iconSearch,
+                      textEditingController:
+                          controller.textnamaSearchController,
+                      items: (search) => controller.getDetailSuggestions(
+                        search,
+                        ProductDatabase.productResult.data?.dataProduct,
+                      ),
+                      itemBuilder: (context, dataPembelian) {
+                        return ListTile(
+                          title: Text(
+                              "${trimString(dataPembelian.idProduct)} - ${trimString(dataPembelian.nmProduct)}"),
+                        );
+                      },
+                      onChanged: (value) {
+                        controller.dataResult = DetailProductResult();
+                        controller.update();
+                      },
+                      onEditComplete: () async {
+                        var data =
+                            ProductDatabase.productResult.data?.dataProduct;
+                        for (var i = 0; i < (data?.length ?? 0); i++) {
+                          if (trimString(data?[i].idProduct) ==
+                                  trimString(controller
+                                      .textnamaSearchController.text) ||
+                              trimString(data?[i].nmProduct) ==
+                                  trimString(controller
+                                      .textnamaSearchController.text)) {
+                            controller.postDetailProduct(
+                              trimString(data?[i].idProduct),
+                            );
+                            controller.update();
+                            break;
+                          }
+                        }
+                      },
+                      onSelected: (data) async {
+                        controller.textnamaSearchController.text =
+                            trimString(data.nmProduct);
+                        controller.postDetailProduct(
+                          trimString(data.idProduct),
+                        );
+                        controller.update();
+                      },
+                    ),
                   const SizedBox(
                     height: 24.0,
                   ),
@@ -348,7 +519,8 @@ class StockOpnameMobileView extends StatefulWidget {
                   ),
                   BaseForm(
                     label: "Stok",
-                    textEditingController: controller.textCurrentStockController,
+                    textEditingController:
+                        controller.textCurrentStockController,
                     enabled: false,
                   ),
                   const SizedBox(

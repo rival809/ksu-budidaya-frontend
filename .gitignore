@@ -48,3 +48,7 @@ app.*.map.json
 models.jsonc
 
 .vscode/templates
+
+# FVM Version Cache
+.fvm/
+.fvmrc
