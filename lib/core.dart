@@ -83,6 +83,7 @@ export 'package:ksu_budidaya/module/database/supplier/widget/dialog_tambah_pelun
 export 'package:ksu_budidaya/module/koperasi/anggota/controller/anggota_controller.dart';
 export 'package:ksu_budidaya/module/koperasi/anggota/view/anggota_view.dart';
 export 'package:ksu_budidaya/module/koperasi/anggota/widget/dialog_anggota.dart';
+export 'package:ksu_budidaya/module/koperasi/anggota/widget/generate_laporan_anggota.dart';
 export 'package:ksu_budidaya/module/koperasi/bayar_hutang_anggota/controller/bayar_hutang_anggota_controller.dart';
 export 'package:ksu_budidaya/module/koperasi/bayar_hutang_anggota/view/bayar_hutang_anggota_view.dart';
 export 'package:ksu_budidaya/module/koperasi/bayar_hutang_anggota/widget/dialog_pelunasan_anggota.dart';
