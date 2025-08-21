@@ -80,19 +80,34 @@ class AnggotaView extends StatefulWidget {
                               ),
                             ],
                           ),
-                          BasePrimaryButton(
-                            onPressed: () {
-                              showDialogBase(
-                                width: 700,
-                                content: DialogAnggota(
-                                  data: DataDetailAnggota(),
-                                  isDetail: false,
-                                ),
-                              );
-                            },
-                            text: "Tambah Anggota",
-                            suffixIcon: iconAdd,
-                            isDense: true,
+                          Row(
+                            children: [
+                              BaseSecondaryButton(
+                                onPressed: () {
+                                  doGenerateLaporanAnggota(controller: controller);
+                                },
+                                text: "Cetak Laporan Anggota",
+                                suffixIcon: iconPrint,
+                                isDense: true,
+                              ),
+                              const SizedBox(
+                                width: 16.0,
+                              ),
+                              BasePrimaryButton(
+                                onPressed: () {
+                                  showDialogBase(
+                                    width: 700,
+                                    content: DialogAnggota(
+                                      data: DataDetailAnggota(),
+                                      isDetail: false,
+                                    ),
+                                  );
+                                },
+                                text: "Tambah Anggota",
+                                suffixIcon: iconAdd,
+                                isDense: true,
+                              ),
+                            ],
                           ),
                         ],
                       ),
