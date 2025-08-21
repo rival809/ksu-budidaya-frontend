@@ -3,7 +3,6 @@ import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
 import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/controller/aktivitas_stock_controller.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 generatePdfAktivitasStock({
@@ -18,8 +17,11 @@ generatePdfAktivitasStock({
     final boldFont = pw.Font.ttf(ttfBold);
     List<PdfAktivitasStock> listDataPenerimaan = [];
 
-    for (var i = 0; i < (controller.dataStockOpname.dataAktivitas?.length ?? 0); i++) {
-      DataAktivitas dataRekap = controller.dataStockOpname.dataAktivitas?[i] ?? DataAktivitas();
+    for (var i = 0;
+        i < (controller.dataStockOpname.dataAktivitas?.length ?? 0);
+        i++) {
+      DataAktivitas dataRekap =
+          controller.dataStockOpname.dataAktivitas?[i] ?? DataAktivitas();
       int noUrut = i + 1;
 
       listDataPenerimaan.add(
@@ -124,10 +126,12 @@ generatePdfAktivitasStock({
                   borderRadius: const pw.BorderRadius.all(
                     pw.Radius.circular(8.0),
                   ),
-                  color: (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
+                  color: (trimString(listDataPenerimaan[row].getIndex(col))
+                              .toUpperCase() ==
                           "PENJUALAN")
                       ? PdfColors.red50
-                      : (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
+                      : (trimString(listDataPenerimaan[row].getIndex(col))
+                                  .toUpperCase() ==
                               "PEMBELIAN")
                           ? PdfColors.green50
                           : PdfColors.blue50,
@@ -140,10 +144,12 @@ generatePdfAktivitasStock({
                   trimString(listDataPenerimaan[row].getIndex(col)),
                   style: pw.TextStyle(
                     font: regularFont,
-                    color: (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
+                    color: (trimString(listDataPenerimaan[row].getIndex(col))
+                                .toUpperCase() ==
                             "PENJUALAN")
                         ? PdfColors.red900
-                        : (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
+                        : (trimString(listDataPenerimaan[row].getIndex(col))
+                                    .toUpperCase() ==
                                 "PEMBELIAN")
                             ? PdfColors.green900
                             : PdfColors.blue900,
@@ -164,7 +170,8 @@ generatePdfAktivitasStock({
       pw.MultiPage(
         maxPages: 1000,
         pageTheme: const pw.PageTheme(
-          pageFormat: PdfPageFormat(29.7 * PdfPageFormat.cm, 21.0 * PdfPageFormat.cm),
+          pageFormat:
+              PdfPageFormat(29.7 * PdfPageFormat.cm, 21.0 * PdfPageFormat.cm),
           orientation: pw.PageOrientation.landscape,
           margin: pw.EdgeInsets.all(8),
         ),
@@ -188,7 +195,8 @@ generatePdfAktivitasStock({
     );
     Uint8List pdfData = await pdf.save();
 
-    String fileName = 'Aktivitas_Stock_${controller.dataStockOpname.paging?.page.toString()}.pdf';
+    String fileName =
+        'Aktivitas_Stock_${controller.dataStockOpname.paging?.page.toString()}.pdf';
 
     await Printing.layoutPdf(
       name: fileName,

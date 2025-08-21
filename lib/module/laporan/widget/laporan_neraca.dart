@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/laporan/laporan_neraca_model.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class LaporanNeraca extends StatefulWidget {
@@ -17,7 +16,8 @@ class LaporanNeraca extends StatefulWidget {
 }
 
 class _LaporanNeracaState extends State<LaporanNeraca> {
-  List<PlutoRow> buildRowsActiva(DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
+  List<PlutoRow> buildRowsActiva(
+      DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
     final List<PlutoRow> rows = [];
     // ACTIVA LANCAR
     rows.add(PlutoRow(cells: {
@@ -28,7 +28,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
     if (current?.aktivaLancar != null) {
       current!.aktivaLancar!.forEach((key, value) {
         rows.add(PlutoRow(cells: {
-          'uraian': PlutoCell(value: key.toString().toUpperCase().replaceAll("_", " ")),
+          'uraian': PlutoCell(
+              value: key.toString().toUpperCase().replaceAll("_", " ")),
           'current_month': PlutoCell(value: value),
           'last_month': PlutoCell(value: previous?.aktivaLancar?[key]),
         }));
@@ -138,7 +139,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
     return rows;
   }
 
-  List<PlutoRow> buildRowsPassiva(DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
+  List<PlutoRow> buildRowsPassiva(
+      DetailLaporanNeraca? current, DetailLaporanNeraca? previous) {
     final List<PlutoRow> rows = [];
     // HUTANG LANCAR
     rows.add(PlutoRow(cells: {
@@ -154,7 +156,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
       }));
       rows.add(PlutoRow(cells: {
         'uraian': PlutoCell(value: 'MODAL TIDAK TETAP'),
-        'current_month': PlutoCell(value: current?.hutangLancar?.modalTidakTetap),
+        'current_month':
+            PlutoCell(value: current?.hutangLancar?.modalTidakTetap),
         'last_month': PlutoCell(value: previous?.hutangLancar?.modalTidakTetap),
       }));
       rows.add(PlutoRow(cells: {
@@ -195,7 +198,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
     if (current?.danaModalShu != null) {
       current!.danaModalShu!.forEach((key, value) {
         rows.add(PlutoRow(cells: {
-          'uraian': PlutoCell(value: key.toString().toUpperCase().replaceAll("_", " ")),
+          'uraian': PlutoCell(
+              value: key.toString().toUpperCase().replaceAll("_", " ")),
           'current_month': PlutoCell(value: value),
           'last_month': PlutoCell(value: previous?.danaModalShu?[key]),
         }));
@@ -246,7 +250,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                           items: Year.fromJson(monthData).months,
                           value: Month(
                             id: controller.monthNow,
-                            month: trimString(getNamaMonth(controller.monthNow)),
+                            month:
+                                trimString(getNamaMonth(controller.monthNow)),
                           ),
                           onChanged: (value) {
                             controller.monthNow = value?.id ?? 1;
@@ -344,7 +349,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                       backgroundColor: primaryColor,
                       titleTextAlign: PlutoColumnTextAlign.center,
                       textAlign: PlutoColumnTextAlign.right,
-                      title: '${getNamaMonth(controller.monthNow)} -   ${controller.yearNow}',
+                      title:
+                          '${getNamaMonth(controller.monthNow)} -   ${controller.yearNow}',
                       field: 'current_month',
                       type: PlutoColumnType.text(),
                       renderer: (rendererContext) {
@@ -364,7 +370,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                       backgroundColor: primaryColor,
                       titleTextAlign: PlutoColumnTextAlign.center,
                       textAlign: PlutoColumnTextAlign.right,
-                      title: subtractOneMonth(controller.monthNow, controller.yearNow),
+                      title: subtractOneMonth(
+                          controller.monthNow, controller.yearNow),
                       field: 'last_month',
                       type: PlutoColumnType.text(),
                       renderer: (rendererContext) {
@@ -383,10 +390,10 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                   ];
 
                   // Build rows dynamically from API
-                  List<PlutoRow> rowsActiva =
-                      buildRowsActiva(result.data?.current, result.data?.previous);
-                  List<PlutoRow> rowsPassiva =
-                      buildRowsPassiva(result.data?.current, result.data?.previous);
+                  List<PlutoRow> rowsActiva = buildRowsActiva(
+                      result.data?.current, result.data?.previous);
+                  List<PlutoRow> rowsPassiva = buildRowsPassiva(
+                      result.data?.current, result.data?.previous);
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -448,9 +455,9 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                                     rowHeight: 47.5,
                                     oddRowColor: neutralWhite,
                                     evenRowColor: gray50,
-                                    columnTextStyle:
-                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
-                                            const TextStyle(),
+                                    columnTextStyle: myTextTheme.titleSmall
+                                            ?.copyWith(color: neutralWhite) ??
+                                        const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -493,9 +500,9 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                                     rowHeight: 47.5,
                                     oddRowColor: neutralWhite,
                                     evenRowColor: gray50,
-                                    columnTextStyle:
-                                        myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
-                                            const TextStyle(),
+                                    columnTextStyle: myTextTheme.titleSmall
+                                            ?.copyWith(color: neutralWhite) ??
+                                        const TextStyle(),
                                     gridBorderColor: blueGray50,
                                     gridBorderRadius: BorderRadius.circular(8),
                                   ),
@@ -515,13 +522,17 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
                 }
               } else {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 224,
+                  height: MediaQuery.of(context).size.height -
+                      AppBar().preferredSize.height -
+                      224,
                   child: const ContainerError(),
                 );
               }
             } else {
               return SizedBox(
-                height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 224,
+                height: MediaQuery.of(context).size.height -
+                    AppBar().preferredSize.height -
+                    224,
                 child: const ContainerTidakAda(
                   entity: 'Laporan Neraca',
                 ),

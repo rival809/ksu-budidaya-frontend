@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/shared/util/trim_string/trim_string.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
@@ -9,7 +8,8 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
   try {
     final pdf = pw.Document();
 
-    DataLaporanHasilUsaha data = controller.resultHasilUsaha.data ?? DataLaporanHasilUsaha();
+    DataLaporanHasilUsaha data =
+        controller.resultHasilUsaha.data ?? DataLaporanHasilUsaha();
 
     List<RowLaporanHasilUsaha> rows = [
       RowLaporanHasilUsaha(
@@ -286,7 +286,8 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                     'No.',
                     'URAIAN',
                     '${getNamaMonth(controller.monthNow)}\n${controller.yearNow}',
-                    subtractTitleOneMonth(controller.monthNow, controller.yearNow)
+                    subtractTitleOneMonth(
+                        controller.monthNow, controller.yearNow)
                   ],
                   data: List<List<dynamic>>.generate(rows.length, (row) {
                     return List<dynamic>.generate(4, (col) {
@@ -336,7 +337,8 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                         );
                       } else if (col == 2) {
                         return Text(
-                          formatMoney(trimString(rows[row].currentMonth.toString())),
+                          formatMoney(
+                              trimString(rows[row].currentMonth.toString())),
                           style: pw.TextStyle(
                             fontSize: 8,
                             font: [
@@ -358,7 +360,8 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
                         );
                       } else if (col == 3) {
                         return Text(
-                          formatMoney(trimString(rows[row].lastMonth.toString())),
+                          formatMoney(
+                              trimString(rows[row].lastMonth.toString())),
                           style: pw.TextStyle(
                             fontSize: 8,
                             font: [
@@ -407,7 +410,8 @@ doGenerateLaporanHasilUsaha({required LaporanController controller}) async {
     );
     Uint8List pdfData = await pdf.save();
 
-    String fileName = 'Laporan_Hasil_Usaha_${controller.monthNow}_${controller.yearNow}.pdf';
+    String fileName =
+        'Laporan_Hasil_Usaha_${controller.monthNow}_${controller.yearNow}.pdf';
 
     // await Printing.sharePdf(
     //   bytes: pdfData,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/pembelian/detail_pembelian_model.dart';
 import 'package:ksu_budidaya/module/transaksi/pembelian/widget/dialog_input_ppn.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
@@ -45,7 +44,8 @@ class PembelianController extends State<PembelianView> {
       };
 
       if (trimString(pembelianNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"keterangan": trimString(pembelianNameController.text)});
+        dataCari
+            .addAll({"keterangan": trimString(pembelianNameController.text)});
       }
 
       if (isAsc != null) {
@@ -77,7 +77,8 @@ class PembelianController extends State<PembelianView> {
       return result;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -101,7 +102,8 @@ class PembelianController extends State<PembelianView> {
         );
 
         if (result.data?.detailPurchase?.isNotEmpty ?? false) {
-          isPpn = result.data!.detailPurchase!.any((element) => element.ppn != "0");
+          isPpn =
+              result.data!.detailPurchase!.any((element) => element.ppn != "0");
         }
 
         update();
@@ -110,7 +112,8 @@ class PembelianController extends State<PembelianView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -139,7 +142,8 @@ class PembelianController extends State<PembelianView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -200,7 +204,8 @@ class PembelianController extends State<PembelianView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog(
+            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -240,7 +245,8 @@ class PembelianController extends State<PembelianView> {
     isPpn = true;
 
     if (dataPembelian.details?.isNotEmpty ?? false) {
-      isPpn = dataPembelian.details!.every((element) => trimString(element.ppn ?? "0") == "0");
+      isPpn = dataPembelian.details!
+          .every((element) => trimString(element.ppn ?? "0") == "0");
     }
   }
 
@@ -315,7 +321,8 @@ class PembelianController extends State<PembelianView> {
   sumTotalNilaiBeli() {
     totalHargaBeli = 0;
     for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalHargaBeli += double.parse(dataPembelian.details?[i].totalNilaiBeli ?? "0");
+      totalHargaBeli +=
+          double.parse(dataPembelian.details?[i].totalNilaiBeli ?? "0");
     }
     totalHargaBeli = totalHargaBeli + totalPpn;
     dataPembelian.totalHargaBeli = totalHargaBeli.toString();
@@ -324,7 +331,8 @@ class PembelianController extends State<PembelianView> {
   sumTotalNilaiJual() {
     totalHargaJual = 0;
     for (var i = 0; i < (dataPembelian.details?.length ?? 0); i++) {
-      totalHargaJual += double.parse(dataPembelian.details?[i].totalNilaiJual ?? "0");
+      totalHargaJual +=
+          double.parse(dataPembelian.details?[i].totalNilaiJual ?? "0");
     }
     dataPembelian.totalHargaJual = totalHargaJual.toString();
   }
@@ -585,8 +593,9 @@ class PembelianController extends State<PembelianView> {
           if (isDetail) {
             total = double.parse((data["total_nilai_beli"] ?? 0).toString());
           } else {
-            total = ((double.parse((data["total_nilai_beli"] ?? 0).toString())) +
-                (double.parse((data["diskon"] ?? 0).toString())));
+            total =
+                ((double.parse((data["total_nilai_beli"] ?? 0).toString())) +
+                    (double.parse((data["diskon"] ?? 0).toString())));
           }
 
           return Text(formatMoney(total.toString()));
@@ -613,11 +622,13 @@ class PembelianController extends State<PembelianView> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       isDetail
-                          ? formatMoney(
-                              (double.parse(dataPembelian.totalHargaBeli ?? "0") - totalDiskon)
-                                  .toString())
+                          ? formatMoney((double.parse(
+                                      dataPembelian.totalHargaBeli ?? "0") -
+                                  totalDiskon)
+                              .toString())
                           : formatMoney(totalHargaBeli.toString()),
-                      style: myTextTheme.displayLarge?.copyWith(fontWeight: FontWeight.w600),
+                      style: myTextTheme.displayLarge
+                          ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -653,7 +664,8 @@ class PembelianController extends State<PembelianView> {
                       isDetail
                           ? formatMoney(dataPembelian.totalHargaJual.toString())
                           : formatMoney(totalHargaJual.toString()),
-                      style: myTextTheme.displayLarge?.copyWith(fontWeight: FontWeight.w600),
+                      style: myTextTheme.displayLarge
+                          ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
