@@ -6,7 +6,7 @@ class DivisiController extends State<DivisiView> {
   late DivisiView view;
 
   String page = "1";
-  String size = "10";
+  String size = "500";
   bool isAsc = true;
   TextEditingController divisiNameController = TextEditingController();
 

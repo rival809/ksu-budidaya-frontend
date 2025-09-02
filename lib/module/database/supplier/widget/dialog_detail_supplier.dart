@@ -63,7 +63,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
   ];
 
   String page = "1";
-  String size = "10";
+  String size = "500";
   bool isAsc = true;
 
   cariDataProduct({bool? isAsc, String? field}) async {
@@ -91,8 +91,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
       return result;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -127,8 +126,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
       return resultPembelian;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -163,8 +161,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
       return resultHutangDagang;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -373,8 +370,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                   } else if (snapshot.hasData) {
                     ProductResult result = snapshot.data;
                     dataProduct = result.data ?? DataProduct();
-                    List<dynamic> listData =
-                        dataProduct.toJson()["data_product"] ?? [];
+                    List<dynamic> listData = dataProduct.toJson()["data_product"] ?? [];
 
                     if (listData.isNotEmpty) {
                       List<PlutoRow> rows = [];
@@ -419,8 +415,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                         ),
                       );
 
-                      List<dynamic> listDataWithIndex =
-                          List.generate(listData.length, (index) {
+                      List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
                         return {
                           ...listData[index],
                           'persistentIndex': index + 1,
@@ -476,12 +471,11 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                               autoSizeMode: PlutoAutoSizeMode.scale,
                             ),
                             style: PlutoGridStyleConfig(
-                              cellTextStyle: myTextTheme.bodyMedium
-                                      ?.copyWith(color: gray900) ??
+                              cellTextStyle: myTextTheme.bodyMedium?.copyWith(color: gray900) ??
                                   const TextStyle(),
-                              columnTextStyle: myTextTheme.titleSmall
-                                      ?.copyWith(color: neutralWhite) ??
-                                  const TextStyle(),
+                              columnTextStyle:
+                                  myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                      const TextStyle(),
                               gridBorderColor: blueGray50,
                               gridBorderRadius: BorderRadius.circular(8),
                             ),
@@ -518,8 +512,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                                 }
                               },
                               onPressRight: () {
-                                if (int.parse(page) <
-                                    (result.data?.paging?.totalPage ?? 0)) {
+                                if (int.parse(page) < (result.data?.paging?.totalPage ?? 0)) {
                                   page = (int.parse(page) + 1).toString();
                                   update();
                                   dataFuture = cariDataProduct();
@@ -599,15 +592,11 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                   } else if (snapshot.hasData) {
                     PembelianResult result = snapshot.data;
                     dataPembelian = result.data ?? DataPembelian();
-                    for (var i = 0;
-                        i < (dataPembelian.dataPembelian?.length ?? 0);
-                        i++) {
-                      dataPembelian.dataPembelian?[i].tgPembelian =
-                          formatDateForView(trimString(
-                              dataPembelian.dataPembelian?[i].tgPembelian));
+                    for (var i = 0; i < (dataPembelian.dataPembelian?.length ?? 0); i++) {
+                      dataPembelian.dataPembelian?[i].tgPembelian = formatDateForView(
+                          trimString(dataPembelian.dataPembelian?[i].tgPembelian));
                     }
-                    List<dynamic> listData =
-                        dataPembelian.toJson()["data_pembelian"] ?? [];
+                    List<dynamic> listData = dataPembelian.toJson()["data_pembelian"] ?? [];
 
                     if (listData.isNotEmpty) {
                       List<PlutoRow> rows = [];
@@ -617,26 +606,21 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                         List.generate(
                           listPenjualanView.length,
                           (index) {
-                            if (listPenjualanView[index] ==
-                                "jenis_pembayaran") {
+                            if (listPenjualanView[index] == "jenis_pembayaran") {
                               return PlutoColumn(
                                 // width: 75,
                                 backgroundColor: primaryColor,
-                                filterHintText:
-                                    "Cari ${listPenjualanView[index]}",
+                                filterHintText: "Cari ${listPenjualanView[index]}",
                                 title: convertTitle(
                                   listPenjualanView[index],
                                 ),
                                 field: listPenjualanView[index],
                                 type: PlutoColumnType.text(),
                                 renderer: (rendererContext) {
-                                  Map<String, dynamic> dataRow =
-                                      rendererContext.row.toJson();
+                                  Map<String, dynamic> dataRow = rendererContext.row.toJson();
                                   return CardLabel(
                                     cardColor: yellow50,
-                                    cardTitle: dataRow["jenis_pembayaran"]
-                                        .toString()
-                                        .toUpperCase(),
+                                    cardTitle: dataRow["jenis_pembayaran"].toString().toUpperCase(),
                                     cardTitleColor: yellow900,
                                     cardBorderColor: yellow50,
                                   );
@@ -647,8 +631,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                               return PlutoColumn(
                                 width: 75,
                                 backgroundColor: primaryColor,
-                                filterHintText:
-                                    "Cari ${listPenjualanView[index]}",
+                                filterHintText: "Cari ${listPenjualanView[index]}",
                                 title: "Jumlah",
                                 field: listPenjualanView[index],
                                 type: PlutoColumnType.number(
@@ -663,21 +646,17 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                                   filterHintText: "Cari Tgl. Pembelian",
                                   title: "Tanggal",
                                   field: listPenjualanView[index],
-                                  type: PlutoColumnType.date(
-                                      format: 'dd-MM-yyyy'));
+                                  type: PlutoColumnType.date(format: 'dd-MM-yyyy'));
                             }
                             return PlutoColumn(
                               backgroundColor: primaryColor,
-                              filterHintText:
-                                  "Cari ${listPenjualanView[index]}",
+                              filterHintText: "Cari ${listPenjualanView[index]}",
                               title: convertTitle(
                                 listPenjualanView[index],
                               ),
                               field: listPenjualanView[index],
-                              type: (listPenjualanView[index] ==
-                                          "total_harga_beli" ||
-                                      listPenjualanView[index] ==
-                                          "total_harga_jual" ||
+                              type: (listPenjualanView[index] == "total_harga_beli" ||
+                                      listPenjualanView[index] == "total_harga_jual" ||
                                       listPenjualanView[index] == "jumlah")
                                   ? PlutoColumnType.number(
                                       locale: "id",
@@ -688,8 +667,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                         ),
                       );
 
-                      List<dynamic> listDataWithIndex =
-                          List.generate(listData.length, (index) {
+                      List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
                         return {
                           ...listData[index],
                           'persistentIndex': index + 1,
@@ -749,9 +727,9 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                               autoSizeMode: PlutoAutoSizeMode.scale,
                             ),
                             style: PlutoGridStyleConfig(
-                              columnTextStyle: myTextTheme.titleSmall
-                                      ?.copyWith(color: neutralWhite) ??
-                                  const TextStyle(),
+                              columnTextStyle:
+                                  myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                      const TextStyle(),
                               gridBorderColor: blueGray50,
                               gridBorderRadius: BorderRadius.circular(8),
                             ),
@@ -788,8 +766,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                                 }
                               },
                               onPressRight: () {
-                                if (int.parse(page) <
-                                    (result.data?.paging?.totalPage ?? 0)) {
+                                if (int.parse(page) < (result.data?.paging?.totalPage ?? 0)) {
                                   page = (int.parse(page) + 1).toString();
                                   update();
                                   dataFuture = cariDataPembelian();
@@ -863,8 +840,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                   } else if (snapshot.hasData) {
                     HutangDagangResult result = snapshot.data;
                     dataHutangDagang = result.data ?? DataHutangDagang();
-                    List<dynamic> listData =
-                        dataHutangDagang.toJson()["data_hutang_dagang"] ?? [];
+                    List<dynamic> listData = dataHutangDagang.toJson()["data_hutang_dagang"] ?? [];
 
                     if (listData.isNotEmpty) {
                       List<PlutoRow> rows = [];
@@ -876,8 +852,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                           (index) {
                             return PlutoColumn(
                               backgroundColor: primaryColor,
-                              filterHintText:
-                                  "Cari ${listHutangDagangView[index]}",
+                              filterHintText: "Cari ${listHutangDagangView[index]}",
                               title: convertTitle(
                                 listHutangDagangView[index],
                               ),
@@ -904,8 +879,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                           enableEditingMode: false,
                           renderer: (rendererContext) {
                             final rowIndex = rendererContext.rowIdx;
-                            Map<String, dynamic> dataRow =
-                                rendererContext.row.toJson();
+                            Map<String, dynamic> dataRow = rendererContext.row.toJson();
                             return DropdownAksi(
                               text: "Aksi",
                               listItem: [
@@ -947,12 +921,8 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                               onChange: (value) async {
                                 if (value == 1) {
                                   try {
-                                    DetailPembelianResult result =
-                                        await ApiService.detailPembelian(
-                                      data: {
-                                        "id_pembelian":
-                                            trimString(dataRow["id_pembelian"])
-                                      },
+                                    DetailPembelianResult result = await ApiService.detailPembelian(
+                                      data: {"id_pembelian": trimString(dataRow["id_pembelian"])},
                                     ).timeout(const Duration(seconds: 30));
 
                                     if (result.success == true) {
@@ -961,33 +931,23 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                                         width: Get.width,
                                         content: DialogDetailPembelian(
                                           dataPembelian: result,
-                                          nmSuplier: trimString(
-                                              widget.data?.nmSupplier),
-                                          idSuplier: trimString(
-                                              widget.data?.idSupplier),
-                                          tgTransaksi: trimString(
-                                              resultHutangDagang
-                                                  .data
-                                                  ?.dataHutangDagang?[rowIndex]
-                                                  .tgHutang),
+                                          nmSuplier: trimString(widget.data?.nmSupplier),
+                                          idSuplier: trimString(widget.data?.idSupplier),
+                                          tgTransaksi: trimString(resultHutangDagang
+                                              .data?.dataHutangDagang?[rowIndex].tgHutang),
                                         ),
                                       );
 
                                       update();
                                     }
                                   } catch (e) {
-                                    if (e
-                                        .toString()
-                                        .contains("TimeoutException")) {
+                                    if (e.toString().contains("TimeoutException")) {
                                       showInfoDialog(
                                           "Tidak Mendapat Respon Dari Server! Silakan coba lagi.",
                                           context);
                                     } else {
                                       showInfoDialog(
-                                          e
-                                              .toString()
-                                              .replaceAll("Exception: ", ""),
-                                          context);
+                                          e.toString().replaceAll("Exception: ", ""), context);
                                     }
                                   }
                                 } else if (value == 2) {
@@ -996,20 +956,12 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                                     content: DialogTambahPelunasan(
                                       isPageBayarHutang: false,
                                       nominal: trimString(resultHutangDagang
-                                          .data
-                                          ?.dataHutangDagang?[rowIndex]
-                                          .nominal),
-                                      idHutangDagang: trimString(
-                                          resultHutangDagang
-                                              .data
-                                              ?.dataHutangDagang?[rowIndex]
-                                              .idHutangDagang),
+                                          .data?.dataHutangDagang?[rowIndex].nominal),
+                                      idHutangDagang: trimString(resultHutangDagang
+                                          .data?.dataHutangDagang?[rowIndex].idHutangDagang),
                                       idTransaksi: trimString(resultHutangDagang
-                                          .data
-                                          ?.dataHutangDagang?[rowIndex]
-                                          .idPembelian),
-                                      idSupplier:
-                                          trimString(widget.data?.idSupplier),
+                                          .data?.dataHutangDagang?[rowIndex].idPembelian),
+                                      idSupplier: trimString(widget.data?.idSupplier),
                                     ),
                                   );
                                 }
@@ -1019,8 +971,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                         ),
                       );
 
-                      List<dynamic> listDataWithIndex =
-                          List.generate(listData.length, (index) {
+                      List<dynamic> listDataWithIndex = List.generate(listData.length, (index) {
                         return {
                           ...listData[index],
                           'persistentIndex': index + 1,
@@ -1079,9 +1030,9 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                               autoSizeMode: PlutoAutoSizeMode.scale,
                             ),
                             style: PlutoGridStyleConfig(
-                              columnTextStyle: myTextTheme.titleSmall
-                                      ?.copyWith(color: neutralWhite) ??
-                                  const TextStyle(),
+                              columnTextStyle:
+                                  myTextTheme.titleSmall?.copyWith(color: neutralWhite) ??
+                                      const TextStyle(),
                               gridBorderColor: blueGray50,
                               gridBorderRadius: BorderRadius.circular(8),
                             ),
@@ -1091,14 +1042,9 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                           rows: rows,
                           createFooter: (stateManager) {
                             double totalHutang = 0;
-                            for (var i = 0;
-                                i <
-                                    (result.data?.dataHutangDagang?.length ??
-                                        0);
-                                i++) {
-                              totalHutang += double.parse(
-                                  result.data?.dataHutangDagang?[i].nominal ??
-                                      "0");
+                            for (var i = 0; i < (result.data?.dataHutangDagang?.length ?? 0); i++) {
+                              totalHutang +=
+                                  double.parse(result.data?.dataHutangDagang?[i].nominal ?? "0");
                             }
                             return FooterTableWidget(
                               widthDialog: 1162,
@@ -1128,8 +1074,7 @@ class _DialogDetailSupplierState extends State<DialogDetailSupplier> {
                                 }
                               },
                               onPressRight: () {
-                                if (int.parse(page) <
-                                    (result.data?.paging?.totalPage ?? 0)) {
+                                if (int.parse(page) < (result.data?.paging?.totalPage ?? 0)) {
                                   page = (int.parse(page) + 1).toString();
                                   update();
                                   dataFuture = cariDataHutangDagang();
