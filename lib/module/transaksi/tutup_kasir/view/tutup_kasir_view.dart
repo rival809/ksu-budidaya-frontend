@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/transaksi/tutup_kasir/widget/generate_tutup_kasir.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class TutupKasirView extends StatefulWidget {
@@ -85,7 +84,7 @@ class TutupKasirView extends StatefulWidget {
                             children: [
                               BaseSecondaryButton(
                                 onPressed: () {
-                                  doGenerateTutupKasir(controller: controller);
+                                  controller.showPrintPeriodDialog();
                                 },
                                 text: "Cetak Riwayat Tutup Kasir",
                                 suffixIcon: iconPrint,
