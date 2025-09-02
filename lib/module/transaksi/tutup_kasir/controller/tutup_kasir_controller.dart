@@ -6,7 +6,7 @@ class TutupKasirController extends State<TutupKasirView> {
   late TutupKasirView view;
 
   String page = "1";
-  String size = "100";
+  String size = "500";
   bool isAsc = true;
   TextEditingController penjualanNameController = TextEditingController();
   Future<dynamic>? dataFuture;

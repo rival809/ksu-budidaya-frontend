@@ -8,7 +8,7 @@ class StockTakeController extends State<StockTakeView> {
   late StockTakeView view;
 
   String page = "1";
-  String size = "100";
+  String size = "500";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 

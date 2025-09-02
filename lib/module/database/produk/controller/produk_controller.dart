@@ -7,7 +7,7 @@ class ProdukController extends State<ProdukView> {
   late ProdukView view;
 
   String page = "1";
-  String size = "100";
+  String size = "500";
   bool isAsc = true;
   TextEditingController productNameController = TextEditingController();
   String? field;

@@ -6,7 +6,7 @@ class CashInCashOutController extends State<CashInCashOutView> {
   late CashInCashOutView view;
 
   String page = "1";
-  String size = "10";
+  String size = "500";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 

@@ -13,7 +13,7 @@ class PenjualanController extends State<PenjualanView> {
   final GlobalKey notaKey = GlobalKey();
 
   String page = "1";
-  String size = "10";
+  String size = "500";
   bool isAsc = false;
   TextEditingController penjualanNameController = TextEditingController();
 

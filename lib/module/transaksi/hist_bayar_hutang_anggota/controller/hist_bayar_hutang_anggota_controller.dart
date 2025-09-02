@@ -9,7 +9,7 @@ class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView>
   late HistBayarHutangAnggotaView view;
 
   String page = "1";
-  String size = "10";
+  String size = "500";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
 

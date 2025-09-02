@@ -8,7 +8,7 @@ class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
   late RiwayatStockOpnameView view;
 
   String page = "1";
-  String size = "100";
+  String size = "500";
   bool isAsc = true;
   TextEditingController supplierNameController = TextEditingController();
   String dropdown = "SEMUA";
