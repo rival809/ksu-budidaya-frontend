@@ -189,6 +189,21 @@ class TutupKasirController extends State<TutupKasirView> {
     }
   }
 
+  showPrintPeriodDialog() {
+    showDialogBase(
+      width: 500,
+      content: DialogPilihPeriodePrint(
+        onPeriodSelected: (int month, int year) {
+          doGenerateTutupKasirByPeriod(
+            controller: this,
+            selectedMonth: month,
+            selectedYear: year,
+          );
+        },
+      ),
+    );
+  }
+
   @override
   void initState() {
     instance = this;
