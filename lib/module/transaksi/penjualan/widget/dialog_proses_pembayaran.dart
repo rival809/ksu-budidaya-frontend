@@ -56,6 +56,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
               onClear: () {
                 controller.dataPenjualan.idAnggota = null;
                 controller.dataPenjualan.nmAnggota = null;
+                controller.onSwitchStep("1");
                 bayarFocus.requestFocus();
                 controller.update();
                 update();
@@ -67,6 +68,7 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
               onChanged: (value) {
                 controller.dataPenjualan.idAnggota = splitString(trimString(value), true);
                 controller.dataPenjualan.nmAnggota = splitString(trimString(value), false);
+                controller.onSwitchStep("1");
                 bayarFocus.requestFocus();
                 controller.update();
                 update();
@@ -106,7 +108,8 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 const SizedBox(
                   width: 16.0,
                 ),
-                if (widget.controller.dataPenjualan.idAnggota?.isNotEmpty ?? false)
+                if (!((widget.controller.dataPenjualan.idAnggota?.isEmpty ?? true) ||
+                    widget.controller.dataPenjualan.idAnggota == "UMUM"))
                   ButtonFilter(
                     status: controller.statusKredit,
                     onTapFIlter: () {
