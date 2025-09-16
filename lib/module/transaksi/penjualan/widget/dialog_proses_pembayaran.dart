@@ -106,17 +106,18 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 const SizedBox(
                   width: 16.0,
                 ),
-                ButtonFilter(
-                  status: controller.statusKredit,
-                  onTapFIlter: () {
-                    controller.onSwitchStep("3");
-                    bayarFocus.requestFocus();
+                if (widget.controller.dataPenjualan.idAnggota?.isNotEmpty ?? false)
+                  ButtonFilter(
+                    status: controller.statusKredit,
+                    onTapFIlter: () {
+                      controller.onSwitchStep("3");
+                      bayarFocus.requestFocus();
 
-                    update();
-                  },
-                  textFilter: "Kredit",
-                  icon: iconCreditCard,
-                ),
+                      update();
+                    },
+                    textFilter: "Kredit",
+                    icon: iconCreditCard,
+                  ),
                 Expanded(
                   child: Container(),
                 ),
