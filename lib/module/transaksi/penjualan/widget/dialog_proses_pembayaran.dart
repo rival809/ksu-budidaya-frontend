@@ -106,7 +106,8 @@ class _DialogProsesPembayaranState extends State<DialogProsesPembayaran> {
                 const SizedBox(
                   width: 16.0,
                 ),
-                if (widget.controller.dataPenjualan.idAnggota?.isNotEmpty ?? false)
+                if (!((widget.controller.dataPenjualan.idAnggota?.isEmpty ?? true) ||
+                    widget.controller.dataPenjualan.idAnggota == "UMUM"))
                   ButtonFilter(
                     status: controller.statusKredit,
                     onTapFIlter: () {
