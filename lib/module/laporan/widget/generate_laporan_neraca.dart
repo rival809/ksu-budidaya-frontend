@@ -8,12 +8,9 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
   try {
     final pdf = pw.Document();
 
-    DataLaporanNeraca data =
-        controller.resultNeraca.data ?? DataLaporanNeraca();
-    List<RowLaporanNeraca> rowsActive =
-        buildRowsActivaPdf(data.current, data.previous);
-    List<RowLaporanNeraca> rowsPassive =
-        buildRowsPassivaPdf(data.current, data.previous);
+    DataLaporanNeraca data = controller.resultNeraca.data ?? DataLaporanNeraca();
+    List<RowLaporanNeraca> rowsActive = buildRowsActivaPdf(data.current, data.previous);
+    List<RowLaporanNeraca> rowsPassive = buildRowsPassivaPdf(data.current, data.previous);
 
     final ttfBold = await rootBundle.load("assets/fonts/Roboto-Bold.ttf");
     final ttfRegular = await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
@@ -25,8 +22,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
     List<List<dynamic>> paginateRows(List<dynamic> rows, int rowsPerPage) {
       final chunked = <List<dynamic>>[];
       for (int i = 0; i < rows.length; i += rowsPerPage) {
-        chunked.add(rows.sublist(
-            i, i + rowsPerPage > rows.length ? rows.length : i + rowsPerPage));
+        chunked.add(rows.sublist(i, i + rowsPerPage > rows.length ? rows.length : i + rowsPerPage));
       }
       return chunked;
     }
@@ -145,9 +141,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
       pw.MultiPage(
         pageTheme: const pw.PageTheme(
           orientation: pw.PageOrientation.landscape,
-          pageFormat: PdfPageFormat(
-              29.7 * PdfPageFormat.cm, 21 * PdfPageFormat.cm,
-              marginAll: 8),
+          pageFormat: PdfPageFormat(29.7 * PdfPageFormat.cm, 21 * PdfPageFormat.cm, marginAll: 8),
         ),
         header: (pw.Context context) => Center(
           child: pw.Column(
@@ -174,8 +168,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
           ),
         ),
         build: (pw.Context context) {
-          final activeChunks =
-              paginateRows(rowsActive, 25); // Split rows into chunks
+          final activeChunks = paginateRows(rowsActive, 25); // Split rows into chunks
           final passiveChunks = paginateRows(rowsPassive, 25);
 
           final pages = <pw.Widget>[];
@@ -191,8 +184,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
                     pw.Expanded(
                       child: pw.Container(),
                     ),
-                  if (i < passiveChunks.length)
-                    createTable(passiveChunks[i], "Passive"),
+                  if (i < passiveChunks.length) createTable(passiveChunks[i], "Passive"),
                 ],
               ),
             );
@@ -205,8 +197,7 @@ doGenerateLaporanNeraca({required LaporanController controller}) async {
 
     Uint8List pdfData = await pdf.save();
 
-    String fileName =
-        'Laporan_Neraca_${controller.monthNow}_${controller.yearNow}.pdf';
+    String fileName = 'Laporan_Neraca_${controller.monthNow}_${controller.yearNow}.pdf';
 
     // await Printing.sharePdf(
     //   bytes: pdfData,
@@ -322,6 +313,11 @@ List<RowLaporanNeraca> buildRowsPassivaPdf(
       uraian: 'MODAL TIDAK TETAP',
       currentMonth: current?.hutangLancar?.modalTidakTetap,
       lastMonth: previous?.hutangLancar?.modalTidakTetap,
+    ));
+    rows.add(RowLaporanNeraca(
+      uraian: 'HUTANG DARI PIHAK KETIGA',
+      currentMonth: current?.hutangLancar?.hutangPihakKetiga,
+      lastMonth: previous?.hutangLancar?.hutangPihakKetiga,
     ));
     rows.add(RowLaporanNeraca(
       uraian: 'JUMLAH',
