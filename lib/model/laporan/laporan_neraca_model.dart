@@ -151,13 +151,13 @@ class AktivaTetap {
 
 class HutangLancar {
   double? hutangDagang;
-  double? hutangPihakKetiga;
+  double? utangPihakKetiga;
   double? modalTidakTetap;
   double? jumlah;
 
   HutangLancar({
     this.hutangDagang,
-    this.hutangPihakKetiga,
+    this.utangPihakKetiga,
     this.modalTidakTetap,
     this.jumlah,
   });
@@ -165,14 +165,14 @@ class HutangLancar {
   factory HutangLancar.fromJson(Map<String, dynamic> json) => HutangLancar(
         hutangDagang: json["hutang_dagang"],
         modalTidakTetap: json["modal_tidak_tetap"],
-        hutangPihakKetiga: json["hutang_pihak_ketiga"],
+        utangPihakKetiga: json["utang_pihak_ketiga"],
         jumlah: json["jumlah"],
       );
 
   Map<String, dynamic> toJson() => {
         "hutang_dagang": hutangDagang,
         "modal_tidak_tetap": modalTidakTetap,
-        "hutang_pihak_ketiga": hutangPihakKetiga,
+        "utang_pihak_ketiga": utangPihakKetiga,
         "jumlah": jumlah,
       };
 }

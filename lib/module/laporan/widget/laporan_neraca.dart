@@ -158,8 +158,8 @@ class _LaporanNeracaState extends State<LaporanNeraca> {
       }));
       rows.add(PlutoRow(cells: {
         'uraian': PlutoCell(value: 'HUTANG DARI PIHAK KETIGA'),
-        'current_month': PlutoCell(value: current?.hutangLancar?.hutangPihakKetiga),
-        'last_month': PlutoCell(value: previous?.hutangLancar?.hutangPihakKetiga),
+        'current_month': PlutoCell(value: current?.hutangLancar?.utangPihakKetiga),
+        'last_month': PlutoCell(value: previous?.hutangLancar?.utangPihakKetiga),
       }));
       rows.add(PlutoRow(cells: {
         'uraian': PlutoCell(value: 'JUMLAH'),
