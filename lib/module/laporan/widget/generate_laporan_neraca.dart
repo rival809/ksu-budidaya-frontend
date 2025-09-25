@@ -316,8 +316,8 @@ List<RowLaporanNeraca> buildRowsPassivaPdf(
     ));
     rows.add(RowLaporanNeraca(
       uraian: 'HUTANG DARI PIHAK KETIGA',
-      currentMonth: current?.hutangLancar?.hutangPihakKetiga,
-      lastMonth: previous?.hutangLancar?.hutangPihakKetiga,
+      currentMonth: current?.hutangLancar?.utangPihakKetiga,
+      lastMonth: previous?.hutangLancar?.utangPihakKetiga,
     ));
     rows.add(RowLaporanNeraca(
       uraian: 'JUMLAH',
