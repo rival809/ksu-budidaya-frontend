@@ -61,6 +61,7 @@ class DetailDataDetailStockTake {
   String? selisih;
   String? petugas;
   bool? isSelisih;
+  bool? isDoneStocktake;
   String? totalHargaJualStock;
   String? totalHargaJualStocktake;
   String? selisihHargaJual;
@@ -74,6 +75,7 @@ class DetailDataDetailStockTake {
       this.selisih,
       this.petugas,
       this.isSelisih,
+      this.isDoneStocktake,
       this.totalHargaJualStock,
       this.totalHargaJualStocktake,
       this.selisihHargaJual});
@@ -87,6 +89,7 @@ class DetailDataDetailStockTake {
     selisih = checkModel(json['selisih']);
     petugas = checkModel(json['petugas']);
     isSelisih = checkModel(json['is_selisih']);
+    isDoneStocktake = checkModel(json['is_done_stocktake']);
     totalHargaJualStock = checkModel(json['total_harga_jual_stock']);
     totalHargaJualStocktake = checkModel(json['total_harga_jual_stocktake']);
     selisihHargaJual = checkModel(json['selisih_harga_jual']);
@@ -102,6 +105,7 @@ class DetailDataDetailStockTake {
     data['selisih'] = selisih;
     data['petugas'] = petugas;
     data['is_selisih'] = isSelisih;
+    data['is_done_stocktake'] = isDoneStocktake;
     data['total_harga_jual_stock'] = totalHargaJualStock;
     data['total_harga_jual_stocktake'] = totalHargaJualStocktake;
     data['selisih_harga_jual'] = selisihHargaJual;

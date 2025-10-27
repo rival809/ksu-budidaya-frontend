@@ -35,6 +35,7 @@ generatePdfDetailStockTake({
           formatMoney(double.tryParse(dataRekap.selisihHargaJual ?? "0")?.toInt() ?? 0),
           trimString(dataRekap.petugas),
           trimString(dataRekap.isSelisih.toString()),
+          trimString(dataRekap.isDoneStocktake.toString()),
         ),
       );
     }
@@ -53,6 +54,7 @@ generatePdfDetailStockTake({
         "HARGA JUAL",
         "PETUGAS",
         "KETERANGAN",
+        "STATUS STOCKTAKE",
       ];
 //END INITIALIZE TITLE
 
@@ -76,6 +78,7 @@ generatePdfDetailStockTake({
           8: pw.Alignment.center,
           9: pw.Alignment.center,
           10: pw.Alignment.center,
+          11: pw.Alignment.center,
         },
         columnWidths: {
           0: const pw.FixedColumnWidth(26),
@@ -89,6 +92,7 @@ generatePdfDetailStockTake({
           8: const pw.FlexColumnWidth(2),
           9: const pw.FlexColumnWidth(2),
           10: const pw.FlexColumnWidth(2),
+          11: const pw.FlexColumnWidth(2),
         },
         cellAlignments: {
           0: pw.Alignment.center,
@@ -102,6 +106,7 @@ generatePdfDetailStockTake({
           8: pw.Alignment.centerRight,
           9: pw.Alignment.centerLeft,
           10: pw.Alignment.center,
+          11: pw.Alignment.center,
         },
         headerStyle: pw.TextStyle(
           color: PdfColor.fromHex("#212121"),
@@ -144,6 +149,32 @@ generatePdfDetailStockTake({
                     color: (listDataPenerimaan[row].getIndex(col) == "true")
                         ? PdfColors.red900
                         : PdfColors.green900,
+                    fontSize: 7,
+                  ),
+                ),
+              );
+            }
+            if (col == 11) {
+              return pw.Container(
+                decoration: pw.BoxDecoration(
+                  borderRadius: const pw.BorderRadius.all(
+                    pw.Radius.circular(8.0),
+                  ),
+                  color: (listDataPenerimaan[row].getIndex(col) == "true")
+                      ? PdfColors.blue50
+                      : PdfColors.orange50,
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 4,
+                ),
+                child: Text(
+                  (listDataPenerimaan[row].getIndex(col) == "true") ? "SUDAH" : "BELUM",
+                  style: pw.TextStyle(
+                    font: regularFont,
+                    color: (listDataPenerimaan[row].getIndex(col) == "true")
+                        ? PdfColors.blue900
+                        : PdfColors.orange900,
                     fontSize: 7,
                   ),
                 ),
@@ -214,6 +245,7 @@ class PdfStockTake {
     this.selisihHargaJual,
     this.petugas,
     this.isSelisih,
+    this.isDoneStocktake,
   );
 
   final String no;
@@ -227,6 +259,7 @@ class PdfStockTake {
   final String selisihHargaJual;
   final String petugas;
   final String isSelisih;
+  final String isDoneStocktake;
 
   String getIndex(int index) {
     switch (index) {
@@ -252,6 +285,8 @@ class PdfStockTake {
         return petugas;
       case 10:
         return isSelisih;
+      case 11:
+        return isDoneStocktake;
     }
     return '';
   }
