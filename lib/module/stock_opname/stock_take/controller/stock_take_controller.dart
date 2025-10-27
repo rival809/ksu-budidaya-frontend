@@ -13,18 +13,20 @@ class StockTakeController extends State<StockTakeView> {
   TextEditingController supplierNameController = TextEditingController();
 
   bool? isSelisih;
+  bool? isSudahStocktake;
 
   Future<dynamic>? dataFuture;
 
   String dropdown = "SEMUA";
+  String dropdownStocktake = "SEMUA";
 
   DataDetailStockTake dataStockOpname = DataDetailStockTake();
   DetailStockTakeResult result = DetailStockTakeResult();
   List<String> listRoleView = [
     "id_product",
     "nm_product",
-    "divisi",
     "petugas",
+    "is_done_stocktake",
     "stock",
     "total_harga_jual_stock",
     "stock_take",
@@ -77,6 +79,9 @@ class StockTakeController extends State<StockTakeView> {
 
       if (isSelisih != null) {
         dataCari.addAll({"is_selisih": isSelisih});
+      }
+      if (isSudahStocktake != null) {
+        dataCari.addAll({"is_done_stocktake": isSelisih});
       }
 
       result = await ApiService.detailStockTake(

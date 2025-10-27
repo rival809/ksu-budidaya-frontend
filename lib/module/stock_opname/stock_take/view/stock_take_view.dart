@@ -40,7 +40,7 @@ class StockTakeView extends StatefulWidget {
                         width: 16.0,
                       ),
                       Text(
-                        "Detail Stocktake",
+                        "Detail Stocktake Divisi ${trimString(idDivisi)} - ${trimString(nmDivisi)}",
                         style: myTextTheme.headlineLarge,
                       ),
                     ],
@@ -61,10 +61,12 @@ class StockTakeView extends StatefulWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               SizedBox(
                                 width: 250,
                                 child: BaseDropdownButton(
+                                  label: "Keterangan",
                                   itemAsString: (value) => value,
                                   sortItem: false,
                                   items: const ["SEMUA", "SELISIH", "SEIMBANG"],
@@ -78,6 +80,31 @@ class StockTakeView extends StatefulWidget {
                                       controller.update();
                                     } else {
                                       controller.isSelisih = false;
+                                      controller.update();
+                                    }
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 16.0,
+                              ),
+                              SizedBox(
+                                width: 250,
+                                child: BaseDropdownButton(
+                                  label: "Status Stocktake",
+                                  itemAsString: (value) => value,
+                                  sortItem: false,
+                                  items: const ["SEMUA", "SUDAH STOCKETAKE", "BELUM STOCKETAKE"],
+                                  value: controller.dropdownStocktake,
+                                  onChanged: (value) {
+                                    if (value == "SEMUA") {
+                                      controller.isSudahStocktake = null;
+                                      controller.update();
+                                    } else if (value == "SUDAH STOCKETAKE") {
+                                      controller.isSudahStocktake = true;
+                                      controller.update();
+                                    } else {
+                                      controller.isSudahStocktake = false;
                                       controller.update();
                                     }
                                   },
@@ -164,6 +191,34 @@ class StockTakeView extends StatefulWidget {
                                         }
                                       },
                                     );
+                                  } else if (controller.listRoleView[index] ==
+                                      "is_done_stocktake") {
+                                    return PlutoColumn(
+                                      backgroundColor: primaryColor,
+                                      filterHintText: "Cari Status Stocktake",
+                                      title: "Status Stocktake",
+                                      field: controller.listRoleView[index],
+                                      type: PlutoColumnType.text(),
+                                      renderer: (rendererContext) {
+                                        Map<String, dynamic> dataRow = rendererContext.row.toJson();
+
+                                        if (dataRow["is_done_stocktake"] == true) {
+                                          return const CardLabel(
+                                            cardColor: green50,
+                                            cardTitle: "Sudah Stocktake",
+                                            cardTitleColor: green900,
+                                            cardBorderColor: green50,
+                                          );
+                                        } else {
+                                          return const CardLabel(
+                                            cardColor: red50,
+                                            cardTitle: "Belum Stocktake",
+                                            cardTitleColor: red900,
+                                            cardBorderColor: red50,
+                                          );
+                                        }
+                                      },
+                                    );
                                   } else {
                                     return PlutoColumn(
                                       backgroundColor: primaryColor,
@@ -203,7 +258,7 @@ class StockTakeView extends StatefulWidget {
 
                               for (String column in controller.listRoleView) {
                                 if (item.containsKey(column)) {
-                                  if (column == "is_selisih") {
+                                  if (column == "is_selisih" || column == "is_done_stocktake") {
                                     cells[column] = PlutoCell(
                                       value: item[column],
                                     );

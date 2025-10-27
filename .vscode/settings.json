@@ -21,5 +21,6 @@
     "titleBar.activeBackground": "#017260",
     "titleBar.activeForeground": "#FFFFFF"
   },
-  "dart.flutterSdkPath": ".fvm/versions/3.19.1"
+  "dart.flutterSdkPath": ".fvm/versions/3.19.1",
+  "cmake.ignoreCMakeListsMissing": true
 }
