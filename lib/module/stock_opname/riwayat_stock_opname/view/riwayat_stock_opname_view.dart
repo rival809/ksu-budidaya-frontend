@@ -29,9 +29,8 @@ class RiwayatStockOpnameView extends StatefulWidget {
                   const SizedBox(
                     height: 16.0,
                   ),
-                  SingleChildScrollView(
-                    controller: ScrollController(),
-                    scrollDirection: Axis.horizontal,
+                  Form(
+                    key: controller.formKeyHistory,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
@@ -40,57 +39,125 @@ class RiwayatStockOpnameView extends StatefulWidget {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 250,
-                                child: BaseForm(
-                                  textEditingController: controller.supplierNameController,
-                                  onChanged: (value) {},
-                                  hintText: "Pencarian",
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: BaseForm(
+                                    textEditingController: controller.supplierNameController,
+                                    onChanged: (value) {},
+                                    hintText: "Pencarian",
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
-                              SizedBox(
-                                width: 250,
-                                child: BaseDropdownButton(
-                                  itemAsString: (value) => value,
-                                  sortItem: false,
-                                  items: const ["SEMUA", "SELISIH", "SEIMBANG"],
-                                  value: controller.dropdown,
-                                  onChanged: (value) {
-                                    if (value == "SEMUA") {
-                                      controller.isSelisih = null;
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                                Expanded(
+                                  child: BaseDropdownButton(
+                                    itemAsString: (value) => value,
+                                    sortItem: false,
+                                    items: const ["SEMUA", "SELISIH", "SEIMBANG"],
+                                    value: controller.dropdown,
+                                    onChanged: (value) {
+                                      if (value == "SEMUA") {
+                                        controller.isSelisih = null;
+                                        controller.update();
+                                      } else if (value == "SELISIH") {
+                                        controller.isSelisih = true;
+                                        controller.update();
+                                      } else {
+                                        controller.isSelisih = false;
+                                        controller.update();
+                                      }
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                                Expanded(
+                                  child: BaseDropdownButton<Month>(
+                                    sortItem: false,
+                                    label: "Bulan",
+                                    itemAsString: (item) => item.monthAsString(),
+                                    items: Year.fromJson(monthData).months,
+                                    value: controller.monthNow != null
+                                        ? Month(
+                                            id: controller.monthNow!,
+                                            month: trimString(getNamaMonth(controller.monthNow!)),
+                                          )
+                                        : null,
+                                    onChanged: (value) {
+                                      controller.monthNow = value?.id;
+                                      controller.hasData = false;
                                       controller.update();
-                                    } else if (value == "SELISIH") {
-                                      controller.isSelisih = true;
+                                    },
+                                    onClear: () {
+                                      controller.monthNow = null;
+                                      controller.yearNow = null;
+                                      controller.hasData = false;
                                       controller.update();
-                                    } else {
-                                      controller.isSelisih = false;
+                                    },
+                                    validator: (value) {
+                                      if (controller.yearNow != null && value == null) {
+                                        return "Bulan harus diisi jika tahun sudah dipilih";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                                Expanded(
+                                  child: BaseDropdownButton<int>(
+                                    sortItem: false,
+                                    label: "Tahun",
+                                    itemAsString: (item) => item.toString(),
+                                    items: List.generate(DateTime.now().year - 2023,
+                                        (index) => DateTime.now().year - index),
+                                    value: controller.yearNow,
+                                    onChanged: (value) {
+                                      controller.yearNow = value;
+                                      controller.hasData = false;
+                                      controller.update();
+                                    },
+                                    onClear: () {
+                                      controller.monthNow = null;
+                                      controller.yearNow = null;
+                                      controller.hasData = false;
+                                      controller.update();
+                                    },
+                                    validator: (value) {
+                                      if (controller.monthNow != null && value == null) {
+                                        return "Tahun harus diisi jika bulan sudah dipilih";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                                BasePrimaryButton(
+                                  onPressed: () {
+                                    if (controller.formKeyHistory.currentState!.validate()) {
+                                      controller.dataFuture = controller.cariDataStockOpname();
+
                                       controller.update();
                                     }
                                   },
+                                  text: "Cari Data",
+                                  isDense: true,
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
-                              BasePrimaryButton(
-                                onPressed: () {
-                                  controller.dataFuture = controller.cariDataStockOpname();
-
-                                  controller.update();
-                                },
-                                text: "Cari Data",
-                                isDense: true,
-                              ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
-                            ],
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                              ],
+                            ),
                           ),
                           BasePrimaryButton(
                             onPressed: () {

@@ -14,6 +14,10 @@ class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
   String dropdown = "SEMUA";
 
   bool? isSelisih;
+  int? monthNow;
+  int? yearNow;
+  bool hasData = false;
+  GlobalKey<FormState> formKeyHistory = GlobalKey<FormState>();
 
   Future<dynamic>? dataFuture;
 
@@ -73,6 +77,13 @@ class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
 
       if (isSelisih != null) {
         dataCari.addAll({"is_selisih": isSelisih});
+      }
+
+      if (monthNow != null) {
+        dataCari.addAll({"month": monthNow});
+      }
+      if (yearNow != null) {
+        dataCari.addAll({"year": yearNow});
       }
 
       result = await ApiService.listHistoryStockOpname(
