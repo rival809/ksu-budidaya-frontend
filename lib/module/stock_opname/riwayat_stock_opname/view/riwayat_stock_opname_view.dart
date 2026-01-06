@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
 import 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/controller/riwayat_stock_opname_controller.dart';
+import 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/widget/generate_riwayat_stock_opname.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class RiwayatStockOpnameView extends StatefulWidget {
@@ -158,6 +159,17 @@ class RiwayatStockOpnameView extends StatefulWidget {
                                 ),
                               ],
                             ),
+                          ),
+                          BaseSecondaryButton(
+                            onPressed: () {
+                              generatePdfRiwayatStockOpname(controller: controller);
+                            },
+                            text: "Cetak PDF",
+                            suffixIcon: iconPrint,
+                            isDense: true,
+                          ),
+                          const SizedBox(
+                            width: 16.0,
                           ),
                           BasePrimaryButton(
                             onPressed: () {
