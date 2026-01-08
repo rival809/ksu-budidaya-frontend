@@ -56,7 +56,7 @@ class DataProductAdapter extends TypeAdapter<DataProduct> {
     };
     return DataProduct(
       dataProduct: (fields[0] as List?)?.cast<DataDetailProduct>(),
-      paging: fields[1] as Paging?,
+      paging: fields[1] as PagingRole?,
       totalKeseluruhan: fields[2] as TotalKeseluruhan?,
     );
   }

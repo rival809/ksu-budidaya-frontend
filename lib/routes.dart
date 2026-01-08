@@ -108,6 +108,14 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
+          path: 'stock-opname/harian',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: StockOpnameHarianView(),
+            );
+          },
+        ),
+        GoRoute(
           path: 'stock-opname/stocktake',
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(

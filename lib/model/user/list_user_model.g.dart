@@ -18,7 +18,7 @@ class DataListUserAdapter extends TypeAdapter<DataListUser> {
     };
     return DataListUser(
       dataUsers: (fields[0] as List?)?.cast<DataUsers>(),
-      paging: fields[1] as Paging?,
+      paging: fields[1] as PagingRole?,
     );
   }
 
@@ -38,9 +38,7 @@ class DataListUserAdapter extends TypeAdapter<DataListUser> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DataListUserAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DataListUserAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class DataUsersAdapter extends TypeAdapter<DataUsers> {
@@ -84,7 +82,5 @@ class DataUsersAdapter extends TypeAdapter<DataUsers> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DataUsersAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DataUsersAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

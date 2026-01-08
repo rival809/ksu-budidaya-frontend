@@ -66,8 +66,7 @@ class DataDetailDivisi {
   @HiveField(3)
   String? updatedAt;
 
-  DataDetailDivisi(
-      {this.idDivisi, this.nmDivisi, this.createdAt, this.updatedAt});
+  DataDetailDivisi({this.idDivisi, this.nmDivisi, this.createdAt, this.updatedAt});
 
   DataDetailDivisi.fromJson(Map<String, dynamic> json) {
     idDivisi = json['id_divisi'];

@@ -18,7 +18,7 @@ class DataListRoleAdapter extends TypeAdapter<DataListRole> {
     };
     return DataListRole(
       dataRoles: (fields[0] as List?)?.cast<DataRoles>(),
-      paging: fields[1] as Paging?,
+      paging: fields[1] as PagingRole?,
     );
   }
 
@@ -38,9 +38,7 @@ class DataListRoleAdapter extends TypeAdapter<DataListRole> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DataListRoleAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DataListRoleAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class DataRolesAdapter extends TypeAdapter<DataRoles> {
@@ -147,22 +145,20 @@ class DataRolesAdapter extends TypeAdapter<DataRoles> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DataRolesAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DataRolesAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
-class PagingAdapter extends TypeAdapter<Paging> {
+class PagingRoleAdapter extends TypeAdapter<PagingRole> {
   @override
   final int typeId = 6;
 
   @override
-  Paging read(BinaryReader reader) {
+  PagingRole read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Paging(
+    return PagingRole(
       page: fields[0] as int?,
       totalItem: fields[1] as int?,
       totalPage: fields[2] as int?,
@@ -170,7 +166,7 @@ class PagingAdapter extends TypeAdapter<Paging> {
   }
 
   @override
-  void write(BinaryWriter writer, Paging obj) {
+  void write(BinaryWriter writer, PagingRole obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
@@ -187,7 +183,5 @@ class PagingAdapter extends TypeAdapter<Paging> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PagingAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is PagingRoleAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

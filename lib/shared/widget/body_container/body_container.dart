@@ -348,6 +348,8 @@ class _BodyContainerState extends State<BodyContainer> {
                                 "/stock-opname",
                                 [
                                   // "/user-management/roles",
+                                  "/stock-opname/harian",
+                                  "/stock-opname/riwayat-harian",
                                   "/stock-opname/mobile",
                                   "/stock-opname/riwayat",
                                   "/stock-opname/stocktake",
@@ -365,6 +367,24 @@ class _BodyContainerState extends State<BodyContainer> {
                                 //     // router.go("/stock-opname/cetak-harian");
                                 //   },
                                 // ),
+                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                  DrawerMenu(
+                                    title: "Stock Opname Harian",
+                                    isSubMenu: true,
+                                    isSelected: currentRoute == "/stock-opname/harian",
+                                    onTap: () {
+                                      router.go("/stock-opname/harian");
+                                    },
+                                  ),
+                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                  DrawerMenu(
+                                    title: "Riwayat Stock Opname Harian",
+                                    isSubMenu: true,
+                                    isSelected: currentRoute == "/stock-opname/riwayat-harian",
+                                    onTap: () {
+                                      router.go("/stock-opname/riwayat-harian");
+                                    },
+                                  ),
                                 if (dataLogin.roleData?.stsStockOpname == true)
                                   DrawerMenu(
                                     title: "Stock Opname",
