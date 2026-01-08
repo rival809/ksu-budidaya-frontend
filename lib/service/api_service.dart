@@ -1645,4 +1645,27 @@ class ApiService {
       throw Exception('Failed to listStocktakeV2');
     }
   }
+
+  static Future<UpdateSingleModel> updateSingleItem({
+    required String idItem,
+    //contoh isinya { "stok_fisik": 19, "notes": "0" }
+    required DataMap data,
+  }) async {
+    var response = await dio.patch(
+      "$_baseUrl/api/stocktake/v2/items/$idItem",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return UpdateSingleModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to updateSingleItem');
+    }
+  }
 }

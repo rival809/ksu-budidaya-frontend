@@ -25,16 +25,16 @@ class ListStocktakeItemsModel {
 }
 
 class DataListStocktakeItems {
-  List<Data>? data;
+  List<DetailListStocktakeItemsilDataListStocktakeItems>? data;
   Pagination? pagination;
 
   DataListStocktakeItems({this.data, this.pagination});
 
   DataListStocktakeItems.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DetailListStocktakeItemsilDataListStocktakeItems>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(DetailListStocktakeItemsilDataListStocktakeItems.fromJson(v));
       });
     }
     pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
@@ -52,7 +52,7 @@ class DataListStocktakeItems {
   }
 }
 
-class Data {
+class DetailListStocktakeItemsilDataListStocktakeItems {
   int? idStocktakeItem;
   String? idStocktakeSession;
   String? idProduct;
@@ -74,7 +74,7 @@ class Data {
   String? updatedAt;
   Valuasi? valuasi;
 
-  Data(
+  DetailListStocktakeItemsilDataListStocktakeItems(
       {this.idStocktakeItem,
       this.idStocktakeSession,
       this.idProduct,
@@ -96,7 +96,7 @@ class Data {
       this.updatedAt,
       this.valuasi});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DetailListStocktakeItemsilDataListStocktakeItems.fromJson(Map<String, dynamic> json) {
     idStocktakeItem = json['id_stocktake_item'];
     idStocktakeSession = json['id_stocktake_session'];
     idProduct = json['id_product'];

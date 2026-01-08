@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/session_stock/list_session_model.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class ListSessionView extends StatefulWidget {
