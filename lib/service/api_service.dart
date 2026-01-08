@@ -1,11 +1,5 @@
 import 'dart:convert';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
-import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
-import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
-import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
 
 class ApiService {
   //CONFIG API
@@ -1217,8 +1211,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return LaporanHasilUsahaResult.fromJson(
-            json.decode(response.toString()));
+        return LaporanHasilUsahaResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1270,8 +1263,7 @@ class ApiService {
       if (response.data["success"] == true) {
         // final mockResponse = await rootBundle.loadString('assets/res_neraca_lajur.json');
         // return LaporanNeracaLajurModel.fromJson(json.decode(mockResponse));
-        return LaporanNeracaLajurModel.fromJson(
-            json.decode(response.toString()));
+        return LaporanNeracaLajurModel.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1294,8 +1286,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return LaporanRealisasiPendapatanResult.fromJson(
-            json.decode(response.toString()));
+        return LaporanRealisasiPendapatanResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1370,8 +1361,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return HistoryHutangDagangResult.fromJson(
-            json.decode(response.toString()));
+        return HistoryHutangDagangResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1392,8 +1382,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return BayarHutangDagangResult.fromJson(
-            json.decode(response.toString()));
+        return BayarHutangDagangResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1436,8 +1425,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return HistoryHutangAnggotaResult.fromJson(
-            json.decode(response.toString()));
+        return HistoryHutangAnggotaResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1458,8 +1446,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return BayarHutangAnggotaResult.fromJson(
-            json.decode(response.toString()));
+        return BayarHutangAnggotaResult.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1501,8 +1488,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       if (response.data["success"] == true) {
-        return HistoryStockOpnameModel.fromJson(
-            json.decode(response.toString()));
+        return HistoryStockOpnameModel.fromJson(json.decode(response.toString()));
       } else {
         throw Exception(response.data["message"]);
       }
@@ -1571,6 +1557,70 @@ class ApiService {
       }
     } else {
       throw Exception('Failed to listStockTake');
+    }
+  }
+
+  static Future<ListSessionModel> listSession({
+    required DataMap data,
+  }) async {
+    var response = await dio.get(
+      "$_baseUrl/api/stocktake/v2/sessions",
+      options: options,
+      queryParameters: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ListSessionModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listSession');
+    }
+  }
+
+  static Future<DetailSessionModel> detailSession({
+    required String idSession,
+  }) async {
+    var response = await dio.get(
+      "$_baseUrl/api/stocktake/v2/sessions/$idSession",
+      options: options,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailSessionModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to detailSession');
+    }
+  }
+
+  static Future<DetailSessionModel> createSession({
+    required String stocktakeType,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stocktake/v2/sessions",
+      options: options,
+      data: {
+        "stocktake_type": stocktakeType,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return DetailSessionModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to createSession');
     }
   }
 }
