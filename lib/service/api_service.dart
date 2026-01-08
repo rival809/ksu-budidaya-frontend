@@ -1623,4 +1623,26 @@ class ApiService {
       throw Exception('Failed to createSession');
     }
   }
+
+  static Future<ListStocktakeItemsModel> listStocktakeV2({
+    required String idSession,
+    required DataMap data,
+  }) async {
+    var response = await dio.get(
+      "$_baseUrl/api/stocktake/v2/sessions/$idSession/items",
+      options: options,
+      data: data,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] == true) {
+        return ListStocktakeItemsModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to listStocktakeV2');
+    }
+  }
 }

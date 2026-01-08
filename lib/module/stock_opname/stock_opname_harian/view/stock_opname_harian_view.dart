@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/model/stocktake_v2/list_stocktake_items_model.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockOpnameHarianView extends StatefulWidget {
@@ -23,121 +24,132 @@ class StockOpnameHarianView extends StatefulWidget {
                     "Stock Opname Harian",
                     style: myTextTheme.headlineLarge,
                   ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  SingleChildScrollView(
-                    controller: ScrollController(),
-                    scrollDirection: Axis.horizontal,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minWidth: Provider.of<DrawerProvider>(context).isDrawerOpen
-                            ? MediaQuery.of(context).size.width - 32 - 265
-                            : MediaQuery.of(context).size.width - 32,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  const SizedBox(height: 16.0),
+                  // Summary Cards
+                  Builder(
+                    builder: (context) {
+                      int total = controller.sessionData?.totalItems ?? 0;
+                      int sudahSO = controller.sessionData?.totalCounted ?? 0;
+                      int belumSO = total - sudahSO;
+
+                      return Row(
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                                decoration: BoxDecoration(
-                                  color: blue600,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Total",
-                                      style: myTextTheme.bodyMedium?.copyWith(color: neutralWhite),
-                                    ),
-                                    Text(
-                                      "100",
-                                      style: myTextTheme.titleLarge?.copyWith(color: neutralWhite),
-                                    ),
-                                  ],
-                                ),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: blue500,
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                                decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Sudah SO",
-                                      style: myTextTheme.bodyMedium?.copyWith(color: neutralWhite),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Total",
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
                                     ),
-                                    Text(
-                                      "100",
-                                      style: myTextTheme.titleLarge?.copyWith(color: neutralWhite),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    total.toString(),
+                                    style: myTextTheme.headlineLarge?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                width: 16.0,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                                decoration: BoxDecoration(
-                                  color: red600,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Belum SO",
-                                      style: myTextTheme.bodyMedium?.copyWith(color: neutralWhite),
-                                    ),
-                                    Text(
-                                      "100",
-                                      style: myTextTheme.titleLarge?.copyWith(color: neutralWhite),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          Row(
-                            children: [
-                              BaseSecondaryButton(
-                                onPressed: () {
-                                  // generatePdfAktivitasStock(controller: controller);
-                                },
-                                text: "Cek Ulang",
-                                isDense: true,
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: primaryGreen,
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              const SizedBox(
-                                width: 16.0,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Sudah SO",
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    sudahSO.toString(),
+                                    style: myTextTheme.headlineLarge?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              BasePrimaryButton(
-                                onPressed: () {
-                                  // generatePdfAktivitasStock(controller: controller);
-                                },
-                                text: "Simpan Data SO",
-                                isDense: true,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: red500,
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                            ],
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Belum SO",
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    belumSO.toString(),
+                                    style: myTextTheme.headlineLarge?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16.0),
+                  // Action Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      BaseSecondaryButton(
+                        onPressed: () {
+                          // TODO: Implement cek ulang
+                        },
+                        text: "Cek Ulang",
+                        isDense: true,
                       ),
-                    ),
+                      const SizedBox(width: 16),
+                      BasePrimaryButton(
+                        onPressed: () {
+                          // TODO: Implement simpan data
+                        },
+                        text: "Simpan Data SO",
+                        isDense: true,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
+                  const SizedBox(height: 16.0),
+                  // Table
                   FutureBuilder(
-                    future: controller.dataFuture,
+                    future: controller.itemsFuture,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ContainerLoadingRole();
@@ -145,163 +157,172 @@ class StockOpnameHarianView extends StatefulWidget {
                         if (snapshot.hasError) {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
-                          AktivitasStockModel result = snapshot.data;
-                          controller.dataStockOpname = result.data ?? DataAktivitasStock();
-                          List<dynamic> listData =
-                              controller.dataStockOpname.toJson()["data_aktivitas"] ?? [];
+                          ListStocktakeItemsModel result = snapshot.data;
+                          controller.itemsData = result.data ?? DataListStocktakeItems();
+                          List<Data>? listData = controller.itemsData.data ?? [];
 
                           if (listData.isNotEmpty) {
                             List<PlutoRow> rows = [];
                             List<PlutoColumn> columns = [];
 
-                            columns.addAll(
-                              List.generate(
-                                controller.listRoleView.length,
-                                (index) {
-                                  if (controller.listRoleView[index] == "aktivitas") {
-                                    return PlutoColumn(
-                                        backgroundColor: primaryColor,
-                                        filterHintText: "Cari ${controller.listRoleView[index]}",
-                                        title: convertTitle(
-                                          controller.listRoleView[index],
-                                        ),
-                                        field: controller.listRoleView[index],
-                                        type: (controller.listRoleView[index] == "tg_aktivitas" ||
-                                                controller.listRoleView[index] ==
-                                                    "tg_update_aktivitas")
-                                            ? PlutoColumnType.date(
-                                                format: 'dd/MM/yyyy HH:mm:ss',
-                                              )
-                                            : PlutoColumnType.text(),
-                                        renderer: (rendererContext) {
-                                          return CardLabel(
-                                            cardColor: rendererContext
-                                                        .row
-                                                        .cells[controller.listRoleView[index]]
-                                                        ?.value ==
-                                                    "Penjualan"
-                                                ? red50
-                                                : rendererContext
-                                                            .row
-                                                            .cells[controller.listRoleView[index]]
-                                                            ?.value ==
-                                                        "Pembelian"
-                                                    ? green50
-                                                    : blue50,
-                                            cardTitle: convertTitle(
-                                              rendererContext
-                                                  .row.cells[controller.listRoleView[index]]?.value,
-                                            ),
-                                            cardTitleColor: rendererContext
-                                                        .row
-                                                        .cells[controller.listRoleView[index]]
-                                                        ?.value ==
-                                                    "Penjualan"
-                                                ? red900
-                                                : rendererContext
-                                                            .row
-                                                            .cells[controller.listRoleView[index]]
-                                                            ?.value ==
-                                                        "Pembelian"
-                                                    ? green900
-                                                    : blue900,
-                                            cardBorderColor: rendererContext
-                                                        .row
-                                                        .cells[controller.listRoleView[index]]
-                                                        ?.value ==
-                                                    "Penjualan"
-                                                ? red900
-                                                : rendererContext
-                                                            .row
-                                                            .cells[controller.listRoleView[index]]
-                                                            ?.value ==
-                                                        "Pembelian"
-                                                    ? green900
-                                                    : blue900,
-                                          );
-                                        });
-                                  } else {
-                                    return PlutoColumn(
-                                      backgroundColor: primaryColor,
-                                      filterHintText: "Cari ${controller.listRoleView[index]}",
-                                      title: convertTitle(
-                                        controller.listRoleView[index],
-                                      ),
-                                      field: controller.listRoleView[index],
-                                      type: (controller.listRoleView[index] == "tg_aktivitas" ||
-                                              controller.listRoleView[index] ==
-                                                  "tg_update_aktivitas")
-                                          ? PlutoColumnType.date(
-                                              format: 'dd/MM/yyyy HH:mm:ss',
-                                            )
-                                          : PlutoColumnType.text(),
-                                    );
-                                  }
-                                },
+                            // Create columns
+                            columns.addAll([
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "ID Produk",
+                                field: "id_product",
+                                type: PlutoColumnType.text(),
+                                width: 150,
                               ),
-                            );
-
-                            columns.add(
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Nama Produk",
+                                field: "nm_product",
+                                type: PlutoColumnType.text(),
+                                width: 200,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Divisi",
+                                field: "nm_divisi",
+                                type: PlutoColumnType.text(),
+                                width: 120,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Jml",
+                                field: "stok_sistem_jml",
+                                type: PlutoColumnType.number(),
+                                width: 80,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Harga Jual",
+                                field: "stok_sistem_harga",
+                                type: PlutoColumnType.number(format: "#,###"),
+                                width: 120,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Jml",
+                                field: "stok_fisik_jml",
+                                type: PlutoColumnType.number(),
+                                width: 80,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Harga Jual",
+                                field: "stok_fisik_harga",
+                                type: PlutoColumnType.number(format: "#,###"),
+                                width: 120,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Jml",
+                                field: "selisih_jml",
+                                type: PlutoColumnType.number(),
+                                width: 80,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Harga Jual",
+                                field: "selisih_harga",
+                                type: PlutoColumnType.number(format: "#,###"),
+                                width: 120,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Keterangan",
+                                field: "notes",
+                                type: PlutoColumnType.text(),
+                                width: 150,
+                              ),
                               PlutoColumn(
                                 width: 150,
                                 backgroundColor: primaryColor,
                                 frozen: PlutoColumnFrozen.end,
-                                title: "AKSI",
-                                field: "Aksi",
-                                filterHintText: "",
+                                title: "Aksi",
+                                field: "aksi",
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
-                                  Map<String, dynamic> dataRow = rendererContext.row.cells
-                                      .map((key, value) => MapEntry(key, value.value));
-                                  return BaseSecondaryButton(
-                                    onPressed: () {
-                                      Map<String, dynamic> dataRow = rendererContext.row.toJson();
+                                  bool isCounted =
+                                      rendererContext.row.cells['is_counted']?.value ?? false;
+                                  int stokFisik =
+                                      rendererContext.row.cells['stok_fisik_jml']?.value ?? 0;
 
-                                      if (rendererContext.row.cells['aktivitas']?.value ==
-                                          "Penjualan") {
-                                        router.push(
-                                          Uri(
-                                            path: "/stock-opname/aktivitas-stock/detail",
-                                            queryParameters: {
-                                              'id': trimString(dataRow["id_aktivitas"].toString())
-                                            },
-                                          ).toString(),
-                                        );
-                                      } else {
-                                        controller.postDetailPurchase(
-                                          trimString(dataRow["id_aktivitas"].toString()),
-                                        );
-                                      }
-                                    },
-                                    text: "Detail",
-                                    isDense: true,
-                                    suffixIcon: iconChevronDown,
-                                  );
+                                  if (!isCounted) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: blue500,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: BasePrimaryButton(
+                                        onPressed: () {
+                                          // TODO: Implement Lakukan SO
+                                        },
+                                        text: "Lakukan SO",
+                                        isDense: true,
+                                      ),
+                                    );
+                                  } else if (stokFisik == 0) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: red500,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: BaseSecondaryButton(
+                                        onPressed: () {
+                                          // TODO: Implement Edit Data SO
+                                        },
+                                        text: "Edit Data SO",
+                                        isDense: true,
+                                      ),
+                                    );
+                                  } else {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: primaryGreen,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: BaseSecondaryButton(
+                                        onPressed: () {
+                                          // TODO: Implement Edit Data SO
+                                        },
+                                        text: "Edit Data SO",
+                                        isDense: true,
+                                      ),
+                                    );
+                                  }
                                 },
                               ),
-                            );
+                            ]);
 
-                            List<dynamic> listDataWithIndex =
-                                List.generate(listData.length, (index) {
-                              return {
-                                ...listData[index],
-                                'persistentIndex': index + 1,
-                              };
-                            });
-                            rows = listDataWithIndex.map((item) {
+                            // Create rows
+                            rows = listData.map((item) {
                               Map<String, PlutoCell> cells = {};
-                              cells['Aksi'] = PlutoCell(
-                                value: null,
-                              );
 
-                              for (String column in controller.listRoleView) {
-                                if (item.containsKey(column)) {
-                                  cells[column] = PlutoCell(
-                                    value: trimStringStrip(item[column]),
-                                  );
-                                }
-                              }
+                              cells['id_product'] = PlutoCell(value: trimString(item.idProduct));
+                              cells['nm_product'] = PlutoCell(value: trimString(item.nmProduct));
+                              cells['nm_divisi'] = PlutoCell(value: trimString(item.nmDivisi));
+                              cells['stok_sistem_jml'] = PlutoCell(value: item.stokSistem ?? 0);
+                              cells['stok_sistem_harga'] = PlutoCell(
+                                value: double.tryParse(item.hargaJual ?? "0") ?? 0,
+                              );
+                              cells['stok_fisik_jml'] = PlutoCell(value: item.stokFisik ?? 0);
+                              cells['stok_fisik_harga'] = PlutoCell(
+                                value: item.stokFisik != null && item.stokFisik! > 0
+                                    ? (double.tryParse(item.hargaJual ?? "0") ?? 0)
+                                    : 0,
+                              );
+                              cells['selisih_jml'] = PlutoCell(value: item.selisih ?? 0);
+                              cells['selisih_harga'] = PlutoCell(
+                                value: (item.selisih ?? 0) *
+                                    (double.tryParse(item.hargaJual ?? "0") ?? 0),
+                              );
+                              cells['notes'] = PlutoCell(value: trimString(item.notes));
+                              cells['aksi'] = PlutoCell(value: null);
+                              cells['is_counted'] = PlutoCell(value: item.isCounted ?? false);
 
                               return PlutoRow(cells: cells);
                             }).toList();
@@ -309,22 +330,21 @@ class StockOpnameHarianView extends StatefulWidget {
                             return SizedBox(
                               height: MediaQuery.of(context).size.height -
                                   AppBar().preferredSize.height -
-                                  144 -
-                                  16,
+                                  300,
                               child: PlutoGrid(
                                 noRowsWidget: const ContainerTidakAda(
-                                  entity: 'Aktivitas Stock',
+                                  entity: 'Data Stock Opname',
                                 ),
                                 mode: PlutoGridMode.select,
                                 onLoaded: (event) {
                                   event.stateManager.setShowColumnFilter(true);
                                 },
                                 onSorted: (event) {
-                                  if (event.column.field != "Aksi") {
+                                  if (event.column.field != "aksi") {
                                     controller.isAsc = !controller.isAsc;
                                     controller.field = event.column.field;
                                     controller.update();
-                                    controller.dataFuture = controller.cariDataStockOpname(
+                                    controller.itemsFuture = controller.fetchStocktakeItems(
                                       isAsc: controller.isAsc,
                                       field: event.column.field,
                                     );
@@ -350,11 +370,11 @@ class StockOpnameHarianView extends StatefulWidget {
                                   return FooterTableWidget(
                                     page: controller.page,
                                     itemPerpage: controller.size,
-                                    maxPage: controller.dataStockOpname.paging?.totalPage ?? 0,
+                                    maxPage: controller.itemsData.pagination?.totalPages ?? 0,
                                     onChangePage: (value) {
                                       controller.page = trimString(value);
                                       controller.update();
-                                      controller.dataFuture = controller.cariDataStockOpname(
+                                      controller.itemsFuture = controller.fetchStocktakeItems(
                                         isAsc: controller.isAsc,
                                         field: controller.field,
                                       );
@@ -364,19 +384,19 @@ class StockOpnameHarianView extends StatefulWidget {
                                       controller.page = "1";
                                       controller.size = trimString(value);
                                       controller.update();
-                                      controller.dataFuture = controller.cariDataStockOpname(
+                                      controller.itemsFuture = controller.fetchStocktakeItems(
                                         isAsc: controller.isAsc,
                                         field: controller.field,
                                       );
                                       controller.update();
                                     },
-                                    totalRow: controller.dataStockOpname.paging?.totalItem ?? 0,
+                                    totalRow: controller.itemsData.pagination?.total ?? 0,
                                     onPressLeft: () {
                                       if (int.parse(controller.page) > 1) {
                                         controller.page =
                                             (int.parse(controller.page) - 1).toString();
                                         controller.update();
-                                        controller.dataFuture = controller.cariDataStockOpname(
+                                        controller.itemsFuture = controller.fetchStocktakeItems(
                                           isAsc: controller.isAsc,
                                           field: controller.field,
                                         );
@@ -385,11 +405,11 @@ class StockOpnameHarianView extends StatefulWidget {
                                     },
                                     onPressRight: () {
                                       if (int.parse(controller.page) <
-                                          (result.data?.paging?.totalPage ?? 0)) {
+                                          (controller.itemsData.pagination?.totalPages ?? 0)) {
                                         controller.page =
                                             (int.parse(controller.page) + 1).toString();
                                         controller.update();
-                                        controller.dataFuture = controller.cariDataStockOpname(
+                                        controller.itemsFuture = controller.fetchStocktakeItems(
                                           isAsc: controller.isAsc,
                                           field: controller.field,
                                         );
@@ -402,7 +422,7 @@ class StockOpnameHarianView extends StatefulWidget {
                             );
                           } else {
                             return const ContainerTidakAda(
-                              entity: 'Aktivitas Stock',
+                              entity: 'Data Stock Opname',
                             );
                           }
                         } else {
@@ -410,7 +430,7 @@ class StockOpnameHarianView extends StatefulWidget {
                         }
                       } else {
                         return const ContainerTidakAda(
-                          entity: "Aktivitas Stock",
+                          entity: "Data Stock Opname",
                         );
                       }
                     },

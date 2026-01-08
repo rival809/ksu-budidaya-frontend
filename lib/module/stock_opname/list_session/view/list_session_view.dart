@@ -218,12 +218,11 @@ class ListSessionView extends StatefulWidget {
                                 type: PlutoColumnType.text(),
                                 enableEditingMode: false,
                                 renderer: (rendererContext) {
-                                  String idSession =
-                                      rendererContext.row.cells['id_stocktake_session']?.value ??
-                                          "";
+                                  int rowIndex = rendererContext.rowIdx;
+                                  DataDetailSession sessionData = listData[rowIndex];
                                   return BaseSecondaryButton(
                                     onPressed: () {
-                                      controller.navigateToStockOpname(idSession);
+                                      controller.navigateToStockOpname(sessionData);
                                     },
                                     text: "Detail",
                                     isDense: true,

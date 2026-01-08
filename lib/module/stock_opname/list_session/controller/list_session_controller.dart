@@ -81,14 +81,11 @@ class ListSessionController extends State<ListSessionView> {
     }
   }
 
-  void navigateToStockOpname(String idSession) {
-    // Navigate to stock opname page
-    router.push(
-      Uri(
-        path: "/stock-opname/session/detail",
-        queryParameters: {'id': idSession},
-      ).toString(),
-    );
+  void navigateToStockOpname(DataDetailSession sessionData) {
+    // Set session data to static variable before navigation
+    StockOpnameHarianController.passedSessionData = sessionData;
+    // Navigate to stock opname page with session data
+    Get.to(const StockOpnameHarianView());
   }
 
   Future<void> createNewSession() async {

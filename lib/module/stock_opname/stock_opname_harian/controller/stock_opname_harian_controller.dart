@@ -5,6 +5,21 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
   static late StockOpnameHarianController instance;
   late StockOpnameHarianView view;
 
+  // Static variable to receive session data from previous screen
+  static DataDetailSession? passedSessionData;
+
+  String? idSession;
+  String page = "1";
+  String size = "100";
+  bool isAsc = false;
+  String? field;
+
+  Future<dynamic>? itemsFuture;
+  DataDetailSession? sessionData;
+
+  ListStocktakeItemsModel itemsResult = ListStocktakeItemsModel();
+  DataListStocktakeItems itemsData = DataListStocktakeItems();
+
   @override
   void initState() {
     super.initState();
@@ -12,128 +27,57 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     WidgetsBinding.instance.addPostFrameCallback((_) => onReady());
   }
 
-  void onReady() {}
+  void onReady() {
+    // Get session data from static variable
+    sessionData = passedSessionData;
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  String page = "1";
-  String size = "500";
-  bool isAsc = true;
-  TextEditingController supplierNameController = TextEditingController();
-  String dropdown = "SEMUA";
-
-  bool? isSelisih;
-
-  Future<dynamic>? dataFuture;
-
-  DataAktivitasStock dataStockOpname = DataAktivitasStock();
-  AktivitasStockModel result = AktivitasStockModel();
-  List<String> listRoleView = [
-    "tg_aktivitas",
-    "tg_update_aktivitas",
-    "id_product",
-    "nm_product",
-    "divisi",
-    "jumlah",
-    "aktivitas",
-    "id_aktivitas",
-    "user",
-  ];
-
-  List<DataDetailProduct> getDetailSuggestions(String query, List<DataDetailProduct>? states) {
-    List<DataDetailProduct> matches = [];
-
-    if (states != null) {
-      matches.addAll(states);
-      matches.retainWhere((s) =>
-          (trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) ||
-              trimString(s.nmProduct).toLowerCase().contains(query.toLowerCase())) &&
-          s.statusProduct == true);
+    if (sessionData != null) {
+      idSession = sessionData!.idStocktakeSession;
+      itemsFuture = fetchStocktakeItems();
+      // Clear static variable after use
+      passedSessionData = null;
+      // Trigger rebuild to show the data
+      update();
     }
-
-    return matches;
   }
 
-  String? field;
-
-  cariDataStockOpname({
+  Future<ListStocktakeItemsModel> fetchStocktakeItems({
     bool? isAsc,
     String? field,
   }) async {
     try {
-      result = AktivitasStockModel();
-      DataMap dataCari = {
+      DataMap params = {
         "page": page,
-        "size": size,
+        "limit": size,
       };
 
-      if (trimString(supplierNameController.text).toString().isNotEmpty) {
-        dataCari.addAll({"id_product": trimString(supplierNameController.text)});
-      }
-
-      if (isAsc != null) {
-        dataCari.addAll({
-          "sort_order": [isAsc == true ? "desc" : "asc"]
-        });
-      }
-      if (field != null) {
-        dataCari.addAll({
+      if (isAsc != null && field != null) {
+        params.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"],
           "sort_by": [field]
         });
       }
 
-      if (field == null) {
-        dataCari.removeWhere((key, value) => key == "sort_order");
-        dataCari.removeWhere((key, value) => key == "sort_by");
-
-        dataCari.addAll({
-          "sort_order": ["desc"]
-        });
-        dataCari.addAll({
-          "sort_by": ["created_at"]
-        });
-      }
-
-      result = await ApiService.listAktivitasStock(
-        data: dataCari,
+      itemsResult = await ApiService.listStocktakeV2(
+        idSession: idSession!,
+        data: params,
       ).timeout(const Duration(seconds: 30));
 
-      return result;
+      itemsData = itemsResult.data ?? DataListStocktakeItems();
+      return itemsResult;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
         showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
+      rethrow;
     }
   }
 
-  postDetailPurchase(String id_pembelian) async {
-    showCircleDialogLoading();
-    try {
-      DetailPembelianResult result = await ApiService.detailPembelian(
-        data: {"id_pembelian": id_pembelian},
-      ).timeout(const Duration(seconds: 30));
-
-      Navigator.pop(context);
-
-      if (result.success == true) {
-        Get.to(DetailPembelian(
-          result: result,
-        ));
-      }
-    } catch (e) {
-      Navigator.pop(context);
-
-      if (e.toString().contains("TimeoutException")) {
-        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
-      } else {
-        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
-      }
-    }
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
