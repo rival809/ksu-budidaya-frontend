@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_alasan.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_submit.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockOpnameHarianView extends StatefulWidget {
@@ -152,55 +150,56 @@ class StockOpnameHarianView extends StatefulWidget {
                         ),
                         const SizedBox(width: 16.0),
                         // Action Buttons
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              BaseSecondaryButton(
-                                onPressed: () {
-                                  // TODO: Implement cek ulang
-                                },
-                                text: "Cek Ulang",
-                                isDense: true,
-                              ),
-                              const SizedBox(width: 16),
-                              BaseDangerButton(
-                                onPressed: () {
-                                  showDialogBase(
-                                    content: DialogAlasan(onConfirm: (String alasan) async {
-                                      await controller.cancleSo(reason: alasan);
-                                    }),
-                                  );
-                                },
-                                text: "Batalkan SO",
-                                isDense: true,
-                              ),
-                              const SizedBox(width: 16),
-                              BasePrimaryButton(
-                                onPressed: () {
-                                  if (UserDatabase.userDatabase.data?.roleData?.idRole ==
-                                          "ROLE001" ||
-                                      UserDatabase.userDatabase.data?.roleData?.idRole ==
-                                          "ROLE002") {
+                        if (!["COMPLETED", "CANCELLED"].contains(controller.sessionData?.status))
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
+                                    UserDatabase.userDatabase.data?.roleData?.idRole ==
+                                        "ROLE002") ...[
+                                  BaseSecondaryButton(
+                                    onPressed: () {
+                                      controller.navigateToReviewCekUlang();
+                                    },
+                                    text: "Cek Ulang",
+                                    isDense: true,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  BaseDangerButton(
+                                    onPressed: () {
+                                      showDialogBase(
+                                        content: DialogAlasan(onConfirm: (String alasan) async {
+                                          await controller.cancleSo(reason: alasan);
+                                        }),
+                                      );
+                                    },
+                                    text: "Batalkan SO",
+                                    isDense: true,
+                                  ),
+                                  const SizedBox(width: 16),
+                                ],
+                                BasePrimaryButton(
+                                  onPressed: () {
                                     showDialogBase(
                                       content: DialogSubmit(onConfirm: (String alasan) async {
-                                        await controller.submitSoManager(reason: alasan);
+                                        if (UserDatabase.userDatabase.data?.roleData?.idRole ==
+                                                "ROLE001" ||
+                                            UserDatabase.userDatabase.data?.roleData?.idRole ==
+                                                "ROLE002") {
+                                          await controller.submitSoManager(reason: alasan);
+                                        } else {
+                                          await controller.submitSo(reason: alasan);
+                                        }
                                       }),
                                     );
-                                  } else {
-                                    showDialogBase(
-                                      content: DialogSubmit(onConfirm: (String alasan) async {
-                                        await controller.submitSo(reason: alasan);
-                                      }),
-                                    );
-                                  }
-                                },
-                                text: "Simpan Data SO",
-                                isDense: true,
-                              ),
-                            ],
+                                  },
+                                  text: "Simpan Data SO",
+                                  isDense: true,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
                       ],
                     );
                   },
@@ -318,97 +317,100 @@ class StockOpnameHarianView extends StatefulWidget {
                                 }
                               },
                             ),
-                            PlutoColumn(
-                              width: 150,
-                              backgroundColor: primaryColor,
-                              frozen: PlutoColumnFrozen.end,
-                              title: "Aksi",
-                              field: "aksi",
-                              type: PlutoColumnType.text(),
-                              enableEditingMode: false,
-                              renderer: (rendererContext) {
-                                bool isCounted =
-                                    rendererContext.row.cells['is_counted']?.value ?? false;
-                                int stokFisik =
-                                    rendererContext.row.cells['stok_fisik_jml']?.value ?? 0;
+                            if (!["COMPLETED", "CANCELLED"]
+                                .contains(controller.sessionData?.status)) ...[
+                              PlutoColumn(
+                                width: 150,
+                                backgroundColor: primaryColor,
+                                frozen: PlutoColumnFrozen.end,
+                                title: "Aksi",
+                                field: "aksi",
+                                type: PlutoColumnType.text(),
+                                enableEditingMode: false,
+                                renderer: (rendererContext) {
+                                  bool isCounted =
+                                      rendererContext.row.cells['is_counted']?.value ?? false;
+                                  int stokFisik =
+                                      rendererContext.row.cells['stok_fisik_jml']?.value ?? 0;
 
-                                if (!isCounted) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: blue500,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: BaseSecondaryButton(
-                                      onPressed: () {
-                                        String namaProduk =
-                                            rendererContext.row.cells['nm_product']?.value ?? '';
-                                        String idItem =
-                                            rendererContext.row.cells['id_stocktake_item']?.value ??
-                                                '';
-                                        controller.showDialogSO(
-                                          namaProduk: namaProduk,
-                                          idItem: idItem,
-                                        );
-                                      },
-                                      text: "Lakukan SO",
-                                      isDense: true,
-                                    ),
-                                  );
-                                } else if (stokFisik == 0) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: red500,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: BaseSecondaryButton(
-                                      onPressed: () {
-                                        String namaProduk =
-                                            rendererContext.row.cells['nm_product']?.value ?? '';
-                                        String idItem =
-                                            rendererContext.row.cells['id_stocktake_item']?.value ??
-                                                '';
-                                        String notes =
-                                            rendererContext.row.cells['notes_value']?.value ?? '';
-                                        controller.showDialogSO(
-                                          namaProduk: namaProduk,
-                                          idItem: idItem,
-                                          initialStokFisik: stokFisik.toString(),
-                                          initialNotes: notes,
-                                        );
-                                      },
-                                      text: "Edit Data SO",
-                                      isDense: true,
-                                    ),
-                                  );
-                                } else {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: primaryGreen,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: BaseSecondaryButton(
-                                      onPressed: () {
-                                        String namaProduk =
-                                            rendererContext.row.cells['nm_product']?.value ?? '';
-                                        String idItem =
-                                            rendererContext.row.cells['id_stocktake_item']?.value ??
-                                                '';
-                                        String notes =
-                                            rendererContext.row.cells['notes_value']?.value ?? '';
-                                        controller.showDialogSO(
-                                          namaProduk: namaProduk,
-                                          idItem: idItem,
-                                          initialStokFisik: stokFisik.toString(),
-                                          initialNotes: notes,
-                                        );
-                                      },
-                                      text: "Edit Data SO",
-                                      isDense: true,
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
+                                  if (!isCounted) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: blue500,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: BaseSecondaryButton(
+                                        onPressed: () {
+                                          String namaProduk =
+                                              rendererContext.row.cells['nm_product']?.value ?? '';
+                                          String idItem = rendererContext
+                                                  .row.cells['id_stocktake_item']?.value ??
+                                              '';
+                                          controller.showDialogSO(
+                                            namaProduk: namaProduk,
+                                            idItem: idItem,
+                                          );
+                                        },
+                                        text: "Lakukan SO",
+                                        isDense: true,
+                                      ),
+                                    );
+                                  } else if (stokFisik == 0) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: red500,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: BaseSecondaryButton(
+                                        onPressed: () {
+                                          String namaProduk =
+                                              rendererContext.row.cells['nm_product']?.value ?? '';
+                                          String idItem = rendererContext
+                                                  .row.cells['id_stocktake_item']?.value ??
+                                              '';
+                                          String notes =
+                                              rendererContext.row.cells['notes_value']?.value ?? '';
+                                          controller.showDialogSO(
+                                            namaProduk: namaProduk,
+                                            idItem: idItem,
+                                            initialStokFisik: stokFisik.toString(),
+                                            initialNotes: notes,
+                                          );
+                                        },
+                                        text: "Edit Data SO",
+                                        isDense: true,
+                                      ),
+                                    );
+                                  } else {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: primaryGreen,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: BaseSecondaryButton(
+                                        onPressed: () {
+                                          String namaProduk =
+                                              rendererContext.row.cells['nm_product']?.value ?? '';
+                                          String idItem = rendererContext
+                                                  .row.cells['id_stocktake_item']?.value ??
+                                              '';
+                                          String notes =
+                                              rendererContext.row.cells['notes_value']?.value ?? '';
+                                          controller.showDialogSO(
+                                            namaProduk: namaProduk,
+                                            idItem: idItem,
+                                            initialStokFisik: stokFisik.toString(),
+                                            initialNotes: notes,
+                                          );
+                                        },
+                                        text: "Edit Data SO",
+                                        isDense: true,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
                           ]);
 
                           // Create rows
@@ -422,23 +424,23 @@ class StockOpnameHarianView extends StatefulWidget {
                             cells['nm_divisi'] = PlutoCell(value: trimString(item.nmDivisi));
                             cells['stok_sistem_jml'] = PlutoCell(value: item.stokSistem ?? 0);
                             cells['stok_sistem_harga'] = PlutoCell(
-                              value: double.tryParse(item.hargaJual ?? "0") ?? 0,
+                              value: item.valuasi?.valuasiSistemJual ?? 0,
                             );
                             cells['stok_fisik_jml'] = PlutoCell(value: item.stokFisik ?? 0);
                             cells['stok_fisik_harga'] = PlutoCell(
-                              value: item.stokFisik != null && item.stokFisik! > 0
-                                  ? (double.tryParse(item.hargaJual ?? "0") ?? 0)
-                                  : 0,
+                              value: item.valuasi?.valuasiFisikJual ?? 0,
                             );
                             cells['selisih_jml'] = PlutoCell(value: item.selisih ?? 0);
                             cells['selisih_harga'] = PlutoCell(
-                              value: (item.selisih ?? 0) *
-                                  (double.tryParse(item.hargaJual ?? "0") ?? 0),
+                              value: item.valuasi?.valuasiSelisihJual ?? 0,
                             );
                             cells['notes'] = PlutoCell(value: trimString(item.notes));
                             cells['notes_value'] = PlutoCell(value: trimString(item.notes));
-                            cells['aksi'] = PlutoCell(value: null);
                             cells['is_counted'] = PlutoCell(value: item.isCounted ?? false);
+                            if (!["COMPLETED", "CANCELLED"]
+                                .contains(controller.sessionData?.status)) {
+                              cells['aksi'] = PlutoCell(value: null);
+                            }
 
                             return PlutoRow(cells: cells);
                           }).toList();

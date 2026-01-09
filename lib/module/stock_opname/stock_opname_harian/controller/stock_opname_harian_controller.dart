@@ -193,6 +193,16 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     }
   }
 
+  void navigateToReviewCekUlang() async {
+    // Pass data to ReviewCekUlangView
+    CekUlangController.passedIdSession = idSession;
+    CekUlangController.passedItems = itemsData.data ?? [];
+
+    // Navigate
+    await Get.to(const CekUlangView());
+    fetchStocktakeItems();
+  }
+
   @override
   void dispose() {
     super.dispose();

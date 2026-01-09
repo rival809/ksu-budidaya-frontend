@@ -66,13 +66,16 @@ class ListSessionView extends StatefulWidget {
                           )
                         ],
                       ),
-                      BasePrimaryButton(
-                        onPressed: () {
-                          controller.createNewSession();
-                        },
-                        text: "Buat Sesi",
-                        isDense: true,
-                      ),
+                      if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
+                          UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE002") ...[
+                        BasePrimaryButton(
+                          onPressed: () {
+                            controller.createNewSession();
+                          },
+                          text: "Buat Sesi",
+                          isDense: true,
+                        ),
+                      ]
                     ],
                   ),
                   const SizedBox(height: 16.0),

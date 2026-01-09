@@ -367,22 +367,15 @@ class _BodyContainerState extends State<BodyContainer> {
                                 //     // router.go("/stock-opname/cetak-harian");
                                 //   },
                                 // ),
-                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                if (dataLogin.roleData?.stsStocktakeHarian == true &&
+                                    ["ROLE001", "ROLE002"]
+                                        .contains(UserDatabase.userDatabase.data?.roleData?.idRole))
                                   DrawerMenu(
                                     title: "Stock Opname Harian",
                                     isSubMenu: true,
                                     isSelected: currentRoute == "/stock-opname/harian",
                                     onTap: () {
                                       router.go("/stock-opname/harian");
-                                    },
-                                  ),
-                                if (dataLogin.roleData?.stsStocktakeHarian == true)
-                                  DrawerMenu(
-                                    title: "Riwayat Stock Opname Harian",
-                                    isSubMenu: true,
-                                    isSelected: currentRoute == "/stock-opname/riwayat-harian",
-                                    onTap: () {
-                                      router.go("/stock-opname/riwayat-harian");
                                     },
                                   ),
                                 if (dataLogin.roleData?.stsStockOpname == true)
@@ -403,7 +396,8 @@ class _BodyContainerState extends State<BodyContainer> {
                                       router.go("/stock-opname/riwayat");
                                     },
                                   ),
-                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                if (dataLogin.roleData?.stsStocktakeHarian == true &&
+                                    UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001")
                                   DrawerMenu(
                                     title: "Stocktake",
                                     isSubMenu: true,
