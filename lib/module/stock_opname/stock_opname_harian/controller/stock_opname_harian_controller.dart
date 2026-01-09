@@ -154,6 +154,44 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     }
   }
 
+  submitSo({required String reason}) async {
+    showCircleDialogLoading();
+    try {
+      await ApiService.submitSo(idSession: trimString(idSession), reason: reason)
+          .timeout(const Duration(seconds: 30));
+
+      Get.back();
+      return true;
+    } catch (e) {
+      Get.back();
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    }
+  }
+
+  submitSoManager({required String reason}) async {
+    showCircleDialogLoading();
+    try {
+      await ApiService.submitSo(idSession: trimString(idSession), reason: reason);
+
+      await ApiService.approveSo(idSession: trimString(idSession), reason: reason);
+
+      await ApiService.finalizeSo(idSession: trimString(idSession), reason: reason);
+
+      Get.back();
+
+      showDialogBase(content: const DialogBerhasil()).then((value) {
+        Get.back();
+      });
+    } catch (e) {
+      Get.back();
+      showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();

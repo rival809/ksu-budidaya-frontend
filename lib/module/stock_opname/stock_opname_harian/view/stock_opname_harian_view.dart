@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 import 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_alasan.dart';
+import 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_submit.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockOpnameHarianView extends StatefulWidget {
@@ -177,7 +178,22 @@ class StockOpnameHarianView extends StatefulWidget {
                               const SizedBox(width: 16),
                               BasePrimaryButton(
                                 onPressed: () {
-                                  // TODO: Implement simpan data
+                                  if (UserDatabase.userDatabase.data?.roleData?.idRole ==
+                                          "ROLE001" ||
+                                      UserDatabase.userDatabase.data?.roleData?.idRole ==
+                                          "ROLE002") {
+                                    showDialogBase(
+                                      content: DialogSubmit(onConfirm: (String alasan) async {
+                                        await controller.submitSoManager(reason: alasan);
+                                      }),
+                                    );
+                                  } else {
+                                    showDialogBase(
+                                      content: DialogSubmit(onConfirm: (String alasan) async {
+                                        await controller.submitSo(reason: alasan);
+                                      }),
+                                    );
+                                  }
                                 },
                                 text: "Simpan Data SO",
                                 isDense: true,

@@ -1692,4 +1692,78 @@ class ApiService {
       throw Exception('Failed to cancelSo');
     }
   }
+
+  static Future<UpdateSingleModel> submitSo({
+    required String reason,
+    required String idSession,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stocktake/v2/sessions/$idSession/submit",
+      options: options,
+      data: {
+        "notes_kasir": reason,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return UpdateSingleModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to submitSo');
+    }
+  }
+
+  static Future<UpdateSingleModel> approveSo({
+    required String reason,
+    required String idSession,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stocktake/v2/sessions/$idSession/review",
+      options: options,
+      data: {
+        "action": "APPROVE",
+        "notes_reviewer": reason,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return UpdateSingleModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to approveSo');
+    }
+  }
+
+  static Future<UpdateSingleModel> finalizeSo({
+    required String reason,
+    required String idSession,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stocktake/v2/sessions/$idSession/finalize",
+      options: options,
+      data: {
+        "confirmation": true,
+        "notes_reviewer": reason,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return UpdateSingleModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to approveSo');
+    }
+  }
 }
