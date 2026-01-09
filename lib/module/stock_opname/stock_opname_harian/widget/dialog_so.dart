@@ -75,6 +75,7 @@ class _DialogSoState extends State<DialogSo> {
             const SizedBox(height: 16),
             BaseForm(
               label: "Stock Fisik",
+              autoFocus: true,
               hintText: "Masukkan Stock Fisik",
               textEditingController: stokFisikController,
               textInputType: TextInputType.number,

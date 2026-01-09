@@ -53,16 +53,16 @@ class DataListStocktakeItems {
 }
 
 class DetailListStocktakeItemsilDataListStocktakeItems {
-  int? idStocktakeItem;
+  double? idStocktakeItem;
   String? idStocktakeSession;
   String? idProduct;
   String? nmProduct;
   String? nmDivisi;
   String? hargaBeli;
   String? hargaJual;
-  int? stokSistem;
-  int? stokFisik;
-  int? selisih;
+  double? stokSistem;
+  double? stokFisik;
+  double? selisih;
   bool? isCounted;
   bool? isFlagged;
   String? flagReason;
@@ -148,15 +148,15 @@ class DetailListStocktakeItemsilDataListStocktakeItems {
 }
 
 class Valuasi {
-  int? qtySistem;
+  double? qtySistem;
   double? valuasiSistemBeli;
-  int? valuasiSistemJual;
-  int? qtyFisik;
-  int? valuasiFisikBeli;
-  int? valuasiFisikJual;
-  int? qtySelisih;
-  int? valuasiSelisihBeli;
-  int? valuasiSelisihJual;
+  double? valuasiSistemJual;
+  double? qtyFisik;
+  double? valuasiFisikBeli;
+  double? valuasiFisikJual;
+  double? qtySelisih;
+  double? valuasiSelisihBeli;
+  double? valuasiSelisihJual;
 
   Valuasi(
       {this.qtySistem,

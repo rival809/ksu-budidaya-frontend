@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_so.dart';
 
 class StockOpnameHarianController extends State<StockOpnameHarianView> {
   static late StockOpnameHarianController instance;
@@ -133,6 +132,25 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
       rethrow;
+    }
+  }
+
+  cancleSo({required String reason}) async {
+    showCircleDialogLoading();
+    try {
+      await ApiService.cancelSo(idSession: trimString(idSession), reason: reason)
+          .timeout(const Duration(seconds: 30));
+
+      Get.back(); // Close loading dialog
+      await showInfoDialog("Stock Opname berhasil dibatalkan", context);
+      Get.back(); // Navigate back to previous screen
+    } catch (e) {
+      Get.back();
+      if (e.toString().contains("TimeoutException")) {
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+      } else {
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
     }
   }
 

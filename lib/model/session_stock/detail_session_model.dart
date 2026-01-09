@@ -26,16 +26,16 @@ class DataDetailSession {
   String? idStocktakeSession;
   String? stocktakeType;
   String? status;
-  int? idTutupKasir;
+  double? idTutupKasir;
   String? shift;
   String? tgStocktake;
   String? usernameKasir;
   String? namaKasir;
   String? usernameReviewer;
   String? namaReviewer;
-  int? totalItems;
-  int? totalCounted;
-  int? totalVariance;
+  double? totalItems;
+  double? totalCounted;
+  double? totalVariance;
   String? notesKasir;
   String? notesReviewer;
   String? submittedAt;
@@ -135,7 +135,7 @@ class DataDetailSession {
 }
 
 class TutupKasir {
-  int? idTutupKasir;
+  double? idTutupKasir;
   String? tgTutupKasir;
   String? shift;
   String? namaKasir;
@@ -208,11 +208,11 @@ class TutupKasir {
 }
 
 class Statistics {
-  int? totalItems;
-  int? countedItems;
-  int? pendingItems;
-  int? flaggedItems;
-  int? totalVariance;
+  double? totalItems;
+  double? countedItems;
+  double? pendingItems;
+  double? flaggedItems;
+  double? totalVariance;
   String? progressPercentage;
 
   Statistics(
@@ -246,11 +246,11 @@ class Statistics {
 
 class ValuasiSummary {
   double? totalValuasiSistemBeli;
-  int? totalValuasiSistemJual;
-  int? totalValuasiFisikBeli;
-  int? totalValuasiFisikJual;
-  int? totalValuasiSelisihBeli;
-  int? totalValuasiSelisihJual;
+  double? totalValuasiSistemJual;
+  double? totalValuasiFisikBeli;
+  double? totalValuasiFisikJual;
+  double? totalValuasiSelisihBeli;
+  double? totalValuasiSelisihJual;
 
   ValuasiSummary(
       {this.totalValuasiSistemBeli,

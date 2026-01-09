@@ -81,11 +81,13 @@ class ListSessionController extends State<ListSessionView> {
     }
   }
 
-  void navigateToStockOpname(DataDetailSession sessionData) {
+  void navigateToStockOpname(DataDetailSession sessionData) async {
     // Set session data to static variable before navigation
     StockOpnameHarianController.passedSessionData = sessionData;
     // Navigate to stock opname page with session data
-    Get.to(const StockOpnameHarianView());
+    await Get.to(const StockOpnameHarianView());
+    dataFuture = fetchListSession();
+    update();
   }
 
   Future<void> createNewSession() async {

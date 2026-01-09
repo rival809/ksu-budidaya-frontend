@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
+import 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_alasan.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockOpnameHarianView extends StatefulWidget {
   const StockOpnameHarianView({super.key});
 
-  Widget build(context, StockOpnameHarianController controller) {
+  Widget build(BuildContext context, StockOpnameHarianController controller) {
     controller.view = this;
     return BodyContainer(
       contentBody: Container(
@@ -17,18 +18,31 @@ class StockOpnameHarianView extends StatefulWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Stock Opname Harian",
-                  style: myTextTheme.headlineLarge,
+                Row(
+                  children: [
+                    if (context.canPop())
+                      BackButton(
+                        onPressed: () {
+                          if (context.canPop()) {
+                            Navigator.pop(context);
+                          }
+                        },
+                      ),
+                    const SizedBox(width: 16),
+                    Text(
+                      "Stock Opname Harian",
+                      style: myTextTheme.headlineLarge,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16.0),
                 // Summary Cards
                 FutureBuilder(
                   future: controller.itemsFuture,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    int total = controller.sessionData?.statistics?.totalItems ?? 0;
-                    int sudahSO = controller.sessionData?.statistics?.countedItems ?? 0;
-                    int belumSO = controller.sessionData?.statistics?.pendingItems ?? 0;
+                    double total = controller.sessionData?.statistics?.totalItems ?? 0;
+                    double sudahSO = controller.sessionData?.statistics?.countedItems ?? 0;
+                    double belumSO = controller.sessionData?.statistics?.pendingItems ?? 0;
 
                     return Row(
                       children: [
@@ -146,6 +160,18 @@ class StockOpnameHarianView extends StatefulWidget {
                                   // TODO: Implement cek ulang
                                 },
                                 text: "Cek Ulang",
+                                isDense: true,
+                              ),
+                              const SizedBox(width: 16),
+                              BaseDangerButton(
+                                onPressed: () {
+                                  showDialogBase(
+                                    content: DialogAlasan(onConfirm: (String alasan) async {
+                                      await controller.cancleSo(reason: alasan);
+                                    }),
+                                  );
+                                },
+                                text: "Batalkan SO",
                                 isDense: true,
                               ),
                               const SizedBox(width: 16),
@@ -296,7 +322,7 @@ class StockOpnameHarianView extends StatefulWidget {
                                       color: blue500,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: BasePrimaryButton(
+                                    child: BaseSecondaryButton(
                                       onPressed: () {
                                         String namaProduk =
                                             rendererContext.row.cells['nm_product']?.value ?? '';

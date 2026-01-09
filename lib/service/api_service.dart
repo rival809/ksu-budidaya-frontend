@@ -1613,7 +1613,7 @@ class ApiService {
       cancelToken: cancelToken,
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       if (response.data["success"] == true) {
         return DetailSessionModel.fromJson(json.decode(response.toString()));
       } else {
@@ -1635,7 +1635,7 @@ class ApiService {
       cancelToken: cancelToken,
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       if (response.data["success"] == true) {
         return ListStocktakeItemsModel.fromJson(json.decode(response.toString()));
       } else {
@@ -1658,7 +1658,7 @@ class ApiService {
       cancelToken: cancelToken,
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       if (response.data["success"] == true) {
         return UpdateSingleModel.fromJson(json.decode(response.toString()));
       } else {
@@ -1666,6 +1666,30 @@ class ApiService {
       }
     } else {
       throw Exception('Failed to updateSingleItem');
+    }
+  }
+
+  static Future<UpdateSingleModel> cancelSo({
+    required String reason,
+    required String idSession,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stocktake/v2/sessions/$idSession/cancel",
+      options: options,
+      data: {
+        "cancel_reason": reason,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return UpdateSingleModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to cancelSo');
     }
   }
 }
