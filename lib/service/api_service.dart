@@ -1717,17 +1717,25 @@ class ApiService {
     }
   }
 
-  static Future<UpdateSingleModel> approveSo({
+  static Future<UpdateSingleModel> reviewSo({
     required String reason,
+    required String action,
     required String idSession,
+    List? revisionItems,
   }) async {
+    DataMap data = {
+      "action": action,
+      "notes_reviewer": reason,
+    };
+
+    if (revisionItems?.isNotEmpty ?? false) {
+      data["revision_items"] = revisionItems;
+    }
+
     var response = await dio.post(
       "$_baseUrl/api/stocktake/v2/sessions/$idSession/review",
       options: options,
-      data: {
-        "action": "APPROVE",
-        "notes_reviewer": reason,
-      },
+      data: data,
       cancelToken: cancelToken,
     );
 

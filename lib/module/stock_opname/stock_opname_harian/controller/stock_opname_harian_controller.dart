@@ -177,7 +177,8 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     try {
       await ApiService.submitSo(idSession: trimString(idSession), reason: reason);
 
-      await ApiService.approveSo(idSession: trimString(idSession), reason: reason);
+      await ApiService.reviewSo(
+          idSession: trimString(idSession), reason: reason, action: "APPROVE");
 
       await ApiService.finalizeSo(idSession: trimString(idSession), reason: reason);
 
