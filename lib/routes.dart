@@ -34,7 +34,7 @@ final GoRouter router = GoRouter(
             );
           } else {
             return const SelectionArea(
-              child: StockOpnameMobileView(),
+              child: StockOpnameHarianView(),
             );
           }
         }
@@ -63,7 +63,7 @@ final GoRouter router = GoRouter(
               );
             } else {
               return const SelectionArea(
-                child: StockOpnameMobileView(),
+                child: StockOpnameHarianView(),
               );
             }
           },
@@ -79,20 +79,9 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: 'stock-opname/mobile',
           builder: (BuildContext context, GoRouterState state) {
-            if (state.extra != null) {
-              bool? isFromHistory;
-              DataMap data = state.extra as DataMap;
-              isFromHistory = data['isFromHistory'];
-              return SelectionArea(
-                child: StockOpnameMobileView(
-                  isFromHistory: isFromHistory,
-                ),
-              );
-            } else {
-              return const SelectionArea(
-                child: StockOpnameMobileView(),
-              );
-            }
+            return const SelectionArea(
+              child: StockOpnameHarianView(),
+            );
           },
         ),
         GoRoute(

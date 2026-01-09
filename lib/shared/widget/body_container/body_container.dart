@@ -387,7 +387,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                       router.go("/stock-opname/mobile");
                                     },
                                   ),
-                                if (dataLogin.roleData?.stsStockOpname == true)
+                                if (dataLogin.roleData?.stsStockOpname == true && kIsWeb)
                                   DrawerMenu(
                                     title: "Riwayat Stock Opname",
                                     isSubMenu: true,
@@ -406,7 +406,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                       router.go("/stock-opname/stocktake");
                                     },
                                   ),
-                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                if (dataLogin.roleData?.stsStocktakeHarian == true && kIsWeb)
                                   DrawerMenu(
                                     title: "Aktivitas Stock",
                                     isSubMenu: true,

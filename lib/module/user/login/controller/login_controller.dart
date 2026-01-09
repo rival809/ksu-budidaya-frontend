@@ -24,23 +24,21 @@ class LoginController extends State<LoginView> {
       await AppSession.save(result.data?.userData?.token ?? "");
       await UserDatabase.save(result);
 
-      ApiService.options.headers?['Authorization'] =
-          "Bearer ${AppSession.token}";
+      ApiService.options.headers?['Authorization'] = "Bearer ${AppSession.token}";
 
       await Future.delayed(const Duration(seconds: 1));
       Get.back();
       if (kIsWeb) {
         html.window.location.reload();
       } else {
-        Get.to(const StockOpnameMobileView());
+        Get.to(const StockOpnameHarianView());
         update();
       }
     } catch (e) {
       Get.back();
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
