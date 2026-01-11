@@ -101,6 +101,14 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
+          path: 'stock-opname/bulanan',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: ListSessionView(),
+            );
+          },
+        ),
+        GoRoute(
           path: 'stock-opname/stocktake',
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(

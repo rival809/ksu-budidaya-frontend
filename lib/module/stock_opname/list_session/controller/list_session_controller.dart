@@ -11,6 +11,9 @@ class ListSessionController extends State<ListSessionView> {
   String? field;
   String statusFilter = "SEMUA";
 
+  // Stocktake type from route
+  String stocktakeType = "HARIAN";
+
   List<String> statusOptions = [
     "SEMUA",
     "DRAFT",
@@ -47,6 +50,7 @@ class ListSessionController extends State<ListSessionView> {
       DataMap dataCari = {
         "page": page,
         "limit": size,
+        "stocktake_type": stocktakeType,
       };
 
       // Add status filter if not "SEMUA"
@@ -84,8 +88,12 @@ class ListSessionController extends State<ListSessionView> {
   void navigateToStockOpname(DataDetailSession sessionData) async {
     // Set session data to static variable before navigation
     StockOpnameHarianController.passedSessionData = sessionData;
-    // Navigate to stock opname page with session data
-    await Get.to(const StockOpnameHarianView());
+
+    // Navigate to stock opname page with stocktake type parameter
+    await Get.to(StockOpnameHarianView(
+      stocktakeType: sessionData.stocktakeType,
+    ));
+
     dataFuture = fetchListSession();
     update();
   }
@@ -94,7 +102,7 @@ class ListSessionController extends State<ListSessionView> {
     showCircleDialogLoading();
     try {
       DetailSessionModel result = await ApiService.createSession(
-        stocktakeType: "HARIAN",
+        stocktakeType: stocktakeType,
       ).timeout(const Duration(seconds: 30));
 
       Navigator.pop(context); // Close loading dialog
@@ -121,6 +129,12 @@ class ListSessionController extends State<ListSessionView> {
   void initState() {
     super.initState();
     instance = this;
+
+    // Determine stocktake type from current route
+    final GoRouter router = GoRouter.of(context);
+    final String currentRoute = router.routerDelegate.currentConfiguration.uri.toString();
+    stocktakeType = currentRoute.contains('/bulanan') ? 'BULANAN' : 'HARIAN';
+
     dataFuture = fetchListSession();
     WidgetsBinding.instance.addPostFrameCallback((_) => onReady());
   }

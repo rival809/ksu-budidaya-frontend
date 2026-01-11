@@ -10,6 +10,9 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
   // Static variable to receive session data from previous screen
   static DataDetailSession? passedSessionData;
 
+  // Stocktake type for this session
+  String stocktakeType = "HARIAN";
+
   String? idSession;
   String page = "1";
   String size = "100";
@@ -37,6 +40,10 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
   void initState() {
     super.initState();
     instance = this;
+
+    // Get stocktake type from widget
+    stocktakeType = widget.stocktakeType ?? "HARIAN";
+
     scrollController.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) => onReady());
   }
@@ -68,11 +75,12 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       try {
         showCircleDialogLoading();
 
-        // Fetch latest session
+        // Fetch latest session with stocktake type filter
         final sessionListResult = await ApiService.listSession(
           data: {
             "page": "1",
             "limit": "1",
+            "stocktake_type": stocktakeType,
           },
         );
 
@@ -220,11 +228,12 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       filteredData = [];
 
       if (!kIsWeb) {
-        // For mobile, fetch latest session
+        // For mobile, fetch latest session with stocktake type filter
         final sessionListResult = await ApiService.listSession(
           data: {
             "page": "1",
             "limit": "1",
+            "stocktake_type": stocktakeType,
           },
         );
 

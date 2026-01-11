@@ -379,6 +379,15 @@ class _BodyContainerState extends State<BodyContainer> {
                                       router.go("/stock-opname/harian");
                                     },
                                   ),
+                                if (dataLogin.roleData?.stsStockOpname == true)
+                                  DrawerMenu(
+                                    title: "Stock Opname Bulanan",
+                                    isSubMenu: true,
+                                    isSelected: currentRoute == "/stock-opname/bulanan",
+                                    onTap: () {
+                                      router.go("/stock-opname/bulanan");
+                                    },
+                                  ),
                                 // if (dataLogin.roleData?.stsStockOpname == true)
                                 //   DrawerMenu(
                                 //     title: "Stock Opname",

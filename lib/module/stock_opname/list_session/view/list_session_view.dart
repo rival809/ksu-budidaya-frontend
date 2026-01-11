@@ -21,7 +21,9 @@ class ListSessionView extends StatefulWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Session",
+                    controller.stocktakeType == "BULANAN"
+                        ? "Session Stock Opname Bulanan"
+                        : "Session Stock Opname Harian",
                     style: myTextTheme.headlineLarge,
                   ),
                   const SizedBox(height: 16.0),

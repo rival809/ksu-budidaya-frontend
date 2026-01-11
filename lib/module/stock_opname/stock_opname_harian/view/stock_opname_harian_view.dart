@@ -3,7 +3,9 @@ import 'package:ksu_budidaya/core.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockOpnameHarianView extends StatefulWidget {
-  const StockOpnameHarianView({super.key});
+  final String? stocktakeType;
+
+  const StockOpnameHarianView({super.key, this.stocktakeType});
 
   Widget build(BuildContext context, StockOpnameHarianController controller) {
     controller.view = this;
@@ -38,7 +40,9 @@ class StockOpnameHarianView extends StatefulWidget {
                       ),
                     const SizedBox(width: 16),
                     Text(
-                      "Stock Opname Harian",
+                      controller.stocktakeType == "BULANAN"
+                          ? "Stock Opname Bulanan"
+                          : "Stock Opname Harian",
                       style: myTextTheme.headlineLarge,
                     ),
                   ],
