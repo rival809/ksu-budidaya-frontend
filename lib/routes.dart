@@ -123,6 +123,14 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
+          path: 'stock-opname/high-risk',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: HighRiskView(),
+            );
+          },
+        ),
+        GoRoute(
           path: 'stock-opname/stocktake',
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(

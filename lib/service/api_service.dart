@@ -1746,7 +1746,7 @@ class ApiService {
         throw Exception(response.data["message"]);
       }
     } else {
-      throw Exception('Failed to approveSo');
+      throw Exception('Failed to reviewSo');
     }
   }
 
@@ -1771,7 +1771,98 @@ class ApiService {
         throw Exception(response.data["message"]);
       }
     } else {
-      throw Exception('Failed to approveSo');
+      throw Exception('Failed to finalizeSo');
+    }
+  }
+
+  static Future<ListHighRiskModel> getListHighRisk() async {
+    var response = await dio.get(
+      "$_baseUrl/api/stocktake/v2/high-risk-products",
+      options: options,
+      queryParameters: {
+        "is_active": true,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return ListHighRiskModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to getListHighRisk');
+    }
+  }
+
+  static Future<AddHighRiskModel> addHighRisk({
+    required String id,
+    required String category,
+    required String reason,
+  }) async {
+    var response = await dio.post(
+      "$_baseUrl/api/stocktake/v2/high-risk-products",
+      options: options,
+      data: {
+        "id_product": id,
+        "category": category,
+        "reason": reason,
+      },
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return AddHighRiskModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to addHighRisk');
+    }
+  }
+
+  static Future<AddHighRiskModel> editHighRisk({
+    required String id,
+    required String category,
+    required String reason,
+  }) async {
+    var response = await dio.patch(
+      "$_baseUrl/api/stocktake/v2/high-risk-products/$id",
+      options: options,
+      data: {"category": category, "reason": reason, "is_active": true},
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return AddHighRiskModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to editHighRisk');
+    }
+  }
+
+  static Future<DeleteHighRiskModel> deleteHighRisk({
+    required String id,
+  }) async {
+    var response = await dio.delete(
+      "$_baseUrl/api/stocktake/v2/high-risk-products/$id",
+      options: options,
+      cancelToken: cancelToken,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data["success"] == true) {
+        return DeleteHighRiskModel.fromJson(json.decode(response.toString()));
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } else {
+      throw Exception('Failed to deleteHighRisk');
     }
   }
 }

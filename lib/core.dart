@@ -2,7 +2,7 @@
 We believe, the class name must be unique. 
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
-fileCount: 284
+fileCount: 290
 */
 export 'package:ksu_budidaya/config.dart';
 export 'package:ksu_budidaya/core_package.dart';
@@ -25,6 +25,9 @@ export 'package:ksu_budidaya/model/cash_in_out/ref_jenis_cash_model.dart';
 export 'package:ksu_budidaya/model/dashboard/income_dashboard_model.dart';
 export 'package:ksu_budidaya/model/dashboard/income_monthly_model.dart';
 export 'package:ksu_budidaya/model/divisi/divisi_model.dart';
+export 'package:ksu_budidaya/model/high_risk/add_high_risk_model.dart';
+export 'package:ksu_budidaya/model/high_risk/delete_high_risk_model.dart';
+export 'package:ksu_budidaya/model/high_risk/list_high_risk_model.dart';
 export 'package:ksu_budidaya/model/hutang_anggota/bayar_hutang_anggota_model.dart';
 export 'package:ksu_budidaya/model/hutang_anggota/bayar_hutang_anggota_payload.dart';
 export 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
@@ -136,6 +139,10 @@ export 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/widget/detail_p
 export 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/widget/generate_aktivitas_stock.dart';
 export 'package:ksu_budidaya/module/stock_opname/cek_ulang/controller/cek_ulang_controller.dart';
 export 'package:ksu_budidaya/module/stock_opname/cek_ulang/view/cek_ulang_view.dart';
+export 'package:ksu_budidaya/module/stock_opname/cek_ulang/widget/dialog_cek_ulang.dart';
+export 'package:ksu_budidaya/module/stock_opname/high_risk/controller/high_risk_controller.dart';
+export 'package:ksu_budidaya/module/stock_opname/high_risk/view/high_risk_view.dart';
+export 'package:ksu_budidaya/module/stock_opname/high_risk/widget/dialog_high_risk.dart';
 export 'package:ksu_budidaya/module/stock_opname/list_session/controller/list_session_controller.dart';
 export 'package:ksu_budidaya/module/stock_opname/list_session/view/list_session_view.dart';
 export 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/controller/riwayat_stock_opname_controller.dart';

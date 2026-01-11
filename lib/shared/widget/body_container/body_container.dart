@@ -350,6 +350,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                   // "/user-management/roles",
                                   "/stock-opname/harian",
                                   "/stock-opname/bulanan",
+                                  "/stock-opname/high-risk",
                                   "/stock-opname/riwayat-harian",
                                   // "/stock-opname/mobile",
                                   "/stock-opname/riwayat",
@@ -387,6 +388,15 @@ class _BodyContainerState extends State<BodyContainer> {
                                     isSelected: currentRoute == "/stock-opname/bulanan",
                                     onTap: () {
                                       router.go("/stock-opname/bulanan");
+                                    },
+                                  ),
+                                if (dataLogin.roleData?.stsStockOpname == true)
+                                  DrawerMenu(
+                                    title: "Produk Rentan",
+                                    isSubMenu: true,
+                                    isSelected: currentRoute == "/stock-opname/high-risk",
+                                    onTap: () {
+                                      router.go("/stock-opname/high-risk");
                                     },
                                   ),
                                 // if (dataLogin.roleData?.stsStockOpname == true)
