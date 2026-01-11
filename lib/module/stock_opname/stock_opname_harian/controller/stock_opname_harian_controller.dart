@@ -337,6 +337,10 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
         });
       }
 
+      if (idSession == null) {
+        return ListStocktakeItemsModel();
+      }
+
       // Hit both APIs concurrently
       final results = await Future.wait([
         ApiService.listStocktakeV2(
@@ -366,6 +370,8 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       if (searchController.text.isEmpty) {
         filteredData = itemsData.data ?? [];
       }
+
+      update();
 
       return itemsResult;
     } catch (e) {

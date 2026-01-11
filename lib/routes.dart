@@ -95,6 +95,13 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: 'stock-opname/harian',
           builder: (BuildContext context, GoRouterState state) {
+            if (!kIsWeb) {
+              return const SelectionArea(
+                child: StockOpnameHarianView(
+                  stocktakeType: "HARIAN",
+                ),
+              );
+            }
             return const SelectionArea(
               child: ListSessionView(),
             );
@@ -103,6 +110,13 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: 'stock-opname/bulanan',
           builder: (BuildContext context, GoRouterState state) {
+            if (!kIsWeb) {
+              return const SelectionArea(
+                child: StockOpnameHarianView(
+                  stocktakeType: "BULANAN",
+                ),
+              );
+            }
             return const SelectionArea(
               child: ListSessionView(),
             );

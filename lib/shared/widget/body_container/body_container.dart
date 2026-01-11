@@ -349,6 +349,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                 [
                                   // "/user-management/roles",
                                   "/stock-opname/harian",
+                                  "/stock-opname/bulanan",
                                   "/stock-opname/riwayat-harian",
                                   // "/stock-opname/mobile",
                                   "/stock-opname/riwayat",

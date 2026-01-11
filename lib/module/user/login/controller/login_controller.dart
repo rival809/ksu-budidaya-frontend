@@ -31,7 +31,7 @@ class LoginController extends State<LoginView> {
       if (kIsWeb) {
         html.window.location.reload();
       } else {
-        Get.to(const StockOpnameHarianView());
+        router.go("/stock-opname/harian");
         update();
       }
     } catch (e) {

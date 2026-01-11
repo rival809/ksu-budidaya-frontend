@@ -11,6 +11,8 @@ class StockOpnameMobileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final drawerProvider = Provider.of<DrawerProvider>(context);
+
     return BodyContainer(
       contentBody: FutureBuilder(
         future: controller.itemsFuture,
@@ -229,39 +231,42 @@ class StockOpnameMobileContent extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: Container(
-        color: neutralWhite,
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            BaseSecondaryButton(
-                onPressed: () {
-                  controller.refreshData();
-                },
-                isDense: true,
-                text: "Refresh Data"),
-            const SizedBox(
-              width: 16.0,
+      floatingActionButton: drawerProvider.isDrawerOpen
+          ? null
+          : Container(
+              color: neutralWhite,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  BaseSecondaryButton(
+                      onPressed: () {
+                        controller.refreshData();
+                      },
+                      isDense: true,
+                      text: "Refresh Data"),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  if (!(controller.itemsData.data?.isEmpty ?? true))
+                    Expanded(
+                      child: BasePrimaryButton(
+                          onPressed: () {
+                            showDialogBase(
+                              content: DialogSubmit(onConfirm: (String alasan) async {
+                                if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
+                                    UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE004") {
+                                  await controller.submitSoManager(reason: alasan);
+                                } else {
+                                  await controller.submitSo(reason: alasan);
+                                }
+                              }),
+                            );
+                          },
+                          text: "Simpan"),
+                    ),
+                ],
+              ),
             ),
-            Expanded(
-              child: BasePrimaryButton(
-                  onPressed: () {
-                    showDialogBase(
-                      content: DialogSubmit(onConfirm: (String alasan) async {
-                        if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
-                            UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE004") {
-                          await controller.submitSoManager(reason: alasan);
-                        } else {
-                          await controller.submitSo(reason: alasan);
-                        }
-                      }),
-                    );
-                  },
-                  text: "Simpan"),
-            ),
-          ],
-        ),
-      ),
       floatingActionLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
