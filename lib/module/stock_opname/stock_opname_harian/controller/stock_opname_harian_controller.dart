@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
@@ -27,6 +28,11 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
   bool hasMoreData = true;
   int currentPage = 1;
 
+  // Search variables
+  final TextEditingController searchController = TextEditingController();
+  List<DetailListStocktakeItemsilDataListStocktakeItems> filteredData = [];
+  Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +44,8 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
   @override
   void dispose() {
     scrollController.dispose();
+    searchController.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -156,6 +164,30 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     );
   }
 
+  void onSearchChanged(String keyword) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      searchItems(keyword);
+    });
+  }
+
+  void searchItems(String keyword) {
+    if (keyword.isEmpty) {
+      filteredData = itemsData.data ?? [];
+    } else {
+      final lowercaseKeyword = keyword.toLowerCase();
+      filteredData = (itemsData.data ?? []).where((item) {
+        final productName = (item.nmProduct ?? '').toLowerCase();
+        final productId = (item.idProduct ?? '').toLowerCase();
+        final division = (item.nmDivisi ?? '').toLowerCase();
+        return productName.contains(lowercaseKeyword) ||
+            productId.contains(lowercaseKeyword) ||
+            division.contains(lowercaseKeyword);
+      }).toList();
+    }
+    update();
+  }
+
   void refreshData() async {
     try {
       showCircleDialogLoading();
@@ -164,6 +196,8 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       currentPage = 1;
       hasMoreData = true;
       page = "1";
+      searchController.clear();
+      filteredData = [];
 
       if (!kIsWeb) {
         // For mobile, fetch latest session

@@ -26,7 +26,14 @@ class StockOpnameMobileContent extends StatelessWidget {
               double belumSO = controller.sessionData?.statistics?.pendingItems ?? 0;
 
               List<DetailListStocktakeItemsilDataListStocktakeItems>? listData =
-                  controller.itemsData.data ?? [];
+                  controller.filteredData.isEmpty && controller.searchController.text.isEmpty
+                      ? controller.itemsData.data ?? []
+                      : controller.filteredData;
+
+              // Initialize filteredData on first load
+              if (controller.filteredData.isEmpty && controller.searchController.text.isEmpty) {
+                controller.filteredData = controller.itemsData.data ?? [];
+              }
 
               return Column(
                 children: [
@@ -66,10 +73,60 @@ class StockOpnameMobileContent extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Search Field
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    color: neutralWhite,
+                    child: TextField(
+                      controller: controller.searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Cari produk, ID, atau divisi...',
+                        prefixIcon: const Icon(Icons.search, color: blueGray400),
+                        suffixIcon: controller.searchController.text.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.clear, color: blueGray400),
+                                onPressed: () {
+                                  controller.searchController.clear();
+                                  controller.searchItems('');
+                                },
+                              )
+                            : null,
+                        filled: true,
+                        fillColor: blueGray50,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
+                      onChanged: (value) {
+                        controller.onSearchChanged(value);
+                      },
+                    ),
+                  ),
                   // List Items
                   Expanded(
                     child: listData.isEmpty
-                        ? const Center(child: Text("Tidak ada data"))
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.search_off, size: 64, color: blueGray300),
+                                const SizedBox(height: 16),
+                                Text(
+                                  controller.searchController.text.isNotEmpty
+                                      ? "Tidak ada hasil pencarian"
+                                      : "Tidak ada data",
+                                  style: myTextTheme.bodyLarge?.copyWith(
+                                    color: blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                         : ListView.builder(
                             controller: controller.scrollController,
                             padding: const EdgeInsets.all(16),
