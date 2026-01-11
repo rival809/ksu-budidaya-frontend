@@ -2,14 +2,14 @@ import 'package:ksu_budidaya/model/session_stock/detail_session_model.dart';
 
 class ListSessionModel {
   bool? success;
-  DataLListSession? data;
+  DataListSession? data;
   String? message;
 
   ListSessionModel({this.success, this.data, this.message});
 
   ListSessionModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? DataLListSession.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataListSession.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -24,13 +24,13 @@ class ListSessionModel {
   }
 }
 
-class DataLListSession {
+class DataListSession {
   List<DataDetailSession>? data;
   Pagination? pagination;
 
-  DataLListSession({this.data, this.pagination});
+  DataListSession({this.data, this.pagination});
 
-  DataLListSession.fromJson(Map<String, dynamic> json) {
+  DataListSession.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = <DataDetailSession>[];
       json['data'].forEach((v) {

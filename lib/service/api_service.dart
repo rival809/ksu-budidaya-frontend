@@ -1631,7 +1631,7 @@ class ApiService {
     var response = await dio.get(
       "$_baseUrl/api/stocktake/v2/sessions/$idSession/items",
       options: options,
-      data: data,
+      queryParameters: data,
       cancelToken: cancelToken,
     );
 

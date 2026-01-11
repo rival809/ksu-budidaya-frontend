@@ -7,6 +7,15 @@ class StockOpnameHarianView extends StatefulWidget {
 
   Widget build(BuildContext context, StockOpnameHarianController controller) {
     controller.view = this;
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => StockOpnameMobileContent(
+        controller: controller,
+      ),
+      desktop: (BuildContext context) => _buildDesktopView(context, controller),
+    );
+  }
+
+  Widget _buildDesktopView(BuildContext context, StockOpnameHarianController controller) {
     return BodyContainer(
       contentBody: Container(
         color: neutralWhite,

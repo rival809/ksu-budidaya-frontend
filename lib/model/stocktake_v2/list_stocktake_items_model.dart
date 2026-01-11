@@ -97,16 +97,17 @@ class DetailListStocktakeItemsilDataListStocktakeItems {
       this.valuasi});
 
   DetailListStocktakeItemsilDataListStocktakeItems.fromJson(Map<String, dynamic> json) {
-    idStocktakeItem = json['id_stocktake_item'];
+    idStocktakeItem =
+        json['id_stocktake_item'] != null ? (json['id_stocktake_item'] as num).toDouble() : null;
     idStocktakeSession = json['id_stocktake_session'];
     idProduct = json['id_product'];
     nmProduct = json['nm_product'];
     nmDivisi = json['nm_divisi'];
     hargaBeli = json['harga_beli'];
     hargaJual = json['harga_jual'];
-    stokSistem = json['stok_sistem'];
-    stokFisik = json['stok_fisik'];
-    selisih = json['selisih'];
+    stokSistem = json['stok_sistem'] != null ? (json['stok_sistem'] as num).toDouble() : null;
+    stokFisik = json['stok_fisik'] != null ? (json['stok_fisik'] as num).toDouble() : null;
+    selisih = json['selisih'] != null ? (json['selisih'] as num).toDouble() : null;
     isCounted = json['is_counted'];
     isFlagged = json['is_flagged'];
     flagReason = json['flag_reason'];
@@ -170,15 +171,25 @@ class Valuasi {
       this.valuasiSelisihJual});
 
   Valuasi.fromJson(Map<String, dynamic> json) {
-    qtySistem = json['qty_sistem'];
-    valuasiSistemBeli = json['valuasi_sistem_beli'];
-    valuasiSistemJual = json['valuasi_sistem_jual'];
-    qtyFisik = json['qty_fisik'];
-    valuasiFisikBeli = json['valuasi_fisik_beli'];
-    valuasiFisikJual = json['valuasi_fisik_jual'];
-    qtySelisih = json['qty_selisih'];
-    valuasiSelisihBeli = json['valuasi_selisih_beli'];
-    valuasiSelisihJual = json['valuasi_selisih_jual'];
+    qtySistem = json['qty_sistem'] != null ? (json['qty_sistem'] as num).toDouble() : null;
+    valuasiSistemBeli = json['valuasi_sistem_beli'] != null
+        ? (json['valuasi_sistem_beli'] as num).toDouble()
+        : null;
+    valuasiSistemJual = json['valuasi_sistem_jual'] != null
+        ? (json['valuasi_sistem_jual'] as num).toDouble()
+        : null;
+    qtyFisik = json['qty_fisik'] != null ? (json['qty_fisik'] as num).toDouble() : null;
+    valuasiFisikBeli =
+        json['valuasi_fisik_beli'] != null ? (json['valuasi_fisik_beli'] as num).toDouble() : null;
+    valuasiFisikJual =
+        json['valuasi_fisik_jual'] != null ? (json['valuasi_fisik_jual'] as num).toDouble() : null;
+    qtySelisih = json['qty_selisih'] != null ? (json['qty_selisih'] as num).toDouble() : null;
+    valuasiSelisihBeli = json['valuasi_selisih_beli'] != null
+        ? (json['valuasi_selisih_beli'] as num).toDouble()
+        : null;
+    valuasiSelisihJual = json['valuasi_selisih_jual'] != null
+        ? (json['valuasi_selisih_jual'] as num).toDouble()
+        : null;
   }
 
   Map<String, dynamic> toJson() {

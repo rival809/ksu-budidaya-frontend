@@ -76,16 +76,18 @@ class DataDetailSession {
     idStocktakeSession = json['id_stocktake_session'];
     stocktakeType = json['stocktake_type'];
     status = json['status'];
-    idTutupKasir = json['id_tutup_kasir'];
+    idTutupKasir =
+        json['id_tutup_kasir'] != null ? (json['id_tutup_kasir'] as num).toDouble() : null;
     shift = json['shift'];
     tgStocktake = json['tg_stocktake'];
     usernameKasir = json['username_kasir'];
     namaKasir = json['nama_kasir'];
     usernameReviewer = json['username_reviewer'];
     namaReviewer = json['nama_reviewer'];
-    totalItems = json['total_items'];
-    totalCounted = json['total_counted'];
-    totalVariance = json['total_variance'];
+    totalItems = json['total_items'] != null ? (json['total_items'] as num).toDouble() : null;
+    totalCounted = json['total_counted'] != null ? (json['total_counted'] as num).toDouble() : null;
+    totalVariance =
+        json['total_variance'] != null ? (json['total_variance'] as num).toDouble() : null;
     notesKasir = json['notes_kasir'];
     notesReviewer = json['notes_reviewer'];
     submittedAt = json['submitted_at'];
@@ -169,7 +171,8 @@ class TutupKasir {
       this.updatedAt});
 
   TutupKasir.fromJson(Map<String, dynamic> json) {
-    idTutupKasir = json['id_tutup_kasir'];
+    idTutupKasir =
+        json['id_tutup_kasir'] != null ? (json['id_tutup_kasir'] as num).toDouble() : null;
     tgTutupKasir = json['tg_tutup_kasir'];
     shift = json['shift'];
     namaKasir = json['nama_kasir'];
@@ -224,11 +227,12 @@ class Statistics {
       this.progressPercentage});
 
   Statistics.fromJson(Map<String, dynamic> json) {
-    totalItems = json['total_items'];
-    countedItems = json['counted_items'];
-    pendingItems = json['pending_items'];
-    flaggedItems = json['flagged_items'];
-    totalVariance = json['total_variance'];
+    totalItems = json['total_items'] != null ? (json['total_items'] as num).toDouble() : null;
+    countedItems = json['counted_items'] != null ? (json['counted_items'] as num).toDouble() : null;
+    pendingItems = json['pending_items'] != null ? (json['pending_items'] as num).toDouble() : null;
+    flaggedItems = json['flagged_items'] != null ? (json['flagged_items'] as num).toDouble() : null;
+    totalVariance =
+        json['total_variance'] != null ? (json['total_variance'] as num).toDouble() : null;
     progressPercentage = json['progress_percentage'];
   }
 
@@ -261,12 +265,24 @@ class ValuasiSummary {
       this.totalValuasiSelisihJual});
 
   ValuasiSummary.fromJson(Map<String, dynamic> json) {
-    totalValuasiSistemBeli = json['total_valuasi_sistem_beli'];
-    totalValuasiSistemJual = json['total_valuasi_sistem_jual'];
-    totalValuasiFisikBeli = json['total_valuasi_fisik_beli'];
-    totalValuasiFisikJual = json['total_valuasi_fisik_jual'];
-    totalValuasiSelisihBeli = json['total_valuasi_selisih_beli'];
-    totalValuasiSelisihJual = json['total_valuasi_selisih_jual'];
+    totalValuasiSistemBeli = json['total_valuasi_sistem_beli'] != null
+        ? (json['total_valuasi_sistem_beli'] as num).toDouble()
+        : null;
+    totalValuasiSistemJual = json['total_valuasi_sistem_jual'] != null
+        ? (json['total_valuasi_sistem_jual'] as num).toDouble()
+        : null;
+    totalValuasiFisikBeli = json['total_valuasi_fisik_beli'] != null
+        ? (json['total_valuasi_fisik_beli'] as num).toDouble()
+        : null;
+    totalValuasiFisikJual = json['total_valuasi_fisik_jual'] != null
+        ? (json['total_valuasi_fisik_jual'] as num).toDouble()
+        : null;
+    totalValuasiSelisihBeli = json['total_valuasi_selisih_beli'] != null
+        ? (json['total_valuasi_selisih_beli'] as num).toDouble()
+        : null;
+    totalValuasiSelisihJual = json['total_valuasi_selisih_jual'] != null
+        ? (json['total_valuasi_selisih_jual'] as num).toDouble()
+        : null;
   }
 
   Map<String, dynamic> toJson() {

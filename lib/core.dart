@@ -146,6 +146,7 @@ export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/view/stock_
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_alasan.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_so.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_submit.dart';
+export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/stock_opname_mobile_content.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/controller/stock_opname_mobile_controller.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/view/stock_opname_mobile_view.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/widget/scanner_barcode.dart';

@@ -89,7 +89,7 @@ class ListSessionView extends StatefulWidget {
                           return const ContainerError();
                         } else if (snapshot.hasData) {
                           ListSessionModel result = snapshot.data;
-                          controller.listSessionData = result.data ?? DataLListSession();
+                          controller.listSessionData = result.data ?? DataListSession();
                           List<DataDetailSession>? listData =
                               controller.listSessionData.data?.cast<DataDetailSession>() ?? [];
 

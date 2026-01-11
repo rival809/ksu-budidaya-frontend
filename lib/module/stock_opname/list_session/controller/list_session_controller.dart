@@ -22,7 +22,7 @@ class ListSessionController extends State<ListSessionView> {
 
   Future<dynamic>? dataFuture;
   ListSessionModel result = ListSessionModel();
-  DataLListSession listSessionData = DataLListSession();
+  DataListSession listSessionData = DataListSession();
 
   List<String> columnFields = [
     "id_stocktake_session",

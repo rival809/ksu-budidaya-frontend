@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
 
@@ -10,7 +11,7 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
 
   String? idSession;
   String page = "1";
-  String size = "100";
+  String size = "10";
   bool isAsc = false;
   String? field;
 
@@ -20,24 +21,91 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
   ListStocktakeItemsModel itemsResult = ListStocktakeItemsModel();
   DataListStocktakeItems itemsData = DataListStocktakeItems();
 
+  // Infinite scroll variables
+  final ScrollController scrollController = ScrollController();
+  bool isLoadingMore = false;
+  bool hasMoreData = true;
+  int currentPage = 1;
+
   @override
   void initState() {
     super.initState();
     instance = this;
+    scrollController.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) => onReady());
   }
 
-  void onReady() {
-    // Get session data from static variable
-    sessionData = passedSessionData;
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
-    if (sessionData != null) {
-      idSession = sessionData!.idStocktakeSession;
-      itemsFuture = fetchStocktakeItems();
-      // Clear static variable after use
-      passedSessionData = null;
-      // Trigger rebuild to show the data
-      update();
+  void _scrollListener() {
+    if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
+      if (!isLoadingMore && hasMoreData && !kIsWeb) {
+        loadMoreItems();
+      }
+    }
+  }
+
+  void onReady() async {
+    // Reset pagination
+    currentPage = 1;
+    hasMoreData = true;
+    page = "1";
+
+    // For mobile/non-web, fetch latest session automatically
+    if (!kIsWeb) {
+      try {
+        showCircleDialogLoading();
+
+        // Fetch latest session
+        final sessionListResult = await ApiService.listSession(
+          data: {
+            "page": "1",
+            "limit": "1",
+          },
+        );
+
+        Get.back(); // Close loading
+
+        if (sessionListResult.data?.data?.isNotEmpty ?? false) {
+          final latestSession = sessionListResult.data!.data!.first;
+
+          // Get full session detail
+          final sessionDetailResult = await ApiService.detailSession(
+            idSession: latestSession.idStocktakeSession ?? '',
+          );
+
+          sessionData = sessionDetailResult.data;
+
+          if (sessionData != null) {
+            idSession = sessionData!.idStocktakeSession;
+            itemsFuture = fetchStocktakeItems();
+            update();
+          } else {
+            showInfoDialog("Tidak ada session aktif", context);
+          }
+        } else {
+          showInfoDialog("Tidak ada session yang tersedia", context);
+        }
+      } catch (e) {
+        Get.back();
+        showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+      }
+    } else {
+      // For web, use passed session data
+      sessionData = passedSessionData;
+
+      if (sessionData != null) {
+        idSession = sessionData!.idStocktakeSession;
+        itemsFuture = fetchStocktakeItems();
+        // Clear static variable after use
+        passedSessionData = null;
+        // Trigger rebuild to show the data
+        update();
+      }
     }
   }
 
@@ -88,6 +156,107 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     );
   }
 
+  void refreshData() async {
+    try {
+      showCircleDialogLoading();
+
+      // Reset pagination
+      currentPage = 1;
+      hasMoreData = true;
+      page = "1";
+
+      if (!kIsWeb) {
+        // For mobile, fetch latest session
+        final sessionListResult = await ApiService.listSession(
+          data: {
+            "page": "1",
+            "limit": "1",
+          },
+        );
+
+        if (sessionListResult.data?.data?.isNotEmpty ?? false) {
+          final latestSession = sessionListResult.data!.data!.first;
+
+          // Get full session detail
+          final sessionDetailResult = await ApiService.detailSession(
+            // idSession: latestSession.idStocktakeSession ?? '',
+            idSession: 'ST-20260108-221256',
+          );
+
+          sessionData = sessionDetailResult.data;
+
+          if (sessionData != null) {
+            idSession = sessionData!.idStocktakeSession;
+          }
+        }
+      }
+
+      // Refresh items data
+      itemsFuture = fetchStocktakeItems(
+        isAsc: isAsc,
+        field: field,
+      );
+
+      Get.back(); // Close loading
+      update();
+    } catch (e) {
+      Get.back();
+      showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+    }
+  }
+
+  void loadMoreItems() async {
+    if (isLoadingMore || !hasMoreData) return;
+
+    isLoadingMore = true;
+    update();
+
+    try {
+      currentPage++;
+      page = currentPage.toString();
+
+      DataMap params = {
+        "page": page,
+        "limit": size,
+      };
+
+      if (field != null) {
+        params.addAll({
+          "sort_order": [isAsc == true ? "asc" : "desc"],
+          "sort_by": [field!]
+        });
+      }
+
+      final result = await ApiService.listStocktakeV2(
+        idSession: idSession!,
+        data: params,
+      );
+
+      if (result.data?.data != null && result.data!.data!.isNotEmpty) {
+        // Append new data to existing list
+        itemsData.data ??= [];
+        itemsData.data!.addAll(result.data!.data!);
+        itemsData.pagination = result.data!.pagination;
+
+        // Check if there's more data
+        final pagination = result.data!.pagination;
+        if (pagination != null) {
+          hasMoreData = (pagination.page ?? 0) < (pagination.totalPages ?? 0);
+        }
+      } else {
+        hasMoreData = false;
+      }
+
+      isLoadingMore = false;
+      update();
+    } catch (e) {
+      isLoadingMore = false;
+      currentPage--;
+      page = currentPage.toString();
+      update();
+    }
+  }
+
   Future<ListStocktakeItemsModel> fetchStocktakeItems({
     bool? isAsc,
     String? field,
@@ -119,6 +288,12 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       // Update items data
       itemsResult = results[0] as ListStocktakeItemsModel;
       itemsData = itemsResult.data ?? DataListStocktakeItems();
+
+      // Check pagination for infinite scroll
+      final pagination = itemsData.pagination;
+      if (pagination != null) {
+        hasMoreData = (pagination.page ?? 0) < (pagination.totalPages ?? 0);
+      }
 
       // Update session data
       final detailSessionResult = results[1] as DetailSessionModel;
@@ -201,11 +376,6 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     // Navigate
     await Get.to(const CekUlangView());
     fetchStocktakeItems();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

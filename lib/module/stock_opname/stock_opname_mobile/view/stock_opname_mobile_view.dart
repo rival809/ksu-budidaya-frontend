@@ -38,17 +38,12 @@ class StockOpnameMobileView extends StatefulWidget {
                           Expanded(
                             child: BasePrimaryButton(
                               text: "Simpan",
-                              onPressed: (controller.dataResult.data?.idProduct
-                                          ?.isEmpty ??
-                                      true)
+                              onPressed: (controller.dataResult.data?.idProduct?.isEmpty ?? true)
                                   ? null
                                   : () {
-                                      if (controller
-                                          .stockOpnameKey.currentState!
-                                          .validate()) {
+                                      if (controller.stockOpnameKey.currentState!.validate()) {
                                         controller.postUpdateProduct(
-                                          trimString(controller
-                                              .dataResult.data?.idProduct),
+                                          trimString(controller.dataResult.data?.idProduct),
                                           controller.textStockController.text,
                                         );
                                       }
@@ -78,11 +73,9 @@ class StockOpnameMobileView extends StatefulWidget {
                             child: BasePrimaryButton(
                               text: "Simpan",
                               onPressed: () {
-                                if (controller.stockOpnameKey.currentState!
-                                    .validate()) {
+                                if (controller.stockOpnameKey.currentState!.validate()) {
                                   controller.postUpdateProduct(
-                                    trimString(
-                                        controller.dataResult.data?.idProduct),
+                                    trimString(controller.dataResult.data?.idProduct),
                                     controller.textStockController.text,
                                   );
                                 }
@@ -113,16 +106,12 @@ class StockOpnameMobileView extends StatefulWidget {
                       Expanded(
                         child: BasePrimaryButton(
                           text: "Simpan",
-                          onPressed: (controller
-                                      .dataResult.data?.idProduct?.isEmpty ??
-                                  true)
+                          onPressed: (controller.dataResult.data?.idProduct?.isEmpty ?? true)
                               ? null
                               : () {
-                                  if (controller.stockOpnameKey.currentState!
-                                      .validate()) {
+                                  if (controller.stockOpnameKey.currentState!.validate()) {
                                     controller.postUpdateProduct(
-                                      trimString(controller
-                                          .dataResult.data?.idProduct),
+                                      trimString(controller.dataResult.data?.idProduct),
                                       controller.textStockController.text,
                                     );
                                   }
@@ -152,11 +141,9 @@ class StockOpnameMobileView extends StatefulWidget {
                         child: BasePrimaryButton(
                           text: "Simpan",
                           onPressed: () {
-                            if (controller.stockOpnameKey.currentState!
-                                .validate()) {
+                            if (controller.stockOpnameKey.currentState!.validate()) {
                               controller.postUpdateProduct(
-                                trimString(
-                                    controller.dataResult.data?.idProduct),
+                                trimString(controller.dataResult.data?.idProduct),
                                 controller.textStockController.text,
                               );
                             }
@@ -209,9 +196,7 @@ class StockOpnameMobileView extends StatefulWidget {
                       Text(
                         controller.useId ? "Kode Produk" : "Nama Produk",
                         style: myTextTheme.bodyMedium?.copyWith(
-                          color: controller.useId
-                              ? primaryColor
-                              : Colors.grey[600],
+                          color: controller.useId ? primaryColor : Colors.grey[600],
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -259,8 +244,7 @@ class StockOpnameMobileView extends StatefulWidget {
                       label: "Nama Produk",
                       enabled: true,
                       suffixIcon: iconSearch,
-                      textEditingController:
-                          controller.textnamaSearchController,
+                      textEditingController: controller.textnamaSearchController,
                       items: (search) => controller.getDetailSuggestions(
                         search,
                         ProductDatabase.productResult.data?.dataProduct,
@@ -276,15 +260,12 @@ class StockOpnameMobileView extends StatefulWidget {
                         controller.update();
                       },
                       onEditComplete: () async {
-                        var data =
-                            ProductDatabase.productResult.data?.dataProduct;
+                        var data = ProductDatabase.productResult.data?.dataProduct;
                         for (var i = 0; i < (data?.length ?? 0); i++) {
                           if (trimString(data?[i].idProduct) ==
-                                  trimString(controller
-                                      .textnamaSearchController.text) ||
+                                  trimString(controller.textnamaSearchController.text) ||
                               trimString(data?[i].nmProduct) ==
-                                  trimString(controller
-                                      .textnamaSearchController.text)) {
+                                  trimString(controller.textnamaSearchController.text)) {
                             controller.postDetailProduct(
                               trimString(data?[i].idProduct),
                             );
@@ -294,8 +275,7 @@ class StockOpnameMobileView extends StatefulWidget {
                         }
                       },
                       onSelected: (data) async {
-                        controller.textnamaSearchController.text =
-                            trimString(data.nmProduct);
+                        controller.textnamaSearchController.text = trimString(data.nmProduct);
                         controller.postDetailProduct(
                           trimString(data.idProduct),
                         );
@@ -331,8 +311,7 @@ class StockOpnameMobileView extends StatefulWidget {
                   ),
                   BaseForm(
                     label: "Stok",
-                    textEditingController:
-                        controller.textCurrentStockController,
+                    textEditingController: controller.textCurrentStockController,
                     enabled: false,
                   ),
                   const SizedBox(
@@ -394,9 +373,7 @@ class StockOpnameMobileView extends StatefulWidget {
                       Text(
                         controller.useId ? "Kode Produk" : "Nama Produk",
                         style: myTextTheme.bodyMedium?.copyWith(
-                          color: controller.useId
-                              ? primaryColor
-                              : Colors.grey[600],
+                          color: controller.useId ? primaryColor : Colors.grey[600],
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -447,8 +424,7 @@ class StockOpnameMobileView extends StatefulWidget {
                       label: "Nama Produk",
                       enabled: true,
                       suffixIcon: iconSearch,
-                      textEditingController:
-                          controller.textnamaSearchController,
+                      textEditingController: controller.textnamaSearchController,
                       items: (search) => controller.getDetailSuggestions(
                         search,
                         ProductDatabase.productResult.data?.dataProduct,
@@ -464,15 +440,12 @@ class StockOpnameMobileView extends StatefulWidget {
                         controller.update();
                       },
                       onEditComplete: () async {
-                        var data =
-                            ProductDatabase.productResult.data?.dataProduct;
+                        var data = ProductDatabase.productResult.data?.dataProduct;
                         for (var i = 0; i < (data?.length ?? 0); i++) {
                           if (trimString(data?[i].idProduct) ==
-                                  trimString(controller
-                                      .textnamaSearchController.text) ||
+                                  trimString(controller.textnamaSearchController.text) ||
                               trimString(data?[i].nmProduct) ==
-                                  trimString(controller
-                                      .textnamaSearchController.text)) {
+                                  trimString(controller.textnamaSearchController.text)) {
                             controller.postDetailProduct(
                               trimString(data?[i].idProduct),
                             );
@@ -482,8 +455,7 @@ class StockOpnameMobileView extends StatefulWidget {
                         }
                       },
                       onSelected: (data) async {
-                        controller.textnamaSearchController.text =
-                            trimString(data.nmProduct);
+                        controller.textnamaSearchController.text = trimString(data.nmProduct);
                         controller.postDetailProduct(
                           trimString(data.idProduct),
                         );
@@ -519,8 +491,7 @@ class StockOpnameMobileView extends StatefulWidget {
                   ),
                   BaseForm(
                     label: "Stok",
-                    textEditingController:
-                        controller.textCurrentStockController,
+                    textEditingController: controller.textCurrentStockController,
                     enabled: false,
                   ),
                   const SizedBox(
