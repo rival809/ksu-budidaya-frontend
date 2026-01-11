@@ -82,7 +82,7 @@ class _FooterTableWidgetState extends State<FooterTableWidget> {
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton2<String>(
                               isExpanded: false,
-                              items: ["100", "500", "1000", "1500", "2500", "5000", "10000"]
+                              items: ["10", "100", "500", "1000", "1500", "2500", "5000", "10000"]
                                   .map((String item) => DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(

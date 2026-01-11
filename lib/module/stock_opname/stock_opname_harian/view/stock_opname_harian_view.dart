@@ -166,7 +166,7 @@ class StockOpnameHarianView extends StatefulWidget {
                               children: [
                                 if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
                                     UserDatabase.userDatabase.data?.roleData?.idRole ==
-                                        "ROLE002") ...[
+                                        "ROLE004") ...[
                                   BaseSecondaryButton(
                                     onPressed: () {
                                       controller.navigateToReviewCekUlang();
@@ -195,7 +195,7 @@ class StockOpnameHarianView extends StatefulWidget {
                                         if (UserDatabase.userDatabase.data?.roleData?.idRole ==
                                                 "ROLE001" ||
                                             UserDatabase.userDatabase.data?.roleData?.idRole ==
-                                                "ROLE002") {
+                                                "ROLE004") {
                                           await controller.submitSoManager(reason: alasan);
                                         } else {
                                           await controller.submitSo(reason: alasan);

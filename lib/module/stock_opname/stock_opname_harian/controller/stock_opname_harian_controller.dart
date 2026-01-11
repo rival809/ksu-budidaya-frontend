@@ -12,7 +12,7 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
 
   String? idSession;
   String page = "1";
-  String size = "10";
+  String size = "100";
   bool isAsc = false;
   String? field;
 
@@ -84,6 +84,7 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
           // Get full session detail
           final sessionDetailResult = await ApiService.detailSession(
             idSession: latestSession.idStocktakeSession ?? '',
+            // idSession: 'ST-20260108-221256',
           );
 
           sessionData = sessionDetailResult.data;
@@ -147,11 +148,30 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
             );
 
             Get.back(); // Close loading dialog
+
+            // Reset pagination before refresh
+            currentPage = 1;
+            hasMoreData = true;
+            page = "1";
+
             // Refresh data
-            itemsFuture = fetchStocktakeItems(
+            await fetchStocktakeItems(
               isAsc: isAsc,
               field: field,
             );
+
+            // Update filtered data after fetch
+            filteredData = itemsData.data ?? [];
+
+            // Scroll to top
+            if (scrollController.hasClients) {
+              scrollController.animateTo(
+                0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+              );
+            }
+
             update();
 
             await showInfoDialog("Data Stock Opname berhasil disimpan", context);
@@ -213,8 +233,8 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
 
           // Get full session detail
           final sessionDetailResult = await ApiService.detailSession(
-            // idSession: latestSession.idStocktakeSession ?? '',
-            idSession: 'ST-20260108-221256',
+            idSession: latestSession.idStocktakeSession ?? '',
+            // idSession: 'ST-20260108-221256',
           );
 
           sessionData = sessionDetailResult.data;
@@ -333,6 +353,11 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       final detailSessionResult = results[1] as DetailSessionModel;
       sessionData = detailSessionResult.data;
 
+      // Update filtered data if no search active
+      if (searchController.text.isEmpty) {
+        filteredData = itemsData.data ?? [];
+      }
+
       return itemsResult;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
@@ -370,6 +395,11 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
           .timeout(const Duration(seconds: 30));
 
       Get.back();
+      await showDialogBase(content: const DialogBerhasil()).then((value) {
+        Get.back();
+      });
+
+      refreshData();
       return true;
     } catch (e) {
       Get.back();

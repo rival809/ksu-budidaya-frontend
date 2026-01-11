@@ -368,7 +368,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                 //   },
                                 // ),
                                 // if (dataLogin.roleData?.stsStocktakeHarian == true &&
-                                //     ["ROLE001", "ROLE002"]
+                                //     ["ROLE001", "ROLE004"]
                                 //         .contains(UserDatabase.userDatabase.data?.roleData?.idRole))
                                 if (dataLogin.roleData?.stsStockOpname == true)
                                   DrawerMenu(

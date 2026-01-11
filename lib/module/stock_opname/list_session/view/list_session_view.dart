@@ -67,7 +67,7 @@ class ListSessionView extends StatefulWidget {
                         ],
                       ),
                       if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
-                          UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE002") ...[
+                          UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE004") ...[
                         BasePrimaryButton(
                           onPressed: () {
                             controller.createNewSession();
