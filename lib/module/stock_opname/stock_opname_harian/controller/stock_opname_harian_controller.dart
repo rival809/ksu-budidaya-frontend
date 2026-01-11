@@ -371,7 +371,9 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
         filteredData = itemsData.data ?? [];
       }
 
-      update();
+      if (!kIsWeb) {
+        update();
+      }
 
       return itemsResult;
     } catch (e) {

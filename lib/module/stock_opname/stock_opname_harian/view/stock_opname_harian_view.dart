@@ -173,6 +173,15 @@ class StockOpnameHarianView extends StatefulWidget {
                                         "ROLE004") ...[
                                   BaseSecondaryButton(
                                     onPressed: () {
+                                      generatePdfStockOpname(controller: controller);
+                                    },
+                                    text: "Print",
+                                    suffixIcon: iconPrint,
+                                    isDense: true,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  BaseSecondaryButton(
+                                    onPressed: () {
                                       controller.navigateToReviewCekUlang();
                                     },
                                     text: "Cek Ulang",

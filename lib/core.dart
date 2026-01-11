@@ -2,7 +2,7 @@
 We believe, the class name must be unique. 
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
-fileCount: 290
+fileCount: 291
 */
 export 'package:ksu_budidaya/config.dart';
 export 'package:ksu_budidaya/core_package.dart';
@@ -153,6 +153,7 @@ export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/view/stock_
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_alasan.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_so.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/dialog_submit.dart';
+export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/generate_stockopname_print.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_harian/widget/stock_opname_mobile_content.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/controller/stock_opname_mobile_controller.dart';
 export 'package:ksu_budidaya/module/stock_opname/stock_opname_mobile/view/stock_opname_mobile_view.dart';
