@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/stock_opname/cek_ulang/widget/dialog_cek_ulang.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class CekUlangView extends StatefulWidget {
@@ -34,7 +33,7 @@ class CekUlangView extends StatefulWidget {
                           ),
                         const SizedBox(width: 16),
                         Text(
-                          "Review Cek Ulang - Stock Opname Harian",
+                          "Cek Ulang - Stock Opname",
                           style: myTextTheme.headlineLarge,
                         ),
                       ],
