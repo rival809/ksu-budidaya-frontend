@@ -390,7 +390,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                       router.go("/stock-opname/bulanan");
                                     },
                                   ),
-                                if (dataLogin.roleData?.stsStockOpname == true)
+                                if (dataLogin.roleData?.stsStockOpname == true && kIsWeb)
                                   DrawerMenu(
                                     title: "Produk Rentan",
                                     isSubMenu: true,
