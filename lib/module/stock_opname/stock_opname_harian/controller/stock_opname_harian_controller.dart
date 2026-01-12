@@ -168,8 +168,12 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
               field: field,
             );
 
-            // Update filtered data after fetch
-            filteredData = itemsData.data ?? [];
+            // Re-apply search filter if search is active, otherwise show all data
+            if (searchController.text.isNotEmpty) {
+              searchItems(searchController.text);
+            } else {
+              filteredData = itemsData.data ?? [];
+            }
 
             // Scroll to top
             if (scrollController.hasClients) {
@@ -218,8 +222,6 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
 
   void refreshData() async {
     try {
-      showCircleDialogLoading();
-
       // Reset pagination
       currentPage = 1;
       hasMoreData = true;
@@ -228,6 +230,7 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       filteredData = [];
 
       if (!kIsWeb) {
+        showCircleDialogLoading();
         // For mobile, fetch latest session with stocktake type filter
         final sessionListResult = await ApiService.listSession(
           data: {
@@ -236,6 +239,7 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
             "stocktake_type": stocktakeType,
           },
         );
+        Get.back(); // Close loading
 
         if (sessionListResult.data?.data?.isNotEmpty ?? false) {
           final latestSession = sessionListResult.data!.data!.first;
@@ -260,7 +264,6 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
         field: field,
       );
 
-      Get.back(); // Close loading
       update();
     } catch (e) {
       Get.back();
@@ -366,15 +369,6 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       final detailSessionResult = results[1] as DetailSessionModel;
       sessionData = detailSessionResult.data;
 
-      // Update filtered data if no search active
-      if (searchController.text.isEmpty) {
-        filteredData = itemsData.data ?? [];
-      }
-
-      if (!kIsWeb) {
-        update();
-      }
-
       return itemsResult;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
@@ -412,9 +406,7 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
           .timeout(const Duration(seconds: 30));
 
       Get.back();
-      await showDialogBase(content: const DialogBerhasil()).then((value) {
-        Get.back();
-      });
+      await showDialogBase(content: const DialogBerhasil());
 
       refreshData();
       return true;
@@ -429,9 +421,49 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
   }
 
   submitSoManager({required String reason}) async {
-    showCircleDialogLoading();
     try {
-      await ApiService.submitSo(idSession: trimString(idSession), reason: reason);
+      // Check if there are any items with difference (selisih)
+      int itemsWithSelisih = 0;
+      for (var item in itemsData.data ?? []) {
+        if ((item.selisih ?? 0) != 0) {
+          itemsWithSelisih++;
+        }
+      }
+
+      // Always show warning if there are items with difference
+      if (itemsWithSelisih > 0) {
+        await showDialogBase(
+          content: DialogKonfirmasi(
+            textKonfirmasi:
+                "Terdeteksi adanya selisih antara jumlah fisik dan sistem. Apakah Anda yakin ingin memperbarui stok dengan data ini?",
+            onConfirm: () async {
+              Get.back(); // Close confirmation dialog
+              await _executeSubmitSoManager(reason);
+            },
+          ),
+        );
+        return; // Exit here, let onConfirm handle the submit
+      }
+
+      // If no difference, proceed directly
+      await _executeSubmitSoManager(reason);
+    } catch (e) {
+      Get.back();
+      showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
+    }
+  }
+
+  Future<void> _executeSubmitSoManager(String reason) async {
+    try {
+      showCircleDialogLoading();
+
+      // Check current status
+      String? currentStatus = sessionData?.status;
+
+      // If status is not SUBMITTED, hit submitSo first
+      if (currentStatus != "SUBMITTED") {
+        await ApiService.submitSo(idSession: trimString(idSession), reason: reason);
+      }
 
       await ApiService.reviewSo(
           idSession: trimString(idSession), reason: reason, action: "APPROVE");
@@ -456,7 +488,7 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
 
     // Navigate
     await Get.to(const CekUlangView());
-    fetchStocktakeItems();
+    refreshData();
   }
 
   @override

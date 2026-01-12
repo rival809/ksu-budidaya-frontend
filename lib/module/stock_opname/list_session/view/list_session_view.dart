@@ -143,6 +143,16 @@ class ListSessionView extends StatefulWidget {
                                       textColor = blue900;
                                       borderColor = blue900;
                                       break;
+                                    case 'cancelled':
+                                      bgColor = red50;
+                                      textColor = red900;
+                                      borderColor = red900;
+                                      break;
+                                    case 'revision':
+                                      bgColor = purple50;
+                                      textColor = purple900;
+                                      borderColor = purple900;
+                                      break;
                                     default:
                                       bgColor = blueGray50;
                                       textColor = blueGray900;

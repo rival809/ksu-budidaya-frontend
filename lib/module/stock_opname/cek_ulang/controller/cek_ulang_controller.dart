@@ -162,6 +162,8 @@ class CekUlangController extends State<CekUlangView> {
         final notesText = trimString(latestItem.notes);
         if (notesText.isNotEmpty && notesText != "-") {
           data["flag_reason"] = notesText;
+        } else {
+          data["flag_reason"] = alasan;
         }
 
         return data;
