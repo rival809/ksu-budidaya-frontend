@@ -31,7 +31,16 @@ class LoginController extends State<LoginView> {
       if (kIsWeb) {
         html.window.location.reload();
       } else {
-        router.go("/stock-opname/harian");
+        if (router.routerDelegate.currentConfiguration.matches.isNotEmpty) {
+          final location = router.routerDelegate.currentConfiguration.uri.path;
+          if (location == "/stock-opname/harian" || location == "/stock-opname/bulanan") {
+            router.pushReplacement("/stock-opname/harian");
+          } else {
+            router.go("/stock-opname/harian");
+          }
+        } else {
+          router.go("/stock-opname/harian");
+        }
         update();
       }
     } catch (e) {

@@ -175,16 +175,12 @@ class StockOpnameMobileContent extends StatelessWidget {
                                             const SizedBox(height: 8),
                                             Text(
                                               item.idProduct ?? '-',
-                                              style: myTextTheme.bodyMedium?.copyWith(
-                                                color: blueGray400,
-                                              ),
+                                              style: myTextTheme.bodyMedium,
                                             ),
                                             const SizedBox(height: 4),
                                             Text(
                                               item.nmDivisi ?? '-',
-                                              style: myTextTheme.bodyMedium?.copyWith(
-                                                color: blueGray400,
-                                              ),
+                                              style: myTextTheme.bodyMedium,
                                             ),
                                             const SizedBox(height: 12),
                                             Container(
