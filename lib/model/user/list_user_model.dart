@@ -30,7 +30,7 @@ class DataListUser {
   @HiveField(0)
   List<DataUsers>? dataUsers;
   @HiveField(1)
-  Paging? paging;
+  PagingRole? paging;
 
   DataListUser({this.dataUsers, this.paging});
 
@@ -41,7 +41,7 @@ class DataListUser {
         dataUsers!.add(DataUsers.fromJson(v));
       });
     }
-    paging = json['paging'] != null ? Paging.fromJson(json['paging']) : null;
+    paging = json['paging'] != null ? PagingRole.fromJson(json['paging']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -69,8 +69,7 @@ class DataUsers {
   @HiveField(4)
   String? updatedAt;
 
-  DataUsers(
-      {this.username, this.name, this.idRole, this.createdAt, this.updatedAt});
+  DataUsers({this.username, this.name, this.idRole, this.createdAt, this.updatedAt});
 
   String userAsString() {
     return trimString(username);

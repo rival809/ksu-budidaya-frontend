@@ -1,6 +1,6 @@
 class AppConfig {
   //local
-  // static const String domain = "http://10.44.121.101:3000";
+  // static const String domain = "http://10.44.121.58:3000";
   //local
   // static const String domain = "http://localhost:3000";
   //prod

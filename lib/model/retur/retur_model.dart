@@ -26,7 +26,7 @@ class ReturResult {
 
 class DataRetur {
   List<DetailDataRetur>? dataRetur;
-  Paging? paging;
+  PagingRole? paging;
 
   DataRetur({this.dataRetur, this.paging});
 
@@ -37,7 +37,7 @@ class DataRetur {
         dataRetur!.add(DetailDataRetur.fromJson(v));
       });
     }
-    paging = json['paging'] != null ? Paging.fromJson(json['paging']) : null;
+    paging = json['paging'] != null ? PagingRole.fromJson(json['paging']) : null;
   }
 
   Map<String, dynamic> toJson() {

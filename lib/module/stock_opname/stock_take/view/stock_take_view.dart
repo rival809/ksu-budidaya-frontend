@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/detail_stock_take_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take/controller/stock_take_controller.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take/widget/generate_stocktake.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockTakeView extends StatefulWidget {

@@ -1,10 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/view/aktivitas_stock_view.dart';
-import 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/view/riwayat_stock_opname_view.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take_divisi/view/stock_take_divisi_view.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/view/hist_bayar_hutang_angoota_view.dart';
 
 final GoRouter router = GoRouter(
   navigatorKey: Get.navigatorKey,
@@ -38,7 +34,7 @@ final GoRouter router = GoRouter(
             );
           } else {
             return const SelectionArea(
-              child: StockOpnameMobileView(),
+              child: StockOpnameHarianView(),
             );
           }
         }
@@ -67,7 +63,7 @@ final GoRouter router = GoRouter(
               );
             } else {
               return const SelectionArea(
-                child: StockOpnameMobileView(),
+                child: StockOpnameHarianView(),
               );
             }
           },
@@ -83,20 +79,9 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: 'stock-opname/mobile',
           builder: (BuildContext context, GoRouterState state) {
-            if (state.extra != null) {
-              bool? isFromHistory;
-              DataMap data = state.extra as DataMap;
-              isFromHistory = data['isFromHistory'];
-              return SelectionArea(
-                child: StockOpnameMobileView(
-                  isFromHistory: isFromHistory,
-                ),
-              );
-            } else {
-              return const SelectionArea(
-                child: StockOpnameMobileView(),
-              );
-            }
+            return const SelectionArea(
+              child: StockOpnameHarianView(),
+            );
           },
         ),
         GoRoute(
@@ -104,6 +89,44 @@ final GoRouter router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const SelectionArea(
               child: RiwayatStockOpnameView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'stock-opname/harian',
+          builder: (BuildContext context, GoRouterState state) {
+            if (!kIsWeb) {
+              return const SelectionArea(
+                child: StockOpnameHarianView(
+                  stocktakeType: "HARIAN",
+                ),
+              );
+            }
+            return const SelectionArea(
+              child: ListSessionView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'stock-opname/bulanan',
+          builder: (BuildContext context, GoRouterState state) {
+            if (!kIsWeb) {
+              return const SelectionArea(
+                child: StockOpnameHarianView(
+                  stocktakeType: "BULANAN",
+                ),
+              );
+            }
+            return const SelectionArea(
+              child: ListSessionView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: 'stock-opname/high-risk',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SelectionArea(
+              child: HighRiskView(),
             );
           },
         ),

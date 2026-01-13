@@ -30,18 +30,16 @@ class DataListRole extends HiveObject {
   @HiveField(0)
   List<DataRoles>? dataRoles;
   @HiveField(1)
-  Paging? paging;
+  PagingRole? paging;
 
   DataListRole({this.dataRoles, this.paging});
 
   factory DataListRole.fromJson(Map<String, dynamic> json) {
     return DataListRole(
       dataRoles: json['data_roles'] != null
-          ? (json['data_roles'] as List)
-              .map((v) => DataRoles.fromJson(v))
-              .toList()
+          ? (json['data_roles'] as List).map((v) => DataRoles.fromJson(v)).toList()
           : null,
-      paging: json['paging'] != null ? Paging.fromJson(json['paging']) : null,
+      paging: json['paging'] != null ? PagingRole.fromJson(json['paging']) : null,
     );
   }
 
@@ -172,8 +170,7 @@ class DataRoles extends HiveObject {
         idRole: idRole ?? this.idRole,
         roleName: roleName ?? this.roleName,
         stsAnggota: stsAnggota ?? this.stsAnggota,
-        stsPembayaranPinjaman:
-            stsPembayaranPinjaman ?? this.stsPembayaranPinjaman,
+        stsPembayaranPinjaman: stsPembayaranPinjaman ?? this.stsPembayaranPinjaman,
         stsKartuPiutang: stsKartuPiutang ?? this.stsKartuPiutang,
         stsSupplier: stsSupplier ?? this.stsSupplier,
         stsDivisi: stsDivisi ?? this.stsDivisi,
@@ -262,7 +259,7 @@ class DataRoles extends HiveObject {
 }
 
 @HiveType(typeId: 6)
-class Paging {
+class PagingRole {
   @HiveField(0)
   int? page;
   @HiveField(1)
@@ -270,9 +267,9 @@ class Paging {
   @HiveField(2)
   int? totalPage;
 
-  Paging({this.page, this.totalItem, this.totalPage});
+  PagingRole({this.page, this.totalItem, this.totalPage});
 
-  Paging.fromJson(Map<String, dynamic> json) {
+  PagingRole.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     totalItem = json['total_item'];
     totalPage = json['total_page'];

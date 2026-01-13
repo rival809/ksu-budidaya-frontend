@@ -19,7 +19,7 @@ Future initialize() async {
     Hive.registerAdapter(RoleDataLoginAdapter());
     Hive.registerAdapter(DataListRoleAdapter());
     Hive.registerAdapter(DataRolesAdapter());
-    Hive.registerAdapter(PagingAdapter());
+    Hive.registerAdapter(PagingRoleAdapter());
     Hive.registerAdapter(DataSupplierAdapter());
     Hive.registerAdapter(DataDetailSupplierAdapter());
     Hive.registerAdapter(DataDivisiAdapter());

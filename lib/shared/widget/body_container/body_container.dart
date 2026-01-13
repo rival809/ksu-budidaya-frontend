@@ -348,7 +348,11 @@ class _BodyContainerState extends State<BodyContainer> {
                                 "/stock-opname",
                                 [
                                   // "/user-management/roles",
-                                  "/stock-opname/mobile",
+                                  "/stock-opname/harian",
+                                  "/stock-opname/bulanan",
+                                  "/stock-opname/high-risk",
+                                  "/stock-opname/riwayat-harian",
+                                  // "/stock-opname/mobile",
                                   "/stock-opname/riwayat",
                                   "/stock-opname/stocktake",
                                   "/stock-opname/aktivitas-stock",
@@ -365,16 +369,46 @@ class _BodyContainerState extends State<BodyContainer> {
                                 //     // router.go("/stock-opname/cetak-harian");
                                 //   },
                                 // ),
+                                // if (dataLogin.roleData?.stsStocktakeHarian == true &&
+                                //     ["ROLE001", "ROLE004"]
+                                //         .contains(UserDatabase.userDatabase.data?.roleData?.idRole))
                                 if (dataLogin.roleData?.stsStockOpname == true)
                                   DrawerMenu(
-                                    title: "Stock Opname",
+                                    title: "Stock Opname Harian",
                                     isSubMenu: true,
-                                    isSelected: currentRoute == "/stock-opname/mobile",
+                                    isSelected: currentRoute == "/stock-opname/harian",
                                     onTap: () {
-                                      router.go("/stock-opname/mobile");
+                                      router.go("/stock-opname/harian");
                                     },
                                   ),
                                 if (dataLogin.roleData?.stsStockOpname == true)
+                                  DrawerMenu(
+                                    title: "Stock Opname Bulanan",
+                                    isSubMenu: true,
+                                    isSelected: currentRoute == "/stock-opname/bulanan",
+                                    onTap: () {
+                                      router.go("/stock-opname/bulanan");
+                                    },
+                                  ),
+                                if (dataLogin.roleData?.stsStockOpname == true && kIsWeb)
+                                  DrawerMenu(
+                                    title: "Produk Rentan",
+                                    isSubMenu: true,
+                                    isSelected: currentRoute == "/stock-opname/high-risk",
+                                    onTap: () {
+                                      router.go("/stock-opname/high-risk");
+                                    },
+                                  ),
+                                // if (dataLogin.roleData?.stsStockOpname == true)
+                                //   DrawerMenu(
+                                //     title: "Stock Opname",
+                                //     isSubMenu: true,
+                                //     isSelected: currentRoute == "/stock-opname/mobile",
+                                //     onTap: () {
+                                //       router.go("/stock-opname/mobile");
+                                //     },
+                                //   ),
+                                if (dataLogin.roleData?.stsStockOpname == true && kIsWeb)
                                   DrawerMenu(
                                     title: "Riwayat Stock Opname",
                                     isSubMenu: true,
@@ -383,7 +417,8 @@ class _BodyContainerState extends State<BodyContainer> {
                                       router.go("/stock-opname/riwayat");
                                     },
                                   ),
-                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                if (dataLogin.roleData?.stsStocktakeHarian == true &&
+                                    UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001")
                                   DrawerMenu(
                                     title: "Stocktake",
                                     isSubMenu: true,
@@ -392,7 +427,7 @@ class _BodyContainerState extends State<BodyContainer> {
                                       router.go("/stock-opname/stocktake");
                                     },
                                   ),
-                                if (dataLogin.roleData?.stsStocktakeHarian == true)
+                                if (dataLogin.roleData?.stsStocktakeHarian == true && kIsWeb)
                                   DrawerMenu(
                                     title: "Aktivitas Stock",
                                     isSubMenu: true,

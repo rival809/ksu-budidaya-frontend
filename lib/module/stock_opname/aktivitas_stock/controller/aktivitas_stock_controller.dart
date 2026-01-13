@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/view/aktivitas_stock_view.dart';
-import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/widget/detail_pembelian.dart';
 
 class AktivitasStockController extends State<AktivitasStockView> {
   static late AktivitasStockController instance;

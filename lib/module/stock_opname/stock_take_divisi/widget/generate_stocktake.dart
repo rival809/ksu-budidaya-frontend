@@ -15,7 +15,7 @@ generatePdfStockTake({
     final regularFont = pw.Font.ttf(ttfRegular);
     final ttfBold = await rootBundle.load("assets/fonts/Roboto-Bold.ttf");
     final boldFont = pw.Font.ttf(ttfBold);
-    List<PdfStockTake> listDataPenerimaan = [];
+    List<PdfStockTakeDivisi> listDataPenerimaan = [];
 
     for (var i = 0; i < (controller.dataStockOpname.dataStock?.length ?? 0); i++) {
       DetailDataStockTake dataRekap =
@@ -23,7 +23,7 @@ generatePdfStockTake({
       // int noUrut = i + 1;
 
       listDataPenerimaan.add(
-        PdfStockTake(
+        PdfStockTakeDivisi(
           trimString(dataRekap.idDivisi),
           trimString(dataRekap.nmDivisi),
           formatMoney(double.tryParse(dataRekap.stock ?? "0")?.toInt() ?? 0),
@@ -37,7 +37,7 @@ generatePdfStockTake({
     }
 
     listDataPenerimaan.add(
-      PdfStockTake(
+      PdfStockTakeDivisi(
         "",
         trimString("TOTAL"),
         formatMoney(controller.dataStockOpname.totalData?.totalStock ?? 0),
@@ -172,8 +172,8 @@ generatePdfStockTake({
   Get.back();
 }
 
-class PdfStockTake {
-  const PdfStockTake(
+class PdfStockTakeDivisi {
+  const PdfStockTakeDivisi(
     this.idDivisi,
     this.nmDivisi,
     this.stock,

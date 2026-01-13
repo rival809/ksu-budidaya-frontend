@@ -34,7 +34,7 @@ class DataProduct {
   @HiveField(0)
   List<DataDetailProduct>? dataProduct;
   @HiveField(1)
-  Paging? paging;
+  PagingRole? paging;
   @HiveField(2)
   TotalKeseluruhan? totalKeseluruhan;
 
@@ -47,7 +47,7 @@ class DataProduct {
         dataProduct!.add(DataDetailProduct.fromJson(v));
       });
     }
-    paging = json['paging'] != null ? Paging.fromJson(json['paging']) : null;
+    paging = json['paging'] != null ? PagingRole.fromJson(json['paging']) : null;
     totalKeseluruhan = json['total_keseluruhan'] != null
         ? TotalKeseluruhan.fromJson(json['total_keseluruhan'])
         : null;

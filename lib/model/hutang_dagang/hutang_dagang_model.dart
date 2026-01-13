@@ -9,8 +9,7 @@ class HutangDagangResult {
 
   HutangDagangResult.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data =
-        json['data'] != null ? DataHutangDagang.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataHutangDagang.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -44,8 +43,7 @@ class DataHutangDagang {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (dataHutangDagang != null) {
-      data['data_hutang_dagang'] =
-          dataHutangDagang!.map((v) => v.toJson()).toList();
+      data['data_hutang_dagang'] = dataHutangDagang!.map((v) => v.toJson()).toList();
     }
     if (paging != null) {
       data['paging'] = paging!.toJson();
