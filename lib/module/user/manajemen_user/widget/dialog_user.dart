@@ -22,12 +22,16 @@ class _DialogUserState extends State<DialogUser> {
     TextEditingController(),
   ];
 
+  List<DataRoles>? listRoles = RoleDatabase.dataListRole.dataRoles;
   DataDetailUser dataEdit = DataDetailUser();
 
   bool obsecure = true;
 
   @override
   void initState() {
+    if (UserDatabase.userDatabase.data?.roleData?.idRole != "ROLE001") {
+      listRoles = listRoles?.where((element) => element.idRole != "ROLE001").toList();
+    }
     dataEdit = widget.data?.data?.copyWith() ?? DataDetailUser();
     textController[0].text = trimString(widget.data?.data?.name);
     textController[1].text = trimString(widget.data?.data?.username);
@@ -107,7 +111,7 @@ class _DialogUserState extends State<DialogUser> {
                     hint: "Pilih Role",
                     label: "Role",
                     itemAsString: (item) => item.roleAsString(),
-                    items: RoleDatabase.dataListRole.dataRoles ?? [],
+                    items: listRoles ?? [],
                     value: dataEdit.idRole?.isEmpty ?? true
                         ? null
                         : DataRoles(
@@ -135,9 +139,7 @@ class _DialogUserState extends State<DialogUser> {
                     suffixIcon: obsecure ? iconEyeOff : iconEyeOn,
                     textEditingController: textController[2],
                     autoValidate: AutovalidateMode.onUserInteraction,
-                    validator: widget.isDetail
-                        ? null
-                        : Validatorless.required("Data Wajib Diisi"),
+                    validator: widget.isDetail ? null : Validatorless.required("Data Wajib Diisi"),
                     onChanged: (value) {
                       dataEdit.password = trimString(value);
                       update();
@@ -192,10 +194,8 @@ class _DialogUserState extends State<DialogUser> {
                         }
 
                         widget.isDetail
-                            ? ManajemenUserController.instance
-                                .postUpdateUser(payload)
-                            : ManajemenUserController.instance
-                                .postCreateUser(payload);
+                            ? ManajemenUserController.instance.postUpdateUser(payload)
+                            : ManajemenUserController.instance.postCreateUser(payload);
                       }
                     },
                   ),
