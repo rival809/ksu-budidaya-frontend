@@ -163,23 +163,26 @@ class StockOpnameHarianView extends StatefulWidget {
                         ),
                         const SizedBox(width: 16.0),
                         // Action Buttons
-                        if (!["COMPLETED", "CANCELLED"].contains(controller.sessionData?.status))
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
-                                    UserDatabase.userDatabase.data?.roleData?.idRole ==
-                                        "ROLE004") ...[
-                                  BaseSecondaryButton(
-                                    onPressed: () {
-                                      generatePdfStockOpname(controller: controller);
-                                    },
-                                    text: "Print",
-                                    suffixIcon: iconPrint,
-                                    isDense: true,
-                                  ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
+                                  UserDatabase.userDatabase.data?.roleData?.idRole ==
+                                      "ROLE004") ...[
+                                BaseSecondaryButton(
+                                  onPressed: () {
+                                    generatePdfStockOpname(controller: controller);
+                                  },
+                                  text: "Print",
+                                  suffixIcon: iconPrint,
+                                  isDense: true,
+                                ),
+                                if (!["COMPLETED", "CANCELLED"]
+                                    .contains(controller.sessionData?.status))
                                   const SizedBox(width: 16),
+                                if (!["COMPLETED", "CANCELLED"]
+                                    .contains(controller.sessionData?.status))
                                   BaseSecondaryButton(
                                     onPressed: () {
                                       controller.navigateToReviewCekUlang();
@@ -187,7 +190,11 @@ class StockOpnameHarianView extends StatefulWidget {
                                     text: "Cek Ulang",
                                     isDense: true,
                                   ),
+                                if (!["COMPLETED", "CANCELLED"]
+                                    .contains(controller.sessionData?.status))
                                   const SizedBox(width: 16),
+                                if (!["COMPLETED", "CANCELLED"]
+                                    .contains(controller.sessionData?.status))
                                   BaseDangerButton(
                                     onPressed: () {
                                       showDialogBase(
@@ -199,8 +206,12 @@ class StockOpnameHarianView extends StatefulWidget {
                                     text: "Batalkan SO",
                                     isDense: true,
                                   ),
+                                if (!["COMPLETED", "CANCELLED"]
+                                    .contains(controller.sessionData?.status))
                                   const SizedBox(width: 16),
-                                ],
+                              ],
+                              if (!["COMPLETED", "CANCELLED"]
+                                  .contains(controller.sessionData?.status))
                                 BasePrimaryButton(
                                   onPressed: () {
                                     showDialogBase(
@@ -219,9 +230,9 @@ class StockOpnameHarianView extends StatefulWidget {
                                   text: "Simpan Data SO",
                                   isDense: true,
                                 ),
-                              ],
-                            ),
+                            ],
                           ),
+                        ),
                       ],
                     );
                   },
@@ -245,6 +256,23 @@ class StockOpnameHarianView extends StatefulWidget {
                         if (listData.isNotEmpty) {
                           List<PlutoRow> rows = [];
                           List<PlutoColumn> columns = [];
+
+                          // Calculate totals
+                          double totalStokSistemJml = 0;
+                          double totalStokSistemHarga = 0;
+                          double totalStokFisikJml = 0;
+                          double totalStokFisikHarga = 0;
+                          double totalSelisihJml = 0;
+                          double totalSelisihHarga = 0;
+
+                          for (var item in listData) {
+                            totalStokSistemJml += item.stokSistem ?? 0;
+                            totalStokSistemHarga += item.valuasi?.valuasiSistemJual ?? 0;
+                            totalStokFisikJml += item.stokFisik ?? 0;
+                            totalStokFisikHarga += item.valuasi?.valuasiFisikJual ?? 0;
+                            totalSelisihJml += item.selisih ?? 0;
+                            totalSelisihHarga += item.valuasi?.valuasiSelisihJual ?? 0;
+                          }
 
                           // Create columns
                           columns.addAll([
@@ -275,6 +303,20 @@ class StockOpnameHarianView extends StatefulWidget {
                               field: "stok_sistem_jml",
                               type: PlutoColumnType.number(),
                               width: 80,
+                              footerRenderer: (rendererContext) {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  color: primaryColor,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    formatMoney(totalStokSistemJml.toStringAsFixed(0)),
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
@@ -282,6 +324,20 @@ class StockOpnameHarianView extends StatefulWidget {
                               field: "stok_sistem_harga",
                               type: PlutoColumnType.number(format: "#,###"),
                               width: 120,
+                              footerRenderer: (rendererContext) {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  color: primaryColor,
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    formatMoney(totalStokSistemHarga.toInt()),
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
@@ -289,6 +345,20 @@ class StockOpnameHarianView extends StatefulWidget {
                               field: "stok_fisik_jml",
                               type: PlutoColumnType.number(),
                               width: 80,
+                              footerRenderer: (rendererContext) {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  color: primaryColor,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    formatMoney(totalStokFisikJml.toStringAsFixed(0)),
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
@@ -296,6 +366,20 @@ class StockOpnameHarianView extends StatefulWidget {
                               field: "stok_fisik_harga",
                               type: PlutoColumnType.number(format: "#,###"),
                               width: 120,
+                              footerRenderer: (rendererContext) {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  color: primaryColor,
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    formatMoney(totalStokFisikHarga.toInt()),
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
@@ -303,6 +387,20 @@ class StockOpnameHarianView extends StatefulWidget {
                               field: "selisih_jml",
                               type: PlutoColumnType.number(),
                               width: 80,
+                              footerRenderer: (rendererContext) {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  color: primaryColor,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    formatMoney(totalSelisihJml.toStringAsFixed(0)),
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
@@ -310,6 +408,20 @@ class StockOpnameHarianView extends StatefulWidget {
                               field: "selisih_harga",
                               type: PlutoColumnType.number(format: "#,###"),
                               width: 120,
+                              footerRenderer: (rendererContext) {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  color: primaryColor,
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    formatMoney(totalSelisihHarga.toInt()),
+                                    style: myTextTheme.titleSmall?.copyWith(
+                                      color: neutralWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
