@@ -153,6 +153,7 @@ generatePdfStockOpname({
         }),
       );
     }
+
     pw.Widget footerTotal() {
       return pw.Container(
         decoration: pw.BoxDecoration(
@@ -288,6 +289,7 @@ generatePdfStockOpname({
         ),
       );
     }
+
     final pdf = pw.Document();
 
     pdf.addPage(
