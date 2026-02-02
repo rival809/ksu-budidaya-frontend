@@ -224,6 +224,20 @@ class ListSessionView extends StatefulWidget {
                                 width: 100,
                               ),
                               PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Catatan Kasir",
+                                field: "notes_kasir",
+                                type: PlutoColumnType.text(),
+                                width: 100,
+                              ),
+                              PlutoColumn(
+                                backgroundColor: primaryColor,
+                                title: "Catatan Reviewer",
+                                field: "notes_reviewer",
+                                type: PlutoColumnType.text(),
+                                width: 100,
+                              ),
+                              PlutoColumn(
                                 width: 150,
                                 backgroundColor: primaryColor,
                                 frozen: PlutoColumnFrozen.end,
@@ -285,6 +299,13 @@ class ListSessionView extends StatefulWidget {
                               cells['shift'] = PlutoCell(
                                 value: trimString(item.shift),
                               );
+                              cells['notes_kasir'] = PlutoCell(
+                                value: trimString(item.notesKasir),
+                              );
+                              cells['notes_reviewer'] = PlutoCell(
+                                value: trimString(item.notesReviewer),
+                              );
+
                               cells['aksi'] = PlutoCell(value: null);
 
                               return PlutoRow(cells: cells);

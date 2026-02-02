@@ -6,6 +6,7 @@ import 'package:ksu_budidaya/core.dart';
 class DialogSo extends StatefulWidget {
   final String namaProduk;
   final String? initialStokFisik;
+  final String? initialStokSistem;
   final String? initialNotes;
   final Function(String stokFisik, String notes) onSimpan;
 
@@ -13,6 +14,7 @@ class DialogSo extends StatefulWidget {
     super.key,
     required this.namaProduk,
     this.initialStokFisik,
+    this.initialStokSistem,
     this.initialNotes,
     required this.onSimpan,
   });
@@ -23,7 +25,9 @@ class DialogSo extends StatefulWidget {
 
 class _DialogSoState extends State<DialogSo> {
   final formKey = GlobalKey<FormState>();
+  final TextEditingController stokSistemController = TextEditingController();
   final TextEditingController stokFisikController = TextEditingController();
+
   final TextEditingController catatanController = TextEditingController();
 
   @override
@@ -31,6 +35,9 @@ class _DialogSoState extends State<DialogSo> {
     super.initState();
     if (widget.initialStokFisik != null) {
       stokFisikController.text = widget.initialStokFisik!;
+    }
+    if (widget.initialStokSistem != null) {
+      stokSistemController.text = widget.initialStokSistem!;
     }
     if (widget.initialNotes != null) {
       catatanController.text = widget.initialNotes!;
@@ -40,6 +47,7 @@ class _DialogSoState extends State<DialogSo> {
   @override
   void dispose() {
     stokFisikController.dispose();
+    stokSistemController.dispose();
     catatanController.dispose();
     super.dispose();
   }
@@ -71,6 +79,13 @@ class _DialogSoState extends State<DialogSo> {
               hintText: widget.namaProduk,
               enabled: false,
               initialValue: widget.namaProduk,
+            ),
+            const SizedBox(height: 16),
+            BaseForm(
+              label: "Stock Sistem",
+              autoFocus: true,
+              textEditingController: stokSistemController,
+              enabled: false,
             ),
             const SizedBox(height: 16),
             BaseForm(
