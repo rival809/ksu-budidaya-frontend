@@ -167,6 +167,15 @@ class StockOpnameHarianView extends StatefulWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              BaseSecondaryButton(
+                                onPressed: () {
+                                  controller.itemsFuture = controller.fetchStocktakeItems();
+                                  controller.update();
+                                },
+                                text: "Refresh Data",
+                                isDense: true,
+                              ),
+                              const SizedBox(width: 16),
                               if (UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ||
                                   UserDatabase.userDatabase.data?.roleData?.idRole ==
                                       "ROLE004") ...[
@@ -426,7 +435,7 @@ class StockOpnameHarianView extends StatefulWidget {
                             PlutoColumn(
                               backgroundColor: primaryColor,
                               title: "Keterangan",
-                              field: "notes",
+                              field: "is_counted",
                               type: PlutoColumnType.text(),
                               width: 100,
                               enableEditingMode: false,
@@ -451,6 +460,13 @@ class StockOpnameHarianView extends StatefulWidget {
                                 }
                               },
                             ),
+                            PlutoColumn(
+                              backgroundColor: primaryColor,
+                              title: "Catatan",
+                              field: "notes",
+                              type: PlutoColumnType.text(),
+                              width: 200,
+                            ),
                             if (!["COMPLETED", "CANCELLED"]
                                 .contains(controller.sessionData?.status)) ...[
                               PlutoColumn(
@@ -464,8 +480,16 @@ class StockOpnameHarianView extends StatefulWidget {
                                 renderer: (rendererContext) {
                                   bool isCounted =
                                       rendererContext.row.cells['is_counted']?.value ?? false;
-                                  int stokFisik =
-                                      rendererContext.row.cells['stok_fisik_jml']?.value ?? 0;
+                                  int stokFisik = int.tryParse(rendererContext
+                                              .row.cells['stok_fisik_jml']?.value
+                                              ?.toString() ??
+                                          '0') ??
+                                      0;
+                                  int stokSistem = int.tryParse(rendererContext
+                                              .row.cells['stok_sistem_jml']?.value
+                                              ?.toString() ??
+                                          '0') ??
+                                      0;
 
                                   if (!isCounted) {
                                     return Container(
@@ -481,6 +505,7 @@ class StockOpnameHarianView extends StatefulWidget {
                                                   .row.cells['id_stocktake_item']?.value ??
                                               '';
                                           controller.showDialogSO(
+                                            initialStokSistem: stokSistem.toString(),
                                             namaProduk: namaProduk,
                                             idItem: idItem,
                                           );
@@ -502,12 +527,14 @@ class StockOpnameHarianView extends StatefulWidget {
                                           String idItem = rendererContext
                                                   .row.cells['id_stocktake_item']?.value ??
                                               '';
+
                                           String notes =
                                               rendererContext.row.cells['notes_value']?.value ?? '';
                                           controller.showDialogSO(
                                             namaProduk: namaProduk,
                                             idItem: idItem,
                                             initialStokFisik: stokFisik.toString(),
+                                            initialStokSistem: stokSistem.toString(),
                                             initialNotes: notes,
                                           );
                                         },
@@ -534,6 +561,7 @@ class StockOpnameHarianView extends StatefulWidget {
                                             namaProduk: namaProduk,
                                             idItem: idItem,
                                             initialStokFisik: stokFisik.toString(),
+                                            initialStokSistem: stokSistem.toString(),
                                             initialNotes: notes,
                                           );
                                         },

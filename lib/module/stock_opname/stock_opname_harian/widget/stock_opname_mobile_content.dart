@@ -156,7 +156,8 @@ class StockOpnameMobileContent extends StatelessWidget {
                                         controller.showDialogSO(
                                           namaProduk: item.nmProduct ?? '-',
                                           idItem: item.idStocktakeItem.toString(),
-                                          initialStokFisik: item.stokFisik?.toString(),
+                                          initialStokFisik: item.stokFisik?.toStringAsFixed(0),
+                                          initialStokSistem: item.stokSistem?.toStringAsFixed(0),
                                           initialNotes: item.notes,
                                         );
                                       },

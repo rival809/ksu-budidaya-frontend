@@ -130,12 +130,14 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
     required String namaProduk,
     required String idItem,
     String? initialStokFisik,
+    String? initialStokSistem,
     String? initialNotes,
   }) {
     showDialogBase(
       content: DialogSo(
         namaProduk: namaProduk,
         initialStokFisik: initialStokFisik,
+        initialStokSistem: initialStokSistem,
         initialNotes: initialNotes,
         onSimpan: (stokFisik, notes) async {
           try {
@@ -155,18 +157,14 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
               idItem: idItem,
             );
 
-            Get.back(); // Close loading dialog
-
             // Reset pagination before refresh
             currentPage = 1;
             hasMoreData = true;
             page = "1";
 
-            // Refresh data
-            await fetchStocktakeItems(
-              isAsc: isAsc,
-              field: field,
-            );
+            // Refresh data - WAIT for it to complete
+            itemsFuture = fetchStocktakeItems();
+            await itemsFuture; // Wait for fetch to complete before updating filteredData
 
             // Re-apply search filter if search is active, otherwise show all data
             if (searchController.text.isNotEmpty) {
@@ -185,6 +183,8 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
             }
 
             update();
+
+            Get.back(); // Close loading dialog
 
             await showInfoDialog("Data Stock Opname berhasil disimpan", context);
           } catch (e) {
@@ -229,34 +229,31 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
       searchController.clear();
       filteredData = [];
 
-      if (!kIsWeb) {
-        showCircleDialogLoading();
-        // For mobile, fetch latest session with stocktake type filter
-        final sessionListResult = await ApiService.listSession(
-          data: {
-            "page": "1",
-            "limit": "1",
-            "stocktake_type": stocktakeType,
-          },
+      // For mobile, fetch latest session with stocktake type filter
+      final sessionListResult = await ApiService.listSession(
+        data: {
+          "page": "1",
+          "limit": "1",
+          "stocktake_type": stocktakeType,
+        },
+      );
+
+      if (sessionListResult.data?.data?.isNotEmpty ?? false) {
+        final latestSession = sessionListResult.data!.data!.first;
+
+        // Get full session detail
+        final sessionDetailResult = await ApiService.detailSession(
+          idSession: latestSession.idStocktakeSession ?? '',
+          // idSession: 'ST-20260108-221256',
         );
-        Get.back(); // Close loading
 
-        if (sessionListResult.data?.data?.isNotEmpty ?? false) {
-          final latestSession = sessionListResult.data!.data!.first;
+        sessionData = sessionDetailResult.data;
 
-          // Get full session detail
-          final sessionDetailResult = await ApiService.detailSession(
-            idSession: latestSession.idStocktakeSession ?? '',
-            // idSession: 'ST-20260108-221256',
-          );
-
-          sessionData = sessionDetailResult.data;
-
-          if (sessionData != null) {
-            idSession = sessionData!.idStocktakeSession;
-          }
+        if (sessionData != null) {
+          idSession = sessionData!.idStocktakeSession;
         }
       }
+      // }
 
       // Refresh items data
       itemsFuture = fetchStocktakeItems(
@@ -266,7 +263,6 @@ class StockOpnameHarianController extends State<StockOpnameHarianView> {
 
       update();
     } catch (e) {
-      Get.back();
       showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
     }
   }
