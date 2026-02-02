@@ -7,13 +7,21 @@ generatePdfStockOpname({
   required StockOpnameHarianController controller,
 }) async {
   showCircleDialogLoading();
-  await Future.delayed(const Duration(seconds: 1));
   try {
+    await Future.delayed(const Duration(seconds: 1));
     final ttfRegular = await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
     final regularFont = pw.Font.ttf(ttfRegular);
     final ttfBold = await rootBundle.load("assets/fonts/Roboto-Bold.ttf");
     final boldFont = pw.Font.ttf(ttfBold);
     List<PdfStockOpnameItem> listDataStockOpname = [];
+
+    // Calculate totals
+    double totalStokSistemJml = 0;
+    double totalStokSistemHarga = 0;
+    double totalStokFisikJml = 0;
+    double totalStokFisikHarga = 0;
+    double totalSelisihJml = 0;
+    double totalSelisihHarga = 0;
 
     for (var i = 0; i < (controller.itemsData.data?.length ?? 0); i++) {
       DetailListStocktakeItemsilDataListStocktakeItems dataItem =
@@ -25,6 +33,14 @@ generatePdfStockOpname({
       double stokSistem = dataItem.stokSistem ?? 0;
       double stokFisik = dataItem.stokFisik ?? 0;
       double selisih = dataItem.selisih ?? 0;
+
+      // Add to totals
+      totalStokSistemJml += stokSistem;
+      totalStokSistemHarga += (stokSistem * hargaJual);
+      totalStokFisikJml += stokFisik;
+      totalStokFisikHarga += (stokFisik * hargaJual);
+      totalSelisihJml += selisih;
+      totalSelisihHarga += (selisih * hargaJual);
 
       listDataStockOpname.add(
         PdfStockOpnameItem(
@@ -44,6 +60,24 @@ generatePdfStockOpname({
       );
     }
 
+    // Add footer row with totals
+    listDataStockOpname.add(
+      PdfStockOpnameItem(
+        "",
+        "TOTAL",
+        "",
+        "",
+        formatMoney(totalStokSistemJml.toInt()),
+        formatMoney(totalStokSistemHarga.toInt()),
+        formatMoney(totalStokFisikJml.toInt()),
+        formatMoney(totalStokFisikHarga.toInt()),
+        formatMoney(totalSelisihJml.toInt()),
+        formatMoney(totalSelisihHarga.toInt()),
+        "",
+        "",
+      ),
+    );
+
     pw.Widget contentTable(pw.Context context) {
       //INITIALIZE TITLE
       List<String> itemTitle = [
@@ -57,8 +91,8 @@ generatePdfStockOpname({
         "STOK FISIK\nHARGA",
         "SELISIH\nJML",
         "SELISIH\nHARGA",
-        "STATUS",
-        "NOTES",
+        "KETERANGAN",
+        "CATATAN",
       ];
       //END INITIALIZE TITLE
 
@@ -178,11 +212,10 @@ generatePdfStockOpname({
       },
     );
   } catch (e) {
-    Get.back();
     showInfoDialog(e.toString(), globalContext);
+  } finally {
+    Get.back();
   }
-
-  Get.back();
 }
 
 class PdfStockOpnameItem {
@@ -197,7 +230,7 @@ class PdfStockOpnameItem {
     this.stokFisikHarga,
     this.selisihJml,
     this.selisihHarga,
-    this.status,
+    this.keterangan,
     this.notes,
   );
 
@@ -211,7 +244,7 @@ class PdfStockOpnameItem {
   final String stokFisikHarga;
   final String selisihJml;
   final String selisihHarga;
-  final String status;
+  final String keterangan;
   final String notes;
 
   String getIndex(int index) {
@@ -237,7 +270,7 @@ class PdfStockOpnameItem {
       case 9:
         return selisihHarga;
       case 10:
-        return status;
+        return keterangan;
       case 11:
         return notes;
     }
