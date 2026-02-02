@@ -7,13 +7,21 @@ generatePdfStockOpname({
   required StockOpnameHarianController controller,
 }) async {
   showCircleDialogLoading();
-  await Future.delayed(const Duration(seconds: 1));
   try {
+    await Future.delayed(const Duration(seconds: 1));
     final ttfRegular = await rootBundle.load("assets/fonts/Roboto-Regular.ttf");
     final regularFont = pw.Font.ttf(ttfRegular);
     final ttfBold = await rootBundle.load("assets/fonts/Roboto-Bold.ttf");
     final boldFont = pw.Font.ttf(ttfBold);
     List<PdfStockOpnameItem> listDataStockOpname = [];
+
+    // Calculate totals
+    double totalStokSistemJml = 0;
+    double totalStokSistemHarga = 0;
+    double totalStokFisikJml = 0;
+    double totalStokFisikHarga = 0;
+    double totalSelisihJml = 0;
+    double totalSelisihHarga = 0;
 
     for (var i = 0; i < (controller.itemsData.data?.length ?? 0); i++) {
       DetailListStocktakeItemsilDataListStocktakeItems dataItem =
@@ -25,6 +33,14 @@ generatePdfStockOpname({
       double stokSistem = dataItem.stokSistem ?? 0;
       double stokFisik = dataItem.stokFisik ?? 0;
       double selisih = dataItem.selisih ?? 0;
+
+      // Add to totals
+      totalStokSistemJml += stokSistem;
+      totalStokSistemHarga += (stokSistem * hargaJual);
+      totalStokFisikJml += stokFisik;
+      totalStokFisikHarga += (stokFisik * hargaJual);
+      totalSelisihJml += selisih;
+      totalSelisihHarga += (selisih * hargaJual);
 
       listDataStockOpname.add(
         PdfStockOpnameItem(
@@ -57,8 +73,8 @@ generatePdfStockOpname({
         "STOK FISIK\nHARGA",
         "SELISIH\nJML",
         "SELISIH\nHARGA",
-        "STATUS",
-        "NOTES",
+        "KETERANGAN",
+        "CATATAN",
       ];
       //END INITIALIZE TITLE
 
@@ -138,6 +154,142 @@ generatePdfStockOpname({
       );
     }
 
+    pw.Widget footerTotal() {
+      return pw.Container(
+        decoration: pw.BoxDecoration(
+          color: PdfColor.fromHex("#2A6EBB"),
+          border: pw.Border.all(
+            color: PdfColor.fromHex("#E3E7ED"),
+            width: 1,
+          ),
+        ),
+        child: pw.Table(
+          columnWidths: {
+            0: const pw.FlexColumnWidth(0.5),
+            1: const pw.FlexColumnWidth(1.5),
+            2: const pw.FlexColumnWidth(3),
+            3: const pw.FlexColumnWidth(1.5),
+            4: const pw.FlexColumnWidth(1),
+            5: const pw.FlexColumnWidth(1.5),
+            6: const pw.FlexColumnWidth(1),
+            7: const pw.FlexColumnWidth(1.5),
+            8: const pw.FlexColumnWidth(1),
+            9: const pw.FlexColumnWidth(1.5),
+            10: const pw.FlexColumnWidth(1.2),
+            11: const pw.FlexColumnWidth(2),
+          },
+          children: [
+            pw.TableRow(
+              children: [
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.center,
+                  child: pw.Text('', style: pw.TextStyle(fontSize: 6, font: boldFont)),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerLeft,
+                  child: pw.Text('TOTAL',
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.white,
+                      )),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerLeft,
+                  child: pw.Text('', style: pw.TextStyle(fontSize: 6, font: boldFont)),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerLeft,
+                  child: pw.Text('', style: pw.TextStyle(fontSize: 6, font: boldFont)),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerRight,
+                  child: pw.Text(formatMoney(totalStokSistemJml.toInt()),
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.white,
+                      )),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerRight,
+                  child: pw.Text(formatMoney(totalStokSistemHarga.toInt()),
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.white,
+                      )),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerRight,
+                  child: pw.Text(formatMoney(totalStokFisikJml.toInt()),
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.white,
+                      )),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerRight,
+                  child: pw.Text(formatMoney(totalStokFisikHarga.toInt()),
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.white,
+                      )),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerRight,
+                  child: pw.Text(formatMoney(totalSelisihJml.toInt()),
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.white,
+                      )),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerRight,
+                  child: pw.Text(formatMoney(totalSelisihHarga.toInt()),
+                      style: pw.TextStyle(
+                        fontSize: 6,
+                        font: boldFont,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.white,
+                      )),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.center,
+                  child: pw.Text('', style: pw.TextStyle(fontSize: 6, font: boldFont)),
+                ),
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(4),
+                  alignment: pw.Alignment.centerLeft,
+                  child: pw.Text('', style: pw.TextStyle(fontSize: 6, font: boldFont)),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
     final pdf = pw.Document();
 
     pdf.addPage(
@@ -163,6 +315,7 @@ generatePdfStockOpname({
             height: 4.0,
           ),
           contentTable(context),
+          footerTotal(),
         ],
       ),
     );
@@ -178,11 +331,10 @@ generatePdfStockOpname({
       },
     );
   } catch (e) {
-    Get.back();
     showInfoDialog(e.toString(), globalContext);
+  } finally {
+    Get.back();
   }
-
-  Get.back();
 }
 
 class PdfStockOpnameItem {
@@ -197,7 +349,7 @@ class PdfStockOpnameItem {
     this.stokFisikHarga,
     this.selisihJml,
     this.selisihHarga,
-    this.status,
+    this.keterangan,
     this.notes,
   );
 
@@ -211,7 +363,7 @@ class PdfStockOpnameItem {
   final String stokFisikHarga;
   final String selisihJml;
   final String selisihHarga;
-  final String status;
+  final String keterangan;
   final String notes;
 
   String getIndex(int index) {
@@ -237,7 +389,7 @@ class PdfStockOpnameItem {
       case 9:
         return selisihHarga;
       case 10:
-        return status;
+        return keterangan;
       case 11:
         return notes;
     }
