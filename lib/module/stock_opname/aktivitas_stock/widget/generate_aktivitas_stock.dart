@@ -26,7 +26,9 @@ generatePdfAktivitasStock({
           formatDateFullTime(trimString(dataRekap.tgUpdateAktivitas)),
           trimStringStrip(dataRekap.nmProduct),
           trimStringStrip(dataRekap.divisi),
+          trimStringStrip(dataRekap.stockSebelumnya),
           trimStringStrip(dataRekap.jumlah),
+          trimStringStrip(dataRekap.stockSetelahnya),
           trimStringStrip(dataRekap.aktivitas),
           trimStringStrip(dataRekap.idAktivitas),
           trimStringStrip(dataRekap.user),
@@ -42,7 +44,9 @@ generatePdfAktivitasStock({
         "TANGGAL UPDATE AKTIVITAS",
         "NAMA PRODUK",
         "DIVISI",
+        "STOCK SEBELUMNYA",
         "JUMLAH",
+        "STOCK SETELAHNYA",
         "AKTIVITAS",
         "ID AKTIVITAS",
         "USER",
@@ -67,17 +71,21 @@ generatePdfAktivitasStock({
           6: pw.Alignment.center,
           7: pw.Alignment.center,
           8: pw.Alignment.center,
+          9: pw.Alignment.center,
+          10: pw.Alignment.center,
         },
         columnWidths: {
           0: const pw.FixedColumnWidth(26),
-          1: const pw.FlexColumnWidth(3),
+          1: const pw.FlexColumnWidth(2.5),
           2: const pw.FlexColumnWidth(3),
-          3: const pw.FlexColumnWidth(4),
+          3: const pw.FlexColumnWidth(3.7),
           4: const pw.FlexColumnWidth(2),
-          5: const pw.FlexColumnWidth(1),
-          6: const pw.FlexColumnWidth(2),
-          7: const pw.FlexColumnWidth(2),
+          5: const pw.FlexColumnWidth(1.5),
+          6: const pw.FlexColumnWidth(1),
+          7: const pw.FlexColumnWidth(1.5),
           8: const pw.FlexColumnWidth(2),
+          9: const pw.FlexColumnWidth(2),
+          10: const pw.FlexColumnWidth(2),
         },
         cellAlignments: {
           0: pw.Alignment.center,
@@ -89,6 +97,8 @@ generatePdfAktivitasStock({
           6: pw.Alignment.center,
           7: pw.Alignment.centerLeft,
           8: pw.Alignment.centerLeft,
+          9: pw.Alignment.centerLeft,
+          10: pw.Alignment.centerLeft,
         },
         headerStyle: pw.TextStyle(
           color: PdfColor.fromHex("#212121"),
@@ -115,7 +125,7 @@ generatePdfAktivitasStock({
         ),
         data: List<List<dynamic>>.generate(listDataPenerimaan.length, (row) {
           return List<dynamic>.generate(itemTitle.length, (col) {
-            if (col == 6) {
+            if (col == 8) {
               return pw.Container(
                 decoration: pw.BoxDecoration(
                   borderRadius: const pw.BorderRadius.all(
@@ -208,7 +218,9 @@ class PdfAktivitasStock {
     this.tgUpdateAktivitas,
     this.nmProduct,
     this.divisi,
+    this.stockSebelumnya,
     this.jumlah,
+    this.stockSetelahnya,
     this.aktivitas,
     this.idAktivitas,
     this.user,
@@ -219,7 +231,9 @@ class PdfAktivitasStock {
   final String tgUpdateAktivitas;
   final String nmProduct;
   final String divisi;
+  final String stockSebelumnya;
   final String jumlah;
+  final String stockSetelahnya;
   final String aktivitas;
   final String idAktivitas;
   final String user;
@@ -236,13 +250,18 @@ class PdfAktivitasStock {
         return nmProduct;
       case 4:
         return divisi;
+
       case 5:
-        return jumlah;
+        return stockSebelumnya;
       case 6:
-        return aktivitas;
+        return jumlah;
       case 7:
-        return idAktivitas;
+        return stockSetelahnya;
       case 8:
+        return aktivitas;
+      case 9:
+        return idAktivitas;
+      case 10:
         return user;
     }
     return '';

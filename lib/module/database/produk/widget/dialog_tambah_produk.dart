@@ -142,8 +142,7 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                       : DataDetailSupplier(
                           idSupplier: dataEdit.idSupplier,
                           nmSupplier: trimString(
-                            getNamaSupplier(
-                                idSupplier: trimString(dataEdit.idSupplier)),
+                            getNamaSupplier(idSupplier: trimString(dataEdit.idSupplier)),
                           ),
                         ),
                   onChanged: (value) {
@@ -193,21 +192,22 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                     update();
                   },
                 ),
-                BaseForm(
-                  label: "Jumlah",
-                  hintText: "Masukkan Jumlah",
-                  textInputFormater: [
-                    ThousandsFormatter(),
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                  ],
-                  textEditingController: textController[4],
-                  onChanged: (value) {
-                    dataEdit.jumlah =
-                        int.tryParse(trimString(removeComma(value))) ?? 0;
-                    update();
-                  },
-                  validator: Validatorless.required("Data Wajib Diisi"),
-                ),
+                if (widget.isDetail)
+                  BaseForm(
+                    label: "Jumlah",
+                    hintText: "Masukkan Jumlah",
+                    textInputFormater: [
+                      ThousandsFormatter(),
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                    ],
+                    enabled: false,
+                    textEditingController: textController[4],
+                    onChanged: (value) {
+                      dataEdit.jumlah = int.tryParse(trimString(removeComma(value))) ?? 0;
+                      update();
+                    },
+                    validator: Validatorless.required("Data Wajib Diisi"),
+                  ),
               ],
             ),
             BaseForm(
@@ -256,9 +256,7 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                         payload.removeWhere(
                           (key, value) => key == "total_beli",
                         );
-                        if (trimString(payload["keterangan"])
-                            .toString()
-                            .isEmpty) {
+                        if (trimString(payload["keterangan"]).toString().isEmpty) {
                           payload.removeWhere(
                             (key, value) => key == "keterangan",
                           );

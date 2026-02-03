@@ -22,6 +22,7 @@ class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
   DataHistoryStockOpname dataStockOpname = DataHistoryStockOpname();
   HistoryStockOpnameModel result = HistoryStockOpnameModel();
   List<String> listRoleView = [
+    "id_stocktake",
     "tg_stocktake",
     "name",
     "nm_product",

@@ -133,18 +133,20 @@ class AktivitasStockView extends StatefulWidget {
 
                             columns.addAll(
                               List.generate(
-                                controller.listRoleView.length,
+                                controller.listAktivitasStockView.length,
                                 (index) {
-                                  if (controller.listRoleView[index] == "aktivitas") {
+                                  if (controller.listAktivitasStockView[index] == "aktivitas") {
                                     return PlutoColumn(
                                         backgroundColor: primaryColor,
-                                        filterHintText: "Cari ${controller.listRoleView[index]}",
+                                        filterHintText:
+                                            "Cari ${controller.listAktivitasStockView[index]}",
                                         title: convertTitle(
-                                          controller.listRoleView[index],
+                                          controller.listAktivitasStockView[index],
                                         ),
-                                        field: controller.listRoleView[index],
-                                        type: (controller.listRoleView[index] == "tg_aktivitas" ||
-                                                controller.listRoleView[index] ==
+                                        field: controller.listAktivitasStockView[index],
+                                        type: (controller.listAktivitasStockView[index] ==
+                                                    "tg_aktivitas" ||
+                                                controller.listAktivitasStockView[index] ==
                                                     "tg_update_aktivitas")
                                             ? PlutoColumnType.date(
                                                 format: 'dd/MM/yyyy HH:mm:ss',
@@ -154,43 +156,51 @@ class AktivitasStockView extends StatefulWidget {
                                           return CardLabel(
                                             cardColor: rendererContext
                                                         .row
-                                                        .cells[controller.listRoleView[index]]
+                                                        .cells[controller
+                                                            .listAktivitasStockView[index]]
                                                         ?.value ==
                                                     "Penjualan"
                                                 ? red50
                                                 : rendererContext
                                                             .row
-                                                            .cells[controller.listRoleView[index]]
+                                                            .cells[controller
+                                                                .listAktivitasStockView[index]]
                                                             ?.value ==
                                                         "Pembelian"
                                                     ? green50
                                                     : blue50,
                                             cardTitle: convertTitle(
                                               rendererContext
-                                                  .row.cells[controller.listRoleView[index]]?.value,
+                                                  .row
+                                                  .cells[controller.listAktivitasStockView[index]]
+                                                  ?.value,
                                             ),
                                             cardTitleColor: rendererContext
                                                         .row
-                                                        .cells[controller.listRoleView[index]]
+                                                        .cells[controller
+                                                            .listAktivitasStockView[index]]
                                                         ?.value ==
                                                     "Penjualan"
                                                 ? red900
                                                 : rendererContext
                                                             .row
-                                                            .cells[controller.listRoleView[index]]
+                                                            .cells[controller
+                                                                .listAktivitasStockView[index]]
                                                             ?.value ==
                                                         "Pembelian"
                                                     ? green900
                                                     : blue900,
                                             cardBorderColor: rendererContext
                                                         .row
-                                                        .cells[controller.listRoleView[index]]
+                                                        .cells[controller
+                                                            .listAktivitasStockView[index]]
                                                         ?.value ==
                                                     "Penjualan"
                                                 ? red900
                                                 : rendererContext
                                                             .row
-                                                            .cells[controller.listRoleView[index]]
+                                                            .cells[controller
+                                                                .listAktivitasStockView[index]]
                                                             ?.value ==
                                                         "Pembelian"
                                                     ? green900
@@ -200,13 +210,15 @@ class AktivitasStockView extends StatefulWidget {
                                   } else {
                                     return PlutoColumn(
                                       backgroundColor: primaryColor,
-                                      filterHintText: "Cari ${controller.listRoleView[index]}",
+                                      filterHintText:
+                                          "Cari ${controller.listAktivitasStockView[index]}",
                                       title: convertTitle(
-                                        controller.listRoleView[index],
+                                        controller.listAktivitasStockView[index],
                                       ),
-                                      field: controller.listRoleView[index],
-                                      type: (controller.listRoleView[index] == "tg_aktivitas" ||
-                                              controller.listRoleView[index] ==
+                                      field: controller.listAktivitasStockView[index],
+                                      type: (controller.listAktivitasStockView[index] ==
+                                                  "tg_aktivitas" ||
+                                              controller.listAktivitasStockView[index] ==
                                                   "tg_update_aktivitas")
                                           ? PlutoColumnType.date(
                                               format: 'dd/MM/yyyy HH:mm:ss',
@@ -272,7 +284,7 @@ class AktivitasStockView extends StatefulWidget {
                                 value: null,
                               );
 
-                              for (String column in controller.listRoleView) {
+                              for (String column in controller.listAktivitasStockView) {
                                 if (item.containsKey(column)) {
                                   cells[column] = PlutoCell(
                                     value: trimStringStrip(item[column]),
