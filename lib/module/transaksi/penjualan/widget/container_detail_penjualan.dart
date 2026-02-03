@@ -1,9 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/transaksi/penjualan/widget/body_penjualan_detail.dart';
-import 'package:ksu_budidaya/module/transaksi/penjualan/widget/footer_penjualan_detail.dart';
-import 'package:ksu_budidaya/module/transaksi/penjualan/widget/header_penjualan_detail.dart';
 
 class ContainerDetailPenjualan extends StatefulWidget {
   final PenjualanController controller;

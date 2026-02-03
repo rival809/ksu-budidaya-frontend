@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/transaksi/penjualan/widget/detail_view.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/widgets.dart';
 
