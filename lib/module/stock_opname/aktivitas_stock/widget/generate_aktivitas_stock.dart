@@ -1,8 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/controller/aktivitas_stock_controller.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 generatePdfAktivitasStock({
@@ -17,11 +15,8 @@ generatePdfAktivitasStock({
     final boldFont = pw.Font.ttf(ttfBold);
     List<PdfAktivitasStock> listDataPenerimaan = [];
 
-    for (var i = 0;
-        i < (controller.dataStockOpname.dataAktivitas?.length ?? 0);
-        i++) {
-      DataAktivitas dataRekap =
-          controller.dataStockOpname.dataAktivitas?[i] ?? DataAktivitas();
+    for (var i = 0; i < (controller.dataStockOpname.dataAktivitas?.length ?? 0); i++) {
+      DataAktivitas dataRekap = controller.dataStockOpname.dataAktivitas?[i] ?? DataAktivitas();
       int noUrut = i + 1;
 
       listDataPenerimaan.add(
@@ -31,7 +26,9 @@ generatePdfAktivitasStock({
           formatDateFullTime(trimString(dataRekap.tgUpdateAktivitas)),
           trimStringStrip(dataRekap.nmProduct),
           trimStringStrip(dataRekap.divisi),
+          trimStringStrip(dataRekap.stockSebelumnya),
           trimStringStrip(dataRekap.jumlah),
+          trimStringStrip(dataRekap.stockSetelahnya),
           trimStringStrip(dataRekap.aktivitas),
           trimStringStrip(dataRekap.idAktivitas),
           trimStringStrip(dataRekap.user),
@@ -47,7 +44,9 @@ generatePdfAktivitasStock({
         "TANGGAL UPDATE AKTIVITAS",
         "NAMA PRODUK",
         "DIVISI",
+        "STOCK SEBELUMNYA",
         "JUMLAH",
+        "STOCK SETELAHNYA",
         "AKTIVITAS",
         "ID AKTIVITAS",
         "USER",
@@ -72,17 +71,21 @@ generatePdfAktivitasStock({
           6: pw.Alignment.center,
           7: pw.Alignment.center,
           8: pw.Alignment.center,
+          9: pw.Alignment.center,
+          10: pw.Alignment.center,
         },
         columnWidths: {
           0: const pw.FixedColumnWidth(26),
-          1: const pw.FlexColumnWidth(3),
+          1: const pw.FlexColumnWidth(2.5),
           2: const pw.FlexColumnWidth(3),
-          3: const pw.FlexColumnWidth(4),
+          3: const pw.FlexColumnWidth(3.7),
           4: const pw.FlexColumnWidth(2),
-          5: const pw.FlexColumnWidth(1),
-          6: const pw.FlexColumnWidth(2),
-          7: const pw.FlexColumnWidth(2),
+          5: const pw.FlexColumnWidth(1.5),
+          6: const pw.FlexColumnWidth(1),
+          7: const pw.FlexColumnWidth(1.5),
           8: const pw.FlexColumnWidth(2),
+          9: const pw.FlexColumnWidth(2),
+          10: const pw.FlexColumnWidth(2),
         },
         cellAlignments: {
           0: pw.Alignment.center,
@@ -94,6 +97,8 @@ generatePdfAktivitasStock({
           6: pw.Alignment.center,
           7: pw.Alignment.centerLeft,
           8: pw.Alignment.centerLeft,
+          9: pw.Alignment.centerLeft,
+          10: pw.Alignment.centerLeft,
         },
         headerStyle: pw.TextStyle(
           color: PdfColor.fromHex("#212121"),
@@ -120,18 +125,16 @@ generatePdfAktivitasStock({
         ),
         data: List<List<dynamic>>.generate(listDataPenerimaan.length, (row) {
           return List<dynamic>.generate(itemTitle.length, (col) {
-            if (col == 6) {
+            if (col == 8) {
               return pw.Container(
                 decoration: pw.BoxDecoration(
                   borderRadius: const pw.BorderRadius.all(
                     pw.Radius.circular(8.0),
                   ),
-                  color: (trimString(listDataPenerimaan[row].getIndex(col))
-                              .toUpperCase() ==
+                  color: (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
                           "PENJUALAN")
                       ? PdfColors.red50
-                      : (trimString(listDataPenerimaan[row].getIndex(col))
-                                  .toUpperCase() ==
+                      : (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
                               "PEMBELIAN")
                           ? PdfColors.green50
                           : PdfColors.blue50,
@@ -144,12 +147,10 @@ generatePdfAktivitasStock({
                   trimString(listDataPenerimaan[row].getIndex(col)),
                   style: pw.TextStyle(
                     font: regularFont,
-                    color: (trimString(listDataPenerimaan[row].getIndex(col))
-                                .toUpperCase() ==
+                    color: (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
                             "PENJUALAN")
                         ? PdfColors.red900
-                        : (trimString(listDataPenerimaan[row].getIndex(col))
-                                    .toUpperCase() ==
+                        : (trimString(listDataPenerimaan[row].getIndex(col)).toUpperCase() ==
                                 "PEMBELIAN")
                             ? PdfColors.green900
                             : PdfColors.blue900,
@@ -170,8 +171,7 @@ generatePdfAktivitasStock({
       pw.MultiPage(
         maxPages: 1000,
         pageTheme: const pw.PageTheme(
-          pageFormat:
-              PdfPageFormat(29.7 * PdfPageFormat.cm, 21.0 * PdfPageFormat.cm),
+          pageFormat: PdfPageFormat(29.7 * PdfPageFormat.cm, 21.0 * PdfPageFormat.cm),
           orientation: pw.PageOrientation.landscape,
           margin: pw.EdgeInsets.all(8),
         ),
@@ -195,8 +195,7 @@ generatePdfAktivitasStock({
     );
     Uint8List pdfData = await pdf.save();
 
-    String fileName =
-        'Aktivitas_Stock_${controller.dataStockOpname.paging?.page.toString()}.pdf';
+    String fileName = 'Aktivitas_Stock_${controller.dataStockOpname.paging?.page.toString()}.pdf';
 
     await Printing.layoutPdf(
       name: fileName,
@@ -219,7 +218,9 @@ class PdfAktivitasStock {
     this.tgUpdateAktivitas,
     this.nmProduct,
     this.divisi,
+    this.stockSebelumnya,
     this.jumlah,
+    this.stockSetelahnya,
     this.aktivitas,
     this.idAktivitas,
     this.user,
@@ -230,7 +231,9 @@ class PdfAktivitasStock {
   final String tgUpdateAktivitas;
   final String nmProduct;
   final String divisi;
+  final String stockSebelumnya;
   final String jumlah;
+  final String stockSetelahnya;
   final String aktivitas;
   final String idAktivitas;
   final String user;
@@ -247,13 +250,18 @@ class PdfAktivitasStock {
         return nmProduct;
       case 4:
         return divisi;
+
       case 5:
-        return jumlah;
+        return stockSebelumnya;
       case 6:
-        return aktivitas;
+        return jumlah;
       case 7:
-        return idAktivitas;
+        return stockSetelahnya;
       case 8:
+        return aktivitas;
+      case 9:
+        return idAktivitas;
+      case 10:
         return user;
     }
     return '';

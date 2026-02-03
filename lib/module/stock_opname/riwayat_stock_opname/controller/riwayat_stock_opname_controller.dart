@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/history_stock_opname_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/view/riwayat_stock_opname_view.dart';
 
 class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
   static late RiwayatStockOpnameController instance;
@@ -24,6 +22,7 @@ class RiwayatStockOpnameController extends State<RiwayatStockOpnameView> {
   DataHistoryStockOpname dataStockOpname = DataHistoryStockOpname();
   HistoryStockOpnameModel result = HistoryStockOpnameModel();
   List<String> listRoleView = [
+    "id_stocktake",
     "tg_stocktake",
     "name",
     "nm_product",

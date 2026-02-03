@@ -17,13 +17,15 @@ class AktivitasStockController extends State<AktivitasStockView> {
 
   DataAktivitasStock dataStockOpname = DataAktivitasStock();
   AktivitasStockModel result = AktivitasStockModel();
-  List<String> listRoleView = [
+  List<String> listAktivitasStockView = [
     "tg_aktivitas",
     "tg_update_aktivitas",
     "id_product",
     "nm_product",
     "divisi",
+    "stock_sebelumnya",
     "jumlah",
+    "stock_setelahnya",
     "aktivitas",
     "id_aktivitas",
     "user",

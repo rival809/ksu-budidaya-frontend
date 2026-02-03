@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/controller/hist_bayar_hutang_anggota_controller.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/widget/dialog_pelunasan_anggota.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class HistBayarHutangAnggotaView extends StatefulWidget {

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
 
 class StockOpnameMobileController extends State<StockOpnameMobileView> {
   static late StockOpnameMobileController instance;
@@ -26,19 +25,14 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
 
   DetailProductResult dataResult = DetailProductResult();
 
-  List<DataDetailProduct> getDetailSuggestions(
-      String query, List<DataDetailProduct>? states) {
+  List<DataDetailProduct> getDetailSuggestions(String query, List<DataDetailProduct>? states) {
     List<DataDetailProduct> matches = [];
 
     if (states != null) {
       matches.addAll(states);
       matches.retainWhere((s) =>
-          (trimString(s.idProduct)
-                  .toLowerCase()
-                  .contains(query.toLowerCase()) ||
-              trimString(s.nmProduct)
-                  .toLowerCase()
-                  .contains(query.toLowerCase())) &&
+          (trimString(s.idProduct).toLowerCase().contains(query.toLowerCase()) ||
+              trimString(s.nmProduct).toLowerCase().contains(query.toLowerCase())) &&
           s.statusProduct == true);
     }
 
@@ -78,8 +72,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       if (result.success == true) {
         dataResult = result;
         textNamaProdukController.text = trimString(result.data?.nmProduct);
-        textCurrentStockController.text =
-            trimString(result.data?.jumlah.toString());
+        textCurrentStockController.text = trimString(result.data?.jumlah.toString());
         textHargaJualController.text = formatMoney(result.data?.hargaJual);
         textHargaBeliController.text = formatMoney(result.data?.hargaBeli);
       }
@@ -87,8 +80,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -199,8 +191,7 @@ class StockOpnameMobileController extends State<StockOpnameMobileView> {
       Navigator.pop(context);
 
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }

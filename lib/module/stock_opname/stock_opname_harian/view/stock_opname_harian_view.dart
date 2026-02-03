@@ -276,11 +276,11 @@ class StockOpnameHarianView extends StatefulWidget {
 
                           for (var item in listData) {
                             totalStokSistemJml += item.stokSistem ?? 0;
-                            totalStokSistemHarga += item.valuasi?.valuasiSistemJual ?? 0;
+                            totalStokSistemHarga += item.valuasi?.valuasiSistemBeli ?? 0;
                             totalStokFisikJml += item.stokFisik ?? 0;
-                            totalStokFisikHarga += item.valuasi?.valuasiFisikJual ?? 0;
+                            totalStokFisikHarga += item.valuasi?.valuasiFisikBeli ?? 0;
                             totalSelisihJml += item.selisih ?? 0;
-                            totalSelisihHarga += item.valuasi?.valuasiSelisihJual ?? 0;
+                            totalSelisihHarga += item.valuasi?.valuasiSelisihBeli ?? 0;
                           }
 
                           // Create columns
@@ -329,7 +329,7 @@ class StockOpnameHarianView extends StatefulWidget {
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
-                              title: "Harga Jual",
+                              title: "Harga Beli",
                               field: "stok_sistem_harga",
                               type: PlutoColumnType.number(format: "#,###"),
                               width: 120,
@@ -371,7 +371,7 @@ class StockOpnameHarianView extends StatefulWidget {
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
-                              title: "Harga Jual",
+                              title: "Harga Beli",
                               field: "stok_fisik_harga",
                               type: PlutoColumnType.number(format: "#,###"),
                               width: 120,
@@ -413,7 +413,7 @@ class StockOpnameHarianView extends StatefulWidget {
                             ),
                             PlutoColumn(
                               backgroundColor: primaryColor,
-                              title: "Harga Jual",
+                              title: "Harga Beli",
                               field: "selisih_harga",
                               type: PlutoColumnType.number(format: "#,###"),
                               width: 120,
@@ -586,15 +586,15 @@ class StockOpnameHarianView extends StatefulWidget {
                             cells['nm_divisi'] = PlutoCell(value: trimString(item.nmDivisi));
                             cells['stok_sistem_jml'] = PlutoCell(value: item.stokSistem ?? 0);
                             cells['stok_sistem_harga'] = PlutoCell(
-                              value: item.valuasi?.valuasiSistemJual ?? 0,
+                              value: item.valuasi?.valuasiSistemBeli ?? 0,
                             );
                             cells['stok_fisik_jml'] = PlutoCell(value: item.stokFisik ?? 0);
                             cells['stok_fisik_harga'] = PlutoCell(
-                              value: item.valuasi?.valuasiFisikJual ?? 0,
+                              value: item.valuasi?.valuasiFisikBeli ?? 0,
                             );
                             cells['selisih_jml'] = PlutoCell(value: item.selisih ?? 0);
                             cells['selisih_harga'] = PlutoCell(
-                              value: item.valuasi?.valuasiSelisihJual ?? 0,
+                              value: item.valuasi?.valuasiSelisihBeli ?? 0,
                             );
                             cells['notes'] = PlutoCell(value: trimString(item.notes));
                             cells['notes_value'] = PlutoCell(value: trimString(item.notes));

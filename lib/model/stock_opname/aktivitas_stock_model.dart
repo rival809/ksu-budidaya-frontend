@@ -62,6 +62,8 @@ class DataAktivitas {
   String? aktivitas;
   String? idAktivitas;
   String? user;
+  String? stockSebelumnya;
+  String? stockSetelahnya;
 
   DataAktivitas(
       {this.tgAktivitas,
@@ -72,7 +74,9 @@ class DataAktivitas {
       this.jumlah,
       this.aktivitas,
       this.idAktivitas,
-      this.user});
+      this.user,
+      this.stockSebelumnya,
+      this.stockSetelahnya});
 
   DataAktivitas.fromJson(Map<String, dynamic> json) {
     tgAktivitas = json['tg_aktivitas'];
@@ -84,6 +88,8 @@ class DataAktivitas {
     aktivitas = json['aktivitas'];
     idAktivitas = json['id_aktivitas'];
     user = json['user'];
+    stockSebelumnya = checkModel(json['stock_sebelumnya']);
+    stockSetelahnya = checkModel(json['stock_setelahnya']);
   }
 
   Map<String, dynamic> toJson() {
@@ -97,6 +103,8 @@ class DataAktivitas {
     data['aktivitas'] = aktivitas;
     data['id_aktivitas'] = idAktivitas;
     data['user'] = user;
+    data['stock_sebelumnya'] = stockSebelumnya;
+    data['stock_setelahnya'] = stockSetelahnya;
     return data;
   }
 }

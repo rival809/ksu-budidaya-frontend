@@ -1,11 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/controller/hist_bayar_hutang_anggota_controller.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/widget/body_penjualan.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/widget/container_nota.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/widget/footer_penjualan.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/widget/header_penjualan.dart';
 
 class DetailPenjualan extends StatefulWidget {
   final HistBayarHutangAnggotaController controller;

@@ -29,19 +29,18 @@ generatePdfStockOpname({
       int noUrut = i + 1;
 
       // Calculate values
-      double hargaJual = double.tryParse(dataItem.hargaJual ?? "0") ?? 0;
+      double hargaBeli = double.tryParse(dataItem.hargaBeli ?? "0") ?? 0;
       double stokSistem = dataItem.stokSistem ?? 0;
       double stokFisik = dataItem.stokFisik ?? 0;
       double selisih = dataItem.selisih ?? 0;
 
       // Add to totals
       totalStokSistemJml += stokSistem;
-      totalStokSistemHarga += (stokSistem * hargaJual);
+      totalStokSistemHarga += (dataItem.valuasi?.valuasiSistemBeli ?? 0);
       totalStokFisikJml += stokFisik;
-      totalStokFisikHarga += (stokFisik * hargaJual);
+      totalStokFisikHarga += (dataItem.valuasi?.valuasiFisikBeli ?? 0);
       totalSelisihJml += selisih;
-      totalSelisihHarga += (selisih * hargaJual);
-
+      totalSelisihHarga += (dataItem.valuasi?.valuasiSelisihBeli ?? 0);
       listDataStockOpname.add(
         PdfStockOpnameItem(
           noUrut.toString(),
@@ -49,11 +48,11 @@ generatePdfStockOpname({
           trimString(dataItem.nmProduct),
           trimString(dataItem.nmDivisi),
           formatMoney(stokSistem.toInt()),
-          formatMoney((stokSistem * hargaJual).toInt()),
+          formatMoney(dataItem.valuasi?.valuasiSistemBeli?.toStringAsFixed(0) ?? 0),
           formatMoney(stokFisik.toInt()),
-          formatMoney((stokFisik * hargaJual).toInt()),
+          formatMoney(dataItem.valuasi?.valuasiFisikBeli?.toStringAsFixed(0) ?? 0),
           formatMoney(selisih.toInt()),
-          formatMoney((selisih * hargaJual).toInt()),
+          formatMoney(dataItem.valuasi?.valuasiSelisihBeli?.toStringAsFixed(0) ?? 0),
           dataItem.isCounted == true ? "Sudah SO" : "Belum SO",
           trimString(dataItem.notes),
         ),
