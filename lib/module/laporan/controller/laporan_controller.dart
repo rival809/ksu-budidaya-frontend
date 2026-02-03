@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/laporan/widget/laporan_penjualan.dart';
 
 class LaporanController extends State<LaporanView> {
   static late LaporanController instance;
@@ -19,12 +18,10 @@ class LaporanController extends State<LaporanView> {
   bool hasData = false;
   List<DateTime?> dates = [];
 
-  List<int> yearData = List<int>.generate(
-      DateTime.now().year - 2025 + 2, (index) => 2025 + index);
+  List<int> yearData = List<int>.generate(DateTime.now().year - 2025 + 2, (index) => 2025 + index);
 
   LaporanHasilUsahaResult resultHasilUsaha = LaporanHasilUsahaResult();
-  LaporanRealisasiPendapatanResult resultRealisasiPendapatan =
-      LaporanRealisasiPendapatanResult();
+  LaporanRealisasiPendapatanResult resultRealisasiPendapatan = LaporanRealisasiPendapatanResult();
   LaporanNeracaLajurModel resultNeracaLajur = LaporanNeracaLajurModel();
   LaporanNeracaModel resultNeraca = LaporanNeracaModel();
   LaporanPenjualanModel resultPenjualan = LaporanPenjualanModel();
@@ -73,8 +70,7 @@ class LaporanController extends State<LaporanView> {
       return resultHasilUsaha;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -98,8 +94,7 @@ class LaporanController extends State<LaporanView> {
       return resultNeracaLajur;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -123,8 +118,7 @@ class LaporanController extends State<LaporanView> {
       return resultNeraca;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -146,8 +140,7 @@ class LaporanController extends State<LaporanView> {
       return resultRealisasiPendapatan;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }
@@ -163,12 +156,10 @@ class LaporanController extends State<LaporanView> {
       String formatDate(DateTime date) =>
           "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
 
-      String startDate = dates[0] != null
-          ? formatDate(dates[0]!)
-          : formatDate(DateTime(yearNow, monthNow, 1));
-      String endDate = dates[1] != null
-          ? formatDate(dates[1]!)
-          : formatDate(DateTime(yearNow, monthNow, 1));
+      String startDate =
+          dates[0] != null ? formatDate(dates[0]!) : formatDate(DateTime(yearNow, monthNow, 1));
+      String endDate =
+          dates[1] != null ? formatDate(dates[1]!) : formatDate(DateTime(yearNow, monthNow, 1));
 
       String? metodePembayaran;
       if (selectedMetodePembayaran == "SEMUA") {
@@ -190,8 +181,7 @@ class LaporanController extends State<LaporanView> {
       return resultPenjualan;
     } catch (e) {
       if (e.toString().contains("TimeoutException")) {
-        showInfoDialog(
-            "Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
+        showInfoDialog("Tidak Mendapat Respon Dari Server! Silakan coba lagi.", context);
       } else {
         showInfoDialog(e.toString().replaceAll("Exception: ", ""), context);
       }

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/hutang_anggota/history_hutang_anggota_model.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/view/hist_bayar_hutang_angoota_view.dart';
-import 'package:ksu_budidaya/module/transaksi/hist_bayar_hutang_anggota/widget/detail_penjualan.dart';
 
 class HistBayarHutangAnggotaController extends State<HistBayarHutangAnggotaView> {
   static late HistBayarHutangAnggotaController instance;

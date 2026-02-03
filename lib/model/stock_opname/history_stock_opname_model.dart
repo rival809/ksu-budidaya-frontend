@@ -1,5 +1,4 @@
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
 
 class HistoryStockOpnameModel {
   bool? success;

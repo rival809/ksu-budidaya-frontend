@@ -1,8 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_opname_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/riwayat_stock_opname/controller/riwayat_stock_opname_controller.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 generatePdfRiwayatStockOpname({

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/aktivitas_stock_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/controller/aktivitas_stock_controller.dart';
-import 'package:ksu_budidaya/module/stock_opname/aktivitas_stock/widget/generate_aktivitas_stock.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class AktivitasStockView extends StatefulWidget {

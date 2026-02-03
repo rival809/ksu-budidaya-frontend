@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take/view/stock_take_view.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take_divisi/controller/stock_take_divisi_controller.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take_divisi/widget/generate_stocktake.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class StockTakeDivisiView extends StatefulWidget {

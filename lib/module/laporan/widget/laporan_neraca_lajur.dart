@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/laporan/widget/excel/generate_excel_neraca_lajur.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class LaporanNeracaLajur extends StatefulWidget {

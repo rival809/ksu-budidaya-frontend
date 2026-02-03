@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/module/transaksi/pembelian/widget/dialog_input_ppn.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class DetailPembelian extends StatefulWidget {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ksu_budidaya/core.dart';
-import 'package:ksu_budidaya/model/stock_opname/stock_take_model.dart';
-import 'package:ksu_budidaya/module/stock_opname/stock_take_divisi/view/stock_take_divisi_view.dart';
 
 class StockTakeDivisiController extends State<StockTakeDivisiView> {
   static late StockTakeDivisiController instance;
