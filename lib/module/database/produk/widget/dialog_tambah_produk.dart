@@ -192,7 +192,7 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                     update();
                   },
                 ),
-                if (widget.isDetail)
+                if (widget.isDetail || UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001")
                   BaseForm(
                     label: "Jumlah",
                     hintText: "Masukkan Jumlah",
@@ -200,7 +200,7 @@ class _DialogTambahProdukState extends State<DialogTambahProduk> {
                       ThousandsFormatter(),
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                     ],
-                    enabled: false,
+                    enabled: UserDatabase.userDatabase.data?.roleData?.idRole == "ROLE001" ? true : false,
                     textEditingController: textController[4],
                     onChanged: (value) {
                       dataEdit.jumlah = int.tryParse(trimString(removeComma(value))) ?? 0;
